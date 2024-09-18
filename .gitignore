@@ -1,6 +1,7 @@
 # file extensions to be ignored in this repo:
 *
 !*.*
+!*/
 *.aux
 *.log
 *.gz
