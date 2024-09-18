@@ -1,0 +1,21 @@
+# file extensions to be ignored in this repo:
+*
+!*.*
+*.aux
+*.log
+*.gz
+*.xsim
+*.dtx
+*.toc
+.idea
+.vs
+.vscode
+*.out
+
+*.zip
+*.xls
+ 
+
+# directories which should be ignored:
+/out/ 
+
