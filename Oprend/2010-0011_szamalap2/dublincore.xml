@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<simpledc 
+ xmlns:dc="http://purl.org/dc/elements/1.1/" 
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+ xsi:noNamespaceSchemaLocation="http://dublincore.org/schemas/xmls/qdc/2003/04/02/simpledc.xsd">
+<dc:title xml:lang="hu">Számítógépes alapismeretek II.</dc:title>
+<dc:creator xml:lang="hu">Heizlerné Bakonyi Viktória</dc:creator>
+<dc:creator xml:lang="hu">Horváth László</dc:creator>
+<dc:creator xml:lang="hu">Illés Zoltán</dc:creator>
+<dc:creator xml:lang="hu">Nagy Tibor</dc:creator>
+<dc:creator xml:lang="hu">Lutár Patrícia</dc:creator>
+<dc:subject xml:lang="hu">operációs rendszer fogalma</dc:subject>
+<dc:subject xml:lang="hu">operációs rendszerek története</dc:subject>
+<dc:subject xml:lang="hu">operációs rendszer feladata</dc:subject>
+<dc:subject xml:lang="hu">operációs rendszer generációk</dc:subject>
+<dc:subject xml:lang="hu">operációs rendszer típusok</dc:subject>
+<dc:subject xml:lang="hu">folyamatok</dc:subject>
+<dc:subject xml:lang="hu">folyamat táblázat</dc:subject>
+<dc:subject xml:lang="hu">szál – folyamatok</dc:subject>
+<dc:subject xml:lang="hu">rendszerhívások</dc:subject>
+<dc:subject xml:lang="hu">operációs rendszer struktúrák</dc:subject>
+<dc:subject xml:lang="hu">kernelmód</dc:subject>
+<dc:subject xml:lang="hu">kernel</dc:subject>
+<dc:subject xml:lang="hu">felhasználói mód</dc:subject>
+<dc:subject xml:lang="hu">B/K művelet</dc:subject>
+<dc:subject xml:lang="hu">folyamatok modellje</dc:subject>
+<dc:subject xml:lang="hu">szinkron rendszerhívás</dc:subject>
+<dc:subject xml:lang="hu">aszinkron rendszerhívás</dc:subject>
+<dc:subject xml:lang="hu">állapotai</dc:subject>
+<dc:subject xml:lang="hu">megvalósításuk</dc:subject>
+<dc:subject xml:lang="hu">folyamatok kommunikációja</dc:subject>
+<dc:subject xml:lang="hu">megszakítástábla</dc:subject>
+<dc:subject xml:lang="hu">IDT</dc:subject>
+<dc:subject xml:lang="hu">megszakításvezérlő</dc:subject>
+<dc:subject xml:lang="hu">PIC</dc:subject>
+<dc:subject xml:lang="hu">megszakítás</dc:subject>
+<dc:subject xml:lang="hu">interrupt</dc:subject>
+<dc:subject xml:lang="hu">megszakításkérelem</dc:subject>
+<dc:subject xml:lang="hu">IRQ</dc:subject>
+<dc:subject xml:lang="hu">megszakításkezelési folyamat</dc:subject>
+<dc:subject xml:lang="hu">kivétel</dc:subject>
+<dc:subject xml:lang="hu">hibakeresés (debuggolás)</dc:subject>
+<dc:subject xml:lang="hu">töréspont</dc:subject>
+<dc:subject xml:lang="hu">fájlrendszer</dc:subject>
+<dc:subject xml:lang="hu">partíciós szektor</dc:subject>
+<dc:subject xml:lang="hu">klaszter (cluster)</dc:subject>
+<dc:subject xml:lang="hu">szektor</dc:subject>
+<dc:subject xml:lang="hu">csapda</dc:subject>
+<dc:subject xml:lang="hu">ütemezés</dc:subject>
+<dc:subject xml:lang="hu">szál</dc:subject>
+<dc:subject xml:lang="hu">szemafor</dc:subject>
+<dc:subject xml:lang="hu">mutex</dc:subject>
+<dc:subject xml:lang="hu">monitor</dc:subject>
+<dc:subject xml:lang="hu">POSIX</dc:subject>
+<dc:subject xml:lang="hu">szignál</dc:subject>
+<dc:subject xml:lang="hu">osztott memória</dc:subject>
+<dc:subject xml:lang="hu">csővezeték</dc:subject>
+<dc:subject xml:lang="hu">kritikus szakasz</dc:subject>
+<dc:subject xml:lang="hu">Wybe Dijkstra</dc:subject>
+<dc:subject xml:lang="hu">CPU</dc:subject>
+<dc:subject xml:lang="hu">erőforrás</dc:subject>
+<dc:subject xml:lang="hu">holtpont</dc:subject>
+<dc:subject xml:lang="hu">kiéheztetés</dc:subject>
+<dc:subject xml:lang="hu">integrált áramkör</dc:subject>
+<dc:subject xml:lang="hu">multiprogramozás</dc:subject>
+<dc:subject xml:lang="hu">beágyazott rendszerek</dc:subject>
+<dc:subject xml:lang="hu">partíció</dc:subject>
+<dc:subject xml:lang="hu">MMU</dc:subject>
+<dc:subject xml:lang="hu">lapcsere</dc:subject>
+<dc:subject xml:lang="hu">FIFO</dc:subject>
+<dc:subject xml:lang="hu">socket</dc:subject>
+<dc:subject xml:lang="hu">lapozás</dc:subject>
+<dc:subject xml:lang="hu">swap</dc:subject>
+<dc:subject xml:lang="hu">interaktív rendszer</dc:subject>
+<dc:subject xml:lang="hu">kötegelt rendszer</dc:subject>
+<dc:subject xml:lang="hu">kliens</dc:subject>
+<dc:subject xml:lang="hu">job</dc:subject>
+<dc:subject xml:lang="hu">jogosultság</dc:subject>
+<dc:subject xml:lang="hu">metaadat</dc:subject>
+<dc:subject xml:lang="hu">könyvtár</dc:subject>
+<dc:subject xml:lang="hu">UNIX</dc:subject>
+<dc:subject xml:lang="hu">GNU/LINUX</dc:subject>
+<dc:subject xml:lang="hu">erőforrás-foglalási gráf</dc:subject>
+<dc:subject xml:lang="hu">fizikai memória</dc:subject>
+<dc:subject xml:lang="hu">virtuális memória</dc:subject>
+<dc:subject xml:lang="hu">merevlemez</dc:subject>
+<dc:subject xml:lang="hu">floppy</dc:subject>
+<dc:subject xml:lang="hu">fregmentáció</dc:subject>
+<dc:subject xml:lang="hu">defregmentáló program</dc:subject>
+<dc:subject xml:lang="hu">i-node</dc:subject>
+<dc:subject xml:lang="hu">cache memory</dc:subject>
+<dc:subject xml:lang="hu">SSH</dc:subject>
+<dc:subject xml:lang="hu">HyperThread</dc:subject>
+<dc:subject xml:lang="hu">párhuzamosság</dc:subject>
+<dc:description xml:lang="hu">A Számítógépes Alapismeretek I. modul folytatásaként elméleti és gyakorlati oldalról mutatja meg az operációs rendszer közeli tevékenységeket, a rendszerhívások jelentését, a rendszerfeladatokat, illetve a folyamatok kezelését.  A jegyzet a TÁMOP-4.1.2.A/2-10/1 pályázat keretén belül készült.</dc:description>
+<dc:publisher xml:lang="hu">Eötvös Loránd Tudományegyetem, Informatikai Kar</dc:publisher>
+<dc:type>InteractiveResource</dc:type>
+<dc:format>scorm</dc:format>
+<dc:identifier></dc:identifier>
+<dc:date>2012-11-25</dc:date>
+<dc:coverage>2012 - 2016, Magyarország</dc:coverage>
+<dc:language>hu</dc:language>
+<dc:rights>Heizlerné Bakonyi Viktória</dc:rights>
+<dc:rights>Horváth László</dc:rights>
+<dc:rights>Illés Zoltán</dc:rights>
+<dc:rights>Nagy Tibor</dc:rights>
+<dc:rights>Lutár Patrícia</dc:rights>
+</simpledc>

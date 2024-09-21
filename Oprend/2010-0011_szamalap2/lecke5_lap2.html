@@ -1,0 +1,110 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="hu" lang="hu">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="css/scormelte_alap.css" rel="stylesheet" type="text/css" title="" />
+<link href="css/style_spec.css" rel="stylesheet" type="text/css" />
+<link href="css/scormelte_nagy.css" rel="alternate stylesheet" type="text/css" title="nagy" />
+<link href="css/scormelte_inverz.css" rel="alternate stylesheet" type="text/css" title="inverz" />
+<!--[if lte IE 6]>
+<link href="css/scormelte_ie6.css" rel="stylesheet" type="text/css" title="" />
+<![endif]-->
+<!-- syntax highlight -->
+<link rel="stylesheet" type="text/css" href="css/shCore.css" />
+<link rel="stylesheet" type="text/css" href="css/shThemeDefault.css" />
+<script type="text/javascript" src="js/shCore.js"></script>
+<script type="text/javascript" src="js/shBrushCpp.js"></script>
+<script type="text/javascript" src="js/shBrushCSharp.js"></script>
+<script type="text/javascript" src="js/shBrushDelphi.js"></script>
+<script type="text/javascript" src="js/shBrushXml.js"></script>
+<script type="text/javascript" src="js/shBrushCss.js"></script>
+<script type="text/javascript" src="js/shBrushJScript.js"></script>
+<script type="text/javascript" src="js/shBrushSql.js"></script>
+<script type="text/javascript">
+SyntaxHighlighter.all()
+</script>
+<title>
+Számítógépes alapismeretek II. / 
+Folyamatok, folyamatleírók, táblázatok és <span class="fogalom" title="szál">szálak</span> fogalma. A folyamatok és a <span class="fogalom" title="szál">szálak</span> közötti különbségek, a folyamatok <span class="fogalom" title="ütemezés">ütemezése</span>
+/Multiprogramozás</title>
+<meta name="description" content="A tananyag  fejlesztése a TÁMOP-4.1.2.A/2-10/1 pályázat keretén belül történt." />
+<meta name="keywords" content="Hardver alapismeretek, operációs rendszer, számítógépes alapismeretek, operációs rendszer fogalma, operációs rendszerek története, operációs rendszer feladata, operációs rendszer generációk, operációs rendszer típusok, folyamatok, folyamat táblázat, szál &ndash; folyamatok, rendszerhívások, operációs rendszer struktúrák, kernelmód, kernel, felhasználói mód, B/K művelet, folyamatok modellje, szinkron rendszerhívás, asszinkron rendszerhívás, állapotai, megvalósításuk, folyamatok kommunikációja, IPC (Inter Process Communication), megszakítástábla, IDT, megszakításvezérlő, PIC, megszakítás, interrupt, megszakításkérelem, IRQ, megszakításkezelési folyamat, kivétel, hibakeresés (debuggolás), töréspont, fájlrendszer, MBR, partíciós szektor, Ntldr, klaszter (cluster), szektor, FAT, NTFS, ext, TSS, csapda, ütemezés, szál, szemafor, mutex, monitor, POSIX, szignál, osztott memória, csővezeték, kritikus szakasz, Wybe Dijkstra, CPU, erőforrás, holtpont, kiéheztetés, integrált áramkör, multiprogramozás, beágyazott rendszerek, partíció, MMU, lapcsere, FIFO, socket, lapozás, swap, interaktív rendszer, kötegelt rendszer, kliens, job, jogosultság, metaadat, könyvtár, UNIX, GNU/LINUX, erőforrás-foglalási gráf, fizikai memória, virtuális memória, merevlemez, floppy, fregmentáció, defregmentáló program, MFT, API, i-node, cache memory, SSH, HyperThread, párhuzamosság" />
+<script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="js/kep.js"></script>
+<script type="text/javascript" src="js/jquery.media.js"></script>
+<script type="text/javascript" src="js/jquery.highlight-3.js"></script>
+<script type="text/javascript" src="js/kereses.js"></script>
+<script type="text/javascript" src="js/stylesheetToggle.js"></script>
+<script type="text/javascript" src="js/cookie.js"></script>
+<script type="text/javascript" src="js/stilusvalto.js"></script>
+<script type="text/javascript" src="js/fogalmak.js"></script>
+<script type="text/javascript" src="js/fogalom.js"></script>
+<script type="text/javascript" src="js/jwplayer.js"></script>
+<script type="text/javascript">
+$(document).ready(function() 
+{
+$("a.hang").media( {width: 250, height: 50,  autoplay: false} );
+});
+</script>
+<script type="text/javascript" src="js/navigacio.js"></script>
+</head>
+<body>
+<div><a name="teteje"  id="teteje"></a></div>
+<div class="jawsfmenu">
+  <ul>
+    <li><a class="tartalom" href="#tartalom" accesskey="t" tabindex="2">Ugrás a <span class="gyorsb">t</span>artalomra</a></li>
+    <li><a class="tartalomj" href="#fejezetek" accesskey="j" tabindex="5">Ugrás a tartalom<span class="gyorsb">j</span>egyzékre</a></li>
+    <li><a class="tanutm" href="#tanutm" accesskey="u" tabindex="7">Ugrás a tan<span class="gyorsb">u</span>lási útmutatóra</a></li>
+  </ul>
+</div>
+<div class="ki_kereses"></div>
+<div class="oldal">
+  <div class="utmutato">
+    <div class="utm_hivatkozasok"><span class="elozolap"><img src="navi/ikon_vissza_dis.gif" alt="Vissza az előzőleg látogatott oldalra (nem elérhető funkció)" title="Vissza az előzőleg látogatott oldalra (nem elérhető funkció)" /></span><a class="kezdolap" href="index.html" accesskey="p" tabindex="21"><img src="navi/ikon_kezdolap.gif" alt="Vissza a modul kezdőlapjára" title="Vissza a modul kezdőlapjára" width="36" height="36"/></a><a class="elozotanlap" href="lecke5_lap1.html" accesskey="e" tabindex="22"><img src="navi/ikon_elozolap.gif" alt="Ugrás a tananyag előző oldalára" title="Ugrás a tananyag előző oldalára" width="36" height="36" /></a><a class="kovetktanlap" href="lecke5_lap3.html" accesskey="v" tabindex="23"><img src="navi/ikon_kovetklap.gif" alt="Ugrás a tananyag következő oldalára" title="Ugrás a tananyag következő oldalára" width="36" height="36"/></a><span class="ki_fogalomkapcs"><img src="navi/ikon_fogalmakbe_dis.gif" alt="Fogalom megjelenítés (nem elérhető funckió)" title="Fogalom megjelenítés (nem elérhető funckió)" /></span><span class="ki_fogalomlista"><img src="navi/ikon_fogalmaklista_dis.gif" alt="Fogalmak listája (nem elérhető funkció)" title="Fogalmak listája (nem elérhető funkció)" /></span><span class="ki_nyomtatas"><img src="navi/ikon_nyomtatas_dis.gif" alt="Oldal nyomtatása (nem elérhető funkció)" title="Oldal nyomtatása (nem elérhető funkció)" /></span><a class="oldalterkep" href="oldalterkep.html" accesskey="d" tabindex="31"><img src="navi/ikon_oldalterkep.gif" alt="Oldaltérkép megtekintése" title="Oldaltérkép megtekintése"  width="36" height="36" /></a><a class="sugo" href="sugo.html" accesskey="s" tabindex="33"><img src="navi/ikon_sugo.gif" alt="Súgó megtekintése" title="Súgó megtekintése"  width="36" height="36" /></a></div>
+  </div>
+  <div class="tartalommenu">
+    <div class="tartalommenu_fejlec"><span id="lapteteje"><a  href="#teteje"><span class="gyorsb">F</span>el a lap tetejére</a></span><a name="fejezetek"   id="fejezetek">Tartalomjegyzék</a></div>
+    <ul><li><a href="#hiv1">Folyamatok, folyamatleírók, táblázatok és szálak fogalma. A folyamatok és a szálak közötti különbségek, a folyamatok ütemezése</a><ul><li><a href="#hiv2">Programozási környezet</a><ul><li><a href="#hiv3">Multiprogramozás</a></li><li><a href="#hiv4">Folyamatok létrehozása és megszüntetése</a></li></ul></li></ul></li></ul> 
+  </div>
+  <div class="tartalom"> <a name="tartalom"    id="tartalom"></a> 
+    <h1><a name="hiv1" id="hiv1"></a>Folyamatok, folyamatleírók, táblázatok és szálak fogalma. A folyamatok és a szálak közötti különbségek, a folyamatok ütemezése</h1><h2><a name="hiv2" id="hiv2"></a>Programozási környezet</h2><h3><a name="hiv3" id="hiv3"></a>Multiprogramozás</h3><p>A mai modern számítógép fogalmához hozzátartozik, hogy természetesnek vesszük azt, amikor a számítógépünk egyidejűleg több tevékenységet végez. Például elég természetes, hogy miközben egy zenelejátszó program révén kedvenc együttesünk slágereit hallgatjuk, eközben például a C# programozási nyelven írt programfejlesztési megoldáson dolgozunk. </p><p>Hogyan lehetséges ez, mikor a számítógépünkben egy processzor (<span class="fogalom" title="CPU">CPU</span>, Central Processing Unit &ndash; központi egység) van, és az egyidejűleg csak egy feladatot képes végrehajtani? Erre a kérdésre a válasz a végrehajtás sebességében van. A központi egység olyan gyorsan képes végrehajtani az utasításokat (több millió utasítást másodpercenként), hogy ha ennél a sebességnél váltogatjuk az éppen végrehajtódó feladatokat, az számunkra azt az illúziót kelti, mintha egymással párhuzamosan történnének a feladat-végrehajtások. </p><p>A folyamatok közti gyors kapcsolást, a végrehajtás váltását <span class="fogalom" title="multiprogramozás"><strong>multiprogramozásnak</strong></span> nevezzük.</p><p>Meg kell jegyezni, hogy sok mai számítógép egyrészt nem egy processzort, hanem több, önálló végrehajtási egységet foglalhat magában, másrészt egy fizikai processzor ráadásul több (kettő, négy vagy akár nyolc) magot is tartalmazhat. A központi egységekben minden magnak saját belső memóriája van, ahova a közös fizikai memóriából betöltik az éppen végrehajtandó feladat kódját, és ekkor a magok valódi párhuzamos működést mutatnak. Ez azt jelenti, hogy egy időegység alatt (körülbelül egy óraciklus) mindegyik mag végrehajtja a saját folyamatának utasítását.</p><p>Ekkor nem látszatpárhuzamosságról beszélhetünk, de ez nem befolyásolja érdemben azt, hogy a folyamatok fogalmi modelljén (szekvenciális, egymás után végrehajtódó folyamatok sora) módosítsunk, amelynek segítségével a <span class="fogalom" title="párhuzamosság">párhuzamosság</span> kezelését tudjuk végezni.</p><p>Így ebben az értelemben a számítógépen futó &#132;program&#148; &ndash; magával az <span class="fogalom" title="operációs rendszer">operációs rendszer</span> feladataival együtt &ndash; nem más, mint szekvenciális folyamatok sorozata. A folyamat egy végrehajtás alatt álló program, és ehhez a folyamathoz tartoznak természetesen más jellemzők is még, mint például a központi egység utasításszámlálója (hol tart a folyamatban a végrehajtás), a központi egység regiszterei (a végrehajtási számítások segédértékei) és a folyamat egyéb más állapotleírói. Ahhoz, hogy egyik folyamatról a másikra tudjunk váltani, az szükséges, hogy mindezen leírókat, adatokat mentsük, hiszen ezek ismerete feltétlenül szükséges a folyamat egy későbbi időpillanatban történő folytatásához.</p><p>Egy ilyen szabályos végrehajtási váltássorozatot mutat az <em>5.4. ábra,</em> ahol négy folyamat között váltogat az <span class="fogalom" title="operációs rendszer">operációs rendszer</span>. Az első rajz azt mutatja, hogy az időben mindig pontosan egy folyamat az aktuálisan működő, egy folyamat, amelyik birtokolja a processzort.</p><!--fej5_kep_4--><div class="kep kozep sz500"><img src="kepek/fej5_kep4_w500.jpg" alt="Az kép azt mutatja, hogy az időben mindig pontosan egy folyamat, négy közül, az aktuálisan működő." style="width:100%; height:auto;" title="Az kép azt mutatja, hogy az időben mindig pontosan egy folyamat, négy közül, az aktuálisan működő." /><span class="kepalairas">5.4. ábra: A négy folyamat (A, B, C és D) önálló, saját utasításszámlálóval</span></div><div class="uresmargo"></div><!--ENDfej5_kep_4--><p>Ebben a rendszerben a <span class="fogalom" title="multiprogramozás">multiprogramozás</span> megvalósítása tehát azt jelenti, hogy tudjunk helyesen váltani az egyes folyamatok között. Rögtön újabb kérdések merülnek fel: mi alapján, miért és mikor váltunk egyik folyamat végrehajtásáról egy másikra? A kérdést úgy is megfogalmazhatjuk: milyen módszer szerint váltsunk, milyen <span class="fogalom" title="ütemezés">ütemezés</span> szerint kapcsoljunk egyik folyamat végrehajtásáról a másikra? (A témával ebben a fejezetben nem foglalkozunk részletesen, de megjegyezzük, hogy ezt tárgyalja az <span class="fogalom" title="ütemezés">ütemezési</span> algoritmusok széles, az irodalomban is jól ismert választéka.)</p><p class="vissza"><a href="#fejezetek">Vissza a tartalom<span class="gyorsb">j</span>egyzékhez</a></p><h3><a name="hiv4" id="hiv4"></a>Folyamatok létrehozása és megszüntetése</h3><p>Ahogy a bevezetőben is láttuk, speciális rendszerek ma is, illetve korábban is, és feltehetőleg a jövőben is az egyszerű &#132;egy program &ndash; egy eszköz&#148; elvet követik, és ilyen rendszereknél nem igazán beszélhetünk folyamatok létrehozásáról, illetve megszüntetéséről. Ebben az esetben a bekapcsolás jelenti az egy folyamat megszületését, míg a kikapcsolás a megszüntetését. (A program ezekben a rendszerekben jellemzően valamilyen ROM &ndash;  csak olvasható &ndash; memóriában van.)</p><p>Az általános célú rendszerekben, amilyenek a mai számítógépeink is, sok folyamatról beszélhetünk, és ezekből a folyamatokból egyesek végrehajtás alatt állnak, mások pedig nem. Pontosabban a helyzet, miszerint néhány folyamat végrehajtás alatt van, mások pedig nem, folyamatosan változik. Azaz kijelenthető, hogy a folyamatok létrehozása és megszüntetése alapvető feladat.</p><p>A folyamatok létrehozása alapvetően vagy az <span class="fogalom" title="operációs rendszer">operációs rendszer</span> igénye (pl. az <span class="fogalom" title="operációs rendszer">operációs rendszer</span> indulásakor), vagy felhasználói igény. Jellemzően három fő tevékenység hoz létre új folyamatot.</p><p><strong>A folyamatokat létrehozó három fő tevékenység</strong> a következő:</p><ul><li>rendszerinicializálás (bekapcsoláskor, illetve alrendszerek újraindításakor);</li><li>a felhasználó ilyen parancsot ad ki (egyszerű parancskiadás vagy az &#132;&#38;&#148; jeles parancsindítás a háttérben);</li><li>egy működő program (folyamat vagy akár egy szkript) ilyen parancsot, <span class="fogalom" title="rendszerhívás">rendszerhívást</span> kezdeményez (ilyen például a &#132;fork&#148; <span class="fogalom" title="rendszerhívás">rendszerhívás</span>).</li></ul><p>A folyamatok létrehozásának tekintetében, technikai értelemben, mindhárom esetben ugyanarról a tevékenységről van szó. Egy folyamat <span class="fogalom" title="rendszerhívás">rendszerhívás</span> segítségével (ez jellemzően a &#132;fork&#148;) új folyamatot hoz létre, ami végzi a saját tevékenységét. Láttunk a leckében már mintát erre az elvre, aminek a lényegi eleme a következő:</p><div class="forraskod"><div class="bekezdes1cm">
+
+// valamilyen tevékenység végzése 
+    ... 
+    a = fork(); // A folyamat megkettőzése, a szülő-gyermek 
+              // létrejötte. 
+  if (a) { // A szülőben vagyunk. 
+    ... 
+    } else { // A gyermekfolyamatban vagyunk. 
+           // Még ugyanaz a memóriaképe a gyermeknek és 
+           // a szülőnek. 
+    ...   
+  // Ha kell, változtatunk, módosítunk a fájlleírókon 
+  // (stdin, stdout, stb.), és indítjuk a folyamatot, 
+  // lecserélve a memóriaképet. 
+       execl("/usr/bin/ls","ls",&#148;/al&#148;,0); 
+  } 
+   ...
+</div>
+</div><p>A szülő-gyermek folyamat kapcsán (fork utasítás) említettük már, hogy mind a szülőfolyamatnak, mind a gyermekfolyamatnak ugyanaz, pontosabban ugyanolyan a memóriaképe. Ez azt jelenti, hogy mindkét folyamatban ugyanazok az elemek (pl. változók, eljárások) jelennek meg. Ellenben ez nem jelenti azt, hogy közös lenne ez a memóriakép! Tehát elmondható, hogy a szülő- és a gyermekfolyamat memóriaterülete egymástól teljesen független lesz. </p><p>Ha például az előbbi kódrészletbe a fork utasítás elé berakunk egy &#132;i&#148; nevű egész típusú változót, akkor az egyaránt jelen lesz a szülő- és a gyermekfolyamatban. Ha ezt a változót például az elágazás &#132;igaz ágán&#148;, azaz a szülőfolyamathoz tartozó részben módosítjuk, akkor a módosítást nem látja már a gyermekág! </p><p>Egy folyamat az indulása után elvégzi a megfelelő (számára meghatározott) tevékenységét, majd előbb vagy utóbb befejeződik. A befejeződés szempontjából tekintve megkülönböztethetünk úgynevezett <strong>önkéntes</strong> vagy <strong>önkéntelen folyamatbefejeződést.</strong> </p><p>Önkéntes a folyamat befejeződése, amikor a folyamat szabályosan a feladatának a végére ér és befejeződik, illetve amikor nem ér a feladatának a végére, de valamilyen hiba miatt úgy &#132;érzi&#148;, hogy nem tudja végrehajtani a feladatát, és ezért befejeződik. </p><p>Az önkéntes folyamatbefejeződésre tekinthetjük példának a másolás parancsot. Tegyük fel, hogy az alábbi formában adjuk ki:</p><p><span class="forraskod">cp alma.fa barack.fa</span></p><p>Ha létezik az &#132;alma.fa&#148; nevű állomány, akkor a parancs végrehajtódik, azaz elvégzi a másolást, majd befejezi a tevékenységét. Ha nem létezik az &#132;alma.fa&#148; nevű állomány, akkor általában jelzi a parancs, hogy hiba van, majd az előző esethez hasonlóan a jelzés után befejezi a tevékenységét.</p><p>Önkéntelen a folyamat befejeződése, amikor a program akár a &#132;tudtán kívül&#148; illegális utasítást hajt végre (pl. rossz memóriacímre hivatkozik), vagy egyszerűen egy másik folyamat eléri annak a befejezését (pl. megsemmisíti a kill <span class="fogalom" title="rendszerhívás">rendszerhívás</span> használatával). Ezekben az esetekben az <span class="fogalom" title="operációs rendszer">operációs rendszer</span> hathatós segítségével a program jelzést kap, aminek hatására befejeződik.</p><p class="vissza"><a href="#fejezetek">Vissza a tartalom<span class="gyorsb">j</span>egyzékhez</a></p> 
+  </div>
+</div>
+<div class="utmutato_also">
+  <div class="utm_hivatkozasok_also"><a class="oldalteteje" accesskey="f" href="#teteje"><span class="gyorsb">F</span>el a lap tetejére</a>
+  <a class="elozotanlap" id="navialsoelozo" href="lecke5_lap1.html"><img src="navi/ikon_elozolap.gif" alt="Ugrás a tananyag előző oldalára" title="Ugrás a tananyag előző oldalára" width="36" height="36" /></a>
+  <a id='navialsokov' class="kovetktanlap" href="lecke5_lap3.html" ><img src="navi/ikon_kovetklap.gif" alt="Ugrás a tananyag következő oldalára" title="Ugrás a tananyag következő oldalára" width="36" height="36"/></a>
+  </div>
+</div>
+<div class="ki_stilus"></div>
+<div class="impresszum">
+  <table class="uszt">
+    <tr>
+      <td><div class="imp_eltetatklogo"><img alt="ELTE és ELTE TáTK logó" src="css/arculat/elte_plus_tatk.png" style="width:100%;height:auto;" /></div>
+        <div class="imp_elteiklogo"><img alt="ELTE és ELTE IK logó" src="css/arculat/elte_plus_ik.png" style="width:100%;height:auto;" /></div></td>
+      <td><div class="imp_uszt"><img alt="Új Széchenyi terv" src="css/arculat/USZT_logo_cmyk.jpg" style="width:100%;height:auto;" /></div></td>
+      <td><div class="imp_eu"><img alt="A projekt az Európai Unió támogatásával, az Európai Szociális Alap társfinanszirozásával valósul meg." title="A projekt az Európai Unió támogatásával, az Európai Szociális Alap társfinanszirozásával valósul meg." src="css/arculat/ESZA.png" style="width:100%;height:auto;"/></div></td>
+    </tr>
+  </table>
+</div>
+</body>
+</html>

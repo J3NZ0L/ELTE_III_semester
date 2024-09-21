@@ -1,0 +1,190 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="hu" lang="hu">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="css/scormelte_alap.css" rel="stylesheet" type="text/css" title="" />
+<link href="css/style_spec.css" rel="stylesheet" type="text/css" />
+<link href="css/scormelte_nagy.css" rel="alternate stylesheet" type="text/css" title="nagy" />
+<link href="css/scormelte_inverz.css" rel="alternate stylesheet" type="text/css" title="inverz" />
+<!--[if lte IE 6]>
+<link href="css/scormelte_ie6.css" rel="stylesheet" type="text/css" title="" />
+<![endif]-->
+<!-- syntax highlight -->
+<link rel="stylesheet" type="text/css" href="css/shCore.css" />
+<link rel="stylesheet" type="text/css" href="css/shThemeDefault.css" />
+<script type="text/javascript" src="js/shCore.js"></script>
+<script type="text/javascript" src="js/shBrushCpp.js"></script>
+<script type="text/javascript" src="js/shBrushCSharp.js"></script>
+<script type="text/javascript" src="js/shBrushDelphi.js"></script>
+<script type="text/javascript" src="js/shBrushXml.js"></script>
+<script type="text/javascript" src="js/shBrushCss.js"></script>
+<script type="text/javascript" src="js/shBrushJScript.js"></script>
+<script type="text/javascript" src="js/shBrushSql.js"></script>
+<script type="text/javascript">
+SyntaxHighlighter.all()
+</script>
+<title>
+Számítógépes alapismeretek II. / 
+Esettanulmány az operációs rendszerbeli funkciók (OS funkciók) megvalósításához
+/Szemafor</title>
+<meta name="description" content="A tananyag  fejlesztése a TÁMOP-4.1.2.A/2-10/1 pályázat keretén belül történt." />
+<meta name="keywords" content="Hardver alapismeretek, operációs rendszer, számítógépes alapismeretek, operációs rendszer fogalma, operációs rendszerek története, operációs rendszer feladata, operációs rendszer generációk, operációs rendszer típusok, folyamatok, folyamat táblázat, szál &ndash; folyamatok, rendszerhívások, operációs rendszer struktúrák, kernelmód, kernel, felhasználói mód, B/K művelet, folyamatok modellje, szinkron rendszerhívás, asszinkron rendszerhívás, állapotai, megvalósításuk, folyamatok kommunikációja, IPC (Inter Process Communication), megszakítástábla, IDT, megszakításvezérlő, PIC, megszakítás, interrupt, megszakításkérelem, IRQ, megszakításkezelési folyamat, kivétel, hibakeresés (debuggolás), töréspont, fájlrendszer, MBR, partíciós szektor, Ntldr, klaszter (cluster), szektor, FAT, NTFS, ext, TSS, csapda, ütemezés, szál, szemafor, mutex, monitor, POSIX, szignál, osztott memória, csővezeték, kritikus szakasz, Wybe Dijkstra, CPU, erőforrás, holtpont, kiéheztetés, integrált áramkör, multiprogramozás, beágyazott rendszerek, partíció, MMU, lapcsere, FIFO, socket, lapozás, swap, interaktív rendszer, kötegelt rendszer, kliens, job, jogosultság, metaadat, könyvtár, UNIX, GNU/LINUX, erőforrás-foglalási gráf, fizikai memória, virtuális memória, merevlemez, floppy, fregmentáció, defregmentáló program, MFT, API, i-node, cache memory, SSH, HyperThread, párhuzamosság" />
+<script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="js/kep.js"></script>
+<script type="text/javascript" src="js/jquery.media.js"></script>
+<script type="text/javascript" src="js/jquery.highlight-3.js"></script>
+<script type="text/javascript" src="js/kereses.js"></script>
+<script type="text/javascript" src="js/stylesheetToggle.js"></script>
+<script type="text/javascript" src="js/cookie.js"></script>
+<script type="text/javascript" src="js/stilusvalto.js"></script>
+<script type="text/javascript" src="js/fogalmak.js"></script>
+<script type="text/javascript" src="js/fogalom.js"></script>
+<script type="text/javascript" src="js/jwplayer.js"></script>
+<script type="text/javascript">
+$(document).ready(function() 
+{
+$("a.hang").media( {width: 250, height: 50,  autoplay: false} );
+});
+</script>
+<script type="text/javascript" src="js/navigacio.js"></script>
+</head>
+<body>
+<div><a name="teteje"  id="teteje"></a></div>
+<div class="jawsfmenu">
+  <ul>
+    <li><a class="tartalom" href="#tartalom" accesskey="t" tabindex="2">Ugrás a <span class="gyorsb">t</span>artalomra</a></li>
+    <li><a class="tartalomj" href="#fejezetek" accesskey="j" tabindex="5">Ugrás a tartalom<span class="gyorsb">j</span>egyzékre</a></li>
+    <li><a class="tanutm" href="#tanutm" accesskey="u" tabindex="7">Ugrás a tan<span class="gyorsb">u</span>lási útmutatóra</a></li>
+  </ul>
+</div>
+<div class="ki_kereses"></div>
+<div class="oldal">
+  <div class="utmutato">
+    <div class="utm_hivatkozasok"><span class="elozolap"><img src="navi/ikon_vissza_dis.gif" alt="Vissza az előzőleg látogatott oldalra (nem elérhető funkció)" title="Vissza az előzőleg látogatott oldalra (nem elérhető funkció)" /></span><a class="kezdolap" href="index.html" accesskey="p" tabindex="21"><img src="navi/ikon_kezdolap.gif" alt="Vissza a modul kezdőlapjára" title="Vissza a modul kezdőlapjára" width="36" height="36"/></a><a class="elozotanlap" href="lecke12_lap6.html" accesskey="e" tabindex="22"><img src="navi/ikon_elozolap.gif" alt="Ugrás a tananyag előző oldalára" title="Ugrás a tananyag előző oldalára" width="36" height="36" /></a><a class="kovetktanlap" href="teszt/lecke12/teszt.html" accesskey="v" tabindex="23"><img src="navi/ikon_kovetklap.gif" alt="Ugrás a tananyag következő oldalára" title="Ugrás a tananyag következő oldalára" width="36" height="36"/></a><span class="ki_fogalomkapcs"><img src="navi/ikon_fogalmakbe_dis.gif" alt="Fogalom megjelenítés (nem elérhető funckió)" title="Fogalom megjelenítés (nem elérhető funckió)" /></span><span class="ki_fogalomlista"><img src="navi/ikon_fogalmaklista_dis.gif" alt="Fogalmak listája (nem elérhető funkció)" title="Fogalmak listája (nem elérhető funkció)" /></span><span class="ki_nyomtatas"><img src="navi/ikon_nyomtatas_dis.gif" alt="Oldal nyomtatása (nem elérhető funkció)" title="Oldal nyomtatása (nem elérhető funkció)" /></span><a class="oldalterkep" href="oldalterkep.html" accesskey="d" tabindex="31"><img src="navi/ikon_oldalterkep.gif" alt="Oldaltérkép megtekintése" title="Oldaltérkép megtekintése"  width="36" height="36" /></a><a class="sugo" href="sugo.html" accesskey="s" tabindex="33"><img src="navi/ikon_sugo.gif" alt="Súgó megtekintése" title="Súgó megtekintése"  width="36" height="36" /></a></div>
+  </div>
+  <div class="tartalommenu">
+    <div class="tartalommenu_fejlec"><span id="lapteteje"><a  href="#teteje"><span class="gyorsb">F</span>el a lap tetejére</a></span><a name="fejezetek"   id="fejezetek">Tartalomjegyzék</a></div>
+    <ul><li><a href="#hiv1">Esettanulmány az operációs rendszerbeli funkciók (OS funkciók) megvalósításához</a><ul><li><a href="#hiv2">Szemafor</a></li><li><a href="#hiv3">Web szerver</a></li></ul></li></ul> 
+  </div>
+  <div class="tartalom"> <a name="tartalom"    id="tartalom"></a> 
+    <h1><a name="hiv1" id="hiv1"></a>Esettanulmány az operációs rendszerbeli funkciók (OS funkciók) megvalósításához</h1><h2><a name="hiv2" id="hiv2"></a>Szemafor</h2><p>Most valósítsunk meg egy bináris <span class="fogalom" title="szemafor">szemafort</span>! Legyen a rendszerben egy <span class="fogalom" title="szemafor">szemafor</span>, amely kezdetben nyitott állapotú. Két szemaforműveletet valósítunk meg <span class="fogalom" title="rendszerhívás">rendszerhívásként</span>: a <span class="fogalom" title="szemafor">szemafor</span> nyitását és zárását. Ha zárás műveletét lezárt <span class="fogalom" title="szemafor">szemafor</span> esetén hajtja végre egy folyamat, akkor blokkolódik. Ha a nyitás műveletét hajtja végre egy folyamat, és a <span class="fogalom" title="szemafor">szemafor</span> nyitva van, vagy nem a folyamat zárta le a <span class="fogalom" title="szemafor">szemafort</span>, akkor a <span class="fogalom" title="rendszerhívás">rendszerhívás</span> térjen vissza hibakóddal, ha viszont van a <span class="fogalom" title="szemafor">szemafor</span> miatt várakozó folyamat, akkor a várakozó folyamatot engedjük tovább. A <span class="fogalom" title="rendszerhívás">rendszerhívás</span> hiba esetén hibakóddal, különben nullával térjen vissza. A visszatérési értéket a megosztott memória elejéről olvassuk ki. </p><p>Lássuk a <span class="fogalom" title="rendszerhívás">rendszerhívások</span> kódját!</p><div class="forraskod"><div class="bekezdes1cm">
+int syscall_semaphor_open() { 
+     int* buffer = (int*)shmat( SHM_ID, 0, 0); 
+     buffer[0] = 5; 
+     kill( getppid(), SIGUSR1 ); 
+     raise( SIGSTOP ); 
+     return buffer[0]; 
+} 
+int syscall_semaphor_close() { 
+     int* buffer = (int*)shmat( SHM_ID, 0, 0); 
+     buffer[0] = 6; 
+     kill( getppid(), SIGUSR1 ); 
+     raise( SIGSTOP ); 
+     return buffer[0]; 
+}
+</div>
+</div><p>Tehát az ötös számú <span class="fogalom" title="rendszerhívás">rendszerhívás</span> lesz a nyitás, és a hatos lesz a zárás. A <span class="fogalom" title="rendszerhívás">rendszerhívás</span> kerneloldalán fogadjuk ezeket, és hívjuk meg a kezelő kernelfüggvényeket!</p><div class="forraskod"><div class="bekezdes1cm">
+//A rendszerhívásokat kezelő függvény
+void workspace::syscall() { 
+     
+     // Az aktuális taszk rendszerhívás adatait tároló osztott memória. 
+     int* task_sh_mem = (int*)_task_table.task(_current_task).syscall_mem(); 
+     
+     // A rendszerhívások
+     switch( task_sh_mem[0] ) { 
+     
+          case 0: // exit() 
+               task_delete(); 
+               break; 
+               
+          case 1: // getpid() 
+               task_sh_mem[0] = _current_task; 
+               _task_table.task(_current_task).task_continue(); 
+               break; 
+               
+          case 2: // getchar() 
+               break; 
+               
+          case 3: // write_message() 
+               write_message(); 
+               break; 
+               
+          case 4: // read_message() 
+               read_message(); 
+               break; 
+               
+          case 5: // szemafor nyitas() 
+               semaphor_open(); 
+               break; 
+               
+          case 6: // szemafor lezaras() 
+               semaphor_close(); 
+               break; 
+               
+          default: // default exit() 
+               task_delete(); 
+               break; 
+     } 
+}
+</div>
+</div><p>A feladat megoldásánál három eseményt kell figyelembe venni (szemafornyitás, szemaforzárás és folyamat végén meghívott exit <span class="fogalom" title="rendszerhívás">rendszerhívás</span>). Most összegezzük a feltételeinket!</p><ul><li>Tárolnunk kell a <span class="fogalom" title="szemafor">szemafor</span> állapotát (nyitott, csukott) &ndash; ez két állapot.</li><li>Tudnunk kell, hogy melyik folyamat zárta le a <span class="fogalom" title="szemafor">szemafort</span>, mivel csak a lezáró folyamat nyithatja ki.</li><li>Ha a lezáró folyamat véget ér anélkül, hogy kinyitotta volna, akkor a folyamat törlésekor nyissuk ki a <span class="fogalom" title="szemafor">szemafort</span>.</li><li>Ha több folyamat is várakozik a <span class="fogalom" title="szemafor">szemaforra</span>, akkor a legrégebben várakozó mehessen tovább.</li></ul><p>A megvalósítás során elegendő egyetlen sort használnunk (_sem néven). A sorban az első folyamat lesz, amelyik lezárta a <span class="fogalom" title="szemafor">szemafort</span>, a sorban lévő többi folyamat pedig a <span class="fogalom" title="szemafor">szemaforra</span> várakozók. A <span class="fogalom" title="szemafor">szemafor</span> állapota következik a sor állapotából. Ha a sor üres, akkor  a <span class="fogalom" title="szemafor">szemafor</span> nyitva, különben zárva van.</p><p>Most nézzük, mit kell tenni, ha az aktuális folyamat meghívta a zárást! A folyamat azonosítója (PID-je) mindenképpen bekerül a sorba, ha azonban a sor üres (még a berakás előtt), akkor a <span class="fogalom" title="szemafor">szemafor</span> nyitva volt, tehát az aktuális folyamat futhat tovább, csak &#132;maga mögött&#148; bezárja a <span class="fogalom" title="szemafor">szemafort</span> azzal, hogy berakjuk a sorba. Ha a sor nem üres, akkor a <span class="fogalom" title="szemafor">szemafor</span> zárva van, tehát az aktuális folyamatot blokkoljuk, és ütemezőt hívunk. A <span class="fogalom" title="rendszerhívás">rendszerhívás</span> mindig nullával tér vissza, tehát nullát tegyünk a megosztott memória kezdetére.</p><div class="forraskod"><div class="bekezdes1cm">
+void workspace::semaphor_close() { 
+     ( (int*)_task_table.task(_current_task).syscall_mem() )[0] = 0; 
+     if( _sem.empty() ) { 
+          _sem.push(_current_task); 
+          _task_table.task(_current_task).task_continue(); 
+     } else { 
+          _sem.push(_current_task); 
+          _sched.set_state(_current_task,sched::BLOCKED); 
+          schedule(buffer); 
+     }
+}
+</div>
+</div><p> Szemafornyitás esetén ellenőrizzük, hogy az aktuális folyamat zárta-e le a <span class="fogalom" title="szemafor">szemafort</span>; ha nem, beállítjuk a hibakódot. Ha az aktuális folyamat zárta le, kivesszük a sor első elemét (aktuális folyamatot). Ha a sor nem ürült ki, akkor a sor első elemét futáskész állapotba rakjuk, eddig várakozott, már ne várakozzon; ez lesz a <span class="fogalom" title="szemafor">szemafor</span> lezárója (sor első eleme). Mivel a nyitás nem blokkoló, mindig az aktuális folyamatot tegyükvissza a processzorra. </p><div class="forraskod"><div class="bekezdes1cm">
+void workspace::semaphor_open() { 
+     if( _sem.empty() || _sem.front() != _current_task ) { 
+          // HIBA beállítása 
+          ( (int*)_task_table.task(_current_task).syscall_mem() )[0] = -1; 
+     } else { 
+          _sem.pop(); 
+          if( !_sem.empty() ) { 
+               int pid = _sem.front(); 
+               _sched.set_state(pid,sched::READY); 
+          } 
+          ( (int*)_task_table.task(_current_task).syscall_mem() )[0] = 0; 
+     } 
+     _task_table.task(_current_task).task_continue(); 
+}
+</div>
+</div><p>A harmadik esemény a folyamat törlése. Törléskor hívjuk meg a szemafornyitást. Ha a folyamat zárta le a <span class="fogalom" title="szemafor">szemafort</span>, és elfelejtette kinyitni, akkor a függvényhívás kinyitja. Ha nem a folyamat zárta le, akkor a nyitás függvény úgysem nyitja ki a <span class="fogalom" title="szemafor">szemafort</span>, legfeljebb a megosztott memóriába ír egy hibakódot.</p><div class="forraskod"><div class="bekezdes1cm">
+void workspace::task_delete() { 
+     semaphor_open(); 
+     int pid = _current_task; 
+     _current_task = _sched.prev(_current_task); 
+     _sched.task_delete( pid ); 
+     _task_table.task_delete( pid ); 
+     schedule( buffer ); 
+}
+</div>
+</div><p>A következő néhány képernyőkép a példaprogram fordítását és futtatását mutatja.</p><!--fej12_kep_9--><img src="kepek/fej12_kep9_w675.jpg" alt="A képen a program látható futás közben" title="A képen a program látható futás közben"/><!--ENDfej12_kep_9--><!--fej12_kep_10--><div class="kep kozep" style="max-width:675px;"><img src="kepek/fej12_kep10_w675.jpg" alt="A képen a program látható futás közben" style="width:100%; height:auto;" title="A képen a program látható futás közben" /><span class="kepalairas">A program futás közben</span></div><div class="uresmargo"></div><!--ENDfej12_kep_10--><p>Az itt látható program letölthető, működését egy videóval szimuláltuk.</p><!--{fej12_letoltes_5}--><div class="allomanyletoltes"><ul><li><strong>Fájl letöltése:</strong> <a href="letoltes/sim3.zip">A programcsomag ide kattintva tölthető le! <span class="jaws">című háttéranyag letöltése</span> </a></li><li><strong>Információ az állományról: </strong></li><li><strong>Fájlméret:</strong> 0.01 <abbr title="megabájt">MB</abbr></li></ul></div><!--END{fej12_letoltes_5}--><!--{fej12_specialis_5}--><video controls width="854" height="480"><source src="./specialis/sim3.mp4" type="video/mp4"><source src="./specialis/sim3.ogv" type="video/ogg"></video><!--END{fej12_specialis_5}--><h2><a name="hiv3" id="hiv3"></a>Web szerver</h2><p>Így a tananyag végére érve már minden tudásunk megvan ahhoz, hogy komolyabb programokat is elkészítsünk. Ilyen például a következő program, ami egy egyszerűsített web szervert valósít meg.</p><!--{fej12_letoltes_2}--><div class="allomanyletoltes"><ul><li><strong>Fájl letöltése:</strong> <a href="letoltes/web_server.c">A program ide kattintva tölthető le! <span class="jaws">című háttéranyag letöltése</span> </a></li><li><strong>Információ az állományról: </strong></li><li><strong>Fájlméret:</strong> 2.34 <abbr title="kilobájt">KB</abbr></li></ul></div><!--END{fej12_letoltes_2}--><!--{fej12_specialis_2}--><video controls width="854" height="480"><source src="./specialis/web_szerver.mp4" type="video/mp4"><source src="./specialis/web_szerver.ogv" type="video/ogg"></video><!--END{fej12_specialis_2}--><p class="vissza"><a href="#fejezetek">Vissza a tartalom<span class="gyorsb">j</span>egyzékhez</a></p> 
+  </div>
+</div>
+<div class="utmutato_also">
+  <div class="utm_hivatkozasok_also"><a class="oldalteteje" accesskey="f" href="#teteje"><span class="gyorsb">F</span>el a lap tetejére</a>
+  <a class="elozotanlap" id="navialsoelozo" href="lecke12_lap6.html"><img src="navi/ikon_elozolap.gif" alt="Ugrás a tananyag előző oldalára" title="Ugrás a tananyag előző oldalára" width="36" height="36" /></a>
+  <a id='navialsokov' class="kovetktanlap" href="teszt/lecke12/teszt.html"><img src="navi/ikon_kovetklap.gif" alt="Ugrás a tananyag következő oldalára" title="Ugrás a tananyag következő oldalára" width="36" height="36"/></a>
+  </div>
+</div>
+<div class="ki_stilus"></div>
+<div class="impresszum">
+  <table class="uszt">
+    <tr>
+      <td><div class="imp_eltetatklogo"><img alt="ELTE és ELTE TáTK logó" src="css/arculat/elte_plus_tatk.png" style="width:100%;height:auto;" /></div>
+        <div class="imp_elteiklogo"><img alt="ELTE és ELTE IK logó" src="css/arculat/elte_plus_ik.png" style="width:100%;height:auto;" /></div></td>
+      <td><div class="imp_uszt"><img alt="Új Széchenyi terv" src="css/arculat/USZT_logo_cmyk.jpg" style="width:100%;height:auto;" /></div></td>
+      <td><div class="imp_eu"><img alt="A projekt az Európai Unió támogatásával, az Európai Szociális Alap társfinanszirozásával valósul meg." title="A projekt az Európai Unió támogatásával, az Európai Szociális Alap társfinanszirozásával valósul meg." src="css/arculat/ESZA.png" style="width:100%;height:auto;"/></div></td>
+    </tr>
+  </table>
+</div>
+</body>
+</html>

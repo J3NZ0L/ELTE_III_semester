@@ -1,0 +1,167 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="hu" lang="hu">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="css/scormelte_alap.css" rel="stylesheet" type="text/css" title="" />
+<link href="css/style_spec.css" rel="stylesheet" type="text/css" />
+<link href="css/scormelte_nagy.css" rel="alternate stylesheet" type="text/css" title="nagy" />
+<link href="css/scormelte_inverz.css" rel="alternate stylesheet" type="text/css" title="inverz" />
+<!--[if lte IE 6]>
+<link href="css/scormelte_ie6.css" rel="stylesheet" type="text/css" title="" />
+<![endif]-->
+<!-- syntax highlight -->
+<link rel="stylesheet" type="text/css" href="css/shCore.css" />
+<link rel="stylesheet" type="text/css" href="css/shThemeDefault.css" />
+<script type="text/javascript" src="js/shCore.js"></script>
+<script type="text/javascript" src="js/shBrushCpp.js"></script>
+<script type="text/javascript" src="js/shBrushCSharp.js"></script>
+<script type="text/javascript" src="js/shBrushDelphi.js"></script>
+<script type="text/javascript" src="js/shBrushXml.js"></script>
+<script type="text/javascript" src="js/shBrushCss.js"></script>
+<script type="text/javascript" src="js/shBrushJScript.js"></script>
+<script type="text/javascript" src="js/shBrushSql.js"></script>
+<script type="text/javascript">
+SyntaxHighlighter.all()
+</script>
+<title>
+Számítógépes alapismeretek II. / 
+A párhuzamosság alapjai &ndash; folyamatok kommunikációja, versenyhelyzetek, kritikus szekciók, szemaforok, monitorok és szignálok
+/A klasszikus IPC-problémák</title>
+<meta name="description" content="A tananyag  fejlesztése a TÁMOP-4.1.2.A/2-10/1 pályázat keretén belül történt." />
+<meta name="keywords" content="Hardver alapismeretek, operációs rendszer, számítógépes alapismeretek, operációs rendszer fogalma, operációs rendszerek története, operációs rendszer feladata, operációs rendszer generációk, operációs rendszer típusok, folyamatok, folyamat táblázat, szál &ndash; folyamatok, rendszerhívások, operációs rendszer struktúrák, kernelmód, kernel, felhasználói mód, B/K művelet, folyamatok modellje, szinkron rendszerhívás, asszinkron rendszerhívás, állapotai, megvalósításuk, folyamatok kommunikációja, IPC (Inter Process Communication), megszakítástábla, IDT, megszakításvezérlő, PIC, megszakítás, interrupt, megszakításkérelem, IRQ, megszakításkezelési folyamat, kivétel, hibakeresés (debuggolás), töréspont, fájlrendszer, MBR, partíciós szektor, Ntldr, klaszter (cluster), szektor, FAT, NTFS, ext, TSS, csapda, ütemezés, szál, szemafor, mutex, monitor, POSIX, szignál, osztott memória, csővezeték, kritikus szakasz, Wybe Dijkstra, CPU, erőforrás, holtpont, kiéheztetés, integrált áramkör, multiprogramozás, beágyazott rendszerek, partíció, MMU, lapcsere, FIFO, socket, lapozás, swap, interaktív rendszer, kötegelt rendszer, kliens, job, jogosultság, metaadat, könyvtár, UNIX, GNU/LINUX, erőforrás-foglalási gráf, fizikai memória, virtuális memória, merevlemez, floppy, fregmentáció, defregmentáló program, MFT, API, i-node, cache memory, SSH, HyperThread, párhuzamosság" />
+<script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="js/kep.js"></script>
+<script type="text/javascript" src="js/jquery.media.js"></script>
+<script type="text/javascript" src="js/jquery.highlight-3.js"></script>
+<script type="text/javascript" src="js/kereses.js"></script>
+<script type="text/javascript" src="js/stylesheetToggle.js"></script>
+<script type="text/javascript" src="js/cookie.js"></script>
+<script type="text/javascript" src="js/stilusvalto.js"></script>
+<script type="text/javascript" src="js/fogalmak.js"></script>
+<script type="text/javascript" src="js/fogalom.js"></script>
+<script type="text/javascript" src="js/jwplayer.js"></script>
+<script type="text/javascript">
+$(document).ready(function() 
+{
+$("a.hang").media( {width: 250, height: 50,  autoplay: false} );
+});
+</script>
+<script type="text/javascript" src="js/navigacio.js"></script>
+</head>
+<body>
+<div><a name="teteje"  id="teteje"></a></div>
+<div class="jawsfmenu">
+  <ul>
+    <li><a class="tartalom" href="#tartalom" accesskey="t" tabindex="2">Ugrás a <span class="gyorsb">t</span>artalomra</a></li>
+    <li><a class="tartalomj" href="#fejezetek" accesskey="j" tabindex="5">Ugrás a tartalom<span class="gyorsb">j</span>egyzékre</a></li>
+    <li><a class="tanutm" href="#tanutm" accesskey="u" tabindex="7">Ugrás a tan<span class="gyorsb">u</span>lási útmutatóra</a></li>
+  </ul>
+</div>
+<div class="ki_kereses"></div>
+<div class="oldal">
+  <div class="utmutato">
+    <div class="utm_hivatkozasok"><span class="elozolap"><img src="navi/ikon_vissza_dis.gif" alt="Vissza az előzőleg látogatott oldalra (nem elérhető funkció)" title="Vissza az előzőleg látogatott oldalra (nem elérhető funkció)" /></span><a class="kezdolap" href="index.html" accesskey="p" tabindex="21"><img src="navi/ikon_kezdolap.gif" alt="Vissza a modul kezdőlapjára" title="Vissza a modul kezdőlapjára" width="36" height="36"/></a><a class="elozotanlap" href="lecke6_lap6.html" accesskey="e" tabindex="22"><img src="navi/ikon_elozolap.gif" alt="Ugrás a tananyag előző oldalára" title="Ugrás a tananyag előző oldalára" width="36" height="36" /></a><a class="kovetktanlap" href="teszt/lecke6/teszt.html" accesskey="v" tabindex="23"><img src="navi/ikon_kovetklap.gif" alt="Ugrás a tananyag következő oldalára" title="Ugrás a tananyag következő oldalára" width="36" height="36"/></a><span class="ki_fogalomkapcs"><img src="navi/ikon_fogalmakbe_dis.gif" alt="Fogalom megjelenítés (nem elérhető funckió)" title="Fogalom megjelenítés (nem elérhető funckió)" /></span><span class="ki_fogalomlista"><img src="navi/ikon_fogalmaklista_dis.gif" alt="Fogalmak listája (nem elérhető funkció)" title="Fogalmak listája (nem elérhető funkció)" /></span><span class="ki_nyomtatas"><img src="navi/ikon_nyomtatas_dis.gif" alt="Oldal nyomtatása (nem elérhető funkció)" title="Oldal nyomtatása (nem elérhető funkció)" /></span><a class="oldalterkep" href="oldalterkep.html" accesskey="d" tabindex="31"><img src="navi/ikon_oldalterkep.gif" alt="Oldaltérkép megtekintése" title="Oldaltérkép megtekintése"  width="36" height="36" /></a><a class="sugo" href="sugo.html" accesskey="s" tabindex="33"><img src="navi/ikon_sugo.gif" alt="Súgó megtekintése" title="Súgó megtekintése"  width="36" height="36" /></a></div>
+  </div>
+  <div class="tartalommenu">
+    <div class="tartalommenu_fejlec"><span id="lapteteje"><a  href="#teteje"><span class="gyorsb">F</span>el a lap tetejére</a></span><a name="fejezetek"   id="fejezetek">Tartalomjegyzék</a></div>
+    <ul><li><a href="#hiv1">A párhuzamosság alapjai &ndash; folyamatok kommunikációja, versenyhelyzetek, kritikus szekciók, szemaforok, monitorok és szignálok</a><ul><li><a href="#hiv2">A gyártó-fogyasztó probléma, az alvás-ébredés módszere</a><ul><li><a href="#hiv3">A klasszikus IPC-problémák</a><ul><li><a href="#hiv4">Az étkező filozófusok esete</a></li><li><a href="#hiv5">Az írók-olvasók problémája</a></li></ul></li></ul></li></ul></li></ul> 
+  </div>
+  <div class="tartalom"> <a name="tartalom"    id="tartalom"></a> 
+    <h1><a name="hiv1" id="hiv1"></a>A párhuzamosság alapjai &ndash; folyamatok kommunikációja, versenyhelyzetek, kritikus szekciók, szemaforok, monitorok és szignálok</h1><h2><a name="hiv2" id="hiv2"></a>A gyártó-fogyasztó probléma, az alvás-ébredés módszere</h2><h3><a name="hiv3" id="hiv3"></a>A klasszikus IPC-problémák</h3><p>Ahogyan láttuk a korábbiakban, a folyamatok közti kommunikáció problémaköre régóta szerves része a témával foglalkozó irodalomnak. Ennek megfelelően számos ehhez a témakörhöz tartozó probléma felvetése, elemzése is megtalálható ebben a témában. Most röviden két jól ismert feladat rövid ismertetésével zárjuk a leckét.</p><h4><a name="hiv4" id="hiv4"></a>Az étkező filozófusok esete</h4><p>A probléma régről ered, nehéz a pontos és eredeti feladatot rekonstruálni, nem is próbálkozunk vele, többféle &#132;alakban&#148; találkozhatunk vele. Sok helyütt &#132;A kínai bölcsek problémája&#148; címmel említik.</p><p>Adott öt filozófus, akik egy asztal körül ülnek és beszélgetnek, filozofálgatnak egymással. Mindegyik filozófus előtt van egy tál spagetti, hogyha megéhezne, tudjon enni. Mindegyik tányér mellett van egy villa. Egy apró probléma van: túlságosan csúszósra sikerült a spagetti, így két villára van szükség az evéshez. A <em>6.5. ábra</em> szemlélteti a szituációt:</p><!--fej6_kep_5--><div class="kep kozep sz400"><img src="kepek/fej6_kep5_w400.jpg" alt="A képen 5 tál spagetti látható, minden két tányér között 1-1 villával" style="width:100%; height:auto;" title="A képen 5 tál spagetti látható, minden két tányér között 1-1 villával" /><span class="kepalairas">6.5. ábra: Az étkező filozófusok problémájának esete öt filozófusra, 
+azaz adott öt tányér és öt villa</span><div class="kep_ikonok jobbra"><span class="kep_nagymeret"><a href="kepek/fej6_kep5_w400_full.html" title="Kép megtekintése külön ablakban" >A fenti kép <span class="kepnev">(fej6_kep5_full.jpg)</span> megtekintése külön ablakban</a></span></div></div><div class="uresmargo"></div><!--ENDfej6_kep_5--><p>Mindegyik filozófus gondolkodik, majd ha megéhezik, próbálja megszerezni a tányérja melletti villákat, hogy egyen. Ha evett, visszateszi a villákat a helyükre, és folytatja a gondolkodást. A feladat az, hogy készítsünk olyan programot, ami szimulálja ezt a folyamatot!</p><p>Egy kézenfekvő megoldás lehet az alábbi:</p><div class="forraskod"><div class="bekezdes1cm">
+
+int N = 5; 
+filozófus(int i) { 
+while(1) { 
+     gondolkodom(); 
+     kell_villa(i);            // A bal oldali villát kell megszerezni. 
+     kell_villa((i+1)%N);      // A jobb oldali villa is kell. 
+     eszem(); 
+     nemkell_villa(i);         // A bal oldali villát visszarakom. 
+     nemkell_villa((i+1)%N);   // A jobb oldali villát is visszarakom. 
+     } 
+}
+</div>
+</div><p>A filozófuseljárás paramétere a filozófus számát adja meg (0&ndash;4). A megoldásnak apró hibája: ha például egyszerre mindegyik filozófus megszerzi a bal oldali villát, ezután várniuk kell a jobb oldali villájukra. Az így kialakult helyzetet <span class="fogalom" title="holtpont"><strong>holtpontnak</strong></span> vagy éhezésnek nevezzük. Egy későbbi fejezetben részletesebben is foglalkozunk vele.</p><p>Ha kicsit módosítunk, és mindenki leteszi a bal oldali villáját, és újra próbálkozik, még az sem az igazi megoldás, hiszen előállhat olyan állapot, hogy folyamatosan felveszik a bal oldali villát, majd leteszik. </p><p>Ennek a megoldásnak, ahogy láttuk, az a gyengéje, hogy nem korlátozzuk az egyidejűleg villához férők számát, azaz akár mind az öt filozófus is villát ragadhat, s így aztán meg is nézhetik magukat. Ezt javítva tegyünk be egy <span class="fogalom" title="szemafor">szemafort</span>, az értékét állítsuk négyre, azt mondva ezzel, hogy egyidejűleg maximum négy filozófusnak engedjük meg, hogy enni próbáljon. Továbbá a villákat is egy-egy bináris <span class="fogalom" title="szemafor">szemaforral</span> (<span class="fogalom" title="mutex">mutexszel</span>) védjük. Ezzel kiegészítve az alábbi kód már szinte magáért beszél.</p><div class="forraskod"><div class="bekezdes1cm">
+
+int N = 5; // Öten vagyunk. 
+szemafor villa[] = {1, 1, 1, 1, 1}; // Mind szabad. 
+szemafor max = 4; // Maximum négy villa használható egyszerre. 
+                  // Ez azt is jelenti, hogy egyszerre maximum 
+                  // négy filozófus kezdhet villafoglaláshoz, 
+                  // evés-előkészítéshez. 
+void filozófus(int i) { 
+     while(1)
+     {
+          gondolkodom(); 
+          down(max);             // Egyidejűleg maximum négyet  
+                                 // enged át, majd blokkol. 
+          down(villa[i]);        // Bal oldali villa. 
+          down(villa[(i+1)%N]);  // Jobb oldali villa. 
+          eszem(); 
+          up(villa[i]); 
+          up(villa[(i+1)%N]); 
+          up(max); 
+     } 
+} 
+</div>
+</div><h4><a name="hiv5" id="hiv5"></a>Az írók-olvasók problémája</h4><p>Egy másik ismert probléma az írók-olvasók problémája. Adott egy <span class="fogalom" title="könyvtár">könyvtár</span>, ahol egyidejűleg több olvasó töltheti az idejét megfelelő művek olvasásával, de ha egy író aktualizálja a műveket, adatokat, akkor csak az író lehet a <span class="fogalom" title="könyvtár">könyvtárban</span>, olvasók nem.</p><p>Az alábbi kód két szemafort használ a megvalósításhoz. A &#132;database&#148; <span class="fogalom" title="szemafor">szemafor</span> az írófolyamat adatbázisbeli tevékenységét mutatja. Az írás kritikus szekciónak tekinthető, csak egyedül lehet az adatbázisban, így ezt a tevékenységet védi a &#132;database&#148; <span class="fogalom" title="szemafor">szemafor</span>. Az olvasók számát is nyilvántartjuk, aminek alapján az írófolyamatot is befolyásoljuk, illetve mivel ennek a változónak a módosítása kritikus, ezért ezt védjük az &#132;olvasó_<span class="fogalom" title="szemafor">szemafor</span>&#148; segítségével. Ezek után lássuk az írófolyamatot! A &#132;down(database)&#148; utasítás azt mondja meg, hogy megáll-e az írófolyamat ebben a pontban: ha a &#132;database&#148; értéke egy, nem áll meg; ha az értéke nulla, akkor megáll.</p><div class="forraskod"><div class="bekezdes1cm">
+// Az írófolyamat 
+
+szemafor database = 1;          // Az íróolyamatot védő szemafor. 
+szemafor olvasó_szemafor = 1;   // Az olvasószám módosítását biztosító 
+                                // szemafor. 
+int olvasók_száma = 0;          // Ebben tároljuk az olvasók számát. 
+
+void író() { 
+     while(1) { 
+          csinál_valamit(); 
+          down(database);       // Kritikus szekció kezdődik. 
+          írunk_adatbázisba(); 
+          up(database);         // Elengedjük a szemafort. 
+     } 
+}
+</div>
+</div><p>Az olvasófolyamat kicsit bonyolultabb, de nem sokkal. Az &#132;olvasó_<span class="fogalom" title="szemafor">szemafor</span>&#148; segítségével védjük az &#132;olvasók_száma&#148; változó módosítását, két részben: amikor növeljük, majd amikor csökkentjük. Ez klasszikus eset, hasonló az írófolyamat műveletéhez. Kicsit bonyolítja a helyzetet az, hogy ha van olvasó, akkor író nem léphet be, ehhez tilosra állítjuk a &#132;database&#148; <span class="fogalom" title="szemafor">szemafort</span>, illetve amikor az utolsó olvasó is elment, szabadra állítjuk az író <span class="fogalom" title="szemafor">szemaforját</span>.</p><div class="forraskod"><div class="bekezdes1cm">
+
+// Az olvasófolyamat 
+
+void olvasó() { 
+     while(1) { 
+          down(olvasó_szemafor); 
+          olvasók_száma++; 
+          if (olvasók_száma == 1) down(database); 
+                 // Ha az első olvasó bejött, az író már nem jöhet. 
+          up(olvasó_szemafor); 
+          olvas_adatbázisból(); 
+          down(olvasó_szemafor); // Kritikus művelet. 
+          olvasók_száma--; 
+          if (olvasók_száma == 0) up(database); 
+                 // Ha elment az utolsó olvasó, jöhet az író. 
+          up(olvasó_szemafor); 
+          adatot_feldolgozunk(); 
+     } 
+} 
+</div>
+</div><p class="vissza"><a href="#fejezetek">Vissza a tartalom<span class="gyorsb">j</span>egyzékhez</a></p> 
+  </div>
+</div>
+<div class="utmutato_also">
+  <div class="utm_hivatkozasok_also"><a class="oldalteteje" accesskey="f" href="#teteje"><span class="gyorsb">F</span>el a lap tetejére</a>
+  <a class="elozotanlap" id="navialsoelozo" href="lecke6_lap6.html"><img src="navi/ikon_elozolap.gif" alt="Ugrás a tananyag előző oldalára" title="Ugrás a tananyag előző oldalára" width="36" height="36" /></a>
+  <a id='navialsokov' class="kovetktanlap" href="teszt/lecke6/teszt.html"><img src="navi/ikon_kovetklap.gif" alt="Ugrás a tananyag következő oldalára" title="Ugrás a tananyag következő oldalára" width="36" height="36"/></a>
+  </div>
+</div>
+<div class="ki_stilus"></div>
+<div class="impresszum">
+  <table class="uszt">
+    <tr>
+      <td><div class="imp_eltetatklogo"><img alt="ELTE és ELTE TáTK logó" src="css/arculat/elte_plus_tatk.png" style="width:100%;height:auto;" /></div>
+        <div class="imp_elteiklogo"><img alt="ELTE és ELTE IK logó" src="css/arculat/elte_plus_ik.png" style="width:100%;height:auto;" /></div></td>
+      <td><div class="imp_uszt"><img alt="Új Széchenyi terv" src="css/arculat/USZT_logo_cmyk.jpg" style="width:100%;height:auto;" /></div></td>
+      <td><div class="imp_eu"><img alt="A projekt az Európai Unió támogatásával, az Európai Szociális Alap társfinanszirozásával valósul meg." title="A projekt az Európai Unió támogatásával, az Európai Szociális Alap társfinanszirozásával valósul meg." src="css/arculat/ESZA.png" style="width:100%;height:auto;"/></div></td>
+    </tr>
+  </table>
+</div>
+</body>
+</html>

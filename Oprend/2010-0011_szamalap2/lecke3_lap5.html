@@ -1,0 +1,96 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="hu" lang="hu">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="css/scormelte_alap.css" rel="stylesheet" type="text/css" title="" />
+<link href="css/style_spec.css" rel="stylesheet" type="text/css" />
+<link href="css/scormelte_nagy.css" rel="alternate stylesheet" type="text/css" title="nagy" />
+<link href="css/scormelte_inverz.css" rel="alternate stylesheet" type="text/css" title="inverz" />
+<!--[if lte IE 6]>
+<link href="css/scormelte_ie6.css" rel="stylesheet" type="text/css" title="" />
+<![endif]-->
+<!-- syntax highlight -->
+<link rel="stylesheet" type="text/css" href="css/shCore.css" />
+<link rel="stylesheet" type="text/css" href="css/shThemeDefault.css" />
+<script type="text/javascript" src="js/shCore.js"></script>
+<script type="text/javascript" src="js/shBrushCpp.js"></script>
+<script type="text/javascript" src="js/shBrushCSharp.js"></script>
+<script type="text/javascript" src="js/shBrushDelphi.js"></script>
+<script type="text/javascript" src="js/shBrushXml.js"></script>
+<script type="text/javascript" src="js/shBrushCss.js"></script>
+<script type="text/javascript" src="js/shBrushJScript.js"></script>
+<script type="text/javascript" src="js/shBrushSql.js"></script>
+<script type="text/javascript">
+SyntaxHighlighter.all()
+</script>
+<title>
+Számítógépes alapismeretek II. / 
+A fájlrendszer-kezelés függvényei, alapvető feladatai
+/Fájlkezelés a C programozási nyelvben</title>
+<meta name="description" content="A tananyag  fejlesztése a TÁMOP-4.1.2.A/2-10/1 pályázat keretén belül történt." />
+<meta name="keywords" content="Hardver alapismeretek, operációs rendszer, számítógépes alapismeretek, operációs rendszer fogalma, operációs rendszerek története, operációs rendszer feladata, operációs rendszer generációk, operációs rendszer típusok, folyamatok, folyamat táblázat, szál &ndash; folyamatok, rendszerhívások, operációs rendszer struktúrák, kernelmód, kernel, felhasználói mód, B/K művelet, folyamatok modellje, szinkron rendszerhívás, asszinkron rendszerhívás, állapotai, megvalósításuk, folyamatok kommunikációja, IPC (Inter Process Communication), megszakítástábla, IDT, megszakításvezérlő, PIC, megszakítás, interrupt, megszakításkérelem, IRQ, megszakításkezelési folyamat, kivétel, hibakeresés (debuggolás), töréspont, fájlrendszer, MBR, partíciós szektor, Ntldr, klaszter (cluster), szektor, FAT, NTFS, ext, TSS, csapda, ütemezés, szál, szemafor, mutex, monitor, POSIX, szignál, osztott memória, csővezeték, kritikus szakasz, Wybe Dijkstra, CPU, erőforrás, holtpont, kiéheztetés, integrált áramkör, multiprogramozás, beágyazott rendszerek, partíció, MMU, lapcsere, FIFO, socket, lapozás, swap, interaktív rendszer, kötegelt rendszer, kliens, job, jogosultság, metaadat, könyvtár, UNIX, GNU/LINUX, erőforrás-foglalási gráf, fizikai memória, virtuális memória, merevlemez, floppy, fregmentáció, defregmentáló program, MFT, API, i-node, cache memory, SSH, HyperThread, párhuzamosság" />
+<script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="js/kep.js"></script>
+<script type="text/javascript" src="js/jquery.media.js"></script>
+<script type="text/javascript" src="js/jquery.highlight-3.js"></script>
+<script type="text/javascript" src="js/kereses.js"></script>
+<script type="text/javascript" src="js/stylesheetToggle.js"></script>
+<script type="text/javascript" src="js/cookie.js"></script>
+<script type="text/javascript" src="js/stilusvalto.js"></script>
+<script type="text/javascript" src="js/fogalmak.js"></script>
+<script type="text/javascript" src="js/fogalom.js"></script>
+<script type="text/javascript" src="js/jwplayer.js"></script>
+<script type="text/javascript">
+$(document).ready(function() 
+{
+$("a.hang").media( {width: 250, height: 50,  autoplay: false} );
+});
+</script>
+<script type="text/javascript" src="js/navigacio.js"></script>
+</head>
+<body>
+<div><a name="teteje"  id="teteje"></a></div>
+<div class="jawsfmenu">
+  <ul>
+    <li><a class="tartalom" href="#tartalom" accesskey="t" tabindex="2">Ugrás a <span class="gyorsb">t</span>artalomra</a></li>
+    <li><a class="tartalomj" href="#fejezetek" accesskey="j" tabindex="5">Ugrás a tartalom<span class="gyorsb">j</span>egyzékre</a></li>
+    <li><a class="tanutm" href="#tanutm" accesskey="u" tabindex="7">Ugrás a tan<span class="gyorsb">u</span>lási útmutatóra</a></li>
+  </ul>
+</div>
+<div class="ki_kereses"></div>
+<div class="oldal">
+  <div class="utmutato">
+    <div class="utm_hivatkozasok"><span class="elozolap"><img src="navi/ikon_vissza_dis.gif" alt="Vissza az előzőleg látogatott oldalra (nem elérhető funkció)" title="Vissza az előzőleg látogatott oldalra (nem elérhető funkció)" /></span><a class="kezdolap" href="index.html" accesskey="p" tabindex="21"><img src="navi/ikon_kezdolap.gif" alt="Vissza a modul kezdőlapjára" title="Vissza a modul kezdőlapjára" width="36" height="36"/></a><a class="elozotanlap" href="lecke3_lap4.html" accesskey="e" tabindex="22"><img src="navi/ikon_elozolap.gif" alt="Ugrás a tananyag előző oldalára" title="Ugrás a tananyag előző oldalára" width="36" height="36" /></a><a class="kovetktanlap" href="lecke3_lap6.html" accesskey="v" tabindex="23"><img src="navi/ikon_kovetklap.gif" alt="Ugrás a tananyag következő oldalára" title="Ugrás a tananyag következő oldalára" width="36" height="36"/></a><span class="ki_fogalomkapcs"><img src="navi/ikon_fogalmakbe_dis.gif" alt="Fogalom megjelenítés (nem elérhető funckió)" title="Fogalom megjelenítés (nem elérhető funckió)" /></span><span class="ki_fogalomlista"><img src="navi/ikon_fogalmaklista_dis.gif" alt="Fogalmak listája (nem elérhető funkció)" title="Fogalmak listája (nem elérhető funkció)" /></span><span class="ki_nyomtatas"><img src="navi/ikon_nyomtatas_dis.gif" alt="Oldal nyomtatása (nem elérhető funkció)" title="Oldal nyomtatása (nem elérhető funkció)" /></span><a class="oldalterkep" href="oldalterkep.html" accesskey="d" tabindex="31"><img src="navi/ikon_oldalterkep.gif" alt="Oldaltérkép megtekintése" title="Oldaltérkép megtekintése"  width="36" height="36" /></a><a class="sugo" href="sugo.html" accesskey="s" tabindex="33"><img src="navi/ikon_sugo.gif" alt="Súgó megtekintése" title="Súgó megtekintése"  width="36" height="36" /></a></div>
+  </div>
+  <div class="tartalommenu">
+    <div class="tartalommenu_fejlec"><span id="lapteteje"><a  href="#teteje"><span class="gyorsb">F</span>el a lap tetejére</a></span><a name="fejezetek"   id="fejezetek">Tartalomjegyzék</a></div>
+    <ul><li><a href="#hiv1">A fájlrendszer-kezelés függvényei, alapvető feladatai</a><ul><li><a href="#hiv2">Fájlkezelés a C programozási nyelvben</a><ul><li><a href="#hiv3">Szabványos input/output függvények a C programozási nyelvben</a></li><li><a href="#hiv4">A fájlok megnyitásának szabványos függvényei</a></li></ul></li></ul></li></ul> 
+  </div>
+  <div class="tartalom"> <a name="tartalom"    id="tartalom"></a> 
+    <h1><a name="hiv1" id="hiv1"></a>A fájlrendszer-kezelés függvényei, alapvető feladatai</h1><h2><a name="hiv2" id="hiv2"></a>Fájlkezelés a C programozási nyelvben</h2><p>A <span class="fogalom" title="Fájlrendszer">fájlrendszer</span> kezelésének alapfeladatai közé tartoznak a <em>fájlok létrehozása</em>, a <em>fájlok megnyitása</em>, a <em>fájlok írása</em>, a <em>fájlok olvasása</em> és nem utolsósorban a fájlok megnyitását követően, ha már nincs szükségünk az adott <span class="fogalom" title="erőforrás">erőforrásokra</span>, a <em>fájlok zárása</em>. </p><p>Ezeket a feladatokat <span class="fogalom" title="rendszerhívás">rendszerhívások</span> nélkül is elvégezhetjük, a C programozási nyelvben meglevő szabványos I/O (input/output) fájlkezelő (stream, csatorna) függvények segítségével. Ezek azért hasznosak a számunkra, mert platformtól függetlenül használhatóak, így a kód hordozhatóságát növelik.</p><h3><a name="hiv3" id="hiv3"></a>Szabványos input/output függvények a C programozási nyelvben</h3><p>A szabványos input/output függvények használatához ne felejtsük el használatba venni minden esetben az <em>stdio.h </em>header fájlt! </p><p><span class="forraskod">#include &lt;stdio.h&gt;</span></p><p>A függvényekben használt size_t a sizeof operátorral létrehozott előjel nélküli, egész típusú változó. Az adatállományt megnyitó eljárások egy FILE* típusú mutatóval térnek vissza, ami tartalmazza az adatáramlás vezérléséhez szükséges információkat.</p><p class="vissza"><a href="#fejezetek">Vissza a tartalom<span class="gyorsb">j</span>egyzékhez</a></p><h3><a name="hiv4" id="hiv4"></a>A fájlok megnyitásának szabványos függvényei</h3><p><span class="forraskod">FILE* fopen( const char * path, const char * mode );</span></p><p>Az fopen függvény megnyitja az első paramétereként kapott elérési útvonalon kapott fájlt. Ezt olyan használati módon tesszük meg, ahogyan azt a második paraméterként adtuk meg. Az fopen függvény visszatérési értékeként egy FILE* típusú fájlleírót kapunk vissza. Amikor egy fájlt az fopen függvénnyel nyitunk meg, akkor a háttérben megnyílik egy fájlleíró (fájldeszkriptor), és mi valójában ezen keresztül fogjuk elérni a fájlunkat. Ha megnyitás közben hiba történik, a visszatérési érték a NULL pointer lesz.</p><p><span class="forraskod">FILE* fdopen( int fd, const char * mode );</span></p><p>Az fdopen függvény összekapcsolódik egy megnyitott fájllal, és az aktuális pozíciót az eredeti fájl aktuális pozíciójára helyezi.<strong><em> </em></strong>Az fdopen függvény első paraméterként egy fájldeszkriptort vár, azaz a már megnyitott fájlunk fájlleíróját. Ezt olyan használati módon tesszük meg, ahogyan azt a második paraméterként adtuk meg. Az fdopen függvény visszatérési értékeként egy FILE* típusú fájlleírót kapjuk vissza. Ha megnyitás közben hiba történik, a visszatérési érték a NULL pointer lesz.</p><p><span class="forraskod">FILE* freopen( const char * path, const char * mode, FILE * stream );</span></p><p>Az freopen függvény újranyitja az első paramétereként kapott elérési útvonalon kapott fájlt. Ezt olyan használati módon tesszük meg, ahogyan azt a második paraméterként adtuk meg, és hozzárendeli a harmadik paraméterben megadott fájlleírót. Az freopen függvény visszatérési értékeként a harmadik paraméterben átadott FILE* típusú fájlleírót kapjuk vissza. Ha megnyitás közben hiba történik, a visszatérési érték a NULL mutató (pointer) lesz.</p><p><em>A fájlok megnyitásának módjai, a használati módot megadó paraméter lehetséges értékei: </em></p><table class="lecke">
+<tr><th><p><strong>Paraméter</strong></p></th><th><p>Leírás</p></th></tr><tr><td><p><strong>r</strong></p></td><td><p>A szöveges állományt olvasásra nyitja meg. A fájl elejére pozícionál.</p></td></tr><tr><td><p><strong>r+</strong></p></td><td><p>A szöveges állományt olvasásra és írásra nyitja meg. A fájl elejére pozícionál.</p></td></tr><tr><td><p><strong>w</strong></p></td><td><p>A szöveges állományt létrehozza, vagy már meglevő fájl esetében nullára állítja a fájl hosszát. Írásra nyit.</p></td></tr><tr><td><p><strong>w+</strong></p></td><td><p>A szöveges állományt létrehozza, vagy már meglevő fájl esetében nullára állítja a fájl hosszát. Írásra és olvasásra nyit.</p></td></tr><tr><td><p><strong>a</strong></p></td><td><p>A szöveges állományt megnyitja hozzáírásra, tehát a fájl végére áll. A fájlt létrehozza, ha korábban nem létezett.</p></td></tr><tr><td><p><strong>a+</strong></p></td><td><p>A szöveges állományt megnyitja olvasásra vagy hozzáírásra. Írásnál a fájl végére ír, olvasásnál a fájl elejétől olvas. A fájlt létrehozza, ha korábban nem létezett.</p></td></tr></table><p>A létrehozott fájl <span class="fogalom" title="jogosultság">jogosultságait</span> az <strong>umask</strong> határozza meg.</p><p><em>Példa egy fájl megnyitására, olvasási módban, a szabványos függvényekkel:</em></p><div class="forraskod"><div class="bekezdes1cm">
+FILE * f;
+f = fopen("fájl_elérési_útvonala","r"); 
+</div>
+</div><p>A FILE struktúrát csak a <span class="fogalom" title="könyvtár">könyvtári</span> tagfüggvények érhetik el. A FILE típusú adatáram tartalma lehet a hibaállapot, az eof állapot, a fájlpozíció és a puffer. Az előredefiniált adatáramok az <strong><em>stdin</em></strong> (avagy a standard input), az <strong><em>stdout </em>(avagy a </strong>standard output) és az <strong><em>stderr</em></strong> (avagy standard error)</p><p class="vissza"><a href="#fejezetek">Vissza a tartalom<span class="gyorsb">j</span>egyzékhez</a></p> 
+  </div>
+</div>
+<div class="utmutato_also">
+  <div class="utm_hivatkozasok_also"><a class="oldalteteje" accesskey="f" href="#teteje"><span class="gyorsb">F</span>el a lap tetejére</a>
+  <a class="elozotanlap" id="navialsoelozo" href="lecke3_lap4.html"><img src="navi/ikon_elozolap.gif" alt="Ugrás a tananyag előző oldalára" title="Ugrás a tananyag előző oldalára" width="36" height="36" /></a>
+  <a id='navialsokov' class="kovetktanlap" href="lecke3_lap6.html" ><img src="navi/ikon_kovetklap.gif" alt="Ugrás a tananyag következő oldalára" title="Ugrás a tananyag következő oldalára" width="36" height="36"/></a>
+  </div>
+</div>
+<div class="ki_stilus"></div>
+<div class="impresszum">
+  <table class="uszt">
+    <tr>
+      <td><div class="imp_eltetatklogo"><img alt="ELTE és ELTE TáTK logó" src="css/arculat/elte_plus_tatk.png" style="width:100%;height:auto;" /></div>
+        <div class="imp_elteiklogo"><img alt="ELTE és ELTE IK logó" src="css/arculat/elte_plus_ik.png" style="width:100%;height:auto;" /></div></td>
+      <td><div class="imp_uszt"><img alt="Új Széchenyi terv" src="css/arculat/USZT_logo_cmyk.jpg" style="width:100%;height:auto;" /></div></td>
+      <td><div class="imp_eu"><img alt="A projekt az Európai Unió támogatásával, az Európai Szociális Alap társfinanszirozásával valósul meg." title="A projekt az Európai Unió támogatásával, az Európai Szociális Alap társfinanszirozásával valósul meg." src="css/arculat/ESZA.png" style="width:100%;height:auto;"/></div></td>
+    </tr>
+  </table>
+</div>
+</body>
+</html>

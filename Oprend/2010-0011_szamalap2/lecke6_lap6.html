@@ -1,0 +1,162 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="hu" lang="hu">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="css/scormelte_alap.css" rel="stylesheet" type="text/css" title="" />
+<link href="css/style_spec.css" rel="stylesheet" type="text/css" />
+<link href="css/scormelte_nagy.css" rel="alternate stylesheet" type="text/css" title="nagy" />
+<link href="css/scormelte_inverz.css" rel="alternate stylesheet" type="text/css" title="inverz" />
+<!--[if lte IE 6]>
+<link href="css/scormelte_ie6.css" rel="stylesheet" type="text/css" title="" />
+<![endif]-->
+<!-- syntax highlight -->
+<link rel="stylesheet" type="text/css" href="css/shCore.css" />
+<link rel="stylesheet" type="text/css" href="css/shThemeDefault.css" />
+<script type="text/javascript" src="js/shCore.js"></script>
+<script type="text/javascript" src="js/shBrushCpp.js"></script>
+<script type="text/javascript" src="js/shBrushCSharp.js"></script>
+<script type="text/javascript" src="js/shBrushDelphi.js"></script>
+<script type="text/javascript" src="js/shBrushXml.js"></script>
+<script type="text/javascript" src="js/shBrushCss.js"></script>
+<script type="text/javascript" src="js/shBrushJScript.js"></script>
+<script type="text/javascript" src="js/shBrushSql.js"></script>
+<script type="text/javascript">
+SyntaxHighlighter.all()
+</script>
+<title>
+Számítógépes alapismeretek II. / 
+A párhuzamosság alapjai &ndash; folyamatok kommunikációja, versenyhelyzetek, kritikus szekciók, szemaforok, monitorok és szignálok
+/Szignálok, üzenetküldés és ezek használata</title>
+<meta name="description" content="A tananyag  fejlesztése a TÁMOP-4.1.2.A/2-10/1 pályázat keretén belül történt." />
+<meta name="keywords" content="Hardver alapismeretek, operációs rendszer, számítógépes alapismeretek, operációs rendszer fogalma, operációs rendszerek története, operációs rendszer feladata, operációs rendszer generációk, operációs rendszer típusok, folyamatok, folyamat táblázat, szál &ndash; folyamatok, rendszerhívások, operációs rendszer struktúrák, kernelmód, kernel, felhasználói mód, B/K művelet, folyamatok modellje, szinkron rendszerhívás, asszinkron rendszerhívás, állapotai, megvalósításuk, folyamatok kommunikációja, IPC (Inter Process Communication), megszakítástábla, IDT, megszakításvezérlő, PIC, megszakítás, interrupt, megszakításkérelem, IRQ, megszakításkezelési folyamat, kivétel, hibakeresés (debuggolás), töréspont, fájlrendszer, MBR, partíciós szektor, Ntldr, klaszter (cluster), szektor, FAT, NTFS, ext, TSS, csapda, ütemezés, szál, szemafor, mutex, monitor, POSIX, szignál, osztott memória, csővezeték, kritikus szakasz, Wybe Dijkstra, CPU, erőforrás, holtpont, kiéheztetés, integrált áramkör, multiprogramozás, beágyazott rendszerek, partíció, MMU, lapcsere, FIFO, socket, lapozás, swap, interaktív rendszer, kötegelt rendszer, kliens, job, jogosultság, metaadat, könyvtár, UNIX, GNU/LINUX, erőforrás-foglalási gráf, fizikai memória, virtuális memória, merevlemez, floppy, fregmentáció, defregmentáló program, MFT, API, i-node, cache memory, SSH, HyperThread, párhuzamosság" />
+<script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="js/kep.js"></script>
+<script type="text/javascript" src="js/jquery.media.js"></script>
+<script type="text/javascript" src="js/jquery.highlight-3.js"></script>
+<script type="text/javascript" src="js/kereses.js"></script>
+<script type="text/javascript" src="js/stylesheetToggle.js"></script>
+<script type="text/javascript" src="js/cookie.js"></script>
+<script type="text/javascript" src="js/stilusvalto.js"></script>
+<script type="text/javascript" src="js/fogalmak.js"></script>
+<script type="text/javascript" src="js/fogalom.js"></script>
+<script type="text/javascript" src="js/jwplayer.js"></script>
+<script type="text/javascript">
+$(document).ready(function() 
+{
+$("a.hang").media( {width: 250, height: 50,  autoplay: false} );
+});
+</script>
+<script type="text/javascript" src="js/navigacio.js"></script>
+</head>
+<body>
+<div><a name="teteje"  id="teteje"></a></div>
+<div class="jawsfmenu">
+  <ul>
+    <li><a class="tartalom" href="#tartalom" accesskey="t" tabindex="2">Ugrás a <span class="gyorsb">t</span>artalomra</a></li>
+    <li><a class="tartalomj" href="#fejezetek" accesskey="j" tabindex="5">Ugrás a tartalom<span class="gyorsb">j</span>egyzékre</a></li>
+    <li><a class="tanutm" href="#tanutm" accesskey="u" tabindex="7">Ugrás a tan<span class="gyorsb">u</span>lási útmutatóra</a></li>
+  </ul>
+</div>
+<div class="ki_kereses"></div>
+<div class="oldal">
+  <div class="utmutato">
+    <div class="utm_hivatkozasok"><span class="elozolap"><img src="navi/ikon_vissza_dis.gif" alt="Vissza az előzőleg látogatott oldalra (nem elérhető funkció)" title="Vissza az előzőleg látogatott oldalra (nem elérhető funkció)" /></span><a class="kezdolap" href="index.html" accesskey="p" tabindex="21"><img src="navi/ikon_kezdolap.gif" alt="Vissza a modul kezdőlapjára" title="Vissza a modul kezdőlapjára" width="36" height="36"/></a><a class="elozotanlap" href="lecke6_lap5.html" accesskey="e" tabindex="22"><img src="navi/ikon_elozolap.gif" alt="Ugrás a tananyag előző oldalára" title="Ugrás a tananyag előző oldalára" width="36" height="36" /></a><a class="kovetktanlap" href="lecke6_lap7.html" accesskey="v" tabindex="23"><img src="navi/ikon_kovetklap.gif" alt="Ugrás a tananyag következő oldalára" title="Ugrás a tananyag következő oldalára" width="36" height="36"/></a><span class="ki_fogalomkapcs"><img src="navi/ikon_fogalmakbe_dis.gif" alt="Fogalom megjelenítés (nem elérhető funckió)" title="Fogalom megjelenítés (nem elérhető funckió)" /></span><span class="ki_fogalomlista"><img src="navi/ikon_fogalmaklista_dis.gif" alt="Fogalmak listája (nem elérhető funkció)" title="Fogalmak listája (nem elérhető funkció)" /></span><span class="ki_nyomtatas"><img src="navi/ikon_nyomtatas_dis.gif" alt="Oldal nyomtatása (nem elérhető funkció)" title="Oldal nyomtatása (nem elérhető funkció)" /></span><a class="oldalterkep" href="oldalterkep.html" accesskey="d" tabindex="31"><img src="navi/ikon_oldalterkep.gif" alt="Oldaltérkép megtekintése" title="Oldaltérkép megtekintése"  width="36" height="36" /></a><a class="sugo" href="sugo.html" accesskey="s" tabindex="33"><img src="navi/ikon_sugo.gif" alt="Súgó megtekintése" title="Súgó megtekintése"  width="36" height="36" /></a></div>
+  </div>
+  <div class="tartalommenu">
+    <div class="tartalommenu_fejlec"><span id="lapteteje"><a  href="#teteje"><span class="gyorsb">F</span>el a lap tetejére</a></span><a name="fejezetek"   id="fejezetek">Tartalomjegyzék</a></div>
+    <ul><li><a href="#hiv1">A párhuzamosság alapjai &ndash; folyamatok kommunikációja, versenyhelyzetek, kritikus szekciók, szemaforok, monitorok és szignálok</a><ul><li><a href="#hiv2">A gyártó-fogyasztó probléma, az alvás-ébredés módszere</a><ul><li><a href="#hiv3">Szignálok, üzenetküldés és ezek használata</a></li></ul></li></ul></li></ul> 
+  </div>
+  <div class="tartalom"> <a name="tartalom"    id="tartalom"></a> 
+    <h1><a name="hiv1" id="hiv1"></a>A párhuzamosság alapjai &ndash; folyamatok kommunikációja, versenyhelyzetek, kritikus szekciók, szemaforok, monitorok és szignálok</h1><h2><a name="hiv2" id="hiv2"></a>A gyártó-fogyasztó probléma, az alvás-ébredés módszere</h2><h3><a name="hiv3" id="hiv3"></a>Szignálok, üzenetküldés és ezek használata</h3><p>Ahogy korábban is láthattuk, a <span class="fogalom" title="szignál">szignálok</span>, azaz a jelzések az IPC világának egyik fontos területét képezik. Az előző részben pedig azt láthattuk, hogy a kölcsönös kizárás biztosítása <span class="fogalom" title="osztott memória">osztott memória</span> és <span class="fogalom" title="szemafor">szemaforok</span> segítségével nem mindig megvalósítható. Ebben segít egy másik módszer: a jelzések és az üzenet küldésének a lehetősége. </p><p>Két <span class="fogalom" title="rendszerhívás">rendszerhívást</span> definiálunk a szolgáltatás biztosítására: a &#132;send&#148;, illetve a &#132;receive&#148; eljárást. (Ezek elvi definíciók, a gyakorlatban, egyes környezetekben más-más névre is hallgatnak, mint például a &#132;kill&#148;, a &#132;msg_snd&#148; vagy a &#132;msg_rcv&#148;. Később majd mutatunk a használatukra példákat.) Mindkét eljárásnak két paramétert definiálunk: az első a címzett vagy a feladó, míg a második paraméter maga az üzenet.</p><p>Ezek után nézzük meg, hogyan módosíthatjuk a klasszikus pék-vásárló problémát ezekkel az üzenetküldési, üzenetfogadási metódusokkal! A megoldás kódját C programozási nyelvi szabályok szerint adjuk meg, de nem fejtünk ki részletesen minden eljárást.</p><div class="forraskod"><div class="bekezdes1cm">
+
+#define N 100  // A pékségben lévő helyek száma, a kenyeres polc mérete. 
+void pék() { // A pék folyamata. 
+     int kenyér;     // A &#132;kenyér&#148; elem tárolási helye. 
+     message m;      // Az üzenet tárolóhelye. 
+     
+     while(1)        // Folyamatosan sütünk. 
+     { 
+          kenyér = kenyeret_sütünk(); 
+          receive(vásárló, m);       // A vásárlótól várunk egy üres üzenetet 
+                                     // az m változóban. 
+          m = üzenet_készítés(kenyér); 
+          send(vásárló, m);          // Elküldjük a kenyeret a vásárlónak. 
+     } 
+} 
+void vásárló() { // A vásárló folyamata. 
+     int kenyér;     // A &#132;kenyér&#148; elem tárolási helye. 
+     message m;      // Az üzenet tárolóhelye. 
+     int i; 
+     for( i = 0; i &lt; N; i++ ) send(pék, m); 
+                    // N darab üres helyet küldünk a péknek. 
+     while(1)       // A vásárlás is folyamatos. 
+     { 
+          receive(pék, m);           // Várunk a péktől egy kenyeret. 
+          kenyér = üzenet_kicsomagolás(m); 
+          send(pék, m);              // Visszaküldjük az üres elemet. 
+          kenyér_elfogyasztás(kenyér); 
+     } 
+}
+</div>
+</div><p>Nézzük röviden a fenti algoritmus magyarázatát! Elindul mindkét folyamat, a &#132;pék&#148; is, és a &#132;vásárló&#148; is. Lássuk először a vásárlót! Még üres a bolt, ezért elküldjük az <em>N</em> darab üres üzenetet, majd várjuk a kenyeret. Ha nincs kenyeres üzenet, a vásárlófolyamat blokkolódik. Amint megjön a kenyeres üzenet, a folyamat folytatja a működését. Amint megjön a kenyeres üzenet, azt kicsomagoljuk, majd visszaküldjük az üres üzenetet. A &#132;pék&#148; folyamat rögtön süt egy kenyeret, majd várja, hogy azt egy üzenetben kérjék tőle. Ha nincs üres &#132;kenyér-szállító&#148; üzenet, a pékfolyamat blokkol. Amint megkapja az üzenetet, abban visszaküldi az elkészült &#132;kenyeret&#148;.</p><p>Összegzésképpen elmondhatjuk, hogy a pék-vásárló probléma megoldása az üzenetküldés módszerével akkor is jó megoldást ad, amikor egy többprocesszoros rendszerben minden processzornak saját memóriája van. Láttuk korábban, hogy az ilyen rendszerekben a közös memóriát használó megoldások (TSL utasítás, Peterson-féle megoldás, szemaforhasználat) nem megfelelők.</p><p>A bemutatott megvalósításban az üzenetküldés folyamatában a részt vevő folyamatokat szerepeltettük, de elképzelhető olyan megoldás is, ahol <em>N</em> elemű levelesláda áll a folyamatok rendelkezésére, sőt olyan is, amikor nem használunk levelesládát, az üzenetek köztes tárolás nélkül közvetlenül a küldőtől a fogadóhoz érkeznek. Ezt a módszert randevústratégiának hívjuk. Ekkor az üzenet küldője, fogadója szorosan egymáshoz igazodva működik. Az üzenetküldés általánosan használt elv a párhuzamos programozású rendszerekben, jól ismert például az MPI (Message Passing Interface).</p><p>Befejezésül nézzük meg egyfajta üzenetküldési módként a szülő-gyerek életciklus jellemző esetét. A &#132;fork&#148; függvény által létrehozott gyerekfolyamat is úgy értesíti szülőjét, hogy küld egy <span class="fogalom" title="szignál">szignált</span> arról, hogy ő befejezte életét (Signal from child, SIGCHLD vagy SIGCLD). Említettük, hogy a &#132;kill&#148; hívás a direkt jelzésküldés fő eszköze. [A kill szintaxisa: &#132;kill(pid,sig)&#148;.] A jelzések, <span class="fogalom" title="szignál">szignálok</span> (SIGCLD, SIGKILL stb.) a &#132;signal.h&#148; header fájlban definiált értékek. </p><p>A <span class="fogalom" title="szignál">szignál</span> konstansok értékei 1 és 64 közé esnek. Jelenleg a következő felosztás az aktuális:</p><ul><li>Az &#132;1 ... 31&#148; közötti tartomány a standard <span class="fogalom" title="szignál">szignál</span> definíciós intervallum. </li><li>Például a SIGCLD a 18, vagy SIGKILL a 9. (Ezért is létezik a &#132;kill -9 pid&#148; formájú shell parancs, mikor egy felesleges eljárásnak vetünk véget!) Minden <span class="fogalom" title="UNIX">UNIX</span> -szerű <span class="fogalom" title="operációs rendszer">operációs rendszer</span>, így például a <span class="fogalom" title="GNU/LINUX">GNU/LINUX</span> <span class="fogalom" title="operációs rendszer">operációs rendszer</span> is ugyanazt azt értékeket használja.</li><li>A &#132;32 ... 48&#148; közötti tartomány a <span class="fogalom" title="POSIX">POSIX</span> szabvány standard szignáltartománya, nem felhasználói használatra szánva.</li><li>A &#132;49 ... 64&#148; közötti tartomány a <span class="fogalom" title="POSIX">POSIX</span> szabvány real-time programozás megvalósíthatóságát biztosítja.</li></ul><p>Két fogalmat kell megemlíteni a <span class="fogalom" title="szignál">szignálokkal</span> kapcsolatban. Az egyik, hogy egy <span class="fogalom" title="szignál"><strong>szignál</strong></span><strong> lehet blokkolva</strong>, ami azt jelenti, hogy ezen blokkolt idő alatt a program &#132;nem érzi meg&#148; a <span class="fogalom" title="szignál">szignált</span>, azaz a <span class="fogalom" title="szignál">szignál</span> egy úgynevezett szignálsorban várakozik, amíg a program meg nem szünteti a blokkolást, vagy be nem fejezi a működést. Nem minden <span class="fogalom" title="szignál">szignál</span> blokkolható, ilyen például a már többször említett SIGKILL <span class="fogalom" title="szignál">szignál</span>. A másik fogalom a szignálmaszk. Egyszerre több <span class="fogalom" title="szignál">szignál</span> is lehet blokkolva, és a maszkban beállított bit határozza meg, hogy mi a helyzet.</p><p>Meg kell jegyezni, hogy az IPC szignálküldési mechanizmusa a szoftveres megszakítás (<span class="fogalom" title="megszakítás">interrupt</span>) mechanizmushoz hasonlítható.</p><p>Ezek után nézzünk egy példát, amit egy korábbi módosításának is tekinthetünk!</p><div class="forraskod"><div class="bekezdes1cm">
+
+#include &lt;signal.h&gt; 
+#include &lt;stdio.h&gt; 
+#include &lt;sys/wait.h&gt; 
+
+#define gyerek 4 
+volatile int kids = gyerek; 
+static void handler(int sig) { 
+     int pid, status; 
+     
+     printf("A szulo (%d) handler-ben vagyunk, ", getpid()); 
+     pid = wait(&#38;status); 
+     kids--; 
+     printf("az elhalt gyerek id: %d,es meg %d maradt!\n", pid, kids); 
+     /* 
+     * Újrainstalláljuk a handlert, hogy a SIGCLD szignálra újra 
+     * aktivizálódni tudjon, ha van még befejeződött gyerekprocessz. 
+     */ 
+     sigset(SIGCLD, handler); 
+} 
+void main() { 
+     int i, pid; 
+     sigset(SIGCLD, handler); 
+     sighold(SIGCLD); 
+     for (i = 0; i &lt; gyerek; i++) { 
+          if (fork() == 0) { // A gyerekfolyamatban vagyunk. 
+               printf("Gyerek processz! Azonositoja: %d\n", getpid()); 
+               exit(0); 
+          } // Az elágazás vége. 
+     } // A ciklus vége. 
+     getchar(); 
+     while (kids &gt; 0) { 
+          printf("Beleptunk a ciklusba!\n"); 
+          sigpause(SIGCLD); 
+          printf("Most van vege a pausenak!\n"); 
+          sighold(SIGCLD); 
+     } 
+}
+</div>
+</div><p>Rögtön az első függvény mutatja a szoftveres <span class="fogalom" title="megszakítás">interrupt</span> hasonlóságot, és ez a &#132;sigset&#148; függvény; már a <span class="fogalom" title="UNIX">UNIX</span> <span class="fogalom" title="operációs rendszer">operációs rendszerben</span> a &#132;signal&#148; névre hallgat. Megmondhatjuk ezzel a függvényhívással azt, hogy melyik <span class="fogalom" title="szignál">szignál</span> érkezésekor milyen kezelőfüggvény (handler) fogadja. A &#132;sighold&#148; hívás blokkolja a paraméterként megadott <span class="fogalom" title="szignál">szignált</span>, míg a &#132;sigpause&#148; várja a paramétereként megadott <span class="fogalom" title="szignál">szignált</span>, és természetesen a blokkolást megszünteti. Ezek után nézzük, hogy a fenti példaprogram mit csinál!</p><p>Beállítja rögtön az elején, hogy a SIGCLD <span class="fogalom" title="szignál">szignál</span> érkezésekor a handler névre keresztelt függvény fogadja! Majd rögtön mondja is azt, hogy azért ne siessünk, ha érkezne SIGCLD jelzés a programnak, akkor az várjon a sorára [sighold(SIGCLD)]. Ezután egy ciklussal lazán &#132;szülünk&#148; négy gyereket. Mindegyik gyerekprocessz elég rövid életű, kiírja a folyamatazonosítóját (PID-jét), befejeződik, és ezzel elküldi a szülőjének a SIGCLD jelzést. A szülő karakterre vár, majd a &#132;sigpause&#148; feloldja blokkolást, és a handlerek szépen fogadják a jelzéseket. Meg kell jegyezni, hogy a SIGCLD az egyetlen <span class="fogalom" title="szignál">szignál</span>, amelyet a handlerben újra kell installálni azért, hogy a itt-tartózkodás ideje alatt érkező esetleges <span class="fogalom" title="szignál">szignálok</span> se vesszenek el. A jelzésekkel a következő lecke részletesen foglalkozik.</p><p class="vissza"><a href="#fejezetek">Vissza a tartalom<span class="gyorsb">j</span>egyzékhez</a></p> 
+  </div>
+</div>
+<div class="utmutato_also">
+  <div class="utm_hivatkozasok_also"><a class="oldalteteje" accesskey="f" href="#teteje"><span class="gyorsb">F</span>el a lap tetejére</a>
+  <a class="elozotanlap" id="navialsoelozo" href="lecke6_lap5.html"><img src="navi/ikon_elozolap.gif" alt="Ugrás a tananyag előző oldalára" title="Ugrás a tananyag előző oldalára" width="36" height="36" /></a>
+  <a id='navialsokov' class="kovetktanlap" href="lecke6_lap7.html" ><img src="navi/ikon_kovetklap.gif" alt="Ugrás a tananyag következő oldalára" title="Ugrás a tananyag következő oldalára" width="36" height="36"/></a>
+  </div>
+</div>
+<div class="ki_stilus"></div>
+<div class="impresszum">
+  <table class="uszt">
+    <tr>
+      <td><div class="imp_eltetatklogo"><img alt="ELTE és ELTE TáTK logó" src="css/arculat/elte_plus_tatk.png" style="width:100%;height:auto;" /></div>
+        <div class="imp_elteiklogo"><img alt="ELTE és ELTE IK logó" src="css/arculat/elte_plus_ik.png" style="width:100%;height:auto;" /></div></td>
+      <td><div class="imp_uszt"><img alt="Új Széchenyi terv" src="css/arculat/USZT_logo_cmyk.jpg" style="width:100%;height:auto;" /></div></td>
+      <td><div class="imp_eu"><img alt="A projekt az Európai Unió támogatásával, az Európai Szociális Alap társfinanszirozásával valósul meg." title="A projekt az Európai Unió támogatásával, az Európai Szociális Alap társfinanszirozásával valósul meg." src="css/arculat/ESZA.png" style="width:100%;height:auto;"/></div></td>
+    </tr>
+  </table>
+</div>
+</body>
+</html>

@@ -1,0 +1,107 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="hu" lang="hu">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="css/scormelte_alap.css" rel="stylesheet" type="text/css" title="" />
+<link href="css/style_spec.css" rel="stylesheet" type="text/css" />
+<link href="css/scormelte_nagy.css" rel="alternate stylesheet" type="text/css" title="nagy" />
+<link href="css/scormelte_inverz.css" rel="alternate stylesheet" type="text/css" title="inverz" />
+<!--[if lte IE 6]>
+<link href="css/scormelte_ie6.css" rel="stylesheet" type="text/css" title="" />
+<![endif]-->
+<!-- syntax highlight -->
+<link rel="stylesheet" type="text/css" href="css/shCore.css" />
+<link rel="stylesheet" type="text/css" href="css/shThemeDefault.css" />
+<script type="text/javascript" src="js/shCore.js"></script>
+<script type="text/javascript" src="js/shBrushCpp.js"></script>
+<script type="text/javascript" src="js/shBrushCSharp.js"></script>
+<script type="text/javascript" src="js/shBrushDelphi.js"></script>
+<script type="text/javascript" src="js/shBrushXml.js"></script>
+<script type="text/javascript" src="js/shBrushCss.js"></script>
+<script type="text/javascript" src="js/shBrushJScript.js"></script>
+<script type="text/javascript" src="js/shBrushSql.js"></script>
+<script type="text/javascript">
+SyntaxHighlighter.all()
+</script>
+<title>
+Számítógépes alapismeretek II.</title>
+<meta name="description" content="A tananyag  fejlesztése a TÁMOP-4.1.2.A/2-10/1 pályázat keretén belül történt." />
+<meta name="keywords" content="Hardver alapismeretek, operációs rendszer, számítógépes alapismeretek, operációs rendszer fogalma, operációs rendszerek története, operációs rendszer feladata, operációs rendszer generációk, operációs rendszer típusok, folyamatok, folyamat táblázat, szál &ndash; folyamatok, rendszerhívások, operációs rendszer struktúrák, kernelmód, kernel, felhasználói mód, B/K művelet, folyamatok modellje, szinkron rendszerhívás, asszinkron rendszerhívás, állapotai, megvalósításuk, folyamatok kommunikációja, IPC (Inter Process Communication), megszakítástábla, IDT, megszakításvezérlő, PIC, megszakítás, interrupt, megszakításkérelem, IRQ, megszakításkezelési folyamat, kivétel, hibakeresés (debuggolás), töréspont, fájlrendszer, MBR, partíciós szektor, Ntldr, klaszter (cluster), szektor, FAT, NTFS, ext, TSS, csapda, ütemezés, szál, szemafor, mutex, monitor, POSIX, szignál, osztott memória, csővezeték, kritikus szakasz, Wybe Dijkstra, CPU, erőforrás, holtpont, kiéheztetés, integrált áramkör, multiprogramozás, beágyazott rendszerek, partíció, MMU, lapcsere, FIFO, socket, lapozás, swap, interaktív rendszer, kötegelt rendszer, kliens, job, jogosultság, metaadat, könyvtár, UNIX, GNU/LINUX, erőforrás-foglalási gráf, fizikai memória, virtuális memória, merevlemez, floppy, fregmentáció, defregmentáló program, MFT, API, i-node, cache memory, SSH, HyperThread, párhuzamosság" />
+<script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="js/kep.js"></script>
+<script type="text/javascript" src="js/jquery.media.js"></script>
+<script type="text/javascript" src="js/jquery.highlight-3.js"></script>
+<script type="text/javascript" src="js/kereses.js"></script>
+<script type="text/javascript" src="js/stylesheetToggle.js"></script>
+<script type="text/javascript" src="js/cookie.js"></script>
+<script type="text/javascript" src="js/stilusvalto.js"></script>
+<script type="text/javascript" src="js/fogalmak.js"></script>
+<script type="text/javascript" src="js/fogalom.js"></script>
+<script type="text/javascript" src="js/jwplayer.js"></script>
+<script type="text/javascript">
+$(document).ready(function() 
+{
+$("a.hang").media( {width: 250, height: 50,  autoplay: false} );
+});
+</script>
+<script type="text/javascript" src="js/navigacio.js"></script>
+</head>
+<body>
+<div><a name="teteje"  id="teteje"></a></div>
+<div class="jawsfmenu">
+  <ul>
+    <li><a class="tartalom" href="#tartalom" accesskey="t" tabindex="2">Ugrás a <span class="gyorsb">t</span>artalomra</a></li>
+    <li><a class="tartalomj" href="#fejezetek" accesskey="j" tabindex="5">Ugrás a tartalom<span class="gyorsb">j</span>egyzékre</a></li>
+    <li><a class="tanutm" href="#tanutm" accesskey="u" tabindex="7">Ugrás a tan<span class="gyorsb">u</span>lási útmutatóra</a></li>
+  </ul>
+</div>
+<div class="ki_kereses"></div>
+<div class="oldal">
+  <div class="utmutato">
+    <div class="utm_hivatkozasok"><span class="elozolap"><img src="navi/ikon_vissza_dis.gif" alt="Vissza az előzőleg látogatott oldalra (nem elérhető funkció)" title="Vissza az előzőleg látogatott oldalra (nem elérhető funkció)" /></span><a class="kezdolap" href="index.html" accesskey="p" tabindex="21"><img src="navi/ikon_kezdolap.gif" alt="Vissza a modul kezdőlapjára" title="Vissza a modul kezdőlapjára" width="36" height="36"/></a><a class="elozotanlap" href="teszt/lecke2/teszt.html" accesskey="e" tabindex="22"><img src="navi/ikon_elozolap.gif" alt="Ugrás a tananyag előző oldalára" title="Ugrás a tananyag előző oldalára" width="36" height="36" /></a><a class="kovetktanlap" href="lecke3_lap2.html" accesskey="v" tabindex="23"><img src="navi/ikon_kovetklap.gif" alt="Ugrás a tananyag következő oldalára" title="Ugrás a tananyag következő oldalára" width="36" height="36"/></a><span class="ki_fogalomkapcs"><img src="navi/ikon_fogalmakbe_dis.gif" alt="Fogalom megjelenítés (nem elérhető funckió)" title="Fogalom megjelenítés (nem elérhető funckió)" /></span><span class="ki_fogalomlista"><img src="navi/ikon_fogalmaklista_dis.gif" alt="Fogalmak listája (nem elérhető funkció)" title="Fogalmak listája (nem elérhető funkció)" /></span><span class="ki_nyomtatas"><img src="navi/ikon_nyomtatas_dis.gif" alt="Oldal nyomtatása (nem elérhető funkció)" title="Oldal nyomtatása (nem elérhető funkció)" /></span><a class="oldalterkep" href="oldalterkep.html" accesskey="d" tabindex="31"><img src="navi/ikon_oldalterkep.gif" alt="Oldaltérkép megtekintése" title="Oldaltérkép megtekintése"  width="36" height="36" /></a><a class="sugo" href="sugo.html" accesskey="s" tabindex="33"><img src="navi/ikon_sugo.gif" alt="Súgó megtekintése" title="Súgó megtekintése"  width="36" height="36" /></a></div>
+    <h1 class="utmutato"><a name="tanutm"  id="tanutm"></a>Tanulási útmutató</h1>
+    <div class="osszefoglalas">
+      <h2>Összefoglalás </h2>
+      <!--{fej3_hang_1}--><div class="hang"><ul><li><strong>Cím:</strong> <a href="hangok/3.mp3">Fájlrendszer kezelése</a></li><li><strong>Hossz:</strong>0 perc 51 <abbr title="másodperc">mp.</abbr></li><li><strong>Fájlméret:</strong> 0.79 <abbr title="megabájt">MB</abbr></li><li><a class="media hang" name="playerf25" id="playerf25" href="hangok/3.mp3">Fájlrendszer kezelése című hanganyag letöltése</a></li><li><a href="hangok/3.html"><span class="jaws">Fájlrendszer kezelése című hanganyag</span>Szöveges változat megtekintése</a></li></ul></div><!--END{fej3_hang_1}--><p>A leckében ismertetjük a <span class="fogalom" title="rendszerhívás">rendszerhívások</span> egyik jellegzetes csoportját, a <span class="fogalom" title="Fájlrendszer">fájlrendszer</span> -kezelő függvényeket és azok használatát. </p><p>Az előzőleg megismert elmélet alapján most a gyakorlatban is megismerjük a <span class="fogalom" title="rendszerhívás">rendszerhívásokat</span>. Elsőként a fájlkezeléssel kapcsolatos függvényeket tekintjük át. </p><p>A példákat a C és a C++ programozási nyelven fogjuk megírni, mert jobbára ez az a programozási nyelv, amit rendszer közeli feladatok megoldásához használnak. A <span class="fogalom" title="POSIX">POSIX</span> (Portable Operating System Interface for <span class="fogalom" title="UNIX">UNIX</span>) szabványban elírtak szerint fogunk dolgozni. Mielőtt nekikezdenénk ennek a munkának, röviden átnézzük, hogy hogyan kell a <span class="fogalom" title="UNIX">UNIX</span> és a <span class="fogalom" title="GNU/LINUX">GNU/LINUX</span> <span class="fogalom" title="operációs rendszer">operációs rendszereken</span> C programozási nyelvű programokat készíteni, és megismerjük a C és a C++ programozási nyelvek közötti eltéréseket.</p> 
+    </div>
+    <div class="kovetelmeny">
+      <h2>Követelmény </h2>
+      <p>A tanuló ismerje meg a C programozási nyelv szintaxisát, és tudjon egyszerűbb C programokat készíteni. Ismerje a <span class="fogalom" title="Fájlrendszer">fájlrendszer</span> -kezelés függvényeit, és képes legyen azokat alkalmazni feladatokban.</p> 
+    </div>
+    <div class="feladatok">
+      <h2>Önállóan megoldható feladatok</h2>
+      <ul><li>Készítsen programot, amelyik a main paraméterlistájában beérkező argumentumokban megcseréli az ott levő alma szót körtére!</li><li>Készítsen programot, amelyik egy fájlt bájtonként olvas végig az első írásjelig!</li><li>Készítsen programot, amelyik egy fájlban levő bájtokat felváltva két fájlba másolja szét!</li></ul> 
+    </div>
+  </div>
+  <div class="tartalommenu">
+    <div class="tartalommenu_fejlec"><span id="lapteteje"><a  href="#teteje"><span class="gyorsb">F</span>el a lap tetejére</a></span><a name="fejezetek"   id="fejezetek">Tartalomjegyzék</a></div>
+    <ul><li><a href="#hiv1">A fájlrendszer-kezelés függvényei, alapvető feladatai</a><ul><li><a href="#hiv2">Szükséges előismeretek </a></li><li><a href="#hiv3">Kódszerkesztés a C és a C++ programozási nyelvekben</a></li><li><a href="#hiv4">Fordítás, hibakeresés a C és a C++ programozási nyelvekben</a></li></ul></li></ul> 
+  </div>
+  <div class="tartalom"> <a name="tartalom" id="tartalom"></a> 
+    <h1><a name="hiv1" id="hiv1" ></a>A fájlrendszer-kezelés függvényei, alapvető feladatai</h1><h2><a name="hiv2" id="hiv2" ></a>Szükséges előismeretek </h2><p>Bejelentkezés a <span class="fogalom" title="UNIX">UNIX</span> és a <span class="fogalom" title="GNU/LINUX">GNU/LINUX</span> operációs rendszerbe</p><p>Hol érhetünk el <span class="fogalom" title="UNIX">UNIX</span> környezetet? Egyfelől sok személyi számítógépen eleve <span class="fogalom" title="GNU/LINUX">GNU/LINUX</span> <span class="fogalom" title="operációs rendszer">operációs rendszer</span>t (is) telepítenek, másfelől mód van arra is, hogy egy szerveren futó <span class="fogalom" title="UNIX">UNIX</span> vagy <span class="fogalom" title="GNU/LINUX">GNU/LINUX</span> <span class="fogalom" title="operációs rendszer">operációs rendszer</span>t használjunk. Ez utóbbi esetben a lokális gépről a Telnet vagy <span class="fogalom" title="SSH">SSH</span> protokollon keresztül célszerű a távoli <span class="fogalom" title="UNIX">UNIX</span> vagy <span class="fogalom" title="GNU/LINUX">GNU/LINUX</span> <span class="fogalom" title="operációs rendszer">operációs rendszerrel</span> telepített szervergépre bejelentkeznünk. </p><p>A Microsoft Windows <span class="fogalom" title="operációs rendszer">operációs rendszerbeli</span> környezetben egy távoli szervergépre való bejelentkezéshez szükségünk lesz a PuTTY nevű kliensprogramra, mely szabadon letölthető a hivatalos honlapról. </p><div class="tatk_kapcslink"><span class="tatk_kapcslink">Kapcsolódó hivatkozások</span><p>A hivatalos honlap helye: <a href="http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html">http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html</a>. Ezen az oldalon a putty.exe linket (<a href="http://the.earth.li/~sgtatham/putty/latest/x86/putty.exe">http://the.earth.li/~sgtatham/putty/latest/x86/putty.exe</a>) kell kiválasztanunk. A PuTTY kliensprogramot telepíteni nem kell.</p></div><p>Természetesen a távoli gép használatához ismernünk kell a távoli szervergépre való bejelentkezéshez szükséges azonosítónkat és a jelszavunkat! </p><p>Miután elindítottuk a PuTTY nevű kliensprogramot, a program kezelőfelületén a &#132;Host Name (or IP address):&#148; részhez írjuk be a távoli szervergép (host) DNS nevét vagy IP címét. Ha a távoli szervergépen az alapértelmezett beállításokkal működik a telnet vagy az <span class="fogalom" title="SSH">SSH</span> szolgáltatás, akkor a kívánt csatlakozási típus kiválasztása után &ndash; a &#132;Connection type:&#148; beállításnál &ndash; a &#132;Port&#148; mezőbe írt számon nem kell változtatnunk. Az alapértelmezett portszámok az <span class="fogalom" title="SSH">SSH</span> esetén a 22-es portszám, a Telnet esetén a 23-as portszám. A &#132;Saved Sessions&#148; résznél menthetjük az általunk megadott beállításokat a kívánt távoli szervergép eléréséhez, így ha újból be szeretnénk lépni a megadott szervergépre, akkor elég lesz a későbbiekben a mentett kapcsolatra kattintanunk. Egy-egy bejelentkezéshez tartozó beállításokat menthetjük egy olyan névvel, amit mi magunk adhatunk meg a programon belül, mindezt úgy, hogy a &#132;Save&#148; gombra kattintunk.</p><p>Miután megadtuk a távoli szervergépre való bejelentkezéshez szükséges beállításokat, kattintsunk az &#132;Open&#148; gombra <em>(3.1. ábra).</em> A felbukkanó dialógusablakban értelemszerűen adjuk meg az azonosítónkat és jelszavunkat.</p><!--fej3_kep_1--><div class="kep kozep sz400"><img src="kepek/fej3_kep1_w400.jpg" alt="A képen a PuTTY kliensprogram ablaka látható" style="width:100%; height:auto;" title="A képen a PuTTY kliensprogram ablaka látható" /><span class="kepalairas">3.1 ábra: A PuTTY kliensprogram beállítása és használata a Microsoft Windows operációs rendszerben</span></div><div class="uresmargo"></div><!--ENDfej3_kep_1--><p>A <span class="fogalom" title="GNU/LINUX">GNU/LINUX</span> <span class="fogalom" title="operációs rendszer">operációs rendszerek</span> esetében fel kell telepíteni az <span class="fogalom" title="SSH">SSH</span> (esetleg <span class="fogalom" title="SSH">SSH</span>-nonfree) nevű csomagot. Ez az <span class="fogalom" title="SSH">SSH</span> program ad lehetőséget számunkra egy távoli szervergépre való biztonságos bejelentkezéshez. Az <span class="fogalom" title="SSH">SSH</span> parancsnak paraméterként meg kell adnunk a távoli szervergép (host) DNS nevét vagy IP címét. A távoli szervergépre való bejelentkezéshez szükséges felhasználói azonosító nevet mindenképpen meg kell adnunk az <span class="fogalom" title="SSH">SSH</span> parancs paramétereként, ha az nem azonos a lokális gépen használt felhasználónevünkkel! Például: ha a &#132;testuser&#148; felhasználói névvel szeretnénk bejelentkezni a távoli szervergépre, akkor azt kétféleképpen is megadhatjuk: Az &#132;<span class="fogalom" title="SSH">SSH</span> -l testuser tavoli.szervergep.cime&#148; és a &#132;<span class="fogalom" title="SSH">SSH</span> testuser@tavoli.szervergep.cime&#148; megadási mód is használatos. Az alábbi képen látható, hogy a legegyszerűbb módon hogyan jelentkezhetünk be egy távoli szervergépre <em>(3.2. ábra)</em>.</p><!--fej3_kep_2--><div class="kep kozep" style="max-width:1172px;"><img src="kepek/fej3_kep2_w1172.jpg" alt="A képen egy terminál ablak látható Linux/GNU operációs rendszer alatt, az SSH parancs kiadásával." style="width:100%; height:auto;" title="A képen egy terminál ablak látható Linux/GNU operációs rendszer alatt, az SSH parancs kiadásával." /><span class="kepalairas">3.2 ábra: Az ssh parancs használata a GNU/Linux operációs rendszerek esetén</span></div><div class="uresmargo"></div><!--ENDfej3_kep_2--><p>Ha ezeket a lépéseket sikeresen végrehajtottuk, akkor bejelentkeztünk egy <span class="fogalom" title="UNIX">UNIX</span> vagy egy <span class="fogalom" title="GNU/LINUX">GNU/LINUX</span> <span class="fogalom" title="operációs rendszer">operációs rendszerbeli</span> környezetbe. </p><p class="vissza"><a href="#fejezetek">Vissza a tartalom<span class="gyorsb">j</span>egyzékhez</a></p><h2><a name="hiv3" id="hiv3" ></a>Kódszerkesztés a C és a C++ programozási nyelvekben</h2><p>A C vagy C++ programozási nyelveken írt programok készítéséhez egy szövegszerkesztő segítségével kell megírnunk a programkódot a <span class="fogalom" title="UNIX">UNIX</span> vagy egy <span class="fogalom" title="GNU/LINUX">GNU/LINUX</span> <span class="fogalom" title="operációs rendszer">operációs rendszerben</span>. Erre a célra a rendszerben meglevő és általunk kedvelt bármelyik szövegszerkesztő program (editor) megfelelő. Például a <em>vi</em>, a <em>vim</em>, az <em>mcedit</em>, a <em>joe</em> és a <em>pico</em>. </p><p>A Microsoft Windows <span class="fogalom" title="operációs rendszer">operációs rendszer</span> alatt is létrehozható a C vagy C++ programozási nyelven megírt programkód egy szöveges alapú szövegszerkesztő programban. Ilyen például a <em>NotePad</em>, a <em>NotePad++</em> és az <em>EditPlus</em>. Természetesen ekkor gondoskodnunk kell arról, hogy a programkódot tartalmazó fájl átkerüljön az általunk használt távoli számítógépre. Erre a feladatra a Microsoft Windows <span class="fogalom" title="operációs rendszer">operációs rendszeren</span> a WinSCP programot használhatjuk.</p><p class="vissza"><a href="#fejezetek">Vissza a tartalom<span class="gyorsb">j</span>egyzékhez</a></p><h2><a name="hiv4" id="hiv4" ></a>Fordítás, hibakeresés a C és a C++ programozási nyelvekben</h2><p>A C programozási nyelven írt programkódok fordításához a <strong>gcc</strong> (<strong>G</strong>NU <strong>C</strong>ompiler <strong>C</strong>ollection) fordítót fogjuk használni. A forrásnyelvű programkódot tartalmazó fordítandó fájl kiterjesztése c vagy C lehet, aszerint hogy C vagy C++ programozási nyelven írt programkódot tartalmaz. Használatos a <strong>g++</strong> fordító is, amelyik mindenképpen C++ programozási nyelven írt programkódokat fordít. A fordítás elindítása egyszerű, a gcc utasításnak paraméterként megadjuk a programkód elérési útvonalát úgy, hogy egyszerűen a gcc szó mögé írjuk le a fordítandó forrásfájl elérési útvonalát. </p><p><span class="forraskod"> gcc forrás_fájlnév.c </span></p><p>A fordítás eredménye ebben az esetben az <em>a.out</em> futtatható programfájl lesz. Nyilván érdemes beszédesebb nevet adni a lefordított futtatható programfájlunknak, ezért használjuk a fordításkor az &ndash;o opciót, amivel az output programfájl nevét adhatjuk meg a fordítónak! A gcc rengeteg egyéb opciót, argumentumot ismer, ezekről a referencia-kézikönyből (manual) tájékozódhatunk. Az output fájl nevének megadásához így bővíthetjük a parancsot:</p><p><span class="forraskod"> gcc forrás_fájlnév.c &ndash;o futtatható_output_fájl_neve </span></p><p>Helytelen kód esetében a fordító hibaüzeneteket ír. Figyelmeztető üzenetek érhetőek el a &ndash;Wall opcióval. A lefordított kódot futtatni a <em>./futtatható_output_fájl_neve</em> paranccsal lehet a fordítást követően. Ne felejtsük el, hogy ennek a fájlnak futtathatónak kell lennie! </p><p>Helyes kód esetében a <span class="fogalom" title="Hibakeresés">hibakereséshez</span> szükség lehet a <strong>gdb</strong> (<strong>G</strong>NU <strong>D</strong>e<strong>b</strong>ugger) programra. A <span class="fogalom" title="Hibakeresés">hibakereséshez</span> a fordításnál meg kell adni a &ndash;g opciót, és csak az így lefordított fájllal dolgozhatunk.</p><div class="forraskod"><div class="bekezdes1cm">
+
+gcc &ndash;g  forrás_fájlnév.c &ndash;o output_neve 
+gdb ./output_neve
+</div>
+</div><p>A gdb alkalmazáson belül parancsok kiadásával végezhetjük el a nyomkövetést. A kiadható parancsokról a help parancs kiadása után tájékozódhatunk. <span class="fogalom" title="Töréspont">töréspontok</span> megadásához a break sorszám, futtatáshoz az r parancs, léptetéshez a step, kifejezések kiíratásához a print kifejezés parancsot használhatjuk.</p><p class="vissza"><a href="#fejezetek">Vissza a tartalom<span class="gyorsb">j</span>egyzékhez</a></p> 
+  </div>
+</div>
+<div class="utmutato_also">
+  <div class="utm_hivatkozasok_also"><a class="oldalteteje" accesskey="f" href="#teteje"><span class="gyorsb">F</span>el a lap tetejére</a>
+  <a class="elozotanlap" id="navialsoelozo" href="teszt/lecke2/teszt.html"><img src="navi/ikon_elozolap.gif" alt="Ugrás a tananyag előző oldalára" title="Ugrás a tananyag előző oldalára" width="36" height="36" /></a>
+  <a id='navialsokov' class="kovetktanlap" href="lecke3_lap2.html"><img src="navi/ikon_kovetklap.gif" alt="Ugrás a tananyag következő oldalára" title="Ugrás a tananyag következő oldalára" width="36" height="36"/></a>
+  </div>
+</div>
+<div class="ki_stilus"></div>
+<div class="impresszum">
+  <table class="uszt">
+    <tr>
+      <td><div class="imp_eltetatklogo"><img alt="ELTE és ELTE TáTK logó" src="css/arculat/elte_plus_tatk.png" style="width:100%;height:auto;" /></div>
+        <div class="imp_elteiklogo"><img alt="ELTE és ELTE IK logó" src="css/arculat/elte_plus_ik.png" style="width:100%;height:auto;" /></div></td>
+      <td><div class="imp_uszt"><img alt="Új Széchenyi terv" src="css/arculat/USZT_logo_cmyk.jpg" style="width:100%;height:auto;" /></div></td>
+      <td><div class="imp_eu"><img alt="A projekt az Európai Unió támogatásával, az Európai Szociális Alap társfinanszirozásával valósul meg." title="A projekt az Európai Unió támogatásával, az Európai Szociális Alap társfinanszirozásával valósul meg." src="css/arculat/ESZA.png" style="width:100%;height:auto;"/></div></td>
+    </tr>
+  </table>
+</div>
+</body>
+</html>

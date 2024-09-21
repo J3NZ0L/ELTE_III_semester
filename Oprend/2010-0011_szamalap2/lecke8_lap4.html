@@ -1,0 +1,249 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="hu" lang="hu">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="css/scormelte_alap.css" rel="stylesheet" type="text/css" title="" />
+<link href="css/style_spec.css" rel="stylesheet" type="text/css" />
+<link href="css/scormelte_nagy.css" rel="alternate stylesheet" type="text/css" title="nagy" />
+<link href="css/scormelte_inverz.css" rel="alternate stylesheet" type="text/css" title="inverz" />
+<!--[if lte IE 6]>
+<link href="css/scormelte_ie6.css" rel="stylesheet" type="text/css" title="" />
+<![endif]-->
+<!-- syntax highlight -->
+<link rel="stylesheet" type="text/css" href="css/shCore.css" />
+<link rel="stylesheet" type="text/css" href="css/shThemeDefault.css" />
+<script type="text/javascript" src="js/shCore.js"></script>
+<script type="text/javascript" src="js/shBrushCpp.js"></script>
+<script type="text/javascript" src="js/shBrushCSharp.js"></script>
+<script type="text/javascript" src="js/shBrushDelphi.js"></script>
+<script type="text/javascript" src="js/shBrushXml.js"></script>
+<script type="text/javascript" src="js/shBrushCss.js"></script>
+<script type="text/javascript" src="js/shBrushJScript.js"></script>
+<script type="text/javascript" src="js/shBrushSql.js"></script>
+<script type="text/javascript">
+SyntaxHighlighter.all()
+</script>
+<title>
+Számítógépes alapismeretek II. / 
+A párhuzamosság kezelése, szemaforok a gyakorlatban, alapvető megoldások
+/A szemaforkészletnek és a szemaforkészlet szemaforjainak kezelése, a semctl függvény</title>
+<meta name="description" content="A tananyag  fejlesztése a TÁMOP-4.1.2.A/2-10/1 pályázat keretén belül történt." />
+<meta name="keywords" content="Hardver alapismeretek, operációs rendszer, számítógépes alapismeretek, operációs rendszer fogalma, operációs rendszerek története, operációs rendszer feladata, operációs rendszer generációk, operációs rendszer típusok, folyamatok, folyamat táblázat, szál &ndash; folyamatok, rendszerhívások, operációs rendszer struktúrák, kernelmód, kernel, felhasználói mód, B/K művelet, folyamatok modellje, szinkron rendszerhívás, asszinkron rendszerhívás, állapotai, megvalósításuk, folyamatok kommunikációja, IPC (Inter Process Communication), megszakítástábla, IDT, megszakításvezérlő, PIC, megszakítás, interrupt, megszakításkérelem, IRQ, megszakításkezelési folyamat, kivétel, hibakeresés (debuggolás), töréspont, fájlrendszer, MBR, partíciós szektor, Ntldr, klaszter (cluster), szektor, FAT, NTFS, ext, TSS, csapda, ütemezés, szál, szemafor, mutex, monitor, POSIX, szignál, osztott memória, csővezeték, kritikus szakasz, Wybe Dijkstra, CPU, erőforrás, holtpont, kiéheztetés, integrált áramkör, multiprogramozás, beágyazott rendszerek, partíció, MMU, lapcsere, FIFO, socket, lapozás, swap, interaktív rendszer, kötegelt rendszer, kliens, job, jogosultság, metaadat, könyvtár, UNIX, GNU/LINUX, erőforrás-foglalási gráf, fizikai memória, virtuális memória, merevlemez, floppy, fregmentáció, defregmentáló program, MFT, API, i-node, cache memory, SSH, HyperThread, párhuzamosság" />
+<script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="js/kep.js"></script>
+<script type="text/javascript" src="js/jquery.media.js"></script>
+<script type="text/javascript" src="js/jquery.highlight-3.js"></script>
+<script type="text/javascript" src="js/kereses.js"></script>
+<script type="text/javascript" src="js/stylesheetToggle.js"></script>
+<script type="text/javascript" src="js/cookie.js"></script>
+<script type="text/javascript" src="js/stilusvalto.js"></script>
+<script type="text/javascript" src="js/fogalmak.js"></script>
+<script type="text/javascript" src="js/fogalom.js"></script>
+<script type="text/javascript" src="js/jwplayer.js"></script>
+<script type="text/javascript">
+$(document).ready(function() 
+{
+$("a.hang").media( {width: 250, height: 50,  autoplay: false} );
+});
+</script>
+<script type="text/javascript" src="js/navigacio.js"></script>
+</head>
+<body>
+<div><a name="teteje"  id="teteje"></a></div>
+<div class="jawsfmenu">
+  <ul>
+    <li><a class="tartalom" href="#tartalom" accesskey="t" tabindex="2">Ugrás a <span class="gyorsb">t</span>artalomra</a></li>
+    <li><a class="tartalomj" href="#fejezetek" accesskey="j" tabindex="5">Ugrás a tartalom<span class="gyorsb">j</span>egyzékre</a></li>
+    <li><a class="tanutm" href="#tanutm" accesskey="u" tabindex="7">Ugrás a tan<span class="gyorsb">u</span>lási útmutatóra</a></li>
+  </ul>
+</div>
+<div class="ki_kereses"></div>
+<div class="oldal">
+  <div class="utmutato">
+    <div class="utm_hivatkozasok"><span class="elozolap"><img src="navi/ikon_vissza_dis.gif" alt="Vissza az előzőleg látogatott oldalra (nem elérhető funkció)" title="Vissza az előzőleg látogatott oldalra (nem elérhető funkció)" /></span><a class="kezdolap" href="index.html" accesskey="p" tabindex="21"><img src="navi/ikon_kezdolap.gif" alt="Vissza a modul kezdőlapjára" title="Vissza a modul kezdőlapjára" width="36" height="36"/></a><a class="elozotanlap" href="lecke8_lap3.html" accesskey="e" tabindex="22"><img src="navi/ikon_elozolap.gif" alt="Ugrás a tananyag előző oldalára" title="Ugrás a tananyag előző oldalára" width="36" height="36" /></a><a class="kovetktanlap" href="lecke8_lap5.html" accesskey="v" tabindex="23"><img src="navi/ikon_kovetklap.gif" alt="Ugrás a tananyag következő oldalára" title="Ugrás a tananyag következő oldalára" width="36" height="36"/></a><span class="ki_fogalomkapcs"><img src="navi/ikon_fogalmakbe_dis.gif" alt="Fogalom megjelenítés (nem elérhető funckió)" title="Fogalom megjelenítés (nem elérhető funckió)" /></span><span class="ki_fogalomlista"><img src="navi/ikon_fogalmaklista_dis.gif" alt="Fogalmak listája (nem elérhető funkció)" title="Fogalmak listája (nem elérhető funkció)" /></span><span class="ki_nyomtatas"><img src="navi/ikon_nyomtatas_dis.gif" alt="Oldal nyomtatása (nem elérhető funkció)" title="Oldal nyomtatása (nem elérhető funkció)" /></span><a class="oldalterkep" href="oldalterkep.html" accesskey="d" tabindex="31"><img src="navi/ikon_oldalterkep.gif" alt="Oldaltérkép megtekintése" title="Oldaltérkép megtekintése"  width="36" height="36" /></a><a class="sugo" href="sugo.html" accesskey="s" tabindex="33"><img src="navi/ikon_sugo.gif" alt="Súgó megtekintése" title="Súgó megtekintése"  width="36" height="36" /></a></div>
+  </div>
+  <div class="tartalommenu">
+    <div class="tartalommenu_fejlec"><span id="lapteteje"><a  href="#teteje"><span class="gyorsb">F</span>el a lap tetejére</a></span><a name="fejezetek"   id="fejezetek">Tartalomjegyzék</a></div>
+    <ul><li><a href="#hiv1">A párhuzamosság kezelése, szemaforok a gyakorlatban, alapvető megoldások</a><ul><li><a href="#hiv2">A szemaforok használata</a><ul><li><a href="#hiv3">A szemaforkészletnek és a szemaforkészlet szemaforjainak kezelése, a semctl függvény</a></li></ul></li></ul></li></ul> 
+  </div>
+  <div class="tartalom"> <a name="tartalom"    id="tartalom"></a> 
+    <h1><a name="hiv1" id="hiv1"></a>A párhuzamosság kezelése, szemaforok a gyakorlatban, alapvető megoldások</h1><h2><a name="hiv2" id="hiv2"></a>A szemaforok használata</h2><h3><a name="hiv3" id="hiv3"></a>A szemaforkészletnek és a szemaforkészlet szemaforjainak kezelése, a semctl függvény</h3><p>A <strong>&#132;semctl&#148;</strong> függvény segítségével tudunk információt kérni a szemaforkészletről vagy annak egy <span class="fogalom" title="szemafor">szemaforjáról</span>, beállítani annak értékét anélkül, hogy blokkolódna a folyamat (kezdeti beállítás). A &#132;<em>semctl&#148;</em> függvény segítségével tudjuk a szemaforkészletet törölni. </p><div class="forraskod"><div class="bekezdes1cm">
+#include &lt;sys/types.h&gt; 
+#include &lt;sys/ipc.h&gt; 
+#include &lt;sys/sem.h&gt; 
+int semctl(int semid, int semnum, int cmd, union semun arg);
+</div>
+</div><p>A semctl függvény paraméterei:</p><ul><li><strong>semid</strong>: a szemaforkészlet azonosítója (a <em>semget</em> függvény adta meg).</li><li><strong>semnum</strong>: a szemaforindex a szemaforkészletben.</li><li><strong>cmd</strong>: parancs.<ul><li><strong>IPC_STAT, IPC_SET: </strong>a szemaforkészlet adatainak a lekérdezése vagy módosítása a negyedik paraméterben megadott struktúra segítségével.</li><li><strong>SETVAL: </strong>a szemaforkészlet adatainak a módosítása a negyedik paraméterben megadott semun struktúra &#132;val&#148; mezőjére, feloldja a várakozó folyamatok blokkolását, ha szükséges.</li><li><strong>GETALL, SETALL: </strong>a szemaforkészlet <span class="fogalom" title="szemafor">szemaforjainak</span> lekérdezése vagy beállítása.</li><li><strong>IPC_RMID: </strong>a szemaforkészlet törlése. A blokkolt folyamatok blokkolása feloldódik.</li></ul></li><li><strong>arg</strong>: A negyedik paraméternek használható semun típusú struktúra. Ennek a megadása opcionális.</li></ul><p>A semctl függvény visszatérési értéke;</p><ul><li>Sikeres végrehajtás esetén nulla.</li><li>Hiba esetén -1, illetve beállítja a globális errno hibaértéket. </li></ul><p><em>A semctl függvénnyel tudjuk a szemaforkészletet és a szemaforkészlet <span class="fogalom" title="szemafor">szemaforjait</span> kezelni, ám a szemaforkészlet kezelésekor különböző hibák merülhetnek fel. A semctl függvény beállítja a globális errno hibaértéket, ami a szokásos értékeken kívül például a következő értékekkel bővül ki:</em></p><table class="lecke">
+<tr><th><p><strong>Konstans</strong></p></th><th><p>Leírás</p></th></tr><tr><td><p><strong>EACCES</strong></p></td><td><p>Nincs jogosultságunk a művelet végrehajtásához.</p></td></tr><tr><td><p><strong>EFAULT</strong></p></td><td><p>Az &#132;arg.buf&#148; és az &#132;arg.array&#148; nem elérhető.</p></td></tr><tr><td><p><strong>EINVAL</strong></p></td><td><p>Hibás a &#132;cmd&#148; vagy a &#132;semid&#148; paraméter.</p></td></tr><tr><td><p><strong>EIDRM</strong></p></td><td><p>A szemaforkészlet törölve lett.</p></td></tr><tr><td><p><strong>EPERM</strong></p></td><td><p>Nincs jogunk végrehajtani a kért műveletet az IPC_RMID, vagy az IPC_SET esetén.</p></td></tr><tr><td><p><strong>ERANGE</strong></p></td><td><p>A szemaforkészlet egyik szemaforjának az új értéke érvénytelen.</p></td></tr></table><p>További hibaértékek a referenca-kézikönyvben (manual) találhatók.</p><p><em>A semun típusú struktúra a sys/sem.h header fájlban van meghatározva. A semun típusú struktúra a következőképpen épül fel:</em></p><div class="forraskod"><div class="bekezdes1cm">
+
+union semun { 
+    int               val;      /* A SETVAL-hoz megadott érték. */ 
+    struct semid_ds  *buf;      /* Az IPC_STAT-hoz, és az IPC_SET-hez 
+                                   megadott buffer. */ 
+    unsigned short   *array;    /* A GETALL-hoz, és a SETALL-hoz megadott 
+                                   tömb. */ 
+    struct seminfo   *__buf;    /* Az IPC_INFO-hoz megadott buffer. */ 
+};
+</div>
+</div><p><em>A semid_ds típusú struktúra a sys/sem.h header fájlban van meghatározva. A semid_ds típusú struktúra a következőképpen épül fel:</em></p><div class="forraskod"><div class="bekezdes1cm">
+
+struct semid_ds { 
+    struct ipc_perm  sem_perm;  /* Definiálja a tulajdonost, és 
+                                   a jogosultságokat. */ 
+    time_t           sem_otime; /* Az utolsó semop művelet időpontja. */ 
+    time_t           sem_ctime; /* Az utolsó módosítás időpontja. */ 
+    unsigned short   sem_nsems; /* A szemaforkészletben található 
+                                   szemaforok száma. */ 
+};
+</div>
+</div><p><em>A ipc_perm típusú struktúra a sys/ipc.h header fájlban van meghatározva. A ipc_perm típusú struktúra a következőképpen épül fel:</em></p><div class="forraskod"><div class="bekezdes1cm">
+
+struct ipc_perm { 
+    key_t key;                  /* A létrehozáskor használt kulcs. */ 
+    uid_t uid;                  /* A tulajdonos UID azonosítója. */ 
+    gid_t gid;                  /* A tulajdonos GID csoportazonosítója. */ 
+    uid_t cuid;                 /* A létrehozó UID azonosítója. */ 
+    gid_t cgid;                 /* A létrehozó GID csoportazonosítója. */ 
+    unsigned short mode;        /* A jogosultságok megadása. Ugyanolyan, 
+                                   mint a fájloknál, csak még plusz 
+                                   jogosultságként megjelennek az SHM_DEST, 
+                                   és az SHM_LOCKED kapcsolók. */ 
+    unsigned short seq;         /* A sorozatszám. */ 
+};
+</div>
+</div><p>Az <em>ipcs</em> shell parancs segítségével tudjuk megnézni az IPC-eszközöket (megosztott memória, <span class="fogalom" title="szemafor">szemafor</span>, üzenetsor). Törölni az ipcrm parancs segítségével tudunk.</p><!--fej8_kep_1--><div class="kep kozep" style="max-width:662px;"><img src="kepek/fej8_kep1_w662.jpg" alt="A képen egy példa látható a System V szemaforok használatára: a gyártó-fogyasztó probléma" style="width:100%; height:auto;" title="A képen egy példa látható a System V szemaforok használatára: a gyártó-fogyasztó probléma" /><span class="kepalairas">Példa a System V szemaforok használatára: a gyártó-fogyasztó probléma</span><div class="kep_ikonok jobbra"><span class="kep_nagymeret"><a href="kepek/fej8_kep1_w662_full.html" title="Kép megtekintése külön ablakban" >A fenti kép <span class="kepnev">()</span> megtekintése külön ablakban</a></span></div></div><div class="uresmargo"></div><!--ENDfej8_kep_1--><p>Most lássuk a gyártó-fogyasztó problémának a szimulációját System V <span class="fogalom" title="szemafor">szemaforok</span> segítségével! A tárolóba való berakás és a kivétel műveletétől tekintsünk el a példánkban. Használjunk két <span class="fogalom" title="szemafor">szemafort</span> az üres helyek és a foglalt helyek számlálására! Elegendő lesz egyetlen szemaforkészletet használnunk két <span class="fogalom" title="szemafor">szemaforral</span>. A berakás és <span class="fogalom" title="Kivétel">kivétel</span> a két <span class="fogalom" title="szemafor">szemaforon</span> egyszerre végzett növelés, illetve csökkentés lesz.</p><!--{fej8_specialis_1}--><video controls width="854" height="480"><source src="./specialis/8_1.mp4" type="video/mp4"><source src="./specialis/8_1.ogv" type="video/ogg"></video><!--END{fej8_specialis_1}--><!--{fej8_letoltes_1}--><div class="allomanyletoltes"><ul><li><strong>Fájl letöltése:</strong> <a href="letoltes/8_fel1.c">Az alábbi programot ide kattintva lehet letölteni! <span class="jaws">című háttéranyag letöltése</span> </a></li><li><strong>Információ az állományról: </strong></li><li><strong>Fájlméret:</strong> 3.22 <abbr title="kilobájt">KB</abbr></li></ul></div><!--END{fej8_letoltes_1}--><div class="forraskod"><div class="bekezdes1cm">
+#include &lt;sys/ipc.h&gt; 
+#include &lt;sys/sem.h&gt; 
+#include &lt;sys/types.h&gt; 
+#include &lt;stdio.h&gt; 
+#include &lt;stdlib.h&gt; 
+#include &lt;unistd.h&gt; 
+#include &lt;sys/stat.h&gt; 
+#include &lt;wait.h&gt; 
+ 
+#define MAXDB 3 
+#define PROCDB 5 
+ 
+int sem_id; 
+ 
+#if !defined(__GNU_LIBRARY__) || defined (_SEM_SEMUN_UNDEFINED) 
+union semun { 
+     int val; 
+     struct semid_ds * buf; 
+     unsigned short int * array; 
+     struct seminfo * __buf; 
+}; 
+#endif 
+ 
+/* A szemaforkészlet létrehozása két szemaforral, majd kezdőértéküket beállítjuk nullára (a nulladik szemafor/foglalt helyek), illetve a kapacitásnak megfelelőre (az első szemafor/üres helyek). */ 
+ 
+int sem_create(const char * filename) { 
+     int kulcs = ftok(filename,1); 
+     if( (sem_id = semget(kulcs, 2, IPC_CREAT | S_IRUSR | S_IWUSR )) &lt; 0 ) 
+          perror("sem get"); 
+     if(semctl(sem_id, 0, SETVAL, 0) &lt; 0) 
+          perror("sem init"); 
+     if(semctl(sem_id, 1, SETVAL, MAXDB) &lt; 0) 
+          perror("sem init"); 
+     return sem_id; 
+} 
+ 
+/* A szemaforkészlet törlése. */ 
+ 
+void sem_delete() { 
+     if(semctl(sem_id, 0, IPC_RMID) &lt; 0) 
+          perror("sem del"); 
+} 
+ 
+/* A berakásnál az üres helyek csökkennek (az első szemafor), és a foglalt helyek pedig nőnek (nulladik szemafor), ezt egyetlen semop hívással érvényesítjük. */ 
+ 
+void berak() { 
+     struct sembuf allapot[2]; 
+     allapot[0].sem_num = 0; 
+     allapot[0].sem_op = 1; 
+     allapot[1].sem_num = 1; 
+     allapot[1].sem_op = -1; 
+     
+     if(semop(sem_id, allapot, 2) &lt; 0) 
+          perror("semop berak"); 
+} 
+ 
+/* A kivételnél a foglalt helyek csökkennek (nulladik szemafor), az üres helyek pedig nőnek (első szemafor), ezt egyetlen semop hívással érvényesítjük. */ 
+void kivesz() { 
+     struct sembuf allapot[2]; 
+     allapot[0].sem_num = 0; 
+     allapot[0].sem_op = -1; 
+     allapot[1].sem_num = 1; 
+     allapot[1].sem_op = 1; 
+     
+     if(semop(sem_id, allapot, 2) &lt; 0) 
+          perror("semop kivesz"); 
+} 
+ 
+/* A gyártófolyamat meghívja a berak függvényt. */ 
+ 
+void gyarto() { 
+     while(1) { 
+          berak(); 
+          printf("berak %d\n", getpid()); 
+          sleep(rand() % 2 + 1); 
+     } 
+} 
+ 
+/* A fogyasztó folyamat meghívja a kivesz függvényt. */ 
+ 
+void fogyaszto() { 
+     while(1) { 
+          kivesz(); 
+          printf("kivesz %d\n", getpid()); 
+          sleep(rand() % 2 + 1); 
+     } 
+} 
+ 
+int main (int argc, char * argv[]) { 
+     pid_t child = 1; 
+     int i; 
+     int ch[PROCDB]; 
+     
+     sem_id = sem_create(argv[0]);  /* Létrehozzuk a szemaforkészletet. */ 
+     
+     for(i = 0; i &lt; PROCDB &#38;&#38; child &gt; 0; ++i) /* Létrehozunk PROCDB darabnyi 
+                                                 gyerekfolyamatot */ 
+          child = fork(); 
+          
+          if( child &gt; 0 ) { 
+               gyarto();  /* A szülőfolyamat a gyártó lesz. */ 
+          } else if ( child == 0 ){ /* A gyerekfolyamatok a pidnek 
+                                       megfelelően gyártók vagy fogyasztók 
+                                       lesznek. */ 
+               if( getpid() % 2 == 0 ) 
+                    gyarto(); 
+               else 
+                    fogyaszto(); 
+          } 
+          
+     return 0; 
+}
+</div>
+</div><p>    Az alábbi ábrákon a program futása látható:</p><!--fej8_kep_11--><div class="kep kozep" style="max-width:358px;"><img src="kepek/fej8_kep11_w358.jpg" alt="A képen a program futása látható" style="width:100%; height:auto;" title="A képen a program futása látható" /><span class="kepalairas">A program futása</span><div class="kep_ikonok jobbra"><span class="kep_nagymeret"><a href="kepek/fej8_kep11_w358_full.html" title="Kép megtekintése külön ablakban" >A fenti kép <span class="kepnev">()</span> megtekintése külön ablakban</a></span></div></div><div class="uresmargo"></div><!--ENDfej8_kep_11--><!--fej8_kep_12--><div class="kep kozep" style="max-width:455px;"><img src="kepek/fej8_kep12_w455.jpg" alt="A képen a program futása látható" style="width:100%; height:auto;" title="A képen a program futása látható" /><span class="kepalairas">A program futása</span><div class="kep_ikonok jobbra"><span class="kep_nagymeret"><a href="kepek/fej8_kep12_w455_full.html" title="Kép megtekintése külön ablakban" >A fenti kép <span class="kepnev">()</span> megtekintése külön ablakban</a></span></div></div><div class="uresmargo"></div><!--ENDfej8_kep_12--><!--fej8_kep_13--><div class="kep kozep" style="max-width:434px;"><img src="kepek/fej8_kep13_w434.jpg" alt="A képen a program futása látható" style="width:100%; height:auto;" title="A képen a program futása látható" /><span class="kepalairas">A program futása</span><div class="kep_ikonok jobbra"><span class="kep_nagymeret"><a href="kepek/fej8_kep13_w434_full.html" title="Kép megtekintése külön ablakban" >A fenti kép <span class="kepnev">(fej8_kep13_full.jpg)</span> megtekintése külön ablakban</a></span></div></div><div class="uresmargo"></div><!--ENDfej8_kep_13--><!--fej8_kep_14--><div class="kep kozep" style="max-width:369px;"><img src="kepek/fej8_kep14_w369.jpg" alt="A képen a program futása látható" style="width:100%; height:auto;" title="A képen a program futása látható" /><span class="kepalairas">A program futása</span><div class="kep_ikonok jobbra"><span class="kep_nagymeret"><a href="kepek/fej8_kep14_w369_full.html" title="Kép megtekintése külön ablakban" >A fenti kép <span class="kepnev">(fej8_kep14_full.jpg)</span> megtekintése külön ablakban</a></span></div></div><div class="uresmargo"></div><!--ENDfej8_kep_14--><p class="vissza"><a href="#fejezetek">Vissza a tartalom<span class="gyorsb">j</span>egyzékhez</a></p> 
+  </div>
+</div>
+<div class="utmutato_also">
+  <div class="utm_hivatkozasok_also"><a class="oldalteteje" accesskey="f" href="#teteje"><span class="gyorsb">F</span>el a lap tetejére</a>
+  <a class="elozotanlap" id="navialsoelozo" href="lecke8_lap3.html"><img src="navi/ikon_elozolap.gif" alt="Ugrás a tananyag előző oldalára" title="Ugrás a tananyag előző oldalára" width="36" height="36" /></a>
+  <a id='navialsokov' class="kovetktanlap" href="lecke8_lap5.html" ><img src="navi/ikon_kovetklap.gif" alt="Ugrás a tananyag következő oldalára" title="Ugrás a tananyag következő oldalára" width="36" height="36"/></a>
+  </div>
+</div>
+<div class="ki_stilus"></div>
+<div class="impresszum">
+  <table class="uszt">
+    <tr>
+      <td><div class="imp_eltetatklogo"><img alt="ELTE és ELTE TáTK logó" src="css/arculat/elte_plus_tatk.png" style="width:100%;height:auto;" /></div>
+        <div class="imp_elteiklogo"><img alt="ELTE és ELTE IK logó" src="css/arculat/elte_plus_ik.png" style="width:100%;height:auto;" /></div></td>
+      <td><div class="imp_uszt"><img alt="Új Széchenyi terv" src="css/arculat/USZT_logo_cmyk.jpg" style="width:100%;height:auto;" /></div></td>
+      <td><div class="imp_eu"><img alt="A projekt az Európai Unió támogatásával, az Európai Szociális Alap társfinanszirozásával valósul meg." title="A projekt az Európai Unió támogatásával, az Európai Szociális Alap társfinanszirozásával valósul meg." src="css/arculat/ESZA.png" style="width:100%;height:auto;"/></div></td>
+    </tr>
+  </table>
+</div>
+</body>
+</html>

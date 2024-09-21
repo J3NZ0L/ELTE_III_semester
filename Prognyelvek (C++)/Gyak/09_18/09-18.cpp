@@ -1,0 +1,6 @@
+/*
+    Masodik ora
+*/
+
+#include <iostream>
+

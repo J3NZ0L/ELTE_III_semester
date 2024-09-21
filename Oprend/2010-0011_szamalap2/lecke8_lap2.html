@@ -1,0 +1,208 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="hu" lang="hu">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="css/scormelte_alap.css" rel="stylesheet" type="text/css" title="" />
+<link href="css/style_spec.css" rel="stylesheet" type="text/css" />
+<link href="css/scormelte_nagy.css" rel="alternate stylesheet" type="text/css" title="nagy" />
+<link href="css/scormelte_inverz.css" rel="alternate stylesheet" type="text/css" title="inverz" />
+<!--[if lte IE 6]>
+<link href="css/scormelte_ie6.css" rel="stylesheet" type="text/css" title="" />
+<![endif]-->
+<!-- syntax highlight -->
+<link rel="stylesheet" type="text/css" href="css/shCore.css" />
+<link rel="stylesheet" type="text/css" href="css/shThemeDefault.css" />
+<script type="text/javascript" src="js/shCore.js"></script>
+<script type="text/javascript" src="js/shBrushCpp.js"></script>
+<script type="text/javascript" src="js/shBrushCSharp.js"></script>
+<script type="text/javascript" src="js/shBrushDelphi.js"></script>
+<script type="text/javascript" src="js/shBrushXml.js"></script>
+<script type="text/javascript" src="js/shBrushCss.js"></script>
+<script type="text/javascript" src="js/shBrushJScript.js"></script>
+<script type="text/javascript" src="js/shBrushSql.js"></script>
+<script type="text/javascript">
+SyntaxHighlighter.all()
+</script>
+<title>
+Számítógépes alapismeretek II. / 
+A párhuzamosság kezelése, szemaforok a gyakorlatban, alapvető megoldások
+/Párhuzamosság, versenyhelyzet, kritikus szakasz</title>
+<meta name="description" content="A tananyag  fejlesztése a TÁMOP-4.1.2.A/2-10/1 pályázat keretén belül történt." />
+<meta name="keywords" content="Hardver alapismeretek, operációs rendszer, számítógépes alapismeretek, operációs rendszer fogalma, operációs rendszerek története, operációs rendszer feladata, operációs rendszer generációk, operációs rendszer típusok, folyamatok, folyamat táblázat, szál &ndash; folyamatok, rendszerhívások, operációs rendszer struktúrák, kernelmód, kernel, felhasználói mód, B/K művelet, folyamatok modellje, szinkron rendszerhívás, asszinkron rendszerhívás, állapotai, megvalósításuk, folyamatok kommunikációja, IPC (Inter Process Communication), megszakítástábla, IDT, megszakításvezérlő, PIC, megszakítás, interrupt, megszakításkérelem, IRQ, megszakításkezelési folyamat, kivétel, hibakeresés (debuggolás), töréspont, fájlrendszer, MBR, partíciós szektor, Ntldr, klaszter (cluster), szektor, FAT, NTFS, ext, TSS, csapda, ütemezés, szál, szemafor, mutex, monitor, POSIX, szignál, osztott memória, csővezeték, kritikus szakasz, Wybe Dijkstra, CPU, erőforrás, holtpont, kiéheztetés, integrált áramkör, multiprogramozás, beágyazott rendszerek, partíció, MMU, lapcsere, FIFO, socket, lapozás, swap, interaktív rendszer, kötegelt rendszer, kliens, job, jogosultság, metaadat, könyvtár, UNIX, GNU/LINUX, erőforrás-foglalási gráf, fizikai memória, virtuális memória, merevlemez, floppy, fregmentáció, defregmentáló program, MFT, API, i-node, cache memory, SSH, HyperThread, párhuzamosság" />
+<script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="js/kep.js"></script>
+<script type="text/javascript" src="js/jquery.media.js"></script>
+<script type="text/javascript" src="js/jquery.highlight-3.js"></script>
+<script type="text/javascript" src="js/kereses.js"></script>
+<script type="text/javascript" src="js/stylesheetToggle.js"></script>
+<script type="text/javascript" src="js/cookie.js"></script>
+<script type="text/javascript" src="js/stilusvalto.js"></script>
+<script type="text/javascript" src="js/fogalmak.js"></script>
+<script type="text/javascript" src="js/fogalom.js"></script>
+<script type="text/javascript" src="js/jwplayer.js"></script>
+<script type="text/javascript">
+$(document).ready(function() 
+{
+$("a.hang").media( {width: 250, height: 50,  autoplay: false} );
+});
+</script>
+<script type="text/javascript" src="js/navigacio.js"></script>
+</head>
+<body>
+<div><a name="teteje"  id="teteje"></a></div>
+<div class="jawsfmenu">
+  <ul>
+    <li><a class="tartalom" href="#tartalom" accesskey="t" tabindex="2">Ugrás a <span class="gyorsb">t</span>artalomra</a></li>
+    <li><a class="tartalomj" href="#fejezetek" accesskey="j" tabindex="5">Ugrás a tartalom<span class="gyorsb">j</span>egyzékre</a></li>
+    <li><a class="tanutm" href="#tanutm" accesskey="u" tabindex="7">Ugrás a tan<span class="gyorsb">u</span>lási útmutatóra</a></li>
+  </ul>
+</div>
+<div class="ki_kereses"></div>
+<div class="oldal">
+  <div class="utmutato">
+    <div class="utm_hivatkozasok"><span class="elozolap"><img src="navi/ikon_vissza_dis.gif" alt="Vissza az előzőleg látogatott oldalra (nem elérhető funkció)" title="Vissza az előzőleg látogatott oldalra (nem elérhető funkció)" /></span><a class="kezdolap" href="index.html" accesskey="p" tabindex="21"><img src="navi/ikon_kezdolap.gif" alt="Vissza a modul kezdőlapjára" title="Vissza a modul kezdőlapjára" width="36" height="36"/></a><a class="elozotanlap" href="lecke8_lap1.html" accesskey="e" tabindex="22"><img src="navi/ikon_elozolap.gif" alt="Ugrás a tananyag előző oldalára" title="Ugrás a tananyag előző oldalára" width="36" height="36" /></a><a class="kovetktanlap" href="lecke8_lap3.html" accesskey="v" tabindex="23"><img src="navi/ikon_kovetklap.gif" alt="Ugrás a tananyag következő oldalára" title="Ugrás a tananyag következő oldalára" width="36" height="36"/></a><span class="ki_fogalomkapcs"><img src="navi/ikon_fogalmakbe_dis.gif" alt="Fogalom megjelenítés (nem elérhető funckió)" title="Fogalom megjelenítés (nem elérhető funckió)" /></span><span class="ki_fogalomlista"><img src="navi/ikon_fogalmaklista_dis.gif" alt="Fogalmak listája (nem elérhető funkció)" title="Fogalmak listája (nem elérhető funkció)" /></span><span class="ki_nyomtatas"><img src="navi/ikon_nyomtatas_dis.gif" alt="Oldal nyomtatása (nem elérhető funkció)" title="Oldal nyomtatása (nem elérhető funkció)" /></span><a class="oldalterkep" href="oldalterkep.html" accesskey="d" tabindex="31"><img src="navi/ikon_oldalterkep.gif" alt="Oldaltérkép megtekintése" title="Oldaltérkép megtekintése"  width="36" height="36" /></a><a class="sugo" href="sugo.html" accesskey="s" tabindex="33"><img src="navi/ikon_sugo.gif" alt="Súgó megtekintése" title="Súgó megtekintése"  width="36" height="36" /></a></div>
+  </div>
+  <div class="tartalommenu">
+    <div class="tartalommenu_fejlec"><span id="lapteteje"><a  href="#teteje"><span class="gyorsb">F</span>el a lap tetejére</a></span><a name="fejezetek"   id="fejezetek">Tartalomjegyzék</a></div>
+    <ul><li><a href="#hiv1">A párhuzamosság kezelése, szemaforok a gyakorlatban, alapvető megoldások</a><ul><li><a href="#hiv2">Párhuzamosság, versenyhelyzet, kritikus szakasz</a><ul><li><a href="#hiv3">Példa a párhuzamos környezetben egy közös erőforrás használata közben előforduló hibalehetőségekből</a></li></ul></li><li><a href="#hiv4">Megoldások a kölcsönös kizárás megvalósításaira</a><ul><li><a href="#hiv5">A megszakítások, folyamatváltások letiltásának módszere</a></li><li><a href="#hiv6">A szigorú váltogatás módszere</a><ul><li><a href="#hiv7">Példa a szigorú válogatás módszerére: a Peterson-féle megoldás</a></li></ul></li><li><a href="#hiv8">A TSL utasítás használata</a></li><li><a href="#hiv9">Az alvás-ébredés módszere</a><ul><li><a href="#hiv10">Példa az alvás-ébredés módszerére: a gyártó-fogyasztó probléma</a></li></ul></li></ul></li><li><a href="#hiv11">A szemaforok használata</a><ul><li><a href="#hiv12">Példa a szemaforok használatára: a gyártó-fogyasztó probléma</a></li></ul></li></ul></li></ul> 
+  </div>
+  <div class="tartalom"> <a name="tartalom"    id="tartalom"></a> 
+    <h1><a name="hiv1" id="hiv1"></a>A párhuzamosság kezelése, szemaforok a gyakorlatban, alapvető megoldások</h1><h2><a name="hiv2" id="hiv2"></a>Párhuzamosság, versenyhelyzet, kritikus szakasz</h2><p>A mai <span class="fogalom" title="operációs rendszer">operációs rendszerektől</span> elvárjuk, hogy képes legyen több folyamatot párhuzamosan futtatni. <strong>Valódi </strong><span class="fogalom" title="párhuzamosság"><strong>párhuzamosságról</strong></span> akkor beszélhetünk, amikor valóban több folyamat fut egy időben. Ez akkor lehetséges, ha a számítógépünkben több processzor van. Közös órajelre működhetnek, akár közös memóriát is használhatnak. Ezek a megoldások gyors kommunikációt tesznek lehetővé a folyamatok között. Nagy teljesítményű úgynevezett &#132;tudományos&#148; számítógépek akár több száz processzort is tartalmazhatnak. Másik elterjedt megoldás, amikor önálló számítógépeket hálózati kapcsolat segítségével üzemeltetnek úgy, mint egy többprocesszoros gépet. Ebben az esetben a számítógépek egymással hálózaton keresztül kommunikálnak, aminek következménye a sokkal lassabb kommunikáció. Viszont egy egyprocesszoros (néhány processzoros) gép esetén is megteremthetjük a <span class="fogalom" title="párhuzamosság">párhuzamosság</span> illúzióját, ha a folyamatokat gyorsan váltogatjuk. Ekkor a folyamatok egy kis ideig futhatnak (egy kis időszeletet kapnak), majd az <span class="fogalom" title="operációs rendszer">operációs rendszer</span> keres egy másik folyamatot, és azt futtatja egy kis ideig. Az interaktív felhasználók ezt úgy látják, mintha több folyamat futna párhuzamosan. Ezt a technikát <strong>látszatpárhuzamosságnak</strong> nevezik.</p><p>Az <span class="fogalom" title="operációs rendszer">operációs rendszerben</span> a párhuzamosan futó folyamatok általában közös <span class="fogalom" title="erőforrás">erőforrásokat</span> használnak, aminek következtében olyan hibalehetőségek jelentkezhetnek (a valódi, illetve a látszatpárhuzamosság esetén is!), amelyek a <span class="fogalom" title="párhuzamosság">párhuzamosság</span> nélkül nem jelentkeztek volna sohasem. Lássunk erre egy példát Andrew S. Tanenbaum és Albert S. Woodhull <em>Operációs rendszerek</em> könyvéből! </p><h3><a name="hiv3" id="hiv3"></a>Példa a párhuzamos környezetben egy közös erőforrás használata közben előforduló hibalehetőségekből</h3><p>A példa így szól: A nyomtatásra váró fájlokat egy nyomtatási sorba helyezzük. A nyomtatási sort egy vektorral valósítjuk meg, a vektor tartalmazza a nyomtatandó fájlok nevét. A vektort a folyamatok közösen használhatják. A sor első elemének indexét egy &#132;out&#148; nevű, és a vektor első szabad helyének indexét (ide kerül az új nyomtatási feladat) egy &#132;in&#148; nevű közös változó tartalmazza. A következő programrészlet elhelyez egy új nyomtatási feladatot a nyomtatási sorba:</p><div class="forraskod"><div class="bekezdes1cm">
+nyomtatasi_sorba(string fájlnév){ 
+     if( a_nyomtatási_sor_nincs_tele ){ 
+          int következő_szabad_rekesz = in_lekérdez; 
+          vektor[következő_szabad_rekesz] = fájlnév; 
+          in_beállít(következő_szabad_rekesz + 1); 
+     } 
+}
+</div>
+</div><p>Tehát az előbbi programrészlet azt csinálja, hogy lekérdezi az &#132;in&#148; közös változó értékét, majd beírja a vektor &#132;in&#148; pozíciójú helyére a fájl nevét, majd lépteti az &#132;in&#148; értékét. </p><p>Tegyük fel, hogy az A és a B folyamatok közel egy időben elhatározzák, hogy a nyomtatási sorba írnak. Az A folyamat ekkor kiolvassa az &#132;in&#148; nevű változó értékét, ami legyen most a példánkban 7, majd a &#132;következő_szabad_rekesz&#148; nevű változóba rakja. Ekkor a B folyamat is kiolvassa az &#132;in&#148; nevű változó értékét (látszat<span class="fogalom" title="párhuzamosság">párhuzamosság</span> esetén az <span class="fogalom" title="operációs rendszer">operációs rendszer</span> éppen cserél folyamatot), ami szintén a 7 értéket tárolja a &#132;következő_szabad_rekesz&#148; nevű változóba, majd a 7-es rekeszbe elhelyezi a nyomtatandó fájl nevét, és az &#132;in&#148; nevű változót 8-ra lépteti. Az A folyamat a korábban lekérdezett 7-es rekeszbe rakja a nyomtatandó fájl nevét, és beállítja az &#132;in&#148; értékét 8-ra. A sor továbbra is konzisztens marad, azonban a B folyamat által a nyomtatási sorba helyezett fájlt soha nem fogja kinyomtatni a rendszer! </p><p>A példában is látható volt, hogy a folyamatok párhuzamos végrehajtása okozta a hibát. A példához hasonló helyzeteket, amikor a futás kimenete attól függ, hogy melyik folyamat mikor és mennyit futott, azaz a párhuzamos végrehajtás következtében előforduló nem determinisztikus viselkedést <strong>versenyhelyzetnek</strong> nevezzük. Ezen hibák megtalálása nehéz feladat, tehát fontos megállapítás az, hogy el kell kerülni a versenyhelyzeteket!</p><p>A példában szereplő hiba elkerülhető lenne, ha a nyomtatási sorba berakó műveletet egy időben legfeljebb csak egy folyamat hajthatja végre. Ha egy folyamat elkezdte az eljárás végrehajtását, akkor egy másik folyamat ne kezdhessen bele az eljárás végrehajtásába, amíg az előbbi be nem fejezte azt. Tehát amikor egy folyamat használ egy közös <span class="fogalom" title="erőforrás">erőforrást</span>, megtiltjuk, hogy egy másik folyamat is használja ugyanazt az <span class="fogalom" title="erőforrás">erőforrást</span>. Ezt nevezzük <strong>kölcsönös kizárásnak.</strong> A programkódnak azt a részét, amelyik közös <span class="fogalom" title="erőforrás">erőforrást</span> használ, <span class="fogalom" title="kritikus szakasz"><strong>kritikus szakasznak</strong></span> (szekciónak) nevezzük. Akkor tudjuk biztosítani a kölcsönös kizárást, ha meg tudjuk oldani, hogy egy időben legfeljebb egy folyamat legyen a <span class="fogalom" title="kritikus szakasz">kritikus szakaszban</span> (adott <span class="fogalom" title="erőforrás">erőforrás</span> tekintetében). Ezzel elkerülhetjük a versenyhelyzetet, ellenben további feltételek is szükségesek a korrekten együttműködő párhuzamos folyamatok közös erőforrás-használatához, hiszen ettől még előfordulhat az, hogy a folyamatok végtelen sokáig várakoznak az <span class="fogalom" title="erőforrás">erőforrás</span> megszerzésére.</p><p><strong>A párhuzamos környezetben egy közös erőforrás használatakor javasolt feltételek</strong></p><p>Tehát a javasolt feltételek:</p><ul><li>A <span class="fogalom" title="kritikus szakasz">kritikus szakaszban</span> legfeljebb egy folyamat legyen.</li><li>Semmilyen előfeltétel ne legyen a sebességről, vagy a processzorok (<span class="fogalom" title="CPU">CPU</span>) számáról.</li><li>A folyamat a <span class="fogalom" title="kritikus szakasz">kritikus szakaszon</span> kívül ne blokkoljon másik folyamatot.</li><li>A <span class="fogalom" title="kritikus szakasz">kritikus szakaszba</span> belépni kívánó folyamatok közül minden folyamat előbb-utóbb kerüljön sorra.</li></ul><p>A következőkben tekintsünk néhány javaslatot a kölcsönös kizárás megvalósítására!</p><h2><a name="hiv4" id="hiv4"></a>Megoldások a kölcsönös kizárás megvalósításaira</h2><p class="vissza"><a href="#fejezetek">Vissza a tartalom<span class="gyorsb">j</span>egyzékhez</a></p><h3><a name="hiv5" id="hiv5"></a>A megszakítások, folyamatváltások letiltásának módszere</h3><p>A legegyszerűbb megoldás a kölcsönös kizárás megvalósítására: a folyamat, mielőtt belépne a <span class="fogalom" title="kritikus szakasz">kritikus szakaszba</span>, letiltja a megszakításokat, majd miután kilépett a <span class="fogalom" title="kritikus szakasz">kritikus szakaszból</span>, újra engedélyezi a megszakításokat. Ezzel elérheti, hogy a <span class="fogalom" title="kritikus szakasz">kritikus szakasza</span> alatt nem történik folyamatváltás, mivel az ütemező az óramegszakítás hatására cseréli le a folyamatokat. Ugyanezt éri el, ha csak az <span class="fogalom" title="ütemezés">ütemezést</span> vagy a folyamatváltást tiltja le a folyamat.</p><p>Ez a megoldási módszer valódi párhuzamos folyamatok esetén nem használható, mivel a megszakítások tiltása csak az adott processzorra vonatkozik. Továbbá nem szabad a felhasználói folyamatoknak ekkora hatalmat adni, mivel a rosszindulatú folyamatok nem kapcsolják vissza a folyamatváltást, így átveszik az uralmat a processzor (<span class="fogalom" title="CPU">CPU</span>) felett.</p><p>Az ismertetett megoldás a felhasználói programok esetén sem használatos, azonban a <span class="fogalom" title="kernel">kerneleken</span> belül gyakran alkalmazott módszer. A <span class="fogalom" title="kernel">kernel</span> a futása alatt tiltja a megszakításokat, így más folyamat nem futhat, amíg a kerneleljárás véget nem ért. Az egyprocesszoros rendszereknél így tudja biztosítani a kernelműveletek atomi voltát (megszakíthatatlanságát).</p><p class="vissza"><a href="#fejezetek">Vissza a tartalom<span class="gyorsb">j</span>egyzékhez</a></p><h3><a name="hiv6" id="hiv6"></a>A szigorú váltogatás módszere</h3><p>A következő megoldásban egy &#132;zálog&#148; nevű változó tartalmazza azt, hogy melyik folyamat léphet be a <span class="fogalom" title="kritikus szakasz">kritikus szakaszba</span>.</p><div class="forraskod"><div class="bekezdes1cm">
+while( TRUE ) { 
+     while( zálog != sorszámom ); 
+     // Tevékeny várakozás. 
+     kritikus_szakasz(); 
+     zálog = (zálog + 1) % folyamatok_száma; 
+     nem_kritikus_szakasz(); 
+}
+</div>
+</div><p>A második sorban lévő ciklus azt teszteli, hogy beléphet-e a folyamat a <span class="fogalom" title="kritikus szakasz">kritikus szakaszba</span>, azaz a zálog az ő sorszámával megegyezik-e. A ciklus magja egy üres utasítás, tehát csak a feltételt teszteljük folyamatosan. Ezt <strong>tevékeny várakozásnak</strong> nevezzük. A tevékeny várakozást általában kerülni kell, mivel nagyon pazarolja a processzor- (<span class="fogalom" title="CPU">CPU</span>-) időt. A másik probléma ezzel a megoldással, hogy a folyamatok sorba léphetnek csak be a <span class="fogalom" title="kritikus szakasz">kritikus szakaszba</span>, ami megsérti a párhuzamos környezetben egy közös <span class="fogalom" title="erőforrás">erőforrás</span> használatakor javasolt feltételekből a harmadik feltételt, mivel ezáltal előfordulhat, hogy egy <span class="fogalom" title="kritikus szakasz">kritikus szakaszon</span> kívüli folyamat sorszámával azonos a zálog, és ekkor ez a folyamat blokkolja a zálogra váró folyamatokat.</p><h4><a name="hiv7" id="hiv7"></a>Példa a szigorú válogatás módszerére: a Peterson-féle megoldás</h4><p>Tegyük fel most azt, hogy két folyamat verseng egymással a közös <span class="fogalom" title="erőforrás">erőforrás</span> használatáért (process = 0 és process = 1). Mielőtt a folyamat belépne a <span class="fogalom" title="kritikus szakasz">kritikus szakaszba</span>, meghívja a &#132;belépés&#148; eljárást, a <span class="fogalom" title="kritikus szakasz">kritikus szakasz</span> végén pedig meghívja a &#132;kilépés&#148; eljárást. A &#132;belépés&#148; eljárás biztosítja, hogy szükség esetén várakozni fog a folyamat (mindezt tevékeny várakozással). </p><div class="forraskod"><div class="bekezdes1cm">
+void belépés(int process) { 
+     int másik = 1 - process; 
+     verseng[process] = TRUE; 
+     zálog = process; 
+     while(zálog == process &#38;&#38; verseng[other] == TRUE); 
+     // Tevékeny várakozás. 
+} 
+ 
+void kilépés(int process) { 
+     verseng[process] = FALSE; 
+}
+</div>
+</div><p>A megoldás lényege az, hogy a &#132;verseng&#148; nevű vektorban tároljuk azt, hogy mely folyamatok akarnak belépni a <span class="fogalom" title="kritikus szakasz">kritikus szakaszba</span>. Ha csak az egyik folyamat akar belépni a <span class="fogalom" title="kritikus szakasz">kritikus szakaszba</span>, akkor a &#132;zálog&#148; az övé lesz, ha a másik folyamat nem verseng. Tehát a várakozó ciklust &#132;átugorjuk&#148;. Ha ezután a másik folyamat is belép, akkor a &#132;zálog&#148; nála lesz, de a &#132;verseng&#148; nevű vektorból azt látja, hogy a már belépett folyamat verseng, tehát várakozni fog addig, amíg a <span class="fogalom" title="kritikus szakasz">kritikus szakaszból</span> ki nem lép a folyamat, és meg nem hívja a &#132;kilépés&#148; eljárást. A &#132;kilépés&#148; eljárás a &#132;verseng&#148; nevű vektornak a folyamat sorszámával indexelt elemét FALSE-ra állítja.</p><p class="vissza"><a href="#fejezetek">Vissza a tartalom<span class="gyorsb">j</span>egyzékhez</a></p><h3><a name="hiv8" id="hiv8"></a>A TSL utasítás használata</h3><p>Sok számítógép rendelkezik egy speciális <strong>TEST AND SET LOCK</strong> (TSL) utasítással, amely beolvas egy regiszterbe egy szót a memóriából, majd visszaír az előbbi memóriaterületre egy nem nulla értéket. Ezeket atomian hajtja végre. Ennek segítségével a következő megoldással lehet biztosítani a kölcsönös kizárást:</p><div class="forraskod"><div class="bekezdes1cm">
+belépés: 
+     tsl regiszter_neve, lock 
+     cmp regiszter_neve, #0 
+     jne belépés 
+     ret 
+ 
+kilépés: 
+     move lock, #0 
+     ret
+</div>
+</div><p>A belépés eljárásnál a tsl utasítás átmásolja a &#132;lock&#148; nevű változó értékét az egyik regiszterbe, és átállítja az értékét egy nem nulla értékre. Majd összehasonlítjuk ezt követően, hogy a regiszterbe kiolvasott lock érték nulla volt-e. Ha nem nulla, akkor már egy másik folyamat zárolt, ekkor visszaugrik a belépés elejére, és újra tesztel. Ha nulla volt, akkor kilép a &#132;belépés&#148; rutinból (a &#132;lock&#148; nevű változó értéke persze ekkor nem nulla), és a <span class="fogalom" title="kritikus szakasz">kritikus szakaszt</span> kezdi végrehajtani. A <span class="fogalom" title="kritikus szakasz">kritikus szakaszból</span> való kilépés után a &#132;lock&#148; nevű változó értékét nullára állítja. Ha egy zárra legfeljebb egy processzor hajthatja végre a műveletet, akkor valódi többprocesszoros gépen is működik vele a kölcsönös kizárás.</p><p class="vissza"><a href="#fejezetek">Vissza a tartalom<span class="gyorsb">j</span>egyzékhez</a></p><h3><a name="hiv9" id="hiv9"></a>Az alvás-ébredés módszere</h3><p>Az előzőekben említett megoldások komoly problémájának róható fel az, hogy tevékeny várakozással oldották meg a problémát, azaz egy ciklusban vizsgálták, hogy beléphetnek-e a <span class="fogalom" title="kritikus szakasz">kritikus szakaszba</span>, vagy sem. Ezzel a módszerrel feleslegesen sok processzor- (<span class="fogalom" title="CPU">CPU</span>-) időt pazaroltak. A tevékeny várakozás a processzoridő pazarlása mellett <strong>fordított prioritási problémának</strong> nevezett hibalehetőséget is magában rejti. Tegyük fel, hogy az <span class="fogalom" title="operációs rendszer">operációs rendszer</span> prioritásos ütemezőt használ. Amíg van magas prioritású futásra kész folyamat, addig alacsonyabb prioritású folyamatot nem futtat. Legyen egy alacsony prioritású folyamat, amelyik a kritikus szekciójában van; ekkor egy magas prioritású folyamat tevékeny várakozásba kezd, amit az alacsonyabb prioritású folyamat tudna feloldani, ha be tudná fejezni a kritikus szekcióját, de soha nem kerül a processzorhoz, mivel az ütemező mindig a magas prioritású tevékenyen várakozó folyamatot választja.</p><p>A tevékeny várakozás feloldására javasolt egyik eszköz a <strong>sleep-wakeup</strong> páros. A sleep egy olyan <span class="fogalom" title="rendszerhívás">rendszerhívás</span>, amely blokkolja a hívó folyamatot, a wakeup pedig olyan <span class="fogalom" title="rendszerhívás">rendszerhívás</span>, amely felébreszti a paraméteréül kapott alvó folyamatot. </p><h4><a name="hiv10" id="hiv10"></a>Példa az alvás-ébredés módszerére: a gyártó-fogyasztó probléma</h4><p>A sleep-wakeup használatára tekintsük példaként a gyártó-fogyasztó problémát! Van egy gyártó és egy fogyasztó folyamatunk. A gyártó termel, és a termelt árut elhelyezi egy tárolóban. A fogyasztó fogyaszt úgy, hogy a tárolóból kiveszi az árut. A tároló kapacitása véges, ha megtelik, a gyártást le kell állítani; ha kiürül, a fogyasztónak várnia kell, amíg újra áru kerül a tárolóba. Amikor a gyártó egy új árut rak a tárolóba, és a tároló megtelik, akkor elmegy aludni, majd amikor a fogyasztó kivesz árut a tárolóból, akkor felébreszti a gyártót. Fordítva is hasonlóan: amikor a fogyasztó szeretne kivenni árut a tárolóból, de azt látja, hogy kiürült, akkor elmegy aludni, majd amikor a gyártó árut helyez el a tárolóban, akkor felébreszti az alvó fogyasztót.</p><p>Legyen egy &#132;DB&#148; nevű változó, amely a tárolóban lévő elemek számát, illetve egy &#132;KAPACITÁS&#148; nevű változó, ami a tároló kapacitását tartalmazza.</p><div class="forraskod"><div class="bekezdes1cm">
+#define KAPACITÁS 100 
+int DB = 0 
+ 
+void gyártó() { 
+     while(1) { 
+          gyárt(); 
+          if(DB == KAPACITÁS)  // Megnézi, hogy tele van-e a tároló? 
+               sleep();        // Ha igen, akkor elmegy aludni. 
+          berak();             // Felébresztették, tehát berakhatja az árut. 
+          DB = DB + 1;         // A gyártó berakott egy árut a tárolóba. 
+          if(DB == 1)          // Ha üres volt a tároló, 
+               wakeup();       // akkor felébreszti a fogyasztót. 
+     } 
+} 
+ 
+void fogyasztó() { 
+     while(1) { 
+          if(DB == 0)          // Megnézi, hogy üres-e a tároló? 
+               sleep();        // Ha igen, akkor elmegy aludni. 
+          kivesz();            // Felébresztették, tehát kivehet egy árut. 
+          DB = DB - 1;         // A fogyasztó kivett egy árut a tárolóból. 
+          if(DB == N - 1)      // Ha tele volt a tároló, 
+               wakeup();       // akkor felébreszti a gyártót. 
+          feldolgozás(); 
+     } 
+}
+</div>
+</div><p>Versenyhelyzet előfordulhat ebben a megoldásban. Tegyük fel azt, hogy a tároló üres, és a fogyasztó kiolvassa a &#132;DB&#148; nevű változó értékét, majd az ütemező átadja vezérlést a gyártónak, aki betesz egy árut a tárolóba, és növeli a &#132;DB&#148; nevű változó értékét egyre. A gyártó látván azt, hogy a &#132;DB&#148; nevű változó értéke eggyel egyenlő (azaz DB==1), ébresztést küld a fogyasztónak, aki még nem alszik (tehát az ébresztés elmarad). Amikor a vezérlés visszakerül a fogyasztóra, a korábban kiolvasott &#132;DB&#148; nevű változó nulla értéke miatt (azaz DB==0) elmegy aludni. A gyártó szép lassan megtölti a tárolót, majd elmegy ő is aludni. Ezt követően mindkét folyamat alszik, és a másikra vár, hogy felébressze. Tehát így &#132;örökké&#148; aludni fognak. A probléma akkor történt, amikor a nem alvó folyamatnak küldtek ébresztést. Ez az ébresztés elveszett. Meg lehetne oldani, hogy az ilyen ébresztést elrakjuk, és amikor el akarna aludni a folyamat, akkor megnézi, van-e talonba ébresztése; ha igen, akkor nem alszik el, csak a talont felhasználja.</p><h2><a name="hiv11" id="hiv11"></a>A szemaforok használata</h2><p>Edsger Wybe Dijkstra által definiált két szemaforművelet (a P és a V műveletek) működése abban rejlik, hogy a műveletekben a szemaforváltozó csökkentése és növelése atomi (azaz megszakíthatatlan). Ez a kulcsszó magában hordozza a megoldást is. Attól függően, hogy milyen szintű programot írunk, úgy a <span class="fogalom" title="szemafor">szemafor</span> megvalósítása &ndash; tehát a két atomi művelet megvalósítása &ndash; különböző lehet.</p><p>Például &#132;hagyományos&#148; C programozási nyelven megírt programokban az <span class="fogalom" title="operációs rendszer">operációs rendszer</span> adta lehetőségeket tudjuk csak használni. Ebben az esetben a szemaforműveleteket <span class="fogalom" title="rendszerhívás">rendszerhíváson</span> keresztül érjük el. Konkrétan nem lehet megmondani, hogy az <span class="fogalom" title="operációs rendszer">operációs rendszer</span> pontosan hogyan kezeli a szemaforváltozó csökkentését és növelését (sok <span class="fogalom" title="operációs rendszer">operációs rendszer</span> létezik, és ezek különbözőek is), de mivel atominak kell lennie a műveletnek, ezért kénytelen minden megszakítást letiltani.</p><p>A <span class="fogalom" title="UNIX">UNIX</span> és a <span class="fogalom" title="UNIX">UNIX</span> -szerű <span class="fogalom" title="operációs rendszer">operációs rendszerbeli</span> környezetben (mint például a <span class="fogalom" title="GNU/LINUX">GNU/LINUX</span> <span class="fogalom" title="operációs rendszer">operációs rendszerben</span> is) a <span class="fogalom" title="szemafor">szemaforok</span> igénybevételére a &#132;semget&#148; (a <span class="fogalom" title="szemafor">szemafor</span> létrehozása), a &#132;semctl&#148; (a szemaforkontroll, azaz a kiolvasás, és a beállítás) és a &#132;semop&#148; (a szemaforoperáció, ami az up és a down művelet) függvényeket használhatjuk. </p><p>A Microsoft Windows <span class="fogalom" title="operációs rendszer">operációs rendszerbeli</span> környezetben a &#132;CreateSemaphore&#148; (a <span class="fogalom" title="szemafor">szemafor</span> létrehozása), a &#132;WaitForSingleObject&#148; (a <span class="fogalom" title="szemafor">szemafor</span> down művelete), a &#132;ReleaseSemaphore&#148; (a <span class="fogalom" title="szemafor">szemafor</span> up művelete) függvények adottak.</p><p>Ha magas szintű programozási nyelven írunk programot (olyan programozási nyelven, amit egy virtuális gép futtat), akkor nem feltétlenül szükséges az <span class="fogalom" title="operációs rendszer">operációs rendszer</span> által nyújtott lehetőséget használni. A virtuális gépben lehet olyan funkció, amivel a <span class="fogalom" title="szemafor">szemafor</span> műveleteit végre lehet hajtani &ndash; triviális, hiszen nem dolgozza fel addig a következő utasítást, amíg a <span class="fogalom" title="szemafor">szemafor</span> értékét nem növelte vagy csökkentette. Tehát a virtuális gépekben egyszerűen lehet biztosítani az atomosságot, ami a valós gépen nem lehetséges. A magas szintű programozási nyelvek más lehetőségeket (pl. <span class="fogalom" title="monitor">monitor</span>) is biztosítanak a <span class="fogalom" title="szemafor">szemafor</span> mellett, de ezeket is <span class="fogalom" title="szemafor">szemaforral</span> valósítják meg.</p><p>A <span class="fogalom" title="szemafor">szemaforok</span> megvalósítása szoftveresen (felhasználói szinten) nem lehetséges, mert az ütemező bármelyik &ndash; kritikus &ndash; pillanatban elveheti a futási jogot a programtól.</p><p>Például tekintsük az alábbi programot, ami egy változó értékét csökkenti eggyel: </p><div class="forraskod"><div class="bekezdes1cm">
+ LOAD r1, #0x100 // a 0x100-as címről és az r1 regiszterbe 
+ DEC r1 // csökkenti az r1 értékét eggyel 
+ STORE r1, #0x100 // elmenti az r1 értékét a 0x100-as címre
+</div>
+</div><p>Jelölje a fenti program lefutását egy másik <span class="fogalom" title="szál">szálban</span> a következő program: </p><div class="forraskod"><div class="bekezdes1cm">
+ LOAD r2, #0x100 
+ DEC r2 
+ STORE r2, #0x100
+</div>
+</div><p>A soros lefutás esetén jól működik, de a következő <span class="fogalom" title="ütemezés">ütemezéssel</span> hibás eredményt ad &ndash; a lefutás után a 0x100-as címen lévő szám csak eggyel csökkent, de ha sorosan futott volna, akkor kettővel csökkent volna: </p><div class="forraskod"><div class="bekezdes1cm">
+ LOAD r1, #0x100 
+ DEC r1 
+ LOAD r2, #0x100 
+ DEC r2 
+ STORE r2, #0x100 
+ STORE r1, #0x100
+</div>
+</div><p>Ez a példa is azt mutatja, hogy ha a <span class="fogalom" title="szemafor">szemafort</span> felhasználói módban valósítanánk meg, akkor nem működne jól, mert megtörténhet, hogy a <span class="fogalom" title="kritikus szakasz">kritikus szakaszba</span> nem csak egy <span class="fogalom" title="szál">szál</span> jut be. Ennek következtében nem az fog történni, aminek történnie kellene. </p><p>Az előbbiekben már említettük, hogy a virtuális gépek esetén ez az út járható, mert az utasításokat nem azonos szinten hajtja végre a virtuális gép. A virtuális gépi utasítások végrehajtását a virtuális gép végzi, ezáltal gondoskodni tud arról, hogy a <span class="fogalom" title="szemafor">szemafor</span> műveletei atomiak legyenek. Természetesen a virtuális gépet futtató programtól is elveheti az ütemező a futási jogot, de ebből nem lesz probléma, mert a virtuális gépi utasításokat is az a program futtatja, amelyiktől elvette az ütemező a futási jogot. </p><p>Ám most térjünk is vissza a <span class="fogalom" title="szemafor">szemaforok</span> &#132;alapgondolatára&#148;, miszerint Edsger Wybe Dijkstra 1965-ben javasolta azt, hogy legyen egy egész szám típusú különleges változó, amelyik a fel nem használt folyamatébresztéseket tárolja. Legyen továbbá két művelet: az &#132;up&#148; és a &#132;down&#148;. A &#132;down&#148; felhasznál egy ébresztést, azaz a változó értékét csökkenti eggyel, az &#132;up&#148; művelet pedig eggyel növeli a változó értékét. </p><p>Ha egy folyamat aludni akarna menni, akkor végrehajt egy &#132;down&#148; műveletet: ha van a talonban ébresztése, azaz a <span class="fogalom" title="szemafor">szemafor</span> értéke nagyobb, mint nulla, akkor csak csökkenti a <span class="fogalom" title="szemafor">szemafort</span>, de nem alszik el; ha a <span class="fogalom" title="szemafor">szemafor</span> értéke nulla, tehát nincs talonban ébresztése, akkor elalszik. </p><p>A &#132;down&#148; művelet blokkolja a folyamatot, az &#132;up&#148; művelet nem. Amikor &#132;up&#148; műveletet hajtunk végre, és van olyan folyamat, amelyik alszik ezen a <span class="fogalom" title="szemafor">szemaforon</span>, akkor kiválaszt egyet, és felébreszti. Az előző példában szereplő hibának a kiküszöbölésére a <span class="fogalom" title="szemafor">szemafort</span> úgy kell megvalósítani, hogy az értékének a kiolvasása és a módosítása atomi művelet legyen, az ütemező ne tudja átadni eközben a vezérlést egy másik folyamatnak.</p><p class="vissza"><a href="#fejezetek">Vissza a tartalom<span class="gyorsb">j</span>egyzékhez</a></p><h3><a name="hiv12" id="hiv12"></a>Példa a szemaforok használatára: a gyártó-fogyasztó probléma</h3><p>Most nézzük meg a gyártó-fogyasztó problémának a megoldását <span class="fogalom" title="szemafor">szemaforokkal</span>! A megoldásban három <span class="fogalom" title="szemafor">szemafort</span> használunk. Egy &#132;üres&#148; nevű <span class="fogalom" title="szemafor">szemafor</span> tartalmazza a tároló üres helyeinek a számát. Ennek csökkentését a gyártófolyamat végzi, növelését a fogyasztó. Egy új áru berakásakor az üres helyek száma csökken, ha eléri a nullát, azaz megtelik a tároló, a hívó folyamat (gyártó) elalszik. Egy &#132;tele&#148; nevű <span class="fogalom" title="szemafor">szemaforral</span> a tároló foglalt helyeit számoljuk. Ennek csökkentését a fogyasztó, növelését a gyártó végzi. Ha a foglalt helyek száma eléri a nullát, azaz kiürül a tároló, akkor a hívó folyamat (fogyasztó) elmegy aludni. A harmadik &#132;mutex&#148; nevű <span class="fogalom" title="szemafor">szemaforral</span> pedig a közös <span class="fogalom" title="erőforrás">erőforrás</span> (tároló) elérését szabályozzuk. A tárolót egy időben legfeljebb csak egy folyamat érheti el, nehogy a tároló adatszerkezete inkonzisztens állapotba kerüljön. Az ilyen típusú <span class="fogalom" title="szemafor">szemaforokat</span>, amelyeknek csak két állását (az egy vagy a nulla) használjuk, és feladatuk, hogy egy időben legfeljebb csak egy folyamat lehessen <span class="fogalom" title="kritikus szakasz">kritikus szakaszban</span>, <strong>bináris szemaforoknak (</strong><span class="fogalom" title="mutex"><strong>mutex</strong></span><strong>)</strong> nevezzük. Ez olyan, mint a vonatok irányításánál használt <span class="fogalom" title="szemafor">szemafor</span>. Ha egy vonat egy pályaszakaszhoz ér, és a <span class="fogalom" title="szemafor">szemafor</span> szabad jelzést mutat, akkor a vonat továbbhalad a védett pályaszakaszra, és bezárja maga mögött a <span class="fogalom" title="szemafor">szemafort</span>. Ha egy másik vonat is ehhez a pályaszakaszhoz ér, és egy lezárt <span class="fogalom" title="szemafor">szemafort</span> lát, akkor megáll, és megvárja, míg a <span class="fogalom" title="szemafor">szemafor</span> ki nem nyílik.</p><div class="forraskod"><div class="bekezdes1cm">
+#define KAPACITÁS 100
+szemafor mutex = 1;
+szemafor üres = KAPACITÁS;
+szemafor tele = 0;
+void gyártó() {
+while(1) {
+gyárt();
+down(&#38;üres);   // Az üres helyek száma csökken,
+// ha nincs üres hely, akkor alvás.
+down(&#38;mutex);  // A kritikus szakasz kezdete.
+berak();       // A kritikus művelet.
+up(&#38;mutex);    // A kritikus szakasz vége.
+up(&#38;tele);     // A tele helyek száma nő, ha alszik egy fogyasztó,
+// mert erre várt, akkor az felébred.
+}
+}
+void fogyasztó() {
+while(1) {
+down(&#38;tele);   // A tele helyek száma csökken, ha nincs tele hely,
+// azaz kiürült, akkor alvás.
+down(&#38;mutex);  // A kritikus szakasz kezdete.
+kivesz();      // A kritikus művelet.
+up(&#38;mutex);    // A kritikus szakasz vége.
+up(&#38;üres);     // Az üres helyek száma nő, ha alszik egy gyártó,
+// mert erre várt, akkor az felébred.
+}
+}
+</div>
+</div><p>A példában a <span class="fogalom" title="szemafor">szemaforok</span> kétféle felhasználását is láthatjuk. Az egyik, hogy a <span class="fogalom" title="kritikus szakasz">kritikus szakaszokra</span> kölcsönös kizárást biztosítsunk, erre használtuk a &#132;mutex&#148; nevű bináris <span class="fogalom" title="szemafor">szemafort</span>. A másik felhasználása, hogy bizonyos esetekben folyamatokat elaltassunk, illetve felébresszünk. Tehát folyamatokat szinkronizálhatunk <span class="fogalom" title="szemafor">szemaforok</span> segítségével.</p><p class="vissza"><a href="#fejezetek">Vissza a tartalom<span class="gyorsb">j</span>egyzékhez</a></p> 
+  </div>
+</div>
+<div class="utmutato_also">
+  <div class="utm_hivatkozasok_also"><a class="oldalteteje" accesskey="f" href="#teteje"><span class="gyorsb">F</span>el a lap tetejére</a>
+  <a class="elozotanlap" id="navialsoelozo" href="lecke8_lap1.html"><img src="navi/ikon_elozolap.gif" alt="Ugrás a tananyag előző oldalára" title="Ugrás a tananyag előző oldalára" width="36" height="36" /></a>
+  <a id='navialsokov' class="kovetktanlap" href="lecke8_lap3.html" ><img src="navi/ikon_kovetklap.gif" alt="Ugrás a tananyag következő oldalára" title="Ugrás a tananyag következő oldalára" width="36" height="36"/></a>
+  </div>
+</div>
+<div class="ki_stilus"></div>
+<div class="impresszum">
+  <table class="uszt">
+    <tr>
+      <td><div class="imp_eltetatklogo"><img alt="ELTE és ELTE TáTK logó" src="css/arculat/elte_plus_tatk.png" style="width:100%;height:auto;" /></div>
+        <div class="imp_elteiklogo"><img alt="ELTE és ELTE IK logó" src="css/arculat/elte_plus_ik.png" style="width:100%;height:auto;" /></div></td>
+      <td><div class="imp_uszt"><img alt="Új Széchenyi terv" src="css/arculat/USZT_logo_cmyk.jpg" style="width:100%;height:auto;" /></div></td>
+      <td><div class="imp_eu"><img alt="A projekt az Európai Unió támogatásával, az Európai Szociális Alap társfinanszirozásával valósul meg." title="A projekt az Európai Unió támogatásával, az Európai Szociális Alap társfinanszirozásával valósul meg." src="css/arculat/ESZA.png" style="width:100%;height:auto;"/></div></td>
+    </tr>
+  </table>
+</div>
+</body>
+</html>

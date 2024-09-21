@@ -1,0 +1,365 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="hu" lang="hu">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="css/scormelte_alap.css" rel="stylesheet" type="text/css" title="" />
+<link href="css/style_spec.css" rel="stylesheet" type="text/css" />
+<link href="css/scormelte_nagy.css" rel="alternate stylesheet" type="text/css" title="nagy" />
+<link href="css/scormelte_inverz.css" rel="alternate stylesheet" type="text/css" title="inverz" />
+<!--[if lte IE 6]>
+<link href="css/scormelte_ie6.css" rel="stylesheet" type="text/css" title="" />
+<![endif]-->
+<!-- syntax highlight -->
+<link rel="stylesheet" type="text/css" href="css/shCore.css" />
+<link rel="stylesheet" type="text/css" href="css/shThemeDefault.css" />
+<script type="text/javascript" src="js/shCore.js"></script>
+<script type="text/javascript" src="js/shBrushCpp.js"></script>
+<script type="text/javascript" src="js/shBrushCSharp.js"></script>
+<script type="text/javascript" src="js/shBrushDelphi.js"></script>
+<script type="text/javascript" src="js/shBrushXml.js"></script>
+<script type="text/javascript" src="js/shBrushCss.js"></script>
+<script type="text/javascript" src="js/shBrushJScript.js"></script>
+<script type="text/javascript" src="js/shBrushSql.js"></script>
+<script type="text/javascript">
+SyntaxHighlighter.all()
+</script>
+<title>
+Számítógépes alapismeretek II. / 
+Esettanulmány az operációs rendszerbeli funkciók (OS funkciók) megvalósításához
+/Ütemezés</title>
+<meta name="description" content="A tananyag  fejlesztése a TÁMOP-4.1.2.A/2-10/1 pályázat keretén belül történt." />
+<meta name="keywords" content="Hardver alapismeretek, operációs rendszer, számítógépes alapismeretek, operációs rendszer fogalma, operációs rendszerek története, operációs rendszer feladata, operációs rendszer generációk, operációs rendszer típusok, folyamatok, folyamat táblázat, szál &ndash; folyamatok, rendszerhívások, operációs rendszer struktúrák, kernelmód, kernel, felhasználói mód, B/K művelet, folyamatok modellje, szinkron rendszerhívás, asszinkron rendszerhívás, állapotai, megvalósításuk, folyamatok kommunikációja, IPC (Inter Process Communication), megszakítástábla, IDT, megszakításvezérlő, PIC, megszakítás, interrupt, megszakításkérelem, IRQ, megszakításkezelési folyamat, kivétel, hibakeresés (debuggolás), töréspont, fájlrendszer, MBR, partíciós szektor, Ntldr, klaszter (cluster), szektor, FAT, NTFS, ext, TSS, csapda, ütemezés, szál, szemafor, mutex, monitor, POSIX, szignál, osztott memória, csővezeték, kritikus szakasz, Wybe Dijkstra, CPU, erőforrás, holtpont, kiéheztetés, integrált áramkör, multiprogramozás, beágyazott rendszerek, partíció, MMU, lapcsere, FIFO, socket, lapozás, swap, interaktív rendszer, kötegelt rendszer, kliens, job, jogosultság, metaadat, könyvtár, UNIX, GNU/LINUX, erőforrás-foglalási gráf, fizikai memória, virtuális memória, merevlemez, floppy, fregmentáció, defregmentáló program, MFT, API, i-node, cache memory, SSH, HyperThread, párhuzamosság" />
+<script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="js/kep.js"></script>
+<script type="text/javascript" src="js/jquery.media.js"></script>
+<script type="text/javascript" src="js/jquery.highlight-3.js"></script>
+<script type="text/javascript" src="js/kereses.js"></script>
+<script type="text/javascript" src="js/stylesheetToggle.js"></script>
+<script type="text/javascript" src="js/cookie.js"></script>
+<script type="text/javascript" src="js/stilusvalto.js"></script>
+<script type="text/javascript" src="js/fogalmak.js"></script>
+<script type="text/javascript" src="js/fogalom.js"></script>
+<script type="text/javascript" src="js/jwplayer.js"></script>
+<script type="text/javascript">
+$(document).ready(function() 
+{
+$("a.hang").media( {width: 250, height: 50,  autoplay: false} );
+});
+</script>
+<script type="text/javascript" src="js/navigacio.js"></script>
+</head>
+<body>
+<div><a name="teteje"  id="teteje"></a></div>
+<div class="jawsfmenu">
+  <ul>
+    <li><a class="tartalom" href="#tartalom" accesskey="t" tabindex="2">Ugrás a <span class="gyorsb">t</span>artalomra</a></li>
+    <li><a class="tartalomj" href="#fejezetek" accesskey="j" tabindex="5">Ugrás a tartalom<span class="gyorsb">j</span>egyzékre</a></li>
+    <li><a class="tanutm" href="#tanutm" accesskey="u" tabindex="7">Ugrás a tan<span class="gyorsb">u</span>lási útmutatóra</a></li>
+  </ul>
+</div>
+<div class="ki_kereses"></div>
+<div class="oldal">
+  <div class="utmutato">
+    <div class="utm_hivatkozasok"><span class="elozolap"><img src="navi/ikon_vissza_dis.gif" alt="Vissza az előzőleg látogatott oldalra (nem elérhető funkció)" title="Vissza az előzőleg látogatott oldalra (nem elérhető funkció)" /></span><a class="kezdolap" href="index.html" accesskey="p" tabindex="21"><img src="navi/ikon_kezdolap.gif" alt="Vissza a modul kezdőlapjára" title="Vissza a modul kezdőlapjára" width="36" height="36"/></a><a class="elozotanlap" href="lecke12_lap3.html" accesskey="e" tabindex="22"><img src="navi/ikon_elozolap.gif" alt="Ugrás a tananyag előző oldalára" title="Ugrás a tananyag előző oldalára" width="36" height="36" /></a><a class="kovetktanlap" href="lecke12_lap5.html" accesskey="v" tabindex="23"><img src="navi/ikon_kovetklap.gif" alt="Ugrás a tananyag következő oldalára" title="Ugrás a tananyag következő oldalára" width="36" height="36"/></a><span class="ki_fogalomkapcs"><img src="navi/ikon_fogalmakbe_dis.gif" alt="Fogalom megjelenítés (nem elérhető funckió)" title="Fogalom megjelenítés (nem elérhető funckió)" /></span><span class="ki_fogalomlista"><img src="navi/ikon_fogalmaklista_dis.gif" alt="Fogalmak listája (nem elérhető funkció)" title="Fogalmak listája (nem elérhető funkció)" /></span><span class="ki_nyomtatas"><img src="navi/ikon_nyomtatas_dis.gif" alt="Oldal nyomtatása (nem elérhető funkció)" title="Oldal nyomtatása (nem elérhető funkció)" /></span><a class="oldalterkep" href="oldalterkep.html" accesskey="d" tabindex="31"><img src="navi/ikon_oldalterkep.gif" alt="Oldaltérkép megtekintése" title="Oldaltérkép megtekintése"  width="36" height="36" /></a><a class="sugo" href="sugo.html" accesskey="s" tabindex="33"><img src="navi/ikon_sugo.gif" alt="Súgó megtekintése" title="Súgó megtekintése"  width="36" height="36" /></a></div>
+  </div>
+  <div class="tartalommenu">
+    <div class="tartalommenu_fejlec"><span id="lapteteje"><a  href="#teteje"><span class="gyorsb">F</span>el a lap tetejére</a></span><a name="fejezetek"   id="fejezetek">Tartalomjegyzék</a></div>
+    <ul><li><a href="#hiv1">Esettanulmány az operációs rendszerbeli funkciók (OS funkciók) megvalósításához</a><ul><li><a href="#hiv2">Ütemezés</a></li></ul></li></ul> 
+  </div>
+  <div class="tartalom"> <a name="tartalom"    id="tartalom"></a> 
+    <h1><a name="hiv1" id="hiv1"></a>Esettanulmány az operációs rendszerbeli funkciók (OS funkciók) megvalósításához</h1><h2><a name="hiv2" id="hiv2"></a>Ütemezés</h2><p>A látszatpárhuzamosság megvalósításához időzítőre és <span class="fogalom" title="ütemezés">ütemezésre</span> van szükségünk. Az időzítő szimulációját már korábban láttuk, miszerint időegységenként SIGALRM jelzést kapunk. A jelzés kezelője meghívja a &#132;workspace&#148; osztályunk &#132;schedule&#148; függvényét. </p><p>Most nézzük meg a &#132;workspace&#148; osztály interfészét. A &#132;workspace&#148; osztály tartalmaz egy taszktáblát, egy ütemezőt (a &#132;schedule&#148; az ütemező osztály egy példánya), az aktuális (processzoron lévő) folyamat (_current_task, azonosítóját, az ütemező és <span class="fogalom" title="rendszerhívás">rendszerhívást</span> kezelő eljárást, illetve még néhány segédeljárást.</p><div class="forraskod"><div class="bekezdes1cm">
+/*************************   opr_workspace.h   **********************/
+#ifndef __OPR_WORKSPACE_H 
+#define __OPR_WORKSPACE_H 
+#include "opr_task.h" 
+#include "opr_sched.h" 
+#include "debug.h" 
+#include &lt;fstream&gt; 
+class workspace { 
+     public: 
+          workspace( const char * kernel_filename, 
+              const char * idle_filename, int max_task_count = 100 ); 
+          // Egy új taszk létrehozása és indítása. 
+          void task_create(const char* task_filename ); 
+          // Az ütemező hívása, amely lecseréli a taszkot, ha szükséges. 
+          void schedule( const char* s ); 
+          // A rendszerhívások kiszolgálása. 
+          void syscall(); 
+     
+     private: 
+          // ADATOK 
+          // A taszkok technikai adatai: 
+          task_table _task_table; 
+          // Az ütemezési adatokat tároló: 
+          schedule _sched; 
+          // Az aktuális taszk PID-je: 
+          int _current_task; 
+          int _max_task_count; 
+          // A fájlnév a kulcs generáláshoz: 
+          const char * _kernel_filename; 
+          
+           // FÜGGVÉNYEK 
+          // A taszkváltás a processzoron: 
+          void task_change( int next_task ); 
+          // A taszk törlése: 
+          void task_delete(); 
+          
+     public:
+          //DEBUG
+          debug sched_debug; 
+          char * buffer; 
+}; 
+#endif
+</div>
+</div><p>A &#132;schedule&#148; függvény végzi az <span class="fogalom" title="ütemezés">ütemezést</span>, illetve az ütemezőnek készítettünk egy saját osztályt; ennek a &#132;next_running&#148; nevű függvénye megadja, hogy melyik legyen a következő folyamat, majd a &#132;task_change&#148; függvénnyel lecseréljük a processzoron a folyamatokat.</p><div class="forraskod"><div class="bekezdes1cm">
+/*************************   opr_workspace.cpp   **********************/
+#include "opr_workspace.h" 
+#include &lt;sys/types.h&gt; 
+#include &lt;signal.h&gt; 
+#include &lt;iostream&gt; 
+#include &lt;stdio.h&gt; 
+     
+     
+// Létrehozza a tárolókat és az IDLE taszkot. 
+workspace::workspace( const char * kernel_filename, 
+    const char * idle_filename, int max_task_count ) : 
+      _task_table(max_task_count),  _sched(max_task_count), 
+      _kernel_filename(kernel_filename), sched_debug("sched_debug") { 
+          int idle_pid = _task_table.task_create( idle_filename, 
+                                                    kernel_filename ); 
+          _sched.init( idle_pid ); 
+          _current_task = idle_pid; 
+          buffer = (char*)malloc(1024); 
+          _max_task_count = max_task_count; 
+} 
+     
+// Az ütemező függvény: 
+void workspace::schedule( const char* s ) { 
+     int next_task = _sched.next_running( _current_task ); 
+     
+     /**********DEBUG**************/ 
+     sched_debug.file &lt;&lt; s &lt;&lt; ", current: " &lt;&lt; 
+                       _current_task &lt;&lt; ", next: " &lt;&lt; next_task; 
+     sched_debug.file &lt;&lt; "  ["; 
+     for( int i = 0; i &lt; _max_task_count; ++i ) 
+          sched_debug.file &lt;&lt; "(" &lt;&lt; _task_table.task(i).lin_pid() 
+                   &lt;&lt; "," &lt;&lt; _sched.get_state(i) &lt;&lt; "," &lt;&lt; 
+                   _sched.prev(i) &lt;&lt; "," &lt;&lt; _sched.next(i) &lt;&lt; ")"; 
+     sched_debug.file &lt;&lt; "]" &lt;&lt;std::endl;
+     /**********DEBUG**************/ 
+     
+     task_change( next_task );
+}
+// Taszkváltás a processzoron: 
+void workspace::task_change( int next_task ) { 
+     
+     // Az aktuális taszk leállítása, ha létezik: 
+     if( _sched.get_state(_current_task) == sched::READY || 
+         _sched.get_state(_current_task) == sched::BLOCKED ) 
+            _task_table.task(_current_task).task_stop(); 
+     
+     // A következő taszk állapotának a beállítása és 
+     // a taszk processzorra adása: 
+     _current_task = next_task; 
+     _task_table.task(next_task).task_continue(); 
+} 
+     
+// Új taszk létrehozása: 
+void workspace::task_create(const char* task_filename ) { 
+     int pid = _task_table.task_create( task_filename, _kernel_filename ); 
+     if( pi d&gt;= 0 ) { 
+          _sched.task_create( pid ); 
+     } 
+} 
+     
+// Az aktuális taszk törlése:
+// Töröljük a nyilvántartásból és ütemezőt hívunk, 
+// hogy másik taszk fusson helyette.
+void workspace::task_delete() { 
+     int pid = _current_task; 
+     _current_task = _sched.prev(_current_task); 
+     _sched.task_delete( pid ); 
+     _task_table.task_delete( pid ); 
+     sprintf( buffer, "task_delete(%d)", pid); // debug 
+     schedule( buffer ); 
+} 
+     
+// A rendszerhívásokat kezelő függvény: 
+void workspace::syscall() { 
+     
+     // Az aktuális taszk rendszerhívás adatait tároló 
+     // osztott memória: 
+     int * task_sh_mem = 
+           (int*) _task_table.task(_current_task).syscall_mem();
+     
+     // A rendszerhívások: 
+     switch( task_sh_mem[0] ) { 
+     
+          case 0:  // exit() 
+               task_delete(); 
+               break; 
+               
+          case 1:  // getpid() 
+               task_sh_mem[0] = _current_task; 
+               _task_table.task(_current_task).task_continue(); 
+                break; 
+               
+          default:  // default exit() 
+               task_delete(); 
+               break; 
+     } 
+}
+</div>
+</div><p>Round-robin <span class="fogalom" title="ütemezés">ütemezést</span> használunk: amelynél a taszkokat &#132;körbeállítjuk&#148;, minden taszk ugyanakkora időszeletet kap. Ha egy taszknak lejár az időszelete, vagy blokkolódik, a következő futtatható taszkot futtassuk. A rendszer betöltésekor létrehozunk egy üresjárati folyamatot (IDLE), amelyet csak akkor futtatunk, ha nincs más futtatható folyamat. A taszkokat egy kétirányú fejelemes listában tároljuk, ahol a fejelem az IDLE folyamat (6.1. és 6.2. ábrák forrása: Horváth Gábor: <em>Bepillantás az operációs rendszerek világába)</em>.</p><!--fej12_kep_2--><div class="kep kozep sz350"><img src="kepek/fej12_kep2_w350.jpg" alt="A képen Round Robin megvalósítása két mutatóval látható" style="width:100%; height:auto;" title="A képen Round Robin megvalósítása két mutatóval látható" /><span class="kepalairas">Round Robin megvalósítása két mutatóval</span></div><div class="uresmargo"></div><!--ENDfej12_kep_2--><!--fej12_kep_3--><div class="kep kozep sz400"><img src="kepek/fej12_kep3_w400.jpg" alt="A képen egyetlen futtatható taszk mutatói láthatóak" style="width:100%; height:auto;" title="A képen egyetlen futtatható taszk mutatói láthatóak" /><span class="kepalairas">Egyetlen futtatható taszk mutatói</span></div><div class="uresmargo"></div><!--ENDfej12_kep_3--><p>A listát statikusan egy vektorban tároljuk, ahol minden folyamat a PID-jének megfelelő indexű helyen van, így egy folyamatot konstans idő alatt el lehet érni. A folyamatok állapotait, a megelőző és a következő listaelem indexét tároljuk a vektorban. </p><p>A folyamatoknak (<span class="fogalom" title="ütemezés">ütemezés</span> szempontjából) kétféle állapotuk lehet: futáskész/futtatható (READY) és blokkolt (BLOCKED). A futtatható taszkokat lehet processzorra rakni, a szimulációban az éppen futó folyamatnak is READY lesz az állapota (a szakirodalomban RUNNING); a _current_task változó amúgy is tartalmazza az aktuális folyamatot, ezért nem szükséges egy új állapot bevezetése. A blokkolt folyamatokat az ütemező nem fogja kiválasztani, tehát a folyamatok várakoztatását úgy valósítjuk meg, hogy a folyamat állapotát BLOCKED-ra állítjuk. Az UNUSED állapotot a vektor nem használt, &#132;üres&#148; helyei esetén használjuk. </p><div class="forraskod"><div class="bekezdes1cm">
+/*************************   opr_sched.h   **********************/
+#ifndef __OPR_SCHED_H 
+#define __OPR_SCHED_H 
+#include &lt;vector&gt; 
+class sched { 
+     public: 
+          // A taszkok állapotai, UNUSED jelzi, hogy a vektor 
+          // cellája üres, azaz a taszk nem létezik. 
+          enum states{ UNUSED, READY, BLOCKED }; 
+          sched( int max_task_count = 100 ): 
+                _table(max_task_count), _head(-1)  
+          
+          // A listát inicializálja, berakja a fejelemet stb. 
+          void init( int idle_pid ); 
+          // Egy új taszk keletkezésekor be kell rakni az ütemezőbe. 
+          bool task_create( int pid ); 
+          // Egy taszk megszűnésekor ki kell venni az ütemezőből. 
+          bool task_delete( int pid ); 
+          // Megkeresi a következő taszkot, amelyiknek átadható a 
+          // processzor. 
+          int next_running( int akt ); 
+          // A pid taszk állapota: 
+          // states&#38; state( int pid ) { return _table[pid]._state; } 
+          states get_state( int pid ); 
+          void set_state( int pid, states s ); 
+          
+          // Egy taszk megelőzője a listában. 
+          int prev( int pid ){  return _table[pid]._prev; } 
+          // Egy taszk következője a listában. 
+          int next( int pid ){  return _table[pid]._next; } 
+          
+     private: 
+          // A lista egy eleme: 
+          struct node { 
+               node() : _state(UNUSED)  
+               states _state; // a taszk állapota 
+               int _prev,_next; // mutatók lista láncolásához 
+          }; 
+          
+          std::vector&lt;node&gt; _table; // a listát tároló vektor 
+          int _head; // a fejelemre (IDLE) mutató 
+          
+          // segédfüggvények a lista kezeléshez 
+          void head_create( int head_pid ); 
+          void list_in( int pid ); 
+          void list_out( int pid ); 
+}; 
+#endif
+</div>
+</div><p>Az ütemező osztályunk &#132;next_running&#148; függvénye határozza meg a következő futtatható taszk azonosítóját. Ezt hívja meg a &#132;workspace&#148; ütemező eljárása. A függvény bemenő paramétere az aktuális folyamat azonosítója, és ehhez képest keresi a listában a következő futtathatót, de az IDLE folyamatot csak akkor választja, ha nincs más futtatható folyamat a listában. Ez tulajdonképpen a listán való lineáris keresés. A többi függvény folyamat létrehozása, törlése, illetve listakezelési műveletek segédfüggvényei.</p><div class="forraskod"><div class="bekezdes1cm">
+/*************************   opr_sched.cpp   **********************/
+#include "opr_sched.h" 
+// Létrehozza a fejelemet (IDLE), és futáskészre állítja. 
+void sched::init( int idle_pid ) { 
+     head_create( idle_pid ); 
+     _table[idle_pid]._state = READY; 
+} 
+     
+// Egy új taszk nyilvántartásba vétele.
+bool sched::task_create( int pid ) { 
+     if( pid &gt;= 0 &#38;&#38; pid &lt; _table.size()  ) { 
+          list_in( pid ); 
+          _table[pid]._state = READY; 
+          return true; 
+     } else 
+          return false; 
+}
+     
+// A taszk törlése az ütemezőből. 
+bool sched::task_delete( int pid ) { 
+     if( pid &gt;= 0 &#38;&#38; pid &lt; _table.size() &#38;&#38; pid != _head ) { 
+           list_out( pid ); 
+          _table[pid]._state = UNUSED; 
+          return true; 
+     } else 
+          return false; 
+} 
+     
+// Egy taszk állapotának a lekérdezése. 
+sched::states sched::get_state( int pid ){ 
+     if( pid &gt;= 0 &#38;&#38; pid &lt; _table.size() ) 
+          return _table[pid]._state; 
+     else 
+          return UNUSED; 
+} 
+     
+// Egy taszk állapotának a beállítása. 
+void sched::set_state( int pid, states s ) { 
+     if( pid &gt;= 0 &#38;&#38; pid &lt; _table.size() &#38;&#38; pid != _head ) 
+          _table[pid]._state = s; 
+} 
+     
+// A következő futtatható taszk keresése round-robin szerint, 
+// a lista következő futtatható taszkja, de az IDLE-t csak akkor 
+// választja, ha nincs más futtatható. 
+int sched::next_running( int akt ) { 
+     // Menjünk körbe a listán, és keressük az első futáskész 
+     // taszkot, de az IDLE-t ugorjuk át. 
+     int pid = _table[akt]._next; 
+     while( pid != akt  &#38;&#38;  ( _table[pid]._state != READY  
+            ||  pid==_head ) ) 
+               pid = _table[pid]._next; 
+     
+     // Ha nem találtunk futáskész taszkot, és az aktuális 
+     // sem folytatható, akkor IDLE. 
+          if(  _table[pid]._state != READY ) 
+               pid = _head; 
+     
+     return pid; 
+}
+     
+// A fejelem létrehozása a listában. 
+void sched::head_create( int head_pid ) { 
+     _table[head_pid]._next = head_pid; 
+     _table[head_pid]._prev = head_pid; 
+     _head = head_pid; 
+} 
+// Egy új node beszúrása a listába. 
+void sched::list_in( int pid ) { 
+     _table[pid]._next = _head; 
+     _table[pid]._prev = _table[_head]._prev; 
+     _table[_table[_head]._prev]._next = pid; 
+     _table[_head]._prev = pid; 
+} 
+// Egy node törlése a listából. 
+void sched::list_out( int pid ){ 
+     _table[_table[pid]._prev]._next = _table[pid]._next; 
+     _table[_table[pid]._next]._prev = _table[pid]._prev; 
+}
+</div>
+</div><p class="vissza"><a href="#fejezetek">Vissza a tartalom<span class="gyorsb">j</span>egyzékhez</a></p> 
+  </div>
+</div>
+<div class="utmutato_also">
+  <div class="utm_hivatkozasok_also"><a class="oldalteteje" accesskey="f" href="#teteje"><span class="gyorsb">F</span>el a lap tetejére</a>
+  <a class="elozotanlap" id="navialsoelozo" href="lecke12_lap3.html"><img src="navi/ikon_elozolap.gif" alt="Ugrás a tananyag előző oldalára" title="Ugrás a tananyag előző oldalára" width="36" height="36" /></a>
+  <a id='navialsokov' class="kovetktanlap" href="lecke12_lap5.html" ><img src="navi/ikon_kovetklap.gif" alt="Ugrás a tananyag következő oldalára" title="Ugrás a tananyag következő oldalára" width="36" height="36"/></a>
+  </div>
+</div>
+<div class="ki_stilus"></div>
+<div class="impresszum">
+  <table class="uszt">
+    <tr>
+      <td><div class="imp_eltetatklogo"><img alt="ELTE és ELTE TáTK logó" src="css/arculat/elte_plus_tatk.png" style="width:100%;height:auto;" /></div>
+        <div class="imp_elteiklogo"><img alt="ELTE és ELTE IK logó" src="css/arculat/elte_plus_ik.png" style="width:100%;height:auto;" /></div></td>
+      <td><div class="imp_uszt"><img alt="Új Széchenyi terv" src="css/arculat/USZT_logo_cmyk.jpg" style="width:100%;height:auto;" /></div></td>
+      <td><div class="imp_eu"><img alt="A projekt az Európai Unió támogatásával, az Európai Szociális Alap társfinanszirozásával valósul meg." title="A projekt az Európai Unió támogatásával, az Európai Szociális Alap társfinanszirozásával valósul meg." src="css/arculat/ESZA.png" style="width:100%;height:auto;"/></div></td>
+    </tr>
+  </table>
+</div>
+</body>
+</html>

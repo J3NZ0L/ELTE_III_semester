@@ -1,0 +1,329 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="hu" lang="hu">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="css/scormelte_alap.css" rel="stylesheet" type="text/css" title="" />
+<link href="css/style_spec.css" rel="stylesheet" type="text/css" />
+<link href="css/scormelte_nagy.css" rel="alternate stylesheet" type="text/css" title="nagy" />
+<link href="css/scormelte_inverz.css" rel="alternate stylesheet" type="text/css" title="inverz" />
+<!--[if lte IE 6]>
+<link href="css/scormelte_ie6.css" rel="stylesheet" type="text/css" title="" />
+<![endif]-->
+<!-- syntax highlight -->
+<link rel="stylesheet" type="text/css" href="css/shCore.css" />
+<link rel="stylesheet" type="text/css" href="css/shThemeDefault.css" />
+<script type="text/javascript" src="js/shCore.js"></script>
+<script type="text/javascript" src="js/shBrushCpp.js"></script>
+<script type="text/javascript" src="js/shBrushCSharp.js"></script>
+<script type="text/javascript" src="js/shBrushDelphi.js"></script>
+<script type="text/javascript" src="js/shBrushXml.js"></script>
+<script type="text/javascript" src="js/shBrushCss.js"></script>
+<script type="text/javascript" src="js/shBrushJScript.js"></script>
+<script type="text/javascript" src="js/shBrushSql.js"></script>
+<script type="text/javascript">
+SyntaxHighlighter.all()
+</script>
+<title>
+Számítógépes alapismeretek II. / 
+Memóriakezelés, alapvető módszerek, <span class="fogalom" title="virtuális memória">virtuális memória</span>, szegmentálás és megvalósításuk a mai processzorokban
+/Példa az osztott memória használatára, egy tömb rendezése </title>
+<meta name="description" content="A tananyag  fejlesztése a TÁMOP-4.1.2.A/2-10/1 pályázat keretén belül történt." />
+<meta name="keywords" content="Hardver alapismeretek, operációs rendszer, számítógépes alapismeretek, operációs rendszer fogalma, operációs rendszerek története, operációs rendszer feladata, operációs rendszer generációk, operációs rendszer típusok, folyamatok, folyamat táblázat, szál &ndash; folyamatok, rendszerhívások, operációs rendszer struktúrák, kernelmód, kernel, felhasználói mód, B/K művelet, folyamatok modellje, szinkron rendszerhívás, asszinkron rendszerhívás, állapotai, megvalósításuk, folyamatok kommunikációja, IPC (Inter Process Communication), megszakítástábla, IDT, megszakításvezérlő, PIC, megszakítás, interrupt, megszakításkérelem, IRQ, megszakításkezelési folyamat, kivétel, hibakeresés (debuggolás), töréspont, fájlrendszer, MBR, partíciós szektor, Ntldr, klaszter (cluster), szektor, FAT, NTFS, ext, TSS, csapda, ütemezés, szál, szemafor, mutex, monitor, POSIX, szignál, osztott memória, csővezeték, kritikus szakasz, Wybe Dijkstra, CPU, erőforrás, holtpont, kiéheztetés, integrált áramkör, multiprogramozás, beágyazott rendszerek, partíció, MMU, lapcsere, FIFO, socket, lapozás, swap, interaktív rendszer, kötegelt rendszer, kliens, job, jogosultság, metaadat, könyvtár, UNIX, GNU/LINUX, erőforrás-foglalási gráf, fizikai memória, virtuális memória, merevlemez, floppy, fregmentáció, defregmentáló program, MFT, API, i-node, cache memory, SSH, HyperThread, párhuzamosság" />
+<script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="js/kep.js"></script>
+<script type="text/javascript" src="js/jquery.media.js"></script>
+<script type="text/javascript" src="js/jquery.highlight-3.js"></script>
+<script type="text/javascript" src="js/kereses.js"></script>
+<script type="text/javascript" src="js/stylesheetToggle.js"></script>
+<script type="text/javascript" src="js/cookie.js"></script>
+<script type="text/javascript" src="js/stilusvalto.js"></script>
+<script type="text/javascript" src="js/fogalmak.js"></script>
+<script type="text/javascript" src="js/fogalom.js"></script>
+<script type="text/javascript" src="js/jwplayer.js"></script>
+<script type="text/javascript">
+$(document).ready(function() 
+{
+$("a.hang").media( {width: 250, height: 50,  autoplay: false} );
+});
+</script>
+<script type="text/javascript" src="js/navigacio.js"></script>
+</head>
+<body>
+<div><a name="teteje"  id="teteje"></a></div>
+<div class="jawsfmenu">
+  <ul>
+    <li><a class="tartalom" href="#tartalom" accesskey="t" tabindex="2">Ugrás a <span class="gyorsb">t</span>artalomra</a></li>
+    <li><a class="tartalomj" href="#fejezetek" accesskey="j" tabindex="5">Ugrás a tartalom<span class="gyorsb">j</span>egyzékre</a></li>
+    <li><a class="tanutm" href="#tanutm" accesskey="u" tabindex="7">Ugrás a tan<span class="gyorsb">u</span>lási útmutatóra</a></li>
+  </ul>
+</div>
+<div class="ki_kereses"></div>
+<div class="oldal">
+  <div class="utmutato">
+    <div class="utm_hivatkozasok"><span class="elozolap"><img src="navi/ikon_vissza_dis.gif" alt="Vissza az előzőleg látogatott oldalra (nem elérhető funkció)" title="Vissza az előzőleg látogatott oldalra (nem elérhető funkció)" /></span><a class="kezdolap" href="index.html" accesskey="p" tabindex="21"><img src="navi/ikon_kezdolap.gif" alt="Vissza a modul kezdőlapjára" title="Vissza a modul kezdőlapjára" width="36" height="36"/></a><a class="elozotanlap" href="lecke10_lap3.html" accesskey="e" tabindex="22"><img src="navi/ikon_elozolap.gif" alt="Ugrás a tananyag előző oldalára" title="Ugrás a tananyag előző oldalára" width="36" height="36" /></a><a class="kovetktanlap" href="teszt/lecke10/teszt.html" accesskey="v" tabindex="23"><img src="navi/ikon_kovetklap.gif" alt="Ugrás a tananyag következő oldalára" title="Ugrás a tananyag következő oldalára" width="36" height="36"/></a><span class="ki_fogalomkapcs"><img src="navi/ikon_fogalmakbe_dis.gif" alt="Fogalom megjelenítés (nem elérhető funckió)" title="Fogalom megjelenítés (nem elérhető funckió)" /></span><span class="ki_fogalomlista"><img src="navi/ikon_fogalmaklista_dis.gif" alt="Fogalmak listája (nem elérhető funkció)" title="Fogalmak listája (nem elérhető funkció)" /></span><span class="ki_nyomtatas"><img src="navi/ikon_nyomtatas_dis.gif" alt="Oldal nyomtatása (nem elérhető funkció)" title="Oldal nyomtatása (nem elérhető funkció)" /></span><a class="oldalterkep" href="oldalterkep.html" accesskey="d" tabindex="31"><img src="navi/ikon_oldalterkep.gif" alt="Oldaltérkép megtekintése" title="Oldaltérkép megtekintése"  width="36" height="36" /></a><a class="sugo" href="sugo.html" accesskey="s" tabindex="33"><img src="navi/ikon_sugo.gif" alt="Súgó megtekintése" title="Súgó megtekintése"  width="36" height="36" /></a></div>
+  </div>
+  <div class="tartalommenu">
+    <div class="tartalommenu_fejlec"><span id="lapteteje"><a  href="#teteje"><span class="gyorsb">F</span>el a lap tetejére</a></span><a name="fejezetek"   id="fejezetek">Tartalomjegyzék</a></div>
+    <ul><li><a href="#hiv1">Memóriakezelés, alapvető módszerek, virtuális memória, szegmentálás és megvalósításuk a mai processzorokban</a><ul><li><a href="#hiv2">Az osztott memória használata </a><ul><li><a href="#hiv3">Példa az osztott memória használatára, egy tömb rendezése </a></li><li><a href="#hiv4">Példa az osztott memória használatára, az osztott memória létrehozása, olvasása, írása és törlése </a></li></ul></li><li><a href="#hiv5">Memória kezelése modern rendszerekben ( A Microsoft Windows memóriakezelési modellje ) </a></li><li><a href="#hiv6">Memória használat felosztása Windows Rendszerekben</a><ul><li><a href="#hiv7">Privilégium szintek</a></li></ul></li></ul></li></ul> 
+  </div>
+  <div class="tartalom"> <a name="tartalom"    id="tartalom"></a> 
+    <h1><a name="hiv1" id="hiv1"></a>Memóriakezelés, alapvető módszerek, virtuális memória, szegmentálás és megvalósításuk a mai processzorokban</h1><h2><a name="hiv2" id="hiv2"></a>Az osztott memória használata </h2><h3><a name="hiv3" id="hiv3"></a>Példa az osztott memória használatára, egy tömb rendezése </h3><p>A következő példában az osztott memóriaterületet egy tömb rendezésére használjuk. Az alapgondolat az, hogy osszuk két körülbelül azonos hosszúságú részre az elemeket, ezeket tároljuk az <span class="fogalom" title="osztott memória">osztott memória</span> egyik, illetve másik felében, ezeket rendezzük külön-külön szülő-gyermek kapcsolatrendszerben, majd &ndash; mivel mind a két <span class="fogalom" title="szál">szál</span> ugyanannak a területnek a két részét használja &ndash; futassuk őket össze. A program paraméterekkel is indítható, amivel megadhatjuk az elemszámot, illetve az első kezdetének és végének az értékét.</p><!--{fej10_letoltes_1}--><div class="allomanyletoltes"><ul><li><strong>Fájl letöltése:</strong> <a href="letoltes/10_fel1.c">Az alábbi programot ide kattintva lehet letölteni! <span class="jaws">című háttéranyag letöltése</span> </a></li><li><strong>Információ az állományról: </strong></li><li><strong>Fájlméret:</strong> 4.99 <abbr title="kilobájt">KB</abbr></li></ul></div><!--END{fej10_letoltes_1}--><div class="forraskod"><div class="bekezdes1cm">
+// A szükséges könyvtári állományok 
+#include &lt;sys/ipc.h&gt; 
+#include &lt;sys/shm.h&gt; 
+#include &lt;sys/types.h&gt; 
+#include &lt;stdio.h&gt; 
+#include &lt;stdlib.h&gt; 
+#include &lt;string.h&gt; 
+#include &lt;unistd.h&gt; 
+#include &lt;wait.h&gt; 
+// A maximális elemszámot definiáló konstans 
+#define ELEMSZAM 50 
+// Az &#132;osztott&#148; azonosítójú memóriaterületet db véletlen elemmel tölti fel 
+void mem_feltolt( int osztott, int db ) { 
+     printf("\nEz a program tetszoleges szamu egesz szamot general, amelyeket\n"); 
+     printf("az osztott memoriaba ir, majd rendezi oket es visszairja oda azokat.\n"); 
+     printf("\nrendezendo elemek, amelyeket a veletlenszam-generator csinal:\n");
+     int i, *buffer; 
+     buffer = shmat ( osztott, NULL, 0 ); 
+     srand(time(NULL)); 
+     for(i=0; i&lt;db; ++i)
+         buffer[i] = rand() % 100; 
+    shmdt( buffer ); 
+} 
+/* 
+Az sh_med_id azonosítójú osztott memóriaterület [tol1,ig1] indexintervallumba eső már rendezett elemeit összefuttatja a [tol2,ig2] indexintervallumba eső, már szintén rendezett elemekkel 
+*/ 
+void merge(int sh_mem_id, int tol1, int ig1, int tol2, int ig2) { 
+     int *eredm, *v1, *v2, d1, d2; 
+     eredm = shmat(sh_mem_id, NULL, 0); 
+     
+     d1 = ig1 &ndash; tol1 + 1; 
+     d2 = ig2 &ndash; tol2 + 1; 
+     v1 = malloc(d1 * sizeof(int)); 
+     v2 = malloc(d2 * sizeof(int)); 
+     
+     memcpy(v1, &#38;eredm[tol1], d1 * sizeof(int)); 
+     memcpy(v2, &#38;eredm[tol2], d2 * sizeof(int)); 
+     
+     int i = 0; 
+     int j = 0; 
+     int k = tol1; 
+    while( i &lt; d1 &#38;&#38; j &lt; d2 )  {
+     if( v1[i]&lt;v2[j] ) { 
+          eredm[k] = v1[i]; 
+          ++i; ++k; 
+     } else if( v1[i] &gt; v2[j]) { 
+          eredm[k] = v2[j]; 
+          ++j; ++k; 
+     } else { 
+          eredm[k] = v1[i]; 
+          eredm[k+1] = v2[j]; 
+          ++i; ++j; k = k+ 2; 
+     } 
+     }
+     while( i &lt; d1 ) { 
+          eredm[k] = v1[i]; 
+          ++i; 
+          ++k; 
+     }
+     while( j &lt; d2 ) { 
+          eredm[k] = v2[j]; 
+          ++j; 
+          ++k; 
+     }
+     
+    shmdt(eredm);
+    free(v1);
+    free(v2);
+} 
+// A rendezett sorozatot a képernyőre írja
+void kiir(int sh_mem_id) { 
+     int *v; 
+     v = shmat(sh_mem_id,NULL,0 ); 
+     int i; 
+     for( i = 0; i &lt; ELEMSZAM; ++i ) 
+          printf("%d\t", v[i]); 
+     shmdt(v); 
+} 
+// Két elem összehasonlítását végző függvény
+int intcmp(const void * a, const void * b) { 
+     return *((int *)a) &gt; *((int *)b); 
+} 
+// A főprogram
+int main (int argc, char ** argv) { 
+     pid_t ch1, ch2; 
+     int sh_mem_id; 
+     int index_tol, index_ig; 
+/* 
+     if( argc &lt; 3 ) 
+     { 
+          sh_mem_id = shmget( ftok(argv[0],1), ELEMSZAM*sizeof(int),  0700 | IPC_CREAT ); 
+          index_tol = 0; 
+          index_ig  = ELEMSZAM &ndash; 1; 
+          mem_feltolt( sh_mem_id, ELEMSZAM ); 
+          kiir(sh_mem_id); 
+     } else 
+ */
+     if (argc &gt; 2) { 
+          sh_mem_id = atoi(argv[0]); 
+          index_tol = atoi(argv[1]); 
+          index_ig  = atoi(argv[2]); 
+          if( (index_ig-index_tol)&gt;10 ) { 
+               ch1 = ch2 = -1; 
+               ch1 = fork (); 
+               if( ch1&gt;0 ) ch2 = fork(); 
+               if( ch1&gt;0 &#38;&#38; ch2&gt;0 ) { 
+                    waitpid(ch1, NULL, -0); 
+                    waitpid(ch2, NULL, -0); 
+                    merge(sh_mem_id, index_tol, index_tol + (index_ig &ndash; index_tol) / 2, 1 + index_tol + (index_ig &ndash; index_tol) / 2, index_ig); 
+               } else { 
+                    if( ch1 == 0 ) { 
+                         char *a[4]; 
+                         a[0] = malloc(sizeof(int)); 
+                         a[1] = malloc(sizeof(int)); 
+                         a[2] = malloc(sizeof(int)); 
+                         sprintf(a[0], "%d", sh_mem_id); 
+                         sprintf(a[1], "%d", index_tol); 
+                         sprintf(a[2], "%d", index_tol + (index_ig &ndash; index_tol) / 2); 
+                         a[3] = NULL; 
+                         execv(argv[0], a); 
+                    } else { 
+                         if( ch2 == 0 ) { 
+                              char *a[4]; 
+                              a[0] = malloc(sizeof(int)); 
+                              a[1] = malloc(sizeof(int)); 
+                              a[2] = malloc(sizeof(int)); 
+                              sprintf(a[0], "%d", sh_mem_id); 
+                              sprintf(a[1], "%d", 1 + index_tol + (index_ig &ndash; index_tol) / 2); 
+                              sprintf(a[2]," %d", index_ig); 
+                              a[3] = NULL; 
+                              execv(argv[0], a); 
+                              // perror("execv"); 
+                         } 
+                    }; 
+               } 
+          } else { 
+               qsort( shmat(sh_mem_id, NULL, 0 ) + index_tol * sizeof(int), index_ig &ndash; index_tol + 1, sizeof(int), intcmp); 
+          }; 
+     }; 
+     if(argc &lt; 3) { 
+          printf("\nAz elemek rendezve:\n"); 
+          kiir(sh_mem_id); 
+          shmctl ( sh_mem_id, IPC_RMID, NULL ); 
+     } 
+     return 0;
+}
+</div>
+</div><p> {ujoldal}</p><p class="vissza"><a href="#fejezetek">Vissza a tartalom<span class="gyorsb">j</span>egyzékhez</a></p><h3><a name="hiv4" id="hiv4"></a>Példa az osztott memória használatára, az osztott memória létrehozása, olvasása, írása és törlése </h3><p>A következő példában egy olyan programot készítünk, amely létrehozza, olvassa, írja és törli az osztott memóriát. A műveletet a parancssoron keresztül fogjuk megadni. Amennyiben egy művelet kiadásakor a közös memória nem létezik, a program automatikusan hozza létre azt!</p><!--{fej10_specialis_1}--><video controls width="854" height="480"><source src="./specialis/10_2.mp4" type="video/mp4"><source src="./specialis/10_2.ogv" type="video/ogg"></video><!--END{fej10_specialis_1}--><!--{fej10_letoltes_2}--><div class="allomanyletoltes"><ul><li><strong>Fájl letöltése:</strong> <a href="letoltes/10_fel2.c">Az alábbi programot ide kattintva lehet letölteni! <span class="jaws">című háttéranyag letöltése</span> </a></li><li><strong>Információ az állományról: </strong></li><li><strong>Fájlméret:</strong> 2.77 <abbr title="kilobájt">KB</abbr></li></ul></div><!--END{fej10_letoltes_2}--><div class="forraskod"><div class="bekezdes1cm">
+#include &lt;stdio.h&gt; 
+#include &lt;sys/types.h&gt; 
+#include &lt;sys/ipc.h&gt; 
+#include &lt;sys/shm.h&gt; 
+// A tárolandó szöveg max. mérete: 
+#define MAXMERET 100 
+// A memóriába írás eljárása: 
+void writeshm(int shmid, char * segptr, char * text); 
+// Olvasás az osztott memóriából: 
+void readshm(int shmid, char * segptr); 
+// Törlés a memóriából: 
+void removeshm(int shmid); 
+void changemode(int shmid, char * mode); 
+void usage(void); 
+int main(int argc, char *argv[]) { 
+     key_t key; 
+     int shmid; 
+     char *segptr; 
+     if (argc &lt; 1) 
+          exit(1);
+     key = ftok(".", 'S'); 
+     if ((shmid = shmget(key, MAXMERET, IPC_CREAT|IPC_EXCL|0666)) == -1) { 
+          printf("az osztott memoriazona letezik &ndash; megnyitom\n"); 
+          if ((shmid = shmget(key, MAXMERET, 0)) == -1) { 
+               perror("shmget hiba"); 
+               exit(1); 
+          } 
+     } else 
+          printf("letrehozok egy uj osztott memoriazonat\n"); 
+// A memóriacím hozzárendelése: 
+          if ((segptr = shmat(shmid, 0, 0)) == (void *) -1) { 
+               perror("shmat hiba"); 
+               exit(1); 
+          };
+          
+          switch (tolower(argv[1][0])) { 
+               case 'w':     // megadott szöveg írása 
+                    writeshm(shmid, segptr, argv[2]); 
+                    break; 
+               case 'r':     // osztott memóriazóna kiolvasása 
+                    readshm(shmid, segptr); 
+                    break; 
+               case 'd':     // törlés 
+                    removeshm(shmid); 
+                    break; 
+               case 'm':     // jogok módosítása 
+                    changemode(shmid, argv[2]); 
+                    break; 
+               default:     // hibás opció 
+                    usage(); 
+          } 
+     } 
+// A műveletek
+void writeshm(int shmid, char * segptr, char * text) { 
+     strcpy(segptr, text); 
+     printf("kesz...\n"); 
+} 
+void readshm(int shmid, char * segptr) { 
+     printf("segptr: %s\n", segptr); 
+} 
+void removeshm(int shmid) { 
+     shmctl(shmid, IPC_RMID, 0); 
+     printf("torolve\n"); 
+} 
+void changemode(int shmid, char * mode) { 
+     struct shmid_ds myshmds; 
+     shmctl(shmid, IPC_STAT, &#38;myshmds); 
+     printf("a regi jogok: %o\n", myshmds.shm_perm.mode); 
+     sscanf(mode, "%o", &#38;myshmds.shm_perm.mode); 
+     shmctl(shmid, IPC_SET, &#38;myshmds); 
+     printf("az uj jogok: %o\n", myshmds.shm_perm.mode); 
+} 
+void usage(void) { 
+     printf("shmexam &ndash; osztott memoria menedzselo rendszer\n\n"); 
+     printf("HASZNALAT: shmexam (w)rite &lt;szoveg&gt;\n"); 
+     printf("                      (r)ead\n"); 
+     printf("                      (d)elete\n"); 
+     printf("                      (m)ode change &lt;oktalis_mod&gt;\n"); 
+     exit(1); 
+} 
+</div>
+</div><p>A programunkat teszteljük a következő parancsokkal:</p><div class="forraskod"><div class="bekezdes1cm">
+$ shmexam w teszt
+$ shmexam r
+$ shmexam w szasz
+$ shmexam r
+$ shmexam d
+$ shmexam m 660
+</div>
+</div><h2><a name="hiv5" id="hiv5"></a>Memória kezelése modern rendszerekben ( A Microsoft Windows memóriakezelési modellje ) </h2><p>A célunk megismerni, hogy a különböző modern operációs rendszerek milyen módszereket alkalmaznak a memória kezelésére. Korábbi tanulmányainkban már volt szó róla, hogy a rendszerek fizikai, és úgynevezett virtuális memóriát kezelnek. A Microsoft Windows operációs rendszereken futó alkalmazások nem közvetlenül látják a fizikai memóriát, hanem az ún. virtuális memóriával találkoznak. </p><p>A Windows által elérhető virtuális memóriaméretet több dolog is befolyásolja, de kereteket szab neki az operációs rendszer felépítése, és az architektúra típusa.</p><!--fej10_kep_8--><div class="kep kozep sz250"><img src="kepek/fej10_kep8_w250.jpg" alt="A képen a virtuális és a fizikai memória látható" style="width:100%; height:auto;" title="A képen a virtuális és a fizikai memória látható" /><span class="kepalairas"></span><div class="kep_ikonok jobbra"><span class="kep_nagymeret"><a href="kepek/fej10_kep8_w250_full.html" title="Kép megtekintése külön ablakban" >A fenti kép <span class="kepnev">(fej10_kep8_full.jpg)</span> megtekintése külön ablakban</a></span></div></div><div class="uresmargo"></div><!--ENDfej10_kep_8--><p>Korábbi tanulmányainkból tudjuk, hogy 32-bites gépeken a processzor regiszterei 32 biten tárolják a memóriacímeket. </p><p>Ebből az egyetlen információból elég könnyen kiszámolható a kezelhető memória mennysiége.</p><p>32bites rendszerek esetén alap esetben (tehát ha nem veszünk figyelembe különböző trükköket) a <span class="fogalom" title="virtuális memória">virtuális memória</span> méretkorlátja: 4 GB<br/>64 bites rendszerek esetében ez nagyságrendekkel nagyobb, itt 16 Exabyte a maximális memória méret.<br/></p><h2><a name="hiv6" id="hiv6"></a>Memória használat felosztása Windows Rendszerekben</h2><p>Minden architekturán, legyen 32-bites vagy 64-bites platformon, Windows kettéosztja a virtuális memóriát. Az egyik részt a felhasználói programok a másik részt az <span class="fogalom" title="operációs rendszer">operációs rendszer</span> használhatja.</p><p>Nagyon egyszerűen meg lehet jegyezni, hogy mi melyik részbe kerül.</p><p>Kernel módú komponensek: a felső részben futnak.<br/>User módú komponensek: az alsó részben futnak.</p><!--fej10_kep_9--><div class="kep kozep sz650"><img src="kepek/fej10_kep9_w650.jpg" alt="" style="width:100%; height:auto;" title="" /><span class="kepalairas"></span><div class="kep_ikonok jobbra"><span class="kep_nagymeret"><a href="kepek/fej10_kep9_w650_full.html" title="Kép megtekintése külön ablakban" >A fenti kép <span class="kepnev">(fej10_kep9_full.jpg)</span> megtekintése külön ablakban</a></span></div></div><div class="uresmargo"></div><!--ENDfej10_kep_9--><p>Természetesen gondokat okozhatna, hogy bizonyos memória területeket ezek a programok ne érjenek el, ennek védelméről a processzor gondoskodik lapvédelem segítségével. </p><p class="vissza"><a href="#fejezetek">Vissza a tartalom<span class="gyorsb">j</span>egyzékhez</a></p><h3><a name="hiv7" id="hiv7"></a>Privilégium szintek</h3><p>Az x86-os processzorok 4 privilégiumszintet különböztet meg ,aminek a lényege, hogy az alacsonyabb szinten futó kód ne legyen képes hozzáférni a magasabb szintű kódhoz rendelt memóriához. ( pl. kernel memóriához) </p><p>}0- Kernel szint</p><p>}1- Rendszerhívások</p><p>}2- Osztott <span class="fogalom" title="könyvtár">könyvtárak</span></p><p>}3- Felhasználói programok</p><p>}Alacsonyabb szintről adatok elérése engedett.</p><p>}Magasabb szintről alacsonyabb szintű adatok (0-1 szint) elérése tiltott.</p><p>}Eljárások hívása megengedett, csak ellenőrzött módon (call szelektor)</p><p>}Felhasználói programok osztott <span class="fogalom" title="könyvtár">könyvtárak</span> adatait elérhetik, de nem módosíthatják! </p><p>A kernel módu komponensek rálátnak a user módú memóriára is.</p><p>Ennek az egyszerű memória felosztásnak az oka a 32bites rendszereknél keresendő, mivel a maximális 4gb memóriával rendelkezdő gépeknél logikus választás volt 2-2GB memóriára osztani az elérhető memória mennyiséget. Természetesen ennek változtatására van lehetőség, amit alkalmaz is az operációs rendszer, ha több memóriát teszünk bele. </p><p>A különböző kompatibilitási problémákat elkerülendő, a hagyományos alkalmazások általában a 0-2gb közti szeletből kapnak memóriát.</p><p>Ha ki szeretnénk tolni a memóriahatárokat, akkor a Microsoft Windows 7 illetve Vista operációs rendszerekben a bcedit nevű programmal könnyedén lehet módosítani a határokat. </p><p><strong>Fizikai memória</strong> </p><p>Alapesetben a processzor 32-bites címbuszon keresztül címzi meg a memóriamodulokat, így a processzor elvileg 4 GB-nál több fizikai memóriát közvetlenül nem tud elérni. <br/>64-bites platformokon a címbusz mérete gyártótól függően negyvenpár bit, így ezek hardvere már TB nagyságrendű memóriakezelésére képes. </p><!--fej10_kep_10--><div class="kep kozep sz250"><img src="kepek/fej10_kep10_w250.jpg" alt="A képen a virtuális és a fizikai memória látható" style="width:100%; height:auto;" title="A képen a virtuális és a fizikai memória látható" /><span class="kepalairas"></span><div class="kep_ikonok jobbra"><span class="kep_nagymeret"><a href="kepek/fej10_kep10_w250_full.html" title="Kép megtekintése külön ablakban" >A fenti kép <span class="kepnev">(fej10_kep10_full.jpg)</span> megtekintése külön ablakban</a></span></div></div><div class="uresmargo"></div><!--ENDfej10_kep_10--><p>A címbusz mérete lehetne nagyobb is, de a mai programok egyelőre ezt nem használnák ki. További előnye a rövidebb címeknek a könnyebb tárolhatóság, így erre felesleges memóriát sem használunk el.</p><p class="vissza"><a href="#fejezetek">Vissza a tartalom<span class="gyorsb">j</span>egyzékhez</a></p> 
+  </div>
+</div>
+<div class="utmutato_also">
+  <div class="utm_hivatkozasok_also"><a class="oldalteteje" accesskey="f" href="#teteje"><span class="gyorsb">F</span>el a lap tetejére</a>
+  <a class="elozotanlap" id="navialsoelozo" href="lecke10_lap3.html"><img src="navi/ikon_elozolap.gif" alt="Ugrás a tananyag előző oldalára" title="Ugrás a tananyag előző oldalára" width="36" height="36" /></a>
+  <a id='navialsokov' class="kovetktanlap" href="teszt/lecke10/teszt.html"><img src="navi/ikon_kovetklap.gif" alt="Ugrás a tananyag következő oldalára" title="Ugrás a tananyag következő oldalára" width="36" height="36"/></a>
+  </div>
+</div>
+<div class="ki_stilus"></div>
+<div class="impresszum">
+  <table class="uszt">
+    <tr>
+      <td><div class="imp_eltetatklogo"><img alt="ELTE és ELTE TáTK logó" src="css/arculat/elte_plus_tatk.png" style="width:100%;height:auto;" /></div>
+        <div class="imp_elteiklogo"><img alt="ELTE és ELTE IK logó" src="css/arculat/elte_plus_ik.png" style="width:100%;height:auto;" /></div></td>
+      <td><div class="imp_uszt"><img alt="Új Széchenyi terv" src="css/arculat/USZT_logo_cmyk.jpg" style="width:100%;height:auto;" /></div></td>
+      <td><div class="imp_eu"><img alt="A projekt az Európai Unió támogatásával, az Európai Szociális Alap társfinanszirozásával valósul meg." title="A projekt az Európai Unió támogatásával, az Európai Szociális Alap társfinanszirozásával valósul meg." src="css/arculat/ESZA.png" style="width:100%;height:auto;"/></div></td>
+    </tr>
+  </table>
+</div>
+</body>
+</html>

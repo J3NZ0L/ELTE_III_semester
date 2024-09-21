@@ -1,0 +1,91 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="hu" lang="hu">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="css/scormelte_alap.css" rel="stylesheet" type="text/css" title="" />
+<link href="css/style_spec.css" rel="stylesheet" type="text/css" />
+<link href="css/scormelte_nagy.css" rel="alternate stylesheet" type="text/css" title="nagy" />
+<link href="css/scormelte_inverz.css" rel="alternate stylesheet" type="text/css" title="inverz" />
+<!--[if lte IE 6]>
+<link href="css/scormelte_ie6.css" rel="stylesheet" type="text/css" title="" />
+<![endif]-->
+<!-- syntax highlight -->
+<link rel="stylesheet" type="text/css" href="css/shCore.css" />
+<link rel="stylesheet" type="text/css" href="css/shThemeDefault.css" />
+<script type="text/javascript" src="js/shCore.js"></script>
+<script type="text/javascript" src="js/shBrushCpp.js"></script>
+<script type="text/javascript" src="js/shBrushCSharp.js"></script>
+<script type="text/javascript" src="js/shBrushDelphi.js"></script>
+<script type="text/javascript" src="js/shBrushXml.js"></script>
+<script type="text/javascript" src="js/shBrushCss.js"></script>
+<script type="text/javascript" src="js/shBrushJScript.js"></script>
+<script type="text/javascript" src="js/shBrushSql.js"></script>
+<script type="text/javascript">
+SyntaxHighlighter.all()
+</script>
+<title>
+Számítógépes alapismeretek II. / 
+Az operációs rendszer szerepe, fogalma, feladatai. Az operációs rendszerek generációi
+/A harmadik generáció (1964-1971)</title>
+<meta name="description" content="A tananyag  fejlesztése a TÁMOP-4.1.2.A/2-10/1 pályázat keretén belül történt." />
+<meta name="keywords" content="Hardver alapismeretek, operációs rendszer, számítógépes alapismeretek, operációs rendszer fogalma, operációs rendszerek története, operációs rendszer feladata, operációs rendszer generációk, operációs rendszer típusok, folyamatok, folyamat táblázat, szál &ndash; folyamatok, rendszerhívások, operációs rendszer struktúrák, kernelmód, kernel, felhasználói mód, B/K művelet, folyamatok modellje, szinkron rendszerhívás, asszinkron rendszerhívás, állapotai, megvalósításuk, folyamatok kommunikációja, IPC (Inter Process Communication), megszakítástábla, IDT, megszakításvezérlő, PIC, megszakítás, interrupt, megszakításkérelem, IRQ, megszakításkezelési folyamat, kivétel, hibakeresés (debuggolás), töréspont, fájlrendszer, MBR, partíciós szektor, Ntldr, klaszter (cluster), szektor, FAT, NTFS, ext, TSS, csapda, ütemezés, szál, szemafor, mutex, monitor, POSIX, szignál, osztott memória, csővezeték, kritikus szakasz, Wybe Dijkstra, CPU, erőforrás, holtpont, kiéheztetés, integrált áramkör, multiprogramozás, beágyazott rendszerek, partíció, MMU, lapcsere, FIFO, socket, lapozás, swap, interaktív rendszer, kötegelt rendszer, kliens, job, jogosultság, metaadat, könyvtár, UNIX, GNU/LINUX, erőforrás-foglalási gráf, fizikai memória, virtuális memória, merevlemez, floppy, fregmentáció, defregmentáló program, MFT, API, i-node, cache memory, SSH, HyperThread, párhuzamosság" />
+<script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="js/kep.js"></script>
+<script type="text/javascript" src="js/jquery.media.js"></script>
+<script type="text/javascript" src="js/jquery.highlight-3.js"></script>
+<script type="text/javascript" src="js/kereses.js"></script>
+<script type="text/javascript" src="js/stylesheetToggle.js"></script>
+<script type="text/javascript" src="js/cookie.js"></script>
+<script type="text/javascript" src="js/stilusvalto.js"></script>
+<script type="text/javascript" src="js/fogalmak.js"></script>
+<script type="text/javascript" src="js/fogalom.js"></script>
+<script type="text/javascript" src="js/jwplayer.js"></script>
+<script type="text/javascript">
+$(document).ready(function() 
+{
+$("a.hang").media( {width: 250, height: 50,  autoplay: false} );
+});
+</script>
+<script type="text/javascript" src="js/navigacio.js"></script>
+</head>
+<body>
+<div><a name="teteje"  id="teteje"></a></div>
+<div class="jawsfmenu">
+  <ul>
+    <li><a class="tartalom" href="#tartalom" accesskey="t" tabindex="2">Ugrás a <span class="gyorsb">t</span>artalomra</a></li>
+    <li><a class="tartalomj" href="#fejezetek" accesskey="j" tabindex="5">Ugrás a tartalom<span class="gyorsb">j</span>egyzékre</a></li>
+    <li><a class="tanutm" href="#tanutm" accesskey="u" tabindex="7">Ugrás a tan<span class="gyorsb">u</span>lási útmutatóra</a></li>
+  </ul>
+</div>
+<div class="ki_kereses"></div>
+<div class="oldal">
+  <div class="utmutato">
+    <div class="utm_hivatkozasok"><span class="elozolap"><img src="navi/ikon_vissza_dis.gif" alt="Vissza az előzőleg látogatott oldalra (nem elérhető funkció)" title="Vissza az előzőleg látogatott oldalra (nem elérhető funkció)" /></span><a class="kezdolap" href="index.html" accesskey="p" tabindex="21"><img src="navi/ikon_kezdolap.gif" alt="Vissza a modul kezdőlapjára" title="Vissza a modul kezdőlapjára" width="36" height="36"/></a><a class="elozotanlap" href="lecke1_lap3.html" accesskey="e" tabindex="22"><img src="navi/ikon_elozolap.gif" alt="Ugrás a tananyag előző oldalára" title="Ugrás a tananyag előző oldalára" width="36" height="36" /></a><a class="kovetktanlap" href="lecke1_lap5.html" accesskey="v" tabindex="23"><img src="navi/ikon_kovetklap.gif" alt="Ugrás a tananyag következő oldalára" title="Ugrás a tananyag következő oldalára" width="36" height="36"/></a><span class="ki_fogalomkapcs"><img src="navi/ikon_fogalmakbe_dis.gif" alt="Fogalom megjelenítés (nem elérhető funckió)" title="Fogalom megjelenítés (nem elérhető funckió)" /></span><span class="ki_fogalomlista"><img src="navi/ikon_fogalmaklista_dis.gif" alt="Fogalmak listája (nem elérhető funkció)" title="Fogalmak listája (nem elérhető funkció)" /></span><span class="ki_nyomtatas"><img src="navi/ikon_nyomtatas_dis.gif" alt="Oldal nyomtatása (nem elérhető funkció)" title="Oldal nyomtatása (nem elérhető funkció)" /></span><a class="oldalterkep" href="oldalterkep.html" accesskey="d" tabindex="31"><img src="navi/ikon_oldalterkep.gif" alt="Oldaltérkép megtekintése" title="Oldaltérkép megtekintése"  width="36" height="36" /></a><a class="sugo" href="sugo.html" accesskey="s" tabindex="33"><img src="navi/ikon_sugo.gif" alt="Súgó megtekintése" title="Súgó megtekintése"  width="36" height="36" /></a></div>
+  </div>
+  <div class="tartalommenu">
+    <div class="tartalommenu_fejlec"><span id="lapteteje"><a  href="#teteje"><span class="gyorsb">F</span>el a lap tetejére</a></span><a name="fejezetek"   id="fejezetek">Tartalomjegyzék</a></div>
+    <ul><li><a href="#hiv1">Az operációs rendszerek evolúciója </a><ul><li><a href="#hiv2">A harmadik generáció (1964-1971)</a></li><li><a href="#hiv3">A negyedik generáció (1971-</a></li></ul></li></ul> 
+  </div>
+  <div class="tartalom"> <a name="tartalom"    id="tartalom"></a> 
+    <h1><a name="hiv1" id="hiv1"></a>Az operációs rendszerek evolúciója </h1><h2><a name="hiv2" id="hiv2"></a>A harmadik generáció (1964-1971)</h2><p>A generációváltást itt is egy technológiai újítás indukálta, az <span class="fogalom" title="integrált áramkör">integrált áramkörök</span> megjelenése. Az <span class="fogalom" title="integrált áramkör">integrált áramkörök</span> olcsóbbá, kisebbé és megbízhatóbbá tették a számítógépeket.</p><p>Az 1960-as évekre már két nagy területen használták a számítógépeket, egyfelől a tudományos életben, másfelől már az üzleti életben is. Az úgynevezett szószervezésű gépeket a tudományos számításokra, a karakterorientált gépek családját pedig jellemzően az adatfeldolgozásban használták. Megjelent az OS/360-as <span class="fogalom" title="operációs rendszer">operációs rendszer</span>. Az eddig tárgyalt számítógéptípusokat szokták általában &#132;nagygépes rendszereknek&#148; nevezni, nemcsak a méretük, hanem viszonylagos &ndash; a felhasználó számára &ndash; bonyolultságuk miatt is. Ebben az időszakban jelennek meg a miniszámítógépek is, amelyek felhasználása szélesebb körben vált lehetségessé. Az <span class="fogalom" title="operációs rendszer">operációs rendszerek</span> közül feltétlenül meg kell említeni az ekkor kidolgozott <span class="fogalom" title="UNIX">UNIX-ot</span> Ez már általános célú, <span class="fogalom" title="multiprogramozás">multiprogramozású</span>, időosztásos rendszer. Mivel nyílt forráskódú, ezért sok fejlesztő a saját igényei szerint alakíthatta, hozhatott létre magának speciális igényeket kielégítő modulokat. </p><p>Ekkor alakult ki egy sor programozási nyelv: Algol, PL/1, Lisp, Basic, ProLog, C és az első objektumorientált nyelv, a Smalltalk.</p><h2><a name="hiv3" id="hiv3"></a>A negyedik generáció (1971-</h2><!--fej1_kep_8--><div class="kep kozep sz650"><img src="kepek/fej1_kep8_w650.jpg" alt="A képen egy negyedik generációs számítógép látható." style="width:100%; height:auto;" title="A képen egy negyedik generációs számítógép látható." /><span class="kepalairas">Negyedik generációs számítógép. (A kép a wikipedia-ból származik)</span><div class="kep_ikonok jobbra"><span class="kep_nagymeret"><a href="kepek/fej1_kep8_w650_full.html" title="Kép megtekintése külön ablakban" >A fenti kép <span class="kepnev">(fej1_kep8_full.jpg)</span> megtekintése külön ablakban</a></span></div></div><div class="uresmargo"></div><!--ENDfej1_kep_8--><p>Általában negyedik generációsnak az 1971 után készült számítógépeket tekintik. Természetesen itt is egy technológiai újítás áll a háttérben, az LSI és a VLSI megjelenése. Ennek köszönhetően lehetővé vált olcsón és nagy mennyiségben számítógépeket előállítani. Megjelentek az első személyi számítógépek (PC &ndash;k), amelyeket már magánszemélyek is vásárolhattak, így igen fontos volt a kényelmes használat, (de a biztonság kevésbé). Eleinte egy BASIC értelmező volt a gépek működtetője. Később teret nyertek a grafikus <span class="fogalom" title="operációs rendszer">operációs rendszerek</span> - ikonokkal, menükkel, interaktivitással. Ezzel egy időben azonban elterjedtek a munkaállomások, a hálózatok és a párhuzamos rendszerek is, amelyek esetében azonban már fontos a biztonság (és a nagy számítási kapacitás). Az <span class="fogalom" title="operációs rendszer">operációs rendszer</span> funkciók az igényeknek megfelelően gyors fejlődésnek indultak. A korszak elején a DOS <span class="fogalom" title="operációs rendszer">operációs rendszer</span>, majd a Macintosh Apple <span class="fogalom" title="operációs rendszer">operációs rendszere</span>, a különböző Windows verziók és a különböző UNIX származékok uralják (SUN OS/Solaris, HP-UX, AIX, OSF, DEC UNIX, Irix </p><p>Egyre bővül a szabad szoftverek felhasználása &ndash; köztük a <span class="fogalom" title="UNIX">UNIX</span> -szerű <span class="fogalom" title="operációs rendszer">operációs rendszereket</span>, így a <span class="fogalom" title="GNU/LINUX">GNU/LINUX</span> <span class="fogalom" title="operációs rendszer">operációs rendszert</span> is. </p><div class="tatk_megjegyzes"><span class="tatk_megjegyzes">Megjegyzés</span><p><strong>A &#132;szabad szoftver</strong>&#148; elnevezés a felhasználók szabadságára utal - azt jelenti, hogy a felhasználóknak szabad futtatni, másolni, közzétenni, tanulmányozni, megváltoztatni és tökéletesíteni a szoftvert. </p><p><strong><em>Nyílt forráskód: </em></strong>általában a &#132;szabad szoftverrel&#148; azonos értelemben használják. Annyit jelent, hogy ezeknek a szoftvereknek hozzáférhető a kódja, vagyis mindenki, aki ezt használja, a saját ízlése, aktuális feladata alapján megváltoztathatja, amivel aztán azt csinál, amit akar, akár közkinccsé teheti; ha arra nem tartja érdemesnek, csak maga használja.</p></div><p class="vissza"><a href="#fejezetek">Vissza a tartalom<span class="gyorsb">j</span>egyzékhez</a></p> 
+  </div>
+</div>
+<div class="utmutato_also">
+  <div class="utm_hivatkozasok_also"><a class="oldalteteje" accesskey="f" href="#teteje"><span class="gyorsb">F</span>el a lap tetejére</a>
+  <a class="elozotanlap" id="navialsoelozo" href="lecke1_lap3.html"><img src="navi/ikon_elozolap.gif" alt="Ugrás a tananyag előző oldalára" title="Ugrás a tananyag előző oldalára" width="36" height="36" /></a>
+  <a id='navialsokov' class="kovetktanlap" href="lecke1_lap5.html" ><img src="navi/ikon_kovetklap.gif" alt="Ugrás a tananyag következő oldalára" title="Ugrás a tananyag következő oldalára" width="36" height="36"/></a>
+  </div>
+</div>
+<div class="ki_stilus"></div>
+<div class="impresszum">
+  <table class="uszt">
+    <tr>
+      <td><div class="imp_eltetatklogo"><img alt="ELTE és ELTE TáTK logó" src="css/arculat/elte_plus_tatk.png" style="width:100%;height:auto;" /></div>
+        <div class="imp_elteiklogo"><img alt="ELTE és ELTE IK logó" src="css/arculat/elte_plus_ik.png" style="width:100%;height:auto;" /></div></td>
+      <td><div class="imp_uszt"><img alt="Új Széchenyi terv" src="css/arculat/USZT_logo_cmyk.jpg" style="width:100%;height:auto;" /></div></td>
+      <td><div class="imp_eu"><img alt="A projekt az Európai Unió támogatásával, az Európai Szociális Alap társfinanszirozásával valósul meg." title="A projekt az Európai Unió támogatásával, az Európai Szociális Alap társfinanszirozásával valósul meg." src="css/arculat/ESZA.png" style="width:100%;height:auto;"/></div></td>
+    </tr>
+  </table>
+</div>
+</body>
+</html>

@@ -1,0 +1,253 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="hu" lang="hu">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="css/scormelte_alap.css" rel="stylesheet" type="text/css" title="" />
+<!--STYLE_CSS-->
+<link href="css/scormelte_nagy.css" rel="alternate stylesheet" type="text/css" title="nagy" />
+<link href="css/scormelte_inverz.css" rel="alternate stylesheet" type="text/css" title="inverz" />
+<!--[if lte IE 6]>
+<link href="css/scormelte_ie6.css" rel="stylesheet" type="text/css" title="" />
+<![endif]-->
+<title>Súgó a tananyag használatához</title>
+<script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="js/jquery.highlight-3.js"></script>
+<script type="text/javascript" src="js/kereses.js"></script>
+<script type="text/javascript" src="js/stylesheetToggle.js"></script>
+<script type="text/javascript" src="js/cookie.js"></script>
+<script type="text/javascript" src="js/stilusvalto.js"></script>
+<script type="text/javascript" src="js/fogalom.js"></script>
+<script type="text/javascript" src="js/navigacio.js"></script>
+
+<meta name="description" content="A tananyag  fejlesztése a TÁMOP-4.1.2.A/2-10/1 pályázat keretén belül történt." />
+<meta name="keywords" content="súgó" />
+</head>
+<body>
+<div><a name="teteje" id="teteje"></a></div>
+<div class="jawsfmenu">
+  <ul>
+    <li><a class="tartalom" href="#tartalom" accesskey="t" tabindex="2">Ugrás a <span class="gyorsb">t</span>artalomra</a></li>
+    <li><a class="tartalomj" href="#fejezetek" accesskey="j" tabindex="5">Ugrás a tartalom<span class="gyorsb">j</span>egyzékre</a></li>
+  </ul>
+</div>
+<div class="ki_kereses"></div>
+<div class="oldal">
+  <div class="utmutato">
+    <div class="utm_hivatkozasok"><span class="elozolap"> <img src="navi/ikon_vissza_dis.gif" alt="Vissza az előzőleg látogatott oldalra (nem elérhető funkció)" title="Vissza az előzőleg látogatott oldalra (nem elérhető funkció)" /></span> <a class="kezdolap" href="index.html" accesskey="p" tabindex="21"><img src="navi/ikon_kezdolap.gif" alt="Vissza a modul kezdőlapjára" width="36" height="36"/></a><span class="elozotanlap"><img src="navi/ikon_elozolap_dis.gif" alt="Ugrás a tananyag előző oldalára (nem elérhető funkció)" title="Ugrás a tananyag előző oldalára (nem elérhető funkció)" width="36" height="36" /></span><span class="kovetktanlap"><img src="navi/ikon_kovetklap_dis.gif" alt="Ugrás a tananyag következő oldalára (nem elérhető funkció)" title="Ugrás a tananyag következő oldalára (nem elérhető funkció)" width="36" height="36"/></span> <span class="ki_fogalomkapcs"><img src="navi/ikon_fogalmakbe_dis.gif" alt="Fogalom megjelenítés (nem elérhető funckió)" title="Fogalom megjelenítés (nem elérhető funckió)" /> </span><span class="ki_fogalomlista"><img src="navi/ikon_fogalmaklista_dis.gif" alt="Fogalmak listája (nem elérhető funkció)" title="Fogalmak listája (nem elérhető funkció)" /></span><span class="ki_nyomtatas"><img src="navi/ikon_nyomtatas_dis.gif" alt="Oldal nyomtatása (nem elérhető funkció)" title="Oldal nyomtatása (nem elérhető funkció)" /></span> <a class="oldalterkep" href="oldalterkep.html" accesskey="d" tabindex="31"><img src="navi/ikon_oldalterkep.gif" alt="Oldaltérkép" width="36" height="36" /></a><a class="sugo" href="sugo.html" accesskey="s" tabindex="33"><img src="navi/ikon_sugo.gif" alt="Súgó megtekintése" width="36" height="36" /></a></div>
+  </div>
+  <div class="tartalommenu">
+    <div class="tartalommenu_fejlec"><span id="lapteteje"><a  href="#teteje"><span class="gyorsb">F</span>el a lap tetejére</a></span><a name="fejezetek"  id="fejezetek">Tartalomjegyzék</a></div>
+    <ul id="mozToc">
+      <li><a href="#sugo">Súgó</a>
+        <ul>
+          <li><a href="#kereses">Keresés</a></li>
+          <li><a href="#fogalmak">Fogalmak</a></li>
+          <li><a href="#stilus">Stílus választás</a></li>
+          <li><a href="#gyorsb">Gyorsbillentyűk</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <div class="tartalom"> <a name="tartalom"  id="tartalom"></a>
+    <h1><a name="sugo"></a>Súgó</h1>
+    <p>Kedves Olvasó! A tananyag technikai megvalósításánál 
+      törekedtünk arra, hogy egy tanulás-menedzsment rendszerben&nbsp; 
+      egyszerűen feltölthető legyen, de emellett a helyi számítógépen, 
+      akár optikai meghajtóról megnyitva is használni lehessen. Ennek 
+      érdekében néhány speciális megoldást alkalmaztunk a tananyag 
+      használatának megkönnyítésére, amelyet az alábbiakban 
+      részletezünk.</p>
+    <p class="vissza"><a href="#fejezetek">Vissza a tartalom<span class="gyorsb">j</span>egyzékhez</a></p>
+    <h2><a name="navigacio"></a>Navigáció</h2>
+    <p>Amennyiben a tananyag egy 				tanulás-menedzsment rendszerben van elhelyezve, a navigációt egy 
+      külön keretben megjelenő menü segíti. Azon felhasználók 
+      kedvéért, akik képernyőolvasó programot használnak, a modul 
+      kezdőlapján elhelyeztünk egy hivatkozást, amellyel a tananyagok 
+      önálló ablakban tudják megnyitni. Az új ablakban az <strong>Előző</strong> és <strong>Következő</strong> hivatkozások követésével 
+      bejárhatják a tananyag leckéit, illetve az oldaltérkép is segíti a 
+      tájékozódást. </p>
+    <p class="vissza"><a href="#fejezetek">Vissza a tartalom<span class="gyorsb">j</span>egyzékhez</a></p>
+    <h2><a name="kereses"></a>Keresés</h2>
+    <p>A keresés funkció az adott lapon található kifejezések 
+      megkeresésére szolgál. Ez a funkció csak akkor érhető el, ha a 
+      használt böngészőprogram képes a JavaScript kód futtatására.</p>
+    <p>A <strong>Keres</strong> gomb csak akkor válik aktívvá, ha 
+      a keresőmezőbe legalább 3 karakter hosszú kifejezést adtunk meg. 
+      Ezután már rákattinthatunk a <strong>Keres</strong> gombra. A 
+      keresés után a találatok a lapon kiemelésre kerülnek. A találati 
+      listán a <strong>Következő, </strong>illetve <strong> Előző </strong>gombok segítségével navigálhatunk, de a 
+      keresési találatokra úgy is eljuthatunk, hogy a TAB billentyűt 
+      használjuk.</p>
+    <p class="vissza"><a href="#fejezetek">Vissza a tartalom<span class="gyorsb">j</span>egyzékhez</a></p>
+    <h2><a name="fogalmak"></a>Fogalmak</h2>
+    <p>Amennyiben az adott lapon van olyan fogalom, amelyhez a 
+      tananyag szerzői megadták a fogalom leírását, az ikonsoron 
+      megjelenik a <strong>Fogalom magyarázatok 
+      bekapcsolva/kikapcsolva</strong>, illetve <strong>Fogalmak 
+      listája</strong> funkció. Ennek előfeltétele az is, hogy a 
+      böngészőprogram képes legyen a JavaScript futtatására.</p>
+    <p>Amennyiben a fogalom magyarázatok megjelenítését 
+      bekapcsoljuk, a fogalmak megjelenése megváltozik az oldalon. 
+      Amennyiben egy fogalomra kattintunk, akkor a 
+      magyarázat megjelenik a fogalom alatt. Ezen magyarázatok a 
+      képernyőolvasó programot használók számára is elérhető.</p>
+    <p>Ha nem szeretnénk ezzel a funkcióval élni, kapcsoljuk ki a 
+      fogalom magyarázatok megjelenését. Ekkor a <strong>Fogalom magyarázatok 
+      kikapcsolva</strong> üzenet jelenik meg a képernyőn.</p>
+    <p class="vissza"><a href="#fejezetek">Vissza a tartalom<span class="gyorsb">j</span>egyzékhez</a></p>
+    <h2><a name="stilus"></a>Stílus választás</h2>
+    <p>Amennyiben a böngészőprogram támogatja a JavaScript 
+      futtatást, lehetőség van az oldalak <strong>stílusának</strong> beállítására. 
+      Választhatunk a normál és nagy betűméretű változat között, 
+      illetve nagybetűs, inverz színséma választására is van lehetőség 
+      a gyengénlátó felhasználók számára.</p>
+    <p class="vissza"><a href="#fejezetek">Vissza a tartalom<span class="gyorsb">j</span>egyzékhez</a></p>
+    <h2><a name="gyorsb"></a>Gyorsbillentyűk</h2>
+    <p>A tananyagunkban elérhető funkciókat (mint például ugrás a 
+      tartalomjegyzékre, keresés, fogalmak megtekintése) gyorsbillentyűk segítségével 
+      is elérhetjük a böngészőprogramban. A gyorsbillentyűket az 
+      oldalakon eltérő színnel és aláhúzással jelezzük. Hogy a gyorsbillentyű 
+      funkciók eléréséhez milyen billentyűkombinációt kell megnyomni, 
+      az a használt böngészőprogramtól függ. (Például a Firefox 
+      böngészőprogramban az ALT+SHIFT billentyűkombináció, az Internet 
+      Explorerben az ALT+SHIFT billentyűkombináció, majd az Enter billentyű 
+      lenyomása használható.)</p>
+    <p>Az alábbiakban felsoroljuk az elérhető gyorsbillentyűk 
+      listáját.</p>
+    <table class="sugo">
+      <caption>
+      A gyorsbillentyűk listája
+      </caption>
+      <tr>
+        <th>Funkció</th>
+        <th>Gyorsbillentyű</th>
+      </tr>
+      <tr>
+        <td><span class="gyorsb">A</span>lapértelmezett stílus 
+          beállítása</td>
+        <td>A</td>
+      </tr>
+      <tr>
+        <td><span class="gyorsb">N</span>agy betűméretű stílus 
+          beállítása</td>
+        <td>N</td>
+      </tr>
+      <tr>
+        <td><span class="gyorsb">I</span>nverz 
+          színsémájú, nagy betűméretű 
+          stílus beállítása</td>
+        <td>I</td>
+      </tr>
+      <tr>
+        <td>Ugrás a <span class="gyorsb"> t</span>artalomra</td>
+        <td>T</td>
+      </tr>
+      <tr>
+        <td>Ugrás a tartalom<span class="gyorsb">j</span>egyzékre</td>
+        <td>J</td>
+      </tr>
+      <tr>
+        <td>Ugrás a modul kezdőla<span class="gyorsb">p</span>jára</td>
+        <td>P</td>
+      </tr>
+      <tr>
+        <td>A tananyag <span class="gyorsb">e</span>lőző oldalának 
+          megtekintése (lineáris bejárás alapján)</td>
+        <td>E</td>
+      </tr>
+      <tr>
+        <td>A tananyag kö<span class="gyorsb">v</span>etkező oldalának 
+          megtekintése (lineáris bejárás alapján)</td>
+        <td>V</td>
+      </tr>
+      <tr>
+        <td>Vissza az  előzőleg látogatott <span class="gyorsb">o</span>ldalra</td>
+        <td>O</td>
+      </tr>
+      <tr>
+        <td>Ugrás a tanulási útm<span class="gyorsb">u</span>tatóra 
+          (a modulok kezdőlapján van erre 
+          lehetőség)</td>
+        <td>U</td>
+      </tr>
+      <tr>
+        <td>Ol<span class="gyorsb">d</span>altérkép megtekintése</td>
+        <td>D</td>
+      </tr>
+      <tr>
+        <td>Ugrás a keresési me<span class="gyorsb">z</span>őre</td>
+        <td>Z</td>
+      </tr>
+      <tr>
+        <td><span class="gyorsb">K</span>eresés gomb megnyomása</td>
+        <td>K</td>
+      </tr>
+      <tr>
+        <td>Előző találat a keresési 
+          találatok között</td>
+        <td>Q</td>
+      </tr>
+      <tr>
+        <td>Következő találat a keresési 
+          találatok között</td>
+        <td>W</td>
+      </tr>
+      <tr>
+        <td>Oldal n<span class="gyorsb">y</span>omtatása</td>
+        <td>Y</td>
+      </tr>
+      <tr>
+        <td>Fogalom <span class="gyorsb"> m</span>egjelenésének bekapcsolása 
+          és kikapcsolása</td>
+        <td>M</td>
+      </tr>
+      <tr>
+        <td>Fogalmak <span class="gyorsb">l</span>istájának 
+          megtekintése</td>
+        <td>L</td>
+      </tr>
+      <tr>
+        <td>Oldal <span class="gyorsb">b</span>ezárása</td>
+        <td>B</td>
+      </tr>
+      <tr>
+        <td><span class="gyorsb">F</span>el 
+          az oldal tetejére</td>
+        <td>F</td>
+      </tr>
+      <tr>
+        <td><span class="gyorsb">S</span>úgó 
+          megtekintése</td>
+        <td>S</td>
+      </tr>
+      <tr>
+        <td>Az önellenőrző feladat 
+          oldalakon az egyes feladatok 
+          gyorsbillentyűi megegyeznek a 
+          feladatok sorszámaival.</td>
+        <td>1,2,3,4,5,6,7,8,9</td>
+      </tr>
+      <tr>
+        <td>Teszt oldalon a me<span class="gyorsb">g</span>oldás 
+          megtekintése</td>
+        <td>G</td>
+      </tr>
+      <tr>
+        <td>Teszt oldalon a teszt kié<span class="gyorsb">r</span>tékelése</td>
+        <td>R</td>
+      </tr>
+      <tr>
+        <td>Űrlap alap<span class="gyorsb">h</span>elyzetbe 
+          állítása</td>
+        <td>H</td>
+      </tr>
+    </table>
+    <p class="vissza"><a href="#fejezetek">Vissza a tartalom<span class="gyorsb">j</span>egyzékhez</a></p>
+  </div>
+</div>
+<div class="utmutato_also">
+  <div class="utm_hivatkozasok_also"><a class="oldalteteje" accesskey="f" href="#teteje"><span class="gyorsb">F</span>el a lap tetejére</a></div>
+</div>
+<div class="ki_stilus"></div>
+</body>
+</html>

@@ -1,0 +1,217 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="hu" lang="hu">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="css/scormelte_alap.css" rel="stylesheet" type="text/css" title="" />
+<link href="css/style_spec.css" rel="stylesheet" type="text/css" />
+<link href="css/scormelte_nagy.css" rel="alternate stylesheet" type="text/css" title="nagy" />
+<link href="css/scormelte_inverz.css" rel="alternate stylesheet" type="text/css" title="inverz" />
+<!--[if lte IE 6]>
+<link href="css/scormelte_ie6.css" rel="stylesheet" type="text/css" title="" />
+<![endif]-->
+<!-- syntax highlight -->
+<link rel="stylesheet" type="text/css" href="css/shCore.css" />
+<link rel="stylesheet" type="text/css" href="css/shThemeDefault.css" />
+<script type="text/javascript" src="js/shCore.js"></script>
+<script type="text/javascript" src="js/shBrushCpp.js"></script>
+<script type="text/javascript" src="js/shBrushCSharp.js"></script>
+<script type="text/javascript" src="js/shBrushDelphi.js"></script>
+<script type="text/javascript" src="js/shBrushXml.js"></script>
+<script type="text/javascript" src="js/shBrushCss.js"></script>
+<script type="text/javascript" src="js/shBrushJScript.js"></script>
+<script type="text/javascript" src="js/shBrushSql.js"></script>
+<script type="text/javascript">
+SyntaxHighlighter.all()
+</script>
+<title>
+Számítógépes alapismeretek II. / 
+A fájlrendszerbeli könyvtárak és jogosultságok} kezelése
+/Az aktuális könyvtárban egy link létrehozása</title>
+<meta name="description" content="A tananyag  fejlesztése a TÁMOP-4.1.2.A/2-10/1 pályázat keretén belül történt." />
+<meta name="keywords" content="Hardver alapismeretek, operációs rendszer, számítógépes alapismeretek, operációs rendszer fogalma, operációs rendszerek története, operációs rendszer feladata, operációs rendszer generációk, operációs rendszer típusok, folyamatok, folyamat táblázat, szál &ndash; folyamatok, rendszerhívások, operációs rendszer struktúrák, kernelmód, kernel, felhasználói mód, B/K művelet, folyamatok modellje, szinkron rendszerhívás, asszinkron rendszerhívás, állapotai, megvalósításuk, folyamatok kommunikációja, IPC (Inter Process Communication), megszakítástábla, IDT, megszakításvezérlő, PIC, megszakítás, interrupt, megszakításkérelem, IRQ, megszakításkezelési folyamat, kivétel, hibakeresés (debuggolás), töréspont, fájlrendszer, MBR, partíciós szektor, Ntldr, klaszter (cluster), szektor, FAT, NTFS, ext, TSS, csapda, ütemezés, szál, szemafor, mutex, monitor, POSIX, szignál, osztott memória, csővezeték, kritikus szakasz, Wybe Dijkstra, CPU, erőforrás, holtpont, kiéheztetés, integrált áramkör, multiprogramozás, beágyazott rendszerek, partíció, MMU, lapcsere, FIFO, socket, lapozás, swap, interaktív rendszer, kötegelt rendszer, kliens, job, jogosultság, metaadat, könyvtár, UNIX, GNU/LINUX, erőforrás-foglalási gráf, fizikai memória, virtuális memória, merevlemez, floppy, fregmentáció, defregmentáló program, MFT, API, i-node, cache memory, SSH, HyperThread, párhuzamosság" />
+<script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="js/kep.js"></script>
+<script type="text/javascript" src="js/jquery.media.js"></script>
+<script type="text/javascript" src="js/jquery.highlight-3.js"></script>
+<script type="text/javascript" src="js/kereses.js"></script>
+<script type="text/javascript" src="js/stylesheetToggle.js"></script>
+<script type="text/javascript" src="js/cookie.js"></script>
+<script type="text/javascript" src="js/stilusvalto.js"></script>
+<script type="text/javascript" src="js/fogalmak.js"></script>
+<script type="text/javascript" src="js/fogalom.js"></script>
+<script type="text/javascript" src="js/jwplayer.js"></script>
+<script type="text/javascript">
+$(document).ready(function() 
+{
+$("a.hang").media( {width: 250, height: 50,  autoplay: false} );
+});
+</script>
+<script type="text/javascript" src="js/navigacio.js"></script>
+</head>
+<body>
+<div><a name="teteje"  id="teteje"></a></div>
+<div class="jawsfmenu">
+  <ul>
+    <li><a class="tartalom" href="#tartalom" accesskey="t" tabindex="2">Ugrás a <span class="gyorsb">t</span>artalomra</a></li>
+    <li><a class="tartalomj" href="#fejezetek" accesskey="j" tabindex="5">Ugrás a tartalom<span class="gyorsb">j</span>egyzékre</a></li>
+    <li><a class="tanutm" href="#tanutm" accesskey="u" tabindex="7">Ugrás a tan<span class="gyorsb">u</span>lási útmutatóra</a></li>
+  </ul>
+</div>
+<div class="ki_kereses"></div>
+<div class="oldal">
+  <div class="utmutato">
+    <div class="utm_hivatkozasok"><span class="elozolap"><img src="navi/ikon_vissza_dis.gif" alt="Vissza az előzőleg látogatott oldalra (nem elérhető funkció)" title="Vissza az előzőleg látogatott oldalra (nem elérhető funkció)" /></span><a class="kezdolap" href="index.html" accesskey="p" tabindex="21"><img src="navi/ikon_kezdolap.gif" alt="Vissza a modul kezdőlapjára" title="Vissza a modul kezdőlapjára" width="36" height="36"/></a><a class="elozotanlap" href="lecke4_lap7.html" accesskey="e" tabindex="22"><img src="navi/ikon_elozolap.gif" alt="Ugrás a tananyag előző oldalára" title="Ugrás a tananyag előző oldalára" width="36" height="36" /></a><a class="kovetktanlap" href="teszt/lecke4/teszt.html" accesskey="v" tabindex="23"><img src="navi/ikon_kovetklap.gif" alt="Ugrás a tananyag következő oldalára" title="Ugrás a tananyag következő oldalára" width="36" height="36"/></a><span class="ki_fogalomkapcs"><img src="navi/ikon_fogalmakbe_dis.gif" alt="Fogalom megjelenítés (nem elérhető funckió)" title="Fogalom megjelenítés (nem elérhető funckió)" /></span><span class="ki_fogalomlista"><img src="navi/ikon_fogalmaklista_dis.gif" alt="Fogalmak listája (nem elérhető funkció)" title="Fogalmak listája (nem elérhető funkció)" /></span><span class="ki_nyomtatas"><img src="navi/ikon_nyomtatas_dis.gif" alt="Oldal nyomtatása (nem elérhető funkció)" title="Oldal nyomtatása (nem elérhető funkció)" /></span><a class="oldalterkep" href="oldalterkep.html" accesskey="d" tabindex="31"><img src="navi/ikon_oldalterkep.gif" alt="Oldaltérkép megtekintése" title="Oldaltérkép megtekintése"  width="36" height="36" /></a><a class="sugo" href="sugo.html" accesskey="s" tabindex="33"><img src="navi/ikon_sugo.gif" alt="Súgó megtekintése" title="Súgó megtekintése"  width="36" height="36" /></a></div>
+  </div>
+  <div class="tartalommenu">
+    <div class="tartalommenu_fejlec"><span id="lapteteje"><a  href="#teteje"><span class="gyorsb">F</span>el a lap tetejére</a></span><a name="fejezetek"   id="fejezetek">Tartalomjegyzék</a></div>
+    <ul><li><a href="#hiv1">A fájlrendszerbeli könyvtárak és jogosultságok kezelése</a><ul><li><a href="#hiv2">A könyvtárkezelés feladatok tükrében</a><ul><li><a href="#hiv3">Az aktuális könyvtárban egy link létrehozása</a></li><li><a href="#hiv4">A stat típusú struktúra további lehetőségei </a><ul><li><a href="#hiv5">A stat típusú struktúra és a ctime függvény</a></li></ul></li><li><a href="#hiv6">A passwd típusú struktúra</a></li><li><a href="#hiv7">A group típusú struktúra</a></li><li><a href="#hiv8">A struktúrák összekapcsolódása</a></li></ul></li></ul></li></ul> 
+  </div>
+  <div class="tartalom"> <a name="tartalom"    id="tartalom"></a> 
+    <h1><a name="hiv1" id="hiv1"></a>A fájlrendszerbeli könyvtárak és jogosultságok kezelése</h1><h2><a name="hiv2" id="hiv2"></a>A könyvtárkezelés feladatok tükrében</h2><h3><a name="hiv3" id="hiv3"></a>Az aktuális könyvtárban egy link létrehozása</h3><p>Készítsünk programot, amely az aktuális <span class="fogalom" title="könyvtár">könyvtárban</span> létrehoz egy linket egy megadott fájlhoz, és vizsgáljuk meg, hogy mennyi az eredeti fájl és a hozzá linkelt fájl  <span class="fogalom" title="i-node">i-node</span> azonosító száma!  </p><p>Az  <span class="fogalom" title="i-node">i-node</span> számhoz parancssorból is hozzáférhetünk az &#132;ls &ndash;il&#148; parancs végrehajtásával. A feladat megoldásához először szükségünk van a fájl nevének beolvasására és annak az ellenőrzésére, hogy létezik-e már. Ezt a feladatot a modul előző leckéje alapján könnyen meg tudjuk oldani.</p><p class="vissza"><a href="#fejezetek">Vissza a tartalom<span class="gyorsb">j</span>egyzékhez</a></p><h3><a name="hiv4" id="hiv4"></a>A stat típusú struktúra további lehetőségei </h3><p>Készítsünk egy ls &ndash;al shell parancshoz hasonlót eredményező programocskát!</p><p>A feladat megoldásának egy-két részlete már előfordult az előző feladatokban. Az első feladatban már megoldottuk az aktuális <span class="fogalom" title="könyvtár">könyvtár</span> végigolvasását. A második feladatban láttuk, hogy a <em>stat struktúrából</em> nagyon sok információ kiolvasható. Így a stat típusú struktúra további feldolgozásával érdemes tovább próbálkozni. A stat struktúrából egyszerűen kiolvasható a fájl hosszúsága. A fájl nevét és hosszát a következőképpen tudnánk megadni, ha az eddigi megoldásokban szereplő változókkal gondolkodunk tovább:</p><p><span class="forraskod">printf("%s %i", direntp-&gt;d_name, My_stat.st_size);</span> </p><p>Fontos információ a fájl utolsó módosításának dátuma. Ezt a stat típusú struktúra st_mtime tagjából olvashatjuk ki, amelynek a típusa time_t. </p><h4><a name="hiv5" id="hiv5"></a>A stat típusú struktúra és a ctime függvény</h4><p>Milyen módon írhatunk ki egy time_t típusú adatot? Szerencsénkre rendelkezésre áll számunkra a ctime függvény, amelyik karaktertömbbé alakítja a time_t típust. </p><div class="forraskod"><div class="bekezdes1cm">
+
+#include &lt;time.h&gt; 
+char * ctime(const time_t * time);
+</div>
+</div><p>Ezt pedig már könnyedén kiírhatjuk:</p><p><span class="forraskod">printf("%s ", ctime(My_stat.st_mtime));</span></p><p>Az állományhoz tartozó jogosultságok meghatározása a stat típusú struktúra st_mode tagjából olvasható ki. Innen fértünk hozzá az előző feladatnál ahhoz is, hogy <span class="fogalom" title="könyvtár">könyvtár</span> -e, vagy sem. A mode_t típushoz definiált <em>fájlbitek</em> segítenek az attribútumok kiolvasásában. Bitenként olvassuk ki az értékeket, és ennek megfelelően hozzáfűzzük a szükséges karaktert egy sztringhez, majd kiíratunk. Például így kellene eljárni a felhasználó olvasási jogának meghatározásánál.</p><div class="forraskod"><div class="bekezdes1cm">
+
+if (My_stat.st_mode &#38;&#38; S_IRUSR) { 
+     strcat(atrb, "r"); 
+} else { 
+     strcat(atrb, "-"); 
+};
+</div>
+</div><p>A sztring összeállítása után ezt már könnyen kiírathatjuk: </p><p><span class="forraskod">printf("%s ", atrb);</span></p><p>Az &#132;ls &ndash;al&#148; parancsot megfigyelve azt tapasztalhatjuk, hogy hiányzik még az állomány tulajdonosának, illetve a csoportjának a megnevezése. Ezek az információk is szintén kinyerhetőek a stat típusú struktúrából, mégpedig az uid_t típusú felhasználói azonosítót leíró mezőből, illetve a guid_t típusú, a csoportot leíró mezőből. Nézzük először azt, hogyan lehet hozzáférni a felhasználó nevéhez, ha adott a felhasználói azonosító! </p><p class="vissza"><a href="#fejezetek">Vissza a tartalom<span class="gyorsb">j</span>egyzékhez</a></p><h3><a name="hiv6" id="hiv6"></a>A passwd típusú struktúra</h3><p>A jelszóállományból lehet kinyerni a felhasználó nevét adott felhasználói azonosító esetén, ha felhasználjuk a passwd függvényt:</p><div class="forraskod"><div class="bekezdes1cm">
+
+#include &lt;<em>sys/types.h</em>&gt; 
+#include &lt;pwd.h&gt; 
+struct passwd * getpwuid( uid_t uid ); 
+</div>
+</div><p><em>A passwd típusú struktúrából már kiolvasható a felhasználói név (pw_name). A passwd típusú struktúra szerkezete a következő:</em></p><div class="forraskod"><div class="bekezdes1cm">
+
+struct passwd { 
+     char*  pw_name;  // A felhasználó bejelentkezési neve. 
+     uid_t  pw_uid;   // A felhasználói azonosító szám. 
+     gid_t  pw_gid;   // A felhasználói csoportazonosító szám. 
+     char*  pw_dir;   // A felhasználó kezdeti bejelentkezési <span class="fogalom" title="könyvtár">könyvtára</span> (home). 
+     char*  pw_shell; // A felhasználó által használt parancsértelmező (shell). 
+};
+</div>
+</div><p>Így a következőlépésekben juthatunk el a felhasználói név kiírásához:</p><p>My_stat.st_uid megadja a felhasználói azonosítót. A getpwuid függvény a felhasználói azonosítóból visszaadja a hozzá tartozó passwd struktúrát, amiből kiolvashatjuk a nevet.</p><p><span class="forraskod">printf("%s &#148;, getpwuid(My_stat.st_uid)-&gt;pw_name);</span></p><p>Hasonló lépésekben juthatunk el a csoportazonosítóhoz. </p><p class="vissza"><a href="#fejezetek">Vissza a tartalom<span class="gyorsb">j</span>egyzékhez</a></p><h3><a name="hiv7" id="hiv7"></a>A group típusú struktúra</h3><p>A stat típusú struktúra csoportazonosítót tartalmazó mezőjét felhasználva meghívjuk a group függvényt, ami visszaadja a group típusú struktúrát:</p><div class="forraskod"><div class="bekezdes1cm">
+
+#include &lt;sys/types.h&gt; 
+#include &lt;grp.h&gt; 
+struct group * <em>getgrgid</em>(gid_t);
+</div>
+</div><p><em>A group típusú struktúra felépítése a következő:</em></p><div class="forraskod"><div class="bekezdes1cm">
+
+struct group { 
+     char*   gr_name;  // A csoport neve.
+     gid_t   gr_gid;   // A csoport azonosítójának a száma.
+     char**  gr_mem;   // Mutató egy olyan NULL végződésű karaktertömbre, 
+                       // amik felhasználói nevekre mutatnak.
+};
+</div>
+</div><p>Ebből a group típusú struktúrából pedig kiolvasható a csoport neve. A kód tömören lehetne ez is:</p><p><span class="forraskod">printf("%s &#148;,getgrgid(My_stat.st_uid)-&gt;pw_name);</span></p><p class="vissza"><a href="#fejezetek">Vissza a tartalom<span class="gyorsb">j</span>egyzékhez</a></p><h3><a name="hiv8" id="hiv8"></a>A struktúrák összekapcsolódása</h3><p>Összefoglalóul tekintsük a 4.1. ábrát!</p><!--fej4_kep_1--><div class="kep kozep sz650"><img src="kepek/fej4_kep1_w650.jpg" alt="a képen a struktúrák összekapcsolását láthatjuk" style="width:100%; height:auto;" title="a képen a struktúrák összekapcsolását láthatjuk" longdesc="kepek/fej4_kep1_w650.html" /><span class="kepalairas">4.1 ábra: Összefoglaló ábra a struktúrák összekapcsolódásáról</span></div><div class="uresmargo"></div><!--ENDfej4_kep_1--><p>Végezetül nézzük meg a teljes kódot!</p><div class="forraskod"><div class="bekezdes1cm">
+
+#include &lt;dirent.h&gt; // A readdir függvény miatt. 
+#include &lt;sys/types.h&gt; //A readdir függvény miatt. 
+#include &lt;string.h&gt; // A string típus miatt. 
+#include &lt;sys/stat.h&gt; // A stat típusú struktúra miatt. 
+#include &lt;time.h&gt; // A ctime függvény miatt. 
+#include &lt;pwd.h&gt; // A felhasználói név kiolvasása miatt. 
+#include &lt;grp.h&gt; // A csoportnév kiolvasása miatt. 
+
+char * uname(uid_t user) { 
+     char * usern = (char*) malloc(25*sizeof(char)); 
+     struct passwd * ps = getpwuid(user); 
+     strcpy(usern, ps-&gt;pw_name); 
+     return usern; 
+}; 
+
+char * gname(gid_t usergroup) { 
+     char * g_name = (char*) malloc(25*sizeof(char)); 
+     struct group * g = getgrgid(usergroup); 
+     strcpy(g_name, g-&gt;gr_name); 
+     return g_name; 
+}; 
+
+char * atr(int a) { 
+     char * atrb = (char*) malloc(12*sizeof(char)); 
+     if (a &#38; S_IFDIR) { strcpy(atrb,"d"); } else { strcpy(atrb,"-"); }; 
+     if (a &#38; S_IRUSR) { strcat(atrb,"r"); } else { strcat(atrb,"-"); }; 
+     if (a &#38; S_IWUSR) { strcat(atrb,"w"); } else { strcat(atrb,"-"); }; 
+     if (a &#38; S_IXUSR) { strcat(atrb,"x"); } else { strcat(atrb,"-"); }; 
+     if (a &#38; S_IRGRP) { strcat(atrb,"r"); } else { strcat(atrb,"-"); }; 
+     if (a &#38; S_IWGRP) { strcat(atrb,"w"); } else { strcat(atrb,"-"); }; 
+     if (a &#38; S_IXGRP) { strcat(atrb,"x"); } else { strcat(atrb,"-"); }; 
+     if (a &#38; S_IROTH) { strcat(atrb,"r"); } else { strcat(atrb,"-"); }; 
+     if (a &#38; S_IWOTH) { strcat(atrb,"w"); } else { strcat(atrb,"-"); }; 
+     if (a &#38; S_IXOTH) { strcat(atrb,"x"); } else { strcat(atrb,"-"); }; 
+     return atrb; 
+}; 
+
+void lsal() { 
+     DIR * d; 
+     struct dirent * direntp; 
+     struct stat * My_status; 
+     char fname[80]; 
+     uid_t user; // A getent passwd|grep -pel megkapom a nevet. 
+     gid_t usergroup; 
+     int attrib; 
+     time_t lastm_time; 
+     off_t meret; 
+     d = opendir("."); 
+     while ((direntp=readdir(d)) != NULL) { 
+          strcpy(fname, direntp-&gt;d_name); 
+          stat(fname, &#38;My_status); 
+          lastm_time = My_status.st_mtime; 
+          user = My_status.st_uid; 
+          usergroup = My_status.st_gid; 
+          meret = My_status.st_size; 
+          attrib = My_status.st_mode; 
+          char dat[80] = ""; 
+          strncat(dat, ctime(&#38;lastm_time), strlen(ctime(&#38;lastm_time)) - 1); 
+               // Az strncat függvény átmásolja az első paraméterként megadott 
+               // bájtmennyiséget. 
+               // A ctime függvény egy sztringet ad vissza. 
+               // A sorvége jelet letöröljük a ctime függvény által 
+               // visszaadott értékből. 
+          printf("%s\t", atr(attrib)); 
+          printf("%s", uname(user)); 
+          printf(" %s \t", gname(usergroup)); 
+          printf("%i\t %s \t%s\n", (int)meret, dat, fname); 
+     }; 
+     closedir(d); 
+}; 
+
+int main() { 
+     char nev[80]; 
+     printf("Az aktualis konyvtar tartalma: \n"); 
+     printf("Attrib\t\tUser Usergroup \t Bytes\t \tDate\t\t\tFile\n\n"); 
+     lsal(); 
+     return 0; 
+}; 
+}
+</div>
+</div><p class="vissza"><a href="#fejezetek">Vissza a tartalom<span class="gyorsb">j</span>egyzékhez</a></p> 
+  </div>
+</div>
+<div class="utmutato_also">
+  <div class="utm_hivatkozasok_also"><a class="oldalteteje" accesskey="f" href="#teteje"><span class="gyorsb">F</span>el a lap tetejére</a>
+  <a class="elozotanlap" id="navialsoelozo" href="lecke4_lap7.html"><img src="navi/ikon_elozolap.gif" alt="Ugrás a tananyag előző oldalára" title="Ugrás a tananyag előző oldalára" width="36" height="36" /></a>
+  <a id='navialsokov' class="kovetktanlap" href="teszt/lecke4/teszt.html"><img src="navi/ikon_kovetklap.gif" alt="Ugrás a tananyag következő oldalára" title="Ugrás a tananyag következő oldalára" width="36" height="36"/></a>
+  </div>
+</div>
+<div class="ki_stilus"></div>
+<div class="impresszum">
+  <table class="uszt">
+    <tr>
+      <td><div class="imp_eltetatklogo"><img alt="ELTE és ELTE TáTK logó" src="css/arculat/elte_plus_tatk.png" style="width:100%;height:auto;" /></div>
+        <div class="imp_elteiklogo"><img alt="ELTE és ELTE IK logó" src="css/arculat/elte_plus_ik.png" style="width:100%;height:auto;" /></div></td>
+      <td><div class="imp_uszt"><img alt="Új Széchenyi terv" src="css/arculat/USZT_logo_cmyk.jpg" style="width:100%;height:auto;" /></div></td>
+      <td><div class="imp_eu"><img alt="A projekt az Európai Unió támogatásával, az Európai Szociális Alap társfinanszirozásával valósul meg." title="A projekt az Európai Unió támogatásával, az Európai Szociális Alap társfinanszirozásával valósul meg." src="css/arculat/ESZA.png" style="width:100%;height:auto;"/></div></td>
+    </tr>
+  </table>
+</div>
+</body>
+</html>

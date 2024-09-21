@@ -1,0 +1,145 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="hu" lang="hu">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="css/scormelte_alap.css" rel="stylesheet" type="text/css" title="" />
+<link href="css/style_spec.css" rel="stylesheet" type="text/css" />
+<link href="css/scormelte_nagy.css" rel="alternate stylesheet" type="text/css" title="nagy" />
+<link href="css/scormelte_inverz.css" rel="alternate stylesheet" type="text/css" title="inverz" />
+<!--[if lte IE 6]>
+<link href="css/scormelte_ie6.css" rel="stylesheet" type="text/css" title="" />
+<![endif]-->
+<!-- syntax highlight -->
+<link rel="stylesheet" type="text/css" href="css/shCore.css" />
+<link rel="stylesheet" type="text/css" href="css/shThemeDefault.css" />
+<script type="text/javascript" src="js/shCore.js"></script>
+<script type="text/javascript" src="js/shBrushCpp.js"></script>
+<script type="text/javascript" src="js/shBrushCSharp.js"></script>
+<script type="text/javascript" src="js/shBrushDelphi.js"></script>
+<script type="text/javascript" src="js/shBrushXml.js"></script>
+<script type="text/javascript" src="js/shBrushCss.js"></script>
+<script type="text/javascript" src="js/shBrushJScript.js"></script>
+<script type="text/javascript" src="js/shBrushSql.js"></script>
+<script type="text/javascript">
+SyntaxHighlighter.all()
+</script>
+<title>
+Számítógépes alapismeretek II. / 
+A párhuzamosság kezelése, szemaforok a gyakorlatban, alapvető megoldások
+/A System V szemaforok használata</title>
+<meta name="description" content="A tananyag  fejlesztése a TÁMOP-4.1.2.A/2-10/1 pályázat keretén belül történt." />
+<meta name="keywords" content="Hardver alapismeretek, operációs rendszer, számítógépes alapismeretek, operációs rendszer fogalma, operációs rendszerek története, operációs rendszer feladata, operációs rendszer generációk, operációs rendszer típusok, folyamatok, folyamat táblázat, szál &ndash; folyamatok, rendszerhívások, operációs rendszer struktúrák, kernelmód, kernel, felhasználói mód, B/K művelet, folyamatok modellje, szinkron rendszerhívás, asszinkron rendszerhívás, állapotai, megvalósításuk, folyamatok kommunikációja, IPC (Inter Process Communication), megszakítástábla, IDT, megszakításvezérlő, PIC, megszakítás, interrupt, megszakításkérelem, IRQ, megszakításkezelési folyamat, kivétel, hibakeresés (debuggolás), töréspont, fájlrendszer, MBR, partíciós szektor, Ntldr, klaszter (cluster), szektor, FAT, NTFS, ext, TSS, csapda, ütemezés, szál, szemafor, mutex, monitor, POSIX, szignál, osztott memória, csővezeték, kritikus szakasz, Wybe Dijkstra, CPU, erőforrás, holtpont, kiéheztetés, integrált áramkör, multiprogramozás, beágyazott rendszerek, partíció, MMU, lapcsere, FIFO, socket, lapozás, swap, interaktív rendszer, kötegelt rendszer, kliens, job, jogosultság, metaadat, könyvtár, UNIX, GNU/LINUX, erőforrás-foglalási gráf, fizikai memória, virtuális memória, merevlemez, floppy, fregmentáció, defregmentáló program, MFT, API, i-node, cache memory, SSH, HyperThread, párhuzamosság" />
+<script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="js/kep.js"></script>
+<script type="text/javascript" src="js/jquery.media.js"></script>
+<script type="text/javascript" src="js/jquery.highlight-3.js"></script>
+<script type="text/javascript" src="js/kereses.js"></script>
+<script type="text/javascript" src="js/stylesheetToggle.js"></script>
+<script type="text/javascript" src="js/cookie.js"></script>
+<script type="text/javascript" src="js/stilusvalto.js"></script>
+<script type="text/javascript" src="js/fogalmak.js"></script>
+<script type="text/javascript" src="js/fogalom.js"></script>
+<script type="text/javascript" src="js/jwplayer.js"></script>
+<script type="text/javascript">
+$(document).ready(function() 
+{
+$("a.hang").media( {width: 250, height: 50,  autoplay: false} );
+});
+</script>
+<script type="text/javascript" src="js/navigacio.js"></script>
+</head>
+<body>
+<div><a name="teteje"  id="teteje"></a></div>
+<div class="jawsfmenu">
+  <ul>
+    <li><a class="tartalom" href="#tartalom" accesskey="t" tabindex="2">Ugrás a <span class="gyorsb">t</span>artalomra</a></li>
+    <li><a class="tartalomj" href="#fejezetek" accesskey="j" tabindex="5">Ugrás a tartalom<span class="gyorsb">j</span>egyzékre</a></li>
+    <li><a class="tanutm" href="#tanutm" accesskey="u" tabindex="7">Ugrás a tan<span class="gyorsb">u</span>lási útmutatóra</a></li>
+  </ul>
+</div>
+<div class="ki_kereses"></div>
+<div class="oldal">
+  <div class="utmutato">
+    <div class="utm_hivatkozasok"><span class="elozolap"><img src="navi/ikon_vissza_dis.gif" alt="Vissza az előzőleg látogatott oldalra (nem elérhető funkció)" title="Vissza az előzőleg látogatott oldalra (nem elérhető funkció)" /></span><a class="kezdolap" href="index.html" accesskey="p" tabindex="21"><img src="navi/ikon_kezdolap.gif" alt="Vissza a modul kezdőlapjára" title="Vissza a modul kezdőlapjára" width="36" height="36"/></a><a class="elozotanlap" href="lecke8_lap2.html" accesskey="e" tabindex="22"><img src="navi/ikon_elozolap.gif" alt="Ugrás a tananyag előző oldalára" title="Ugrás a tananyag előző oldalára" width="36" height="36" /></a><a class="kovetktanlap" href="lecke8_lap4.html" accesskey="v" tabindex="23"><img src="navi/ikon_kovetklap.gif" alt="Ugrás a tananyag következő oldalára" title="Ugrás a tananyag következő oldalára" width="36" height="36"/></a><span class="ki_fogalomkapcs"><img src="navi/ikon_fogalmakbe_dis.gif" alt="Fogalom megjelenítés (nem elérhető funckió)" title="Fogalom megjelenítés (nem elérhető funckió)" /></span><span class="ki_fogalomlista"><img src="navi/ikon_fogalmaklista_dis.gif" alt="Fogalmak listája (nem elérhető funkció)" title="Fogalmak listája (nem elérhető funkció)" /></span><span class="ki_nyomtatas"><img src="navi/ikon_nyomtatas_dis.gif" alt="Oldal nyomtatása (nem elérhető funkció)" title="Oldal nyomtatása (nem elérhető funkció)" /></span><a class="oldalterkep" href="oldalterkep.html" accesskey="d" tabindex="31"><img src="navi/ikon_oldalterkep.gif" alt="Oldaltérkép megtekintése" title="Oldaltérkép megtekintése"  width="36" height="36" /></a><a class="sugo" href="sugo.html" accesskey="s" tabindex="33"><img src="navi/ikon_sugo.gif" alt="Súgó megtekintése" title="Súgó megtekintése"  width="36" height="36" /></a></div>
+  </div>
+  <div class="tartalommenu">
+    <div class="tartalommenu_fejlec"><span id="lapteteje"><a  href="#teteje"><span class="gyorsb">F</span>el a lap tetejére</a></span><a name="fejezetek"   id="fejezetek">Tartalomjegyzék</a></div>
+    <ul><li><a href="#hiv1">A párhuzamosság kezelése, szemaforok a gyakorlatban, alapvető megoldások</a><ul><li><a href="#hiv2">A szemaforok használata</a><ul><li><a href="#hiv3">A System V szemaforok használata</a></li><li><a href="#hiv4">Példa az egyszerű bináris szemaforok használatára</a></li><li><a href="#hiv5">A szemaforkészlet létrehozása, a semget függvény</a></li><li><a href="#hiv6">A szemaforkészlet szemaforjainak értékváltoztatása, a semop függvény</a></li></ul></li></ul></li></ul> 
+  </div>
+  <div class="tartalom"> <a name="tartalom"    id="tartalom"></a> 
+    <h1><a name="hiv1" id="hiv1"></a>A párhuzamosság kezelése, szemaforok a gyakorlatban, alapvető megoldások</h1><h2><a name="hiv2" id="hiv2"></a>A szemaforok használata</h2><h3><a name="hiv3" id="hiv3"></a>A System V szemaforok használata</h3><p>A <strong>System V <span class="fogalom" title="szemafor">szemaforok</span></strong> nem negatív egész értékű változók. A szemaforműveletek általában ezeknek a változóknak az értékét egy egész számmal növelik vagy csökkentik. Ha a művelet eredménye negatív szám lenne, az <span class="fogalom" title="operációs rendszer">operációs rendszer</span> blokkolja a folyamatot, amíg a művelet végrehajtható nem lesz, azaz a művelet eredménye nem negatív lesz. Az <span class="fogalom" title="operációs rendszer">operációs rendszer</span> több <span class="fogalom" title="szemafor">szemafort</span> is tud egyszerre kezelni (<strong>szemaforkészlet</strong> vagy <strong>szemafortömb</strong>). Ebben az esetben a műveleteket csak akkor hajtja végre a <span class="fogalom" title="szemafor">szemaforokon</span>, ha mindegyiken elvégezhető, különben várakoztatja a folyamatot.</p><p class="vissza"><a href="#fejezetek">Vissza a tartalom<span class="gyorsb">j</span>egyzékhez</a></p><h3><a name="hiv4" id="hiv4"></a>Példa az egyszerű bináris szemaforok használatára</h3><p>Most nézzünk meg egy programrészletet egy egyszerű bináris <span class="fogalom" title="szemafor">szemafor</span> használatára! A <span class="fogalom" title="szemafor">szemafort</span> záráskor eggyel csökkentjük, nyitáskor pedig eggyel növeljük. Ha kezdetben beállítjuk a <span class="fogalom" title="szemafor">szemafor</span> értékét egyre, akkor ez megfelel a nyitott állapotnak, mivel az első lezáró folyamat tovább mehet, és a <span class="fogalom" title="szemafor">szemafor</span> értékét eggyel csökkenti, amelyik ezután nulla lesz. A további szemaforzárási kísérletekre (eggyel való csökkentések) a folyamatok blokkolódnak. A nyitás hatására (eggyel való növelés) a <span class="fogalom" title="szemafor">szemafor</span> értéke ismét egy lesz.</p><div class="forraskod"><div class="bekezdes1cm">
+key_t kulcs; 
+int szemafor_id; 
+struct sembuf muvelet; 
+ 
+/* Kulcsgenerálás, majd az egyetlen szemafort tartalmazó szemaforkészlet létrehozása: */ 
+kulcs = ftok(argv[0], 1); 
+szemafor_id = semget(kulcs, 1, IPC_CREAT | S_IRUSR | S_IWUSR); 
+ 
+/* Beállítjuk a szemafor kezdeti értékét egyre, azaz &#132;nyitott&#148; állapotba: */ 
+semctl(szemafor_id, 0, SETVAL, 1); 
+ 
+/* Lezárjuk a szemafort. A sembuf struktúrában a sem_op értékét egyre állítjuk. A semop függvény megkísérli hozzáadni a szemaforhoz sem_op értékét, blokkolja a folyamatot, ha az eredmény negatív lenne: */ 
+muvelet.sem_num =  0; 
+muvelet.sem_op  = -1; 
+muvelet.sem_flg =  0; 
+semop(szemafor_id, &#38;muvelet, 1); 
+ 
+/* A kritikus szakasz kezdete. */ 
+ 
+/* A kritikus szakasz műveletei: */ 
+ 
+/* Megnyitjuk a szemafort, azaz eggyel növeljük a szemafor értékét: */ 
+muvelet.sem_num = 0; 
+muvelet.sem_op  = 1; 
+muvelet.sem_flg = 0; 
+semop(szemafor_id, &#38;muvelet, 1); 
+ 
+/* A kritikus szakasz vége. */ 
+ 
+/* A kritikus szakasz végén töröljük a szemafort: */ 
+semctl(szemafor_id,0,IPC_RMID); 
+</div>
+</div><p class="vissza"><a href="#fejezetek">Vissza a tartalom<span class="gyorsb">j</span>egyzékhez</a></p><h3><a name="hiv5" id="hiv5"></a>A szemaforkészlet létrehozása, a semget függvény</h3><p>A szemaforkészletet létrehozását a <strong>semget</strong> nevű függvénnyel tudjuk megtenni, amelyhez az <strong>ftok</strong> nevű függvénnyel létrehozott kulcsot használhatjuk. Ugyanezzel a kulccsal a korábban már létrehozott szemaforkészlet azonosítóját is meg tudjuk szerezni a <strong>semget</strong> nevű függvénnyel.</p><div class="forraskod"><div class="bekezdes1cm">
+#include &lt;sys/types.h&gt; 
+#include &lt;sys/ipc.h&gt; 
+#include &lt;sys/sem.h&gt; 
+int semget(key_t key, int nsems, int semflg);
+</div>
+</div><p>A semget függvény paraméterei:</p><ul><li><strong>key</strong>: az <em>ftok</em> függvénnyel létrehozott kulcs.</li><li><strong>nsems</strong>: a szemaforkészletben lévő <span class="fogalom" title="szemafor">szemaforok</span> száma.</li><li><strong>semflg</strong>: kapcsolók (állománykezelésnél használt jogok is itt adhatók meg)<ul><li><strong>IPC_CREAT:</strong> új <span class="fogalom" title="szemafor">szemafor</span> létrehozása, ha ezt nem adjuk meg, akkor a létező szemaforkészlet azonosítóját adja meg.</li><li><strong>IPV_EXCL: </strong>a kapcsoló esetén hiba történik, ha már létezik szemaforkészlet a megadott kulccsal.</li></ul></li></ul><p>A semget függvény visszatérési értéke: </p><ul><li>Sikeres végrehajtás esetén a szemaforkészlet azonosítója.</li><li>Hiba esetén -1, illetve beállítja a globális errno hibaértéket. </li></ul><p><em>A semget függvény egy új szemaforkészletet hoz létre, ám egy új szemaforkészletet létrehozásakor különböző hibák merülhetnek fel. A semget függvény beállítja a globális errno hibaértéket, ami a szokásos értékeken kívül például a következő értékekkel bővül ki:</em></p><table class="lecke">
+<tr><th><p><strong>Konstans</strong></p></th><th><p>Leírás</p></th></tr><tr><td><p><strong>EACCES</strong></p></td><td><p>Jogosultsági hiba lépett fel.</p></td></tr><tr><td><p><strong>EEXIST</strong></p></td><td><p>Az IPC_CREAT | IPC_EXCL kapcsolók esetén a megadott kulccsal már létezett szemaforkészlet.</p></td></tr><tr><td><p><strong>ENOENT</strong></p></td><td><p>Nem létezik a megadott kulccsal szemaforkészlet, és nem írtuk elő az IPC_CREAT kapcsolót.</p></td></tr><tr><td><p><strong>ENOMEM</strong></p></td><td><p>Nincs elég memória.</p></td></tr><tr><td><p><strong>ENOSPC</strong></p></td><td><p>Nincs elég hely egy új szemaforkészlet létrehozásához.</p></td></tr><tr><td><p><strong>EINVAL</strong></p></td><td><p>Hibás szemaforszám, vagy a létező szemaforkészletben lévő <span class="fogalom" title="szemafor">szemaforok</span> száma kisebb, mint a megadott <em>nsems.</em></p></td></tr></table><p>További hibaértékek a referenca-kézikönyvben (manual) találhatóak.</p><p class="vissza"><a href="#fejezetek">Vissza a tartalom<span class="gyorsb">j</span>egyzékhez</a></p><h3><a name="hiv6" id="hiv6"></a>A szemaforkészlet szemaforjainak értékváltoztatása, a semop függvény</h3><p>A &#132;<em>semop&#148;</em> függvénnyel tudjuk a szemaforkészlet <span class="fogalom" title="szemafor">szemaforjainak</span> az értékét változtatni, azaz növelni vagy csökkenteni. A <em>&#132;semop&#148;</em> függvény blokkolja a folyamatot, ha a kért művelet nem hajtható végre. Ha több <span class="fogalom" title="szemafor">szemaforon</span> végzünk műveletet, akkor minden <span class="fogalom" title="szemafor">szemaforon</span> egyszerre végzi el a műveletet, ha az lehetséges, azaz minden <span class="fogalom" title="szemafor">szemaforon</span> megvalósítható a kért változtatás.</p><div class="forraskod"><div class="bekezdes1cm">
+#include &lt;sys/types.h&gt; 
+#include &lt;sys/ipc.h&gt; 
+#include &lt;sys/sem.h&gt; 
+int semop(int semid, struct sembuf * sops, unsigned nsops);
+</div>
+</div><p>A semop függvény paraméterei:</p><ul><li><strong>semid</strong>: a szemaforkészlet azonosítója.</li><li><strong>sops</strong>: a művelet paramétereit tartalmazó tömb kezdőcíme. Egy tömbelem egy <span class="fogalom" title="szemafor">szemafor</span> kijelölését (indexét a szemaforkészletben), a műveletet és módosító kapcsolókat tartalmaz. Típusa: sembuf struktúra típus.</li><li><strong>nsops</strong>: annak a mennyisége, hogy hány <span class="fogalom" title="szemafor">szemaforon</span> végezzük egyszerre a műveletet, a második paraméterben szereplő tömb elemszáma.</li></ul><p>A semop függvény visszatérési értéke: </p><ul><li>Sikeres végrehajtás esetén nulla.</li><li>Hiba esetén -1, illetve beállítja a globális errno hibaértéket. </li></ul><p><em>A semop függvénnyel tudjuk a szemaforkészlet szemaforjainak az értékét változtatni, ám az értékváltoztatáskor különböző hibák merülhetnek fel. A semop függvény beállítja a globális errno hibaértéket, ami a szokásos értékeken kívül például a következő értékekkel bővül ki:</em></p><table class="lecke">
+<tr><td><p><strong>Konstans</strong></p></td><td><p>Leírás</p></td></tr><tr><td><p><strong>EACCES</strong></p></td><td><p>Nincs jogosultságunk a művelet végrehajtásához.</p></td></tr><tr><td><p><strong>EFAULT</strong></p></td><td><p>A művelet paramétereit tartalmazó tömb kezdőcíme (sops) hibás.</p></td></tr><tr><td><p><strong>E2BIG</strong></p></td><td><p>A <span class="fogalom" title="szemafor">szemaforok</span> mennyiségének a megadása, azaz hogy hány <span class="fogalom" title="szemafor">szemaforon</span> végezzünk egyszerre műveletet (nsops) túl nagy.</p></td></tr><tr><td><p><strong>ENOMEM</strong></p></td><td><p>Nincs elég memória.</p></td></tr><tr><td><p><strong>EAGAIN</strong></p></td><td><p>Az IPC_NOWAIT kapcsoló megadása esetén nem lehetett végrehajtani a műveletet.</p></td></tr><tr><td><p><strong>EINVAL</strong></p></td><td><p>A szemaforkészlet azonosítója (semid), vagy a <span class="fogalom" title="szemafor">szemaforok</span> mennyiségének a megadása, azaz hogy hány <span class="fogalom" title="szemafor">szemaforon</span> végezzünk egyszerre műveletet (nsops) hibás.</p></td></tr><tr><td><p><strong>EFBIG</strong></p></td><td><p>A művelet paramétereit tartalmazó (sops) tömbben az egyik <span class="fogalom" title="szemafor">szemafor</span> nem létezik a szemaforkészletben.</p></td></tr><tr><td><p><strong>EIDRM</strong></p></td><td><p>A <span class="fogalom" title="szemafor">szemafor</span> törölve lett.</p></td></tr><tr><td><p><strong>EINTR</strong></p></td><td><p>Egy művelet közben jelzést kaptunk.</p></td></tr><tr><td><p><strong>ERANGE</strong></p></td><td><p>A szemaforkészlet egyik <span class="fogalom" title="szemafor">szemaforjának</span> az értéke nagyobb, mint a megengedett SEMVMX.</p></td></tr></table><p>További hibaértékek a referenca-kézikönyvben (manual) találhatóak.</p><p><em>A sembuf típusú struktúra a sys/sem.h header fájlban van meghatározva. A sembuf típusú struktúra a következőképpen épül fel:</em></p><div class="forraskod"><div class="bekezdes1cm">
+vstruct sembuf { 
+           ushort  sem_num;    /* A szemafor indexe a szemaforkészletben. */ 
+           short   sem_op;     /* Ezt az értéket adja hozzá a szemaforhoz. */ 
+           short   sem_flg;    /* Kapcsolók: IPC_NOWAIT, SEM_UNDO. */ 
+        };
+</div>
+</div><p><em>A sembuf típusú struktúrában használt kapcsolók jelentése: </em></p><ul><li><strong>IPC_NOWAIT: </strong>nem blokkolja a folyamatot, még akkor sem, ha nem lehet végrehajtani. Ekkor a semop függvény hibával tér vissza.</li><li><strong>SEM_UNDO: </strong>a műveletet visszavonja a rendszer, amikor a folyamat befejeződik.</li></ul><p><em>A sembuf típusú struktúrában használt értékadás jelentése: </em></p><p>A <span class="fogalom" title="szemafor">szemafor</span> értékét a sembuf struktúrában lévő sem_op hozzáadásával lehet módosítani.</p><ul><li>Ha sem_op &gt; 0, akkor a <span class="fogalom" title="szemafor">szemafor</span> értéke nő. Ez nem okoz blokkolást. Általában a <span class="fogalom" title="kritikus szakasz">kritikus szakasz</span> végén használjuk.</li><li>Ha sem_op &lt; 0, akkor az <span class="fogalom" title="operációs rendszer">operációs rendszer</span> megpróbálja a <span class="fogalom" title="szemafor">szemafor</span> értékét csökkenteni, ha a <span class="fogalom" title="szemafor">szemafor</span> értéke negatívvá válna, akkor nem hajtja végre, hanem  blokkolja a folyamatot.</li><li>Ha sem_op = 0, akkor a <span class="fogalom" title="szemafor">szemafor</span> értéke nem változik. Ha a <span class="fogalom" title="szemafor">szemafor</span> értéke nem nulla, akkor a folyamat blokkolódik egészen addig, míg a <span class="fogalom" title="szemafor">szemafor</span> nulla nem lesz. Ezt nullára várakozásnak is szokták nevezni.</li></ul><p class="vissza"><a href="#fejezetek">Vissza a tartalom<span class="gyorsb">j</span>egyzékhez</a></p> 
+  </div>
+</div>
+<div class="utmutato_also">
+  <div class="utm_hivatkozasok_also"><a class="oldalteteje" accesskey="f" href="#teteje"><span class="gyorsb">F</span>el a lap tetejére</a>
+  <a class="elozotanlap" id="navialsoelozo" href="lecke8_lap2.html"><img src="navi/ikon_elozolap.gif" alt="Ugrás a tananyag előző oldalára" title="Ugrás a tananyag előző oldalára" width="36" height="36" /></a>
+  <a id='navialsokov' class="kovetktanlap" href="lecke8_lap4.html" ><img src="navi/ikon_kovetklap.gif" alt="Ugrás a tananyag következő oldalára" title="Ugrás a tananyag következő oldalára" width="36" height="36"/></a>
+  </div>
+</div>
+<div class="ki_stilus"></div>
+<div class="impresszum">
+  <table class="uszt">
+    <tr>
+      <td><div class="imp_eltetatklogo"><img alt="ELTE és ELTE TáTK logó" src="css/arculat/elte_plus_tatk.png" style="width:100%;height:auto;" /></div>
+        <div class="imp_elteiklogo"><img alt="ELTE és ELTE IK logó" src="css/arculat/elte_plus_ik.png" style="width:100%;height:auto;" /></div></td>
+      <td><div class="imp_uszt"><img alt="Új Széchenyi terv" src="css/arculat/USZT_logo_cmyk.jpg" style="width:100%;height:auto;" /></div></td>
+      <td><div class="imp_eu"><img alt="A projekt az Európai Unió támogatásával, az Európai Szociális Alap társfinanszirozásával valósul meg." title="A projekt az Európai Unió támogatásával, az Európai Szociális Alap társfinanszirozásával valósul meg." src="css/arculat/ESZA.png" style="width:100%;height:auto;"/></div></td>
+    </tr>
+  </table>
+</div>
+</body>
+</html>

@@ -1,0 +1,127 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="hu" lang="hu">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="css/scormelte_alap.css" rel="stylesheet" type="text/css" title="" />
+<link href="css/style_spec.css" rel="stylesheet" type="text/css" />
+<link href="css/scormelte_nagy.css" rel="alternate stylesheet" type="text/css" title="nagy" />
+<link href="css/scormelte_inverz.css" rel="alternate stylesheet" type="text/css" title="inverz" />
+<!--[if lte IE 6]>
+<link href="css/scormelte_ie6.css" rel="stylesheet" type="text/css" title="" />
+<![endif]-->
+<!-- syntax highlight -->
+<link rel="stylesheet" type="text/css" href="css/shCore.css" />
+<link rel="stylesheet" type="text/css" href="css/shThemeDefault.css" />
+<script type="text/javascript" src="js/shCore.js"></script>
+<script type="text/javascript" src="js/shBrushCpp.js"></script>
+<script type="text/javascript" src="js/shBrushCSharp.js"></script>
+<script type="text/javascript" src="js/shBrushDelphi.js"></script>
+<script type="text/javascript" src="js/shBrushXml.js"></script>
+<script type="text/javascript" src="js/shBrushCss.js"></script>
+<script type="text/javascript" src="js/shBrushJScript.js"></script>
+<script type="text/javascript" src="js/shBrushSql.js"></script>
+<script type="text/javascript">
+SyntaxHighlighter.all()
+</script>
+<title>
+Számítógépes alapismeretek II. / 
+A párhuzamosság alapjai &ndash; folyamatok kommunikációja, versenyhelyzetek, kritikus szekciók, szemaforok, monitorok és szignálok
+/A gyártó-fogyasztó probléma, az alvás-ébredés módszere</title>
+<meta name="description" content="A tananyag  fejlesztése a TÁMOP-4.1.2.A/2-10/1 pályázat keretén belül történt." />
+<meta name="keywords" content="Hardver alapismeretek, operációs rendszer, számítógépes alapismeretek, operációs rendszer fogalma, operációs rendszerek története, operációs rendszer feladata, operációs rendszer generációk, operációs rendszer típusok, folyamatok, folyamat táblázat, szál &ndash; folyamatok, rendszerhívások, operációs rendszer struktúrák, kernelmód, kernel, felhasználói mód, B/K művelet, folyamatok modellje, szinkron rendszerhívás, asszinkron rendszerhívás, állapotai, megvalósításuk, folyamatok kommunikációja, IPC (Inter Process Communication), megszakítástábla, IDT, megszakításvezérlő, PIC, megszakítás, interrupt, megszakításkérelem, IRQ, megszakításkezelési folyamat, kivétel, hibakeresés (debuggolás), töréspont, fájlrendszer, MBR, partíciós szektor, Ntldr, klaszter (cluster), szektor, FAT, NTFS, ext, TSS, csapda, ütemezés, szál, szemafor, mutex, monitor, POSIX, szignál, osztott memória, csővezeték, kritikus szakasz, Wybe Dijkstra, CPU, erőforrás, holtpont, kiéheztetés, integrált áramkör, multiprogramozás, beágyazott rendszerek, partíció, MMU, lapcsere, FIFO, socket, lapozás, swap, interaktív rendszer, kötegelt rendszer, kliens, job, jogosultság, metaadat, könyvtár, UNIX, GNU/LINUX, erőforrás-foglalási gráf, fizikai memória, virtuális memória, merevlemez, floppy, fregmentáció, defregmentáló program, MFT, API, i-node, cache memory, SSH, HyperThread, párhuzamosság" />
+<script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="js/kep.js"></script>
+<script type="text/javascript" src="js/jquery.media.js"></script>
+<script type="text/javascript" src="js/jquery.highlight-3.js"></script>
+<script type="text/javascript" src="js/kereses.js"></script>
+<script type="text/javascript" src="js/stylesheetToggle.js"></script>
+<script type="text/javascript" src="js/cookie.js"></script>
+<script type="text/javascript" src="js/stilusvalto.js"></script>
+<script type="text/javascript" src="js/fogalmak.js"></script>
+<script type="text/javascript" src="js/fogalom.js"></script>
+<script type="text/javascript" src="js/jwplayer.js"></script>
+<script type="text/javascript">
+$(document).ready(function() 
+{
+$("a.hang").media( {width: 250, height: 50,  autoplay: false} );
+});
+</script>
+<script type="text/javascript" src="js/navigacio.js"></script>
+</head>
+<body>
+<div><a name="teteje"  id="teteje"></a></div>
+<div class="jawsfmenu">
+  <ul>
+    <li><a class="tartalom" href="#tartalom" accesskey="t" tabindex="2">Ugrás a <span class="gyorsb">t</span>artalomra</a></li>
+    <li><a class="tartalomj" href="#fejezetek" accesskey="j" tabindex="5">Ugrás a tartalom<span class="gyorsb">j</span>egyzékre</a></li>
+    <li><a class="tanutm" href="#tanutm" accesskey="u" tabindex="7">Ugrás a tan<span class="gyorsb">u</span>lási útmutatóra</a></li>
+  </ul>
+</div>
+<div class="ki_kereses"></div>
+<div class="oldal">
+  <div class="utmutato">
+    <div class="utm_hivatkozasok"><span class="elozolap"><img src="navi/ikon_vissza_dis.gif" alt="Vissza az előzőleg látogatott oldalra (nem elérhető funkció)" title="Vissza az előzőleg látogatott oldalra (nem elérhető funkció)" /></span><a class="kezdolap" href="index.html" accesskey="p" tabindex="21"><img src="navi/ikon_kezdolap.gif" alt="Vissza a modul kezdőlapjára" title="Vissza a modul kezdőlapjára" width="36" height="36"/></a><a class="elozotanlap" href="lecke6_lap2.html" accesskey="e" tabindex="22"><img src="navi/ikon_elozolap.gif" alt="Ugrás a tananyag előző oldalára" title="Ugrás a tananyag előző oldalára" width="36" height="36" /></a><a class="kovetktanlap" href="lecke6_lap4.html" accesskey="v" tabindex="23"><img src="navi/ikon_kovetklap.gif" alt="Ugrás a tananyag következő oldalára" title="Ugrás a tananyag következő oldalára" width="36" height="36"/></a><span class="ki_fogalomkapcs"><img src="navi/ikon_fogalmakbe_dis.gif" alt="Fogalom megjelenítés (nem elérhető funckió)" title="Fogalom megjelenítés (nem elérhető funckió)" /></span><span class="ki_fogalomlista"><img src="navi/ikon_fogalmaklista_dis.gif" alt="Fogalmak listája (nem elérhető funkció)" title="Fogalmak listája (nem elérhető funkció)" /></span><span class="ki_nyomtatas"><img src="navi/ikon_nyomtatas_dis.gif" alt="Oldal nyomtatása (nem elérhető funkció)" title="Oldal nyomtatása (nem elérhető funkció)" /></span><a class="oldalterkep" href="oldalterkep.html" accesskey="d" tabindex="31"><img src="navi/ikon_oldalterkep.gif" alt="Oldaltérkép megtekintése" title="Oldaltérkép megtekintése"  width="36" height="36" /></a><a class="sugo" href="sugo.html" accesskey="s" tabindex="33"><img src="navi/ikon_sugo.gif" alt="Súgó megtekintése" title="Súgó megtekintése"  width="36" height="36" /></a></div>
+  </div>
+  <div class="tartalommenu">
+    <div class="tartalommenu_fejlec"><span id="lapteteje"><a  href="#teteje"><span class="gyorsb">F</span>el a lap tetejére</a></span><a name="fejezetek"   id="fejezetek">Tartalomjegyzék</a></div>
+    <ul><li><a href="#hiv1">A párhuzamosság alapjai &ndash; folyamatok kommunikációja, versenyhelyzetek, kritikus szekciók, szemaforok, monitorok és szignálok</a><ul><li><a href="#hiv2">A gyártó-fogyasztó probléma, az alvás-ébredés módszere</a></li></ul></li></ul> 
+  </div>
+  <div class="tartalom"> <a name="tartalom"    id="tartalom"></a> 
+    <h1><a name="hiv1" id="hiv1"></a>A párhuzamosság alapjai &ndash; folyamatok kommunikációja, versenyhelyzetek, kritikus szekciók, szemaforok, monitorok és szignálok</h1><h2><a name="hiv2" id="hiv2"></a>A gyártó-fogyasztó probléma, az alvás-ébredés módszere</h2><p>Ahogy láttuk az előző, tevékeny várakozást használó versenyhelyzet-elkerülő megoldásokban a legfontosabb gond az, hogy processzoridőt pazarolnak. (Még előfordulhat olyan eset is, hogy ha ezek a folyamatok különböző prioritással futnak, és ha a magasabb prioritású folyamat tevékeny várakozásba kezd &ndash; miközben az alacsonyabb prioritású másik folyamat éppen a kritikus szekciójában van &ndash;, és az ütemezőnk mindig a magasabb prioritású, &#132;futásra kész&#148; állapotú folyamat futtatja, akkor ez a magasabb prioritású folyamat sosem kerül ki a belépés függvény végtelen ciklusából, hiszen az alacsonyabb prioritású testvérfolyamat sosem tud kikerülni a kritikus szekciójából.)</p><p>Ahhoz, hogy a drága processzoridőt se pazaroljuk, olyan megoldást lehet javasolni, ami vagy blokkolni tud egy folyamatot (aludni küldi), vagy fel tudja ébreszteni ebből a blokkolt állapotból.</p><p>A probléma tárgyalásához most nézzünk egy általános, gyakran előforduló feladatot, amit &#132;gyártó-fogyasztó problémaként&#148; is ismerünk.</p><p>Vegyünk két folyamatot, amelyek egy közös tárhelyen dolgoznak: az egyikük adatot helyez el ebben (gyártó), a másik adatokat olvas, és ki is veszi azokat a közös tárhelyből (fogyasztó). (Az egy gyártó &ndash; egy fogyasztó esetet általánosan is lehetne tárgyalni, de érdemben nem befolyásolja ezen egyszerűbb esetet.) Az alvás-ébresztés utasítás különböző lehet, gyakran &#132;sleep-wakeup&#148; vagy hasonló névre hallgatnak.</p><p>Lássuk a probléma egy megoldását pék-vásárló esetére (sok helyen találkozhatunk pékség előtt kígyózó sorokkal). A kész kenyerek tárolására akkora polc van a pékségben, amin száz kenyeret tárolhatunk (<em>N</em> = 100). Ha megtelt az összes hely, a pék várakozik, amíg a vásárlók elvisznek a teli polcról néhány kenyeret, ezután újra süt. Ha sok vásárló jött a pékségbe, akkor esetleg elfogyott a kenyér; ilyenkor a vásárlók szép sorban várakoznak, amíg az újabb sütés befejeződik. A &#132;hely&#148; változóval jelezzük az aktuálisan polcon lévő kenyerek számát.</p><p>Lássuk a két eljárást! A &#132;pék&#148; eljárás a pék folyamatát, a &#132;vásárló&#148; eljárás a vásárló folyamatát jelenti. Kezdetben a &#132;hely&#148; nevű változó értéke nulla, azaz üres a pékség. Ha a kenyérsütések eredményeként tele lesz a polc (hely = <em>N</em>), akkor nem tud több kenyeret a pék a polcra tenni, ezért alszik egy kicsit. Még egy lényeges lépés van a &#132;pék&#148; eljárásban: ha a vásárlók várakoztak (aludtak), mert nem volt kenyér, akkor ha megsült a kenyér (hely = 1), felébresztjük a vásárlót.</p><div class="forraskod"><div class="bekezdes1cm">
+
+#define N 100 
+ 
+int hely = 0; 
+
+void pék() { 
+     int kenyér;
+     while(1) { 
+          // Folyamatosan dolgozik a pék, végtelen ciklus. 
+          kenyér = új_kenyér(); 
+          if (hely == N) alvás();  // Ha tele van a polc, a pék elmegy pihenni. 
+          polcra(kenyér); 
+          hely++; 
+          if (hely==1)             // Ha az előző növeléssel lett egy a hely 
+               ébresztő(vásárló);  // értéke, akkor ébreszteni kell a vásárlót. 
+     } 
+}
+</div>
+</div><p>A vásárlófolyamat a pék folyamatának gyakorlatilag az ellentéte. Ha nincs kenyér, azaz hely = 0, akkor várakozik (alszik). Láttuk, a vásárlót a pék ébreszti! (Kiszól a boltból, hogy kész a kenyér, lehet venni...) A másik lényeges pont a vásárlófolyamatban az, amikor felszabadult egy hely a polcon (hely = <em>N</em>&ndash;1), akkor fel kell ébresztenie a péket, hogy süssön kenyeret.</p><div class="forraskod"><div class="bekezdes1cm">
+
+void vásárló() { 
+     int kenyér; 
+     while(1) { 
+          // Folyamatosan jönnek a vásárlók is a pékségbe, végtelen ciklus. 
+          if (hely == 0) alvás();  // Ha üres a polc, akkor a vásárlók 
+                                   // sorban várnak, míg lesz kenyér. 
+          kenyér = kenyeret(); 
+          hely--; 
+          if (hely == N - 1)       // Ha a megvásárolt kenyérrel lett egy 
+               ébresztő(pék);      // szabad hely a polcon, akkor ébresztjük 
+                                   // a péket. 
+          megesszük(kenyér); 
+     }
+}
+</div>
+</div><p>A megvalósítás világos, de van egy kis probléma vele. A &#132;hely&#148; változó a közös adat, amit mindkét folyamat használ, s ez versenyhelyzetet teremt. </p><p>Tegyük fel a következőt! A polc üres, azaz a hely értéke nulla. A vásárló kiolvasta már az értékét, és éppen kezdi nézni, hogy vajon az nulla értékű-e? Még nem jut el az alvásig [&#132;if (hely==0) alvás();&#148;] és ebben a pillanatban az ütemező átadja a vezérlést a péknek. A pék süt egy kenyeret, berakja a polcra, majd a &#132;hely&#148; nevű változó értékét megnöveli, ami egy lesz. Ekkor küld egy ébresztőt a vásárlónak, aki nem alszik még, hiszen nem jutott el addig. Így előbb ébresztik, mintsem aludt volna, azaz az ébresztés elveszik, nincs hatása. Ezután visszakapja a vezérlést a vásárló, mivel beolvasta már korábban a &#132;hely&#148; nevű változó értékét, és akkor az nulla volt, így innen folytatva a végrehajtást álomba szenderül. Eztán a pék telesüti a polcot kenyérrel, majd ő is elalszik. Ekkor mindketten jóízűen alszanak, amíg a vásárlók &#132;éhen nem halnak&#148;. </p><p>Ezt a helyzetet lehetne esetleg javítani, de az alapvető szituáció változatlan marad. A &#132;hely&#148; változó kezelése kritikus szekciót jelent, hiszen mindkét folyamat ezen keresztül látja, hogy mi az aktuális polc helyzete.</p><p class="vissza"><a href="#fejezetek">Vissza a tartalom<span class="gyorsb">j</span>egyzékhez</a></p> 
+  </div>
+</div>
+<div class="utmutato_also">
+  <div class="utm_hivatkozasok_also"><a class="oldalteteje" accesskey="f" href="#teteje"><span class="gyorsb">F</span>el a lap tetejére</a>
+  <a class="elozotanlap" id="navialsoelozo" href="lecke6_lap2.html"><img src="navi/ikon_elozolap.gif" alt="Ugrás a tananyag előző oldalára" title="Ugrás a tananyag előző oldalára" width="36" height="36" /></a>
+  <a id='navialsokov' class="kovetktanlap" href="lecke6_lap4.html" ><img src="navi/ikon_kovetklap.gif" alt="Ugrás a tananyag következő oldalára" title="Ugrás a tananyag következő oldalára" width="36" height="36"/></a>
+  </div>
+</div>
+<div class="ki_stilus"></div>
+<div class="impresszum">
+  <table class="uszt">
+    <tr>
+      <td><div class="imp_eltetatklogo"><img alt="ELTE és ELTE TáTK logó" src="css/arculat/elte_plus_tatk.png" style="width:100%;height:auto;" /></div>
+        <div class="imp_elteiklogo"><img alt="ELTE és ELTE IK logó" src="css/arculat/elte_plus_ik.png" style="width:100%;height:auto;" /></div></td>
+      <td><div class="imp_uszt"><img alt="Új Széchenyi terv" src="css/arculat/USZT_logo_cmyk.jpg" style="width:100%;height:auto;" /></div></td>
+      <td><div class="imp_eu"><img alt="A projekt az Európai Unió támogatásával, az Európai Szociális Alap társfinanszirozásával valósul meg." title="A projekt az Európai Unió támogatásával, az Európai Szociális Alap társfinanszirozásával valósul meg." src="css/arculat/ESZA.png" style="width:100%;height:auto;"/></div></td>
+    </tr>
+  </table>
+</div>
+</body>
+</html>

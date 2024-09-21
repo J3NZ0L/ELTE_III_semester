@@ -1,0 +1,214 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="hu" lang="hu">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="css/scormelte_alap.css" rel="stylesheet" type="text/css" title="" />
+<link href="css/style_spec.css" rel="stylesheet" type="text/css" />
+<link href="css/scormelte_nagy.css" rel="alternate stylesheet" type="text/css" title="nagy" />
+<link href="css/scormelte_inverz.css" rel="alternate stylesheet" type="text/css" title="inverz" />
+<!--[if lte IE 6]>
+<link href="css/scormelte_ie6.css" rel="stylesheet" type="text/css" title="" />
+<![endif]-->
+<!-- syntax highlight -->
+<link rel="stylesheet" type="text/css" href="css/shCore.css" />
+<link rel="stylesheet" type="text/css" href="css/shThemeDefault.css" />
+<script type="text/javascript" src="js/shCore.js"></script>
+<script type="text/javascript" src="js/shBrushCpp.js"></script>
+<script type="text/javascript" src="js/shBrushCSharp.js"></script>
+<script type="text/javascript" src="js/shBrushDelphi.js"></script>
+<script type="text/javascript" src="js/shBrushXml.js"></script>
+<script type="text/javascript" src="js/shBrushCss.js"></script>
+<script type="text/javascript" src="js/shBrushJScript.js"></script>
+<script type="text/javascript" src="js/shBrushSql.js"></script>
+<script type="text/javascript">
+SyntaxHighlighter.all()
+</script>
+<title>
+Számítógépes alapismeretek II. / 
+Osztott memória, üzenetküldés, rendszerhívások és alkalmazásaik. A folyamatok közötti kommunikáció
+/A Socket, avagy a foglalat</title>
+<meta name="description" content="A tananyag  fejlesztése a TÁMOP-4.1.2.A/2-10/1 pályázat keretén belül történt." />
+<meta name="keywords" content="Hardver alapismeretek, operációs rendszer, számítógépes alapismeretek, operációs rendszer fogalma, operációs rendszerek története, operációs rendszer feladata, operációs rendszer generációk, operációs rendszer típusok, folyamatok, folyamat táblázat, szál &ndash; folyamatok, rendszerhívások, operációs rendszer struktúrák, kernelmód, kernel, felhasználói mód, B/K művelet, folyamatok modellje, szinkron rendszerhívás, asszinkron rendszerhívás, állapotai, megvalósításuk, folyamatok kommunikációja, IPC (Inter Process Communication), megszakítástábla, IDT, megszakításvezérlő, PIC, megszakítás, interrupt, megszakításkérelem, IRQ, megszakításkezelési folyamat, kivétel, hibakeresés (debuggolás), töréspont, fájlrendszer, MBR, partíciós szektor, Ntldr, klaszter (cluster), szektor, FAT, NTFS, ext, TSS, csapda, ütemezés, szál, szemafor, mutex, monitor, POSIX, szignál, osztott memória, csővezeték, kritikus szakasz, Wybe Dijkstra, CPU, erőforrás, holtpont, kiéheztetés, integrált áramkör, multiprogramozás, beágyazott rendszerek, partíció, MMU, lapcsere, FIFO, socket, lapozás, swap, interaktív rendszer, kötegelt rendszer, kliens, job, jogosultság, metaadat, könyvtár, UNIX, GNU/LINUX, erőforrás-foglalási gráf, fizikai memória, virtuális memória, merevlemez, floppy, fregmentáció, defregmentáló program, MFT, API, i-node, cache memory, SSH, HyperThread, párhuzamosság" />
+<script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="js/kep.js"></script>
+<script type="text/javascript" src="js/jquery.media.js"></script>
+<script type="text/javascript" src="js/jquery.highlight-3.js"></script>
+<script type="text/javascript" src="js/kereses.js"></script>
+<script type="text/javascript" src="js/stylesheetToggle.js"></script>
+<script type="text/javascript" src="js/cookie.js"></script>
+<script type="text/javascript" src="js/stilusvalto.js"></script>
+<script type="text/javascript" src="js/fogalmak.js"></script>
+<script type="text/javascript" src="js/fogalom.js"></script>
+<script type="text/javascript" src="js/jwplayer.js"></script>
+<script type="text/javascript">
+$(document).ready(function() 
+{
+$("a.hang").media( {width: 250, height: 50,  autoplay: false} );
+});
+</script>
+<script type="text/javascript" src="js/navigacio.js"></script>
+</head>
+<body>
+<div><a name="teteje"  id="teteje"></a></div>
+<div class="jawsfmenu">
+  <ul>
+    <li><a class="tartalom" href="#tartalom" accesskey="t" tabindex="2">Ugrás a <span class="gyorsb">t</span>artalomra</a></li>
+    <li><a class="tartalomj" href="#fejezetek" accesskey="j" tabindex="5">Ugrás a tartalom<span class="gyorsb">j</span>egyzékre</a></li>
+    <li><a class="tanutm" href="#tanutm" accesskey="u" tabindex="7">Ugrás a tan<span class="gyorsb">u</span>lási útmutatóra</a></li>
+  </ul>
+</div>
+<div class="ki_kereses"></div>
+<div class="oldal">
+  <div class="utmutato">
+    <div class="utm_hivatkozasok"><span class="elozolap"><img src="navi/ikon_vissza_dis.gif" alt="Vissza az előzőleg látogatott oldalra (nem elérhető funkció)" title="Vissza az előzőleg látogatott oldalra (nem elérhető funkció)" /></span><a class="kezdolap" href="index.html" accesskey="p" tabindex="21"><img src="navi/ikon_kezdolap.gif" alt="Vissza a modul kezdőlapjára" title="Vissza a modul kezdőlapjára" width="36" height="36"/></a><a class="elozotanlap" href="lecke11_lap5.html" accesskey="e" tabindex="22"><img src="navi/ikon_elozolap.gif" alt="Ugrás a tananyag előző oldalára" title="Ugrás a tananyag előző oldalára" width="36" height="36" /></a><a class="kovetktanlap" href="lecke11_lap7.html" accesskey="v" tabindex="23"><img src="navi/ikon_kovetklap.gif" alt="Ugrás a tananyag következő oldalára" title="Ugrás a tananyag következő oldalára" width="36" height="36"/></a><span class="ki_fogalomkapcs"><img src="navi/ikon_fogalmakbe_dis.gif" alt="Fogalom megjelenítés (nem elérhető funckió)" title="Fogalom megjelenítés (nem elérhető funckió)" /></span><span class="ki_fogalomlista"><img src="navi/ikon_fogalmaklista_dis.gif" alt="Fogalmak listája (nem elérhető funkció)" title="Fogalmak listája (nem elérhető funkció)" /></span><span class="ki_nyomtatas"><img src="navi/ikon_nyomtatas_dis.gif" alt="Oldal nyomtatása (nem elérhető funkció)" title="Oldal nyomtatása (nem elérhető funkció)" /></span><a class="oldalterkep" href="oldalterkep.html" accesskey="d" tabindex="31"><img src="navi/ikon_oldalterkep.gif" alt="Oldaltérkép megtekintése" title="Oldaltérkép megtekintése"  width="36" height="36" /></a><a class="sugo" href="sugo.html" accesskey="s" tabindex="33"><img src="navi/ikon_sugo.gif" alt="Súgó megtekintése" title="Súgó megtekintése"  width="36" height="36" /></a></div>
+  </div>
+  <div class="tartalommenu">
+    <div class="tartalommenu_fejlec"><span id="lapteteje"><a  href="#teteje"><span class="gyorsb">F</span>el a lap tetejére</a></span><a name="fejezetek"   id="fejezetek">Tartalomjegyzék</a></div>
+    <ul><li><a href="#hiv1">Osztott memória, üzenetküldés, rendszerhívások és alkalmazásaik. A folyamatok közötti kommunikáció</a><ul><li><a href="#hiv2">A folyamatok közötti kommunikáció</a><ul><li><a href="#hiv3">A Socket, avagy a foglalat</a><ul><li><a href="#hiv4">Egy socket létrehozása, a socket függvény</a></li><li><a href="#hiv5">Egy sockethez való csatlakozás</a></li><li><a href="#hiv6">Példa a socketek használatára: helyi kommunikáció</a></li></ul></li></ul></li></ul></li></ul> 
+  </div>
+  <div class="tartalom"> <a name="tartalom"    id="tartalom"></a> 
+    <h1><a name="hiv1" id="hiv1"></a>Osztott memória, üzenetküldés, rendszerhívások és alkalmazásaik. A folyamatok közötti kommunikáció</h1><h2><a name="hiv2" id="hiv2"></a>A folyamatok közötti kommunikáció</h2><h3><a name="hiv3" id="hiv3"></a>A Socket, avagy a foglalat</h3><p>A <em><span class="fogalom" title="socket">socket</span></em> többfajta kommunikációt valósit meg egy <span class="fogalom" title="operációs rendszer">operációs rendszeren</span> belül két folyamat között, vagy számítógépes hálózaton keresztül két különböző számítógépen futó folyamatok között. Küldhetünk egy irányban egy adatcsomagot, vagy akár nagy mennyiségű adatot is csomagokra bontva hibakezeléssel. Párhuzamos kiszolgálást segítő függvényei is vannak. A kommunikáció során először a kiszolgáló (szerver) folyamat hozza létre a foglalatot, és majd várja, hogy az ügyfél (<span class="fogalom" title="kliens">kliens</span>) által létrehozott foglalaton keresztül (<span class="fogalom" title="socket">socketen</span> keresztül) küldjön neki adatot. Foglalatot létrehozni a <em><span class="fogalom" title="socket">socket</span></em> függvénnyel lehet.</p><h4><a name="hiv4" id="hiv4"></a>Egy socket létrehozása, a socket függvény</h4><div class="forraskod"><div class="bekezdes1cm">
+
+#include &lt;sys/types.h&gt; 
+#include &lt;sys/socket.h&gt; 
+
+int socket(int domain, int type, int protocol);
+</div>
+</div><p>A <strong>socket</strong> függvény paraméterei:</p><ul><li><strong>domain</strong>: a kommunikációs szabványcsaládot lehet megadni. Következzen néhány: <ul><li><strong>PF_UNIX, PF_LOCAL:</strong> helyi kommunikáció, </li><li><strong>PF_INET:</strong> IPv4 Internet protokollok (4 bájt), </li><li><strong>PF_INET6:</strong> IPv6 Internet protokollok (6 bájt). </li></ul></li><li><strong>type</strong>: a kapcsolat típusát adja meg. <ul><li><strong>SOCK_DGRAM:</strong> egyetlen csomagnyi adatmennyiség elküldése hibakezelés nélkül,</li><li><strong>SOCK_STREAM:</strong> kétirányú adatátvitel, nagy mennyiségű adatok csomagokra bontva, hibakezeléssel. </li></ul></li><li><strong>protocol</strong>: adatátviteli szabvány megadása. Az előző két típusnak egy-egy szabványa van: ezek az UDP és a TCP, ekkor a paramétert nem kell megadni.</li></ul><p>A socket függvény visszatérési értéke: </p><ul><li>Sikeres végrehajtás esetén a foglalat (<span class="fogalom" title="socket">socket</span>) fájlleírója.</li><li>Hiba esetén -1, illetve beállítja a globális errno hibaértéket. </li></ul><p><em>A <span class="fogalom" title="socket">socket</span> függvénnyel tudjuk a <span class="fogalom" title="socket">socketet</span> létrehozni, ám a <span class="fogalom" title="socket">socket</span> létrehozásakor különböző hibák merülhetnek fel. A <span class="fogalom" title="socket">socket</span> függvény beállítja a globális errno hibaértéket, ami a szokásos értékeken kívül például a következő értékekkel bővül ki:</em></p><table class="lecke">
+<tr><th><p><strong>Konstans</strong></p></th><th><p>Leírás</p></th></tr><tr><td><p><strong>EACCES</strong></p></td><td><p>Nincs jogosultságunk a művelet végrehajtásához.</p></td></tr><tr><td><p><strong>EAFNOSUPPORT</strong></p></td><td><p>Nem támogatott a szabványcsalád.</p></td></tr><tr><td><p><strong>EINVAL</strong></p></td><td><p>Hibás szabvány vagy szabványcsalád.</p></td></tr><tr><td><p><strong>EMFILE</strong></p></td><td><p>Túl sok állományt nyitott meg a folyamat.</p></td></tr><tr><td><p><strong>ENFILE</strong></p></td><td><p>Túl sok nyitott állomány van a rendszeren.</p></td></tr><tr><td><p><strong>EPROTONOSUPPORT</strong></p></td><td><p>A szabványcsaládban nem támogatott a típus vagy a szabvány.</p></td></tr><tr><td><p><strong>ENOBUFS</strong></p></td><td><p>Nincs elég memória.</p></td></tr><tr><td><p><strong>ENOMEM</strong></p></td><td><p>Nincs elég memória.</p></td></tr></table><p>További hibaértékek a referencia-kézikönyvben (manual) találhatók.</p><h4><a name="hiv5" id="hiv5"></a>Egy sockethez való csatlakozás</h4><p>A foglalat létrehozása után csatlakozni kell a foglalathoz; tulajdonképpen ekkor címezzük meg a foglalatot: megadjuk a helyi kommunikációnál használt fájl nevét, vagy a távoli kommunikáció esetén a távoli gép internet címét. A kommunikáció különböző szereplői különböző függvényeket használnak erre: A kiszolgáló folyamat a &#132;<em>bind&#148;</em> függvényt, az ügyfélfolyamat a &#132;<em>connect&#148;</em> függvényt.</p><p><strong>Egy sockethez való csatlakozásnál a címzéshez használt adatszerkezetek</strong></p><p>Most nézzük a címzéshez használt adatszerkezeteket!</p><div class="forraskod"><div class="bekezdes1cm">
+
+// Az általános struktúra: 
+struct sockaddr { 
+    unsigned short    sa_family;      /* címzési család, AF_xxx */ 
+    char              sa_data[14];    /* protokoll címzés, 14 bájtos */ 
+}; 
+
+// A helyi kommunikációra használható címzés: 
+
+struct sockaddr_un { 
+    short             sun_family;     /* AF_UNIX */ 
+    char              sun_PATH[108];  /* elésési útvonal */ 
+}; 
+
+// Internetcím tárolására használható struktúra: 
+
+struct sockaddr_in { 
+    short             sin_family;     /* Például: AF_INET, AF_INET6. */ 
+    unsigned short    sin_port;       /* Portszám. Például: htons(3490). */ 
+    struct in_addr    sin_addr;       /* IP cím. */ 
+    char              sin_zero[8];    /* Ki lehet nullázni. */ 
+}; 
+
+A sin_addr az IP címen kívül lehet még:
+- INADDR_ANY: Bármely IPv4 IP cím, ha a kiszolgáló bárkitől fogadhat adatot.
+- INADDR_BBROADCAST: Az alhálózat minden résztvevője.
+
+// Az IP cím tárolására
+
+struct in_addr { 
+    unsigned long     s_addr;         /* A feltöltés az inet_pton() 
+                                         függvénnyel történik. */ 
+};
+</div>
+</div><p><strong>Egy sockethez való csatlakozás &ndash; kiszolgáló oldalon, a bind függvény</strong></p><p>Kiszolgáló oldali kapcsolódás a foglalathoz:</p><div class="forraskod"><div class="bekezdes1cm">
+
+#include &lt;sys/types.h&gt; 
+#include &lt;sys/socket.h&gt; 
+
+int bind(int sockfd, const struct sockaddr * my_addr, socklen_t addrlen);
+</div>
+</div><p>A bind függvény paraméterei:</p><ul><li><strong>sockfd</strong>: a foglalat (<span class="fogalom" title="socket">socket</span>) fájlleírója (a <span class="fogalom" title="socket">socket</span> függvény adja meg).</li><li><strong>my_addr</strong>: a cím, amellyel megcímezzük a foglalatot, azaz hogy kitől akarunk fogadni kapcsolatot.</li><li><strong>addrlen</strong>: a cím mérete bájtokban.</li></ul><p>A bind függvény visszatérési értéke: </p><ul><li>Sikeres végrehajtás esetén nulla.</li><li>Hiba esetén -1, illetve beállítja a globális errno hibaértéket. </li></ul><p><em>A bind függvénnyel tudunk egy <span class="fogalom" title="socket">sockethez</span> kiszolgálói oldalon csatlakozni, ám a csatlakozáskor különböző hibák merülhetnek fel. A bind függvény beállítja a globális errno hibaértéket, ami a szokásos értékeken kívül például a következő értékekkel bővül ki:</em></p><table class="lecke">
+<tr><th><p><strong>Konstans</strong></p></th><th><p>Leírás</p></th></tr><tr><td><p><strong>EACCES</strong></p></td><td><p>Nincs jogosultságunk az adott címhez; alacsony portokhoz általában rendszergazdai jogosultság kell.</p></td></tr><tr><td><p><strong>EFAULT</strong></p></td><td><p>A &#132;my_addr&#148; hibás cím.</p></td></tr><tr><td><p><strong>EINVAL</strong></p></td><td><p>A foglalat már meg lett címezve.</p></td></tr><tr><td><p><strong>EADDRINUSE</strong></p></td><td><p>A cím már kapcsolva van foglalathoz.</p></td></tr><tr><td><p><strong>EBADF</strong></p></td><td><p>Hibás a &#132;sockfd&#148;.</p></td></tr><tr><td><p><strong>ENOTSOCK</strong></p></td><td><p>A &#132;sockfd&#148; nem egy foglalat leírója.</p></td></tr><tr><td><p><strong>EADDRNOTAVAIL</strong></p></td><td><p>A cím nem elérhető.</p></td></tr><tr><td><p><strong>ENOMEM</strong></p></td><td><p>Nincs elég memória.</p></td></tr><tr><td><p><strong>ENOTDIR</strong></p></td><td><p>A path eleje nem <span class="fogalom" title="könyvtár">könyvtár</span>.</p></td></tr></table><p>További hibaértékek a referencia-kézikönyvben (manual) találhatók.</p><p><strong>Egy sockethez való csatlakozás &ndash; ügyféloldalon, a connect függvény</strong></p><p>Ügyféloldali kapcsolódás a foglalathoz:</p><div class="forraskod"><div class="bekezdes1cm">
+
+ #include &lt;sys/types.h&gt; 
+#include &lt;sys/socket.h&gt; 
+
+int connect(int sockfd, const struct sockaddr * serv_addr, socklen_t addrlen);
+</div>
+</div><p>A connect függvény paraméterei:</p><ul><li><strong>sockfd</strong>: a foglalat fájlleírója (a <span class="fogalom" title="socket">socket</span> függvény adja meg).</li><li><strong>serv_addr</strong>: a cím, amellyel megcímezzük a foglalatot, azaz a kiszolgáló címe, ide küldjük az adatot.</li><li><strong>addrlen</strong>: a cím mérete bájtokban.</li></ul><p>A connect függvény visszatérési értéke: </p><ul><li>Sikeres végrehajtás esetén nulla.</li><li>Hiba esetén -1, illetve beállítja a globális errno hibaértéket. </li></ul><p><em>A connect függvénnyel tudunk egy <span class="fogalom" title="socket">sockethez</span> ügyféloldalon csatlakozni, ám a csatlakozáskor különböző hibák merülhetnek fel. A connect függvény beállítja a globális errno hibaértéket, ami a szokásos értékeken kívül például a következő értékekkel bővül ki:</em></p><table class="lecke">
+<tr><th><p><strong>Konstans</strong></p></th><th><p>Leírás</p></th></tr><tr><td><p><strong>EACCES</strong></p></td><td><p>UNIX domain esetén nincs jogosultságunk a socket fájlhoz.</p></td></tr><tr><td><p><strong>ENOTSOCK</strong></p></td><td><p>A &#132;sockfd&#148; nem egy foglalat leírója.</p></td></tr><tr><td><p><strong>EADDRNOTAVAIL</strong></p></td><td><p>A cím nem elérhető.</p></td></tr><tr><td><p><strong>EAFNOSUPPORT</strong></p></td><td><p>Nem támogatott a szabványcsalád.</p></td></tr><tr><td><p><strong>EISCONN</strong></p></td><td><p>A foglalat már meg lett címezve.</p></td></tr><tr><td><p><strong>ETIMEDOUT</strong></p></td><td><p>Időkorlát-túllépés.</p></td></tr><tr><td><p><strong>ECONNREFUSED</strong></p></td><td><p>A kiszolgáló a kapcsolatot visszautasította.</p></td></tr><tr><td><p><strong>ENETUNREACH</strong></p></td><td><p>A kiszolgáló nem elérhető.</p></td></tr><tr><td><p><strong>EADDRINUSE</strong></p></td><td><p>A cím kapcsolva lett foglalathoz.</p></td></tr><tr><td><p><strong>EINPROGRESS</strong></p></td><td><p>A kapcsolódás folyamatban van (nem blokkoló mód esetén).</p></td></tr><tr><td><p><strong>EALREADY</strong></p></td><td><p>A csatlakozás még nem történt meg (nem blokkoló mód esetén).</p></td></tr></table><p>További hibaértékek a referencia-kézikönyvben (manual) találhatók.</p><h4><a name="hiv6" id="hiv6"></a>Példa a socketek használatára: helyi kommunikáció</h4><p>Lássunk egy egyszerű példát, amelyben foglalatot használunk helyi kommunikációra!</p><div class="forraskod"><div class="bekezdes1cm">
+
+// A kiszolgáló folyamat: 
+
+#include &lt;sys/types.h&gt; 
+#include &lt;sys/socket.h&gt; 
+#include &lt;sys/un.h&gt; 
+#include &lt;unistd.h&gt; 
+#include &lt;stdio.h&gt; 
+#include &lt;string.h&gt; 
+
+int main() { 
+     int sockfd; 
+     struct sockaddr_un * server; 
+     char uzenet[1024]; 
+     
+/* A DGRAM típusú foglalat létrehozása fájlrendszeren. */ 
+     sockfd = socket( AF_UNIX, SOCK_DGRAM, 0 ); 
+        server.sun_family = AF_UNIX; 
+     strcpy( server.sun_path, "socket_file" ); 
+     
+/* A foglalat megcímzése (a munkakönyvtárban socket_file nevű fájl). */ 
+     bind( sockfd, (struct sockaddr*) (&#38;server), sizeof(server)); 
+     
+/* Olvasás a foglalatból (várakozás az üzenetre). */ 
+     read( sockfd, uzenet, sizeof(uzenet) ); 
+     printf ( "A kapott uzenet: %s\n", uzenet ); 
+     
+/* A foglalat lezárása, majd a fájl törlése. */ 
+     close(sockfd); 
+     unlink( "socket_file" ); 
+     
+     return 0; 
+}
+// Az ügyfélfolyamat: 
+
+#include &lt;sys/types.h&gt; 
+#include &lt;sys/socket.h&gt; 
+#include &lt;sys/un.h&gt; 
+#include &lt;unistd.h&gt; 
+#include &lt;stdio.h&gt; 
+#include &lt;string.h&gt; 
+
+int main() { 
+     int sockfd; 
+     struct sockaddr_un * server; 
+     const char uzenet [] = "Hello!"; 
+     
+/* A DGRAM típusú foglalat létrehozása fájlrendszeren. */ 
+     sockfd = socket( AF_UNIX, SOCK_DGRAM, 0 ); 
+     
+     server.sun_family = AF_UNIX; 
+     strcpy( server.sun_path, "socket_file" ); 
+     
+/* A foglalat megcímzése (a munkakönyvtárban socket_file nevű fájl). */ 
+     connect(sockfd,(struct sockaddr*) (&#38;server), sizeof(server)); 
+     
+/* Írás a foglalatba. */ 
+     write( sockfd, uzenet, strlen ( uzenet ) + 1); 
+/* A foglalat lezárása. */ 
+     close(sockfd); 
+      return 0; 
+}
+</div>
+</div><p>A következő képernyőkép a példaprogram fordítását és futtatását mutatja. Először a szervert lefordítjuk és elindítjuk. A szerver vár a <span class="fogalom" title="kliens">kliensre</span>.</p><!--fej11_kep_6--><div class="kep kozep" style="max-width:406px;"><img src="kepek/fej11_kep6_w406.jpg" alt="A képen a program látható futás közben" style="width:100%; height:auto;" title="A képen a program látható futás közben" /><span class="kepalairas">A program futása</span><div class="kep_ikonok jobbra"><span class="kep_nagymeret"><a href="kepek/fej11_kep6_w406_full.html" title="Kép megtekintése külön ablakban" >A fenti kép <span class="kepnev">()</span> megtekintése külön ablakban</a></span></div></div><div class="uresmargo"></div><!--ENDfej11_kep_6--><p>Majd a <span class="fogalom" title="kliens">kliens</span>t fordítjuk és indítjuk egy másik terminálon.</p><!--fej11_kep_7--><div class="kep kozep" style="max-width:426px;"><img src="kepek/fej11_kep7_w426.jpg" alt="A képen a program látható futás közben" style="width:100%; height:auto;" title="A képen a program látható futás közben" /><span class="kepalairas">A program futása</span><div class="kep_ikonok jobbra"><span class="kep_nagymeret"><a href="kepek/fej11_kep7_w426_full.html" title="Kép megtekintése külön ablakban" >A fenti kép <span class="kepnev">()</span> megtekintése külön ablakban</a></span></div></div><div class="uresmargo"></div><!--ENDfej11_kep_7--><p>Ezután a szerver megkapja az üzenetet és terminál.</p><!--fej11_kep_8--><div class="kep kozep" style="max-width:439px;"><img src="kepek/fej11_kep8_w439.jpg" alt="A képen a program látható futás közben" style="width:100%; height:auto;" title="A képen a program látható futás közben" /><span class="kepalairas">A program futása</span><div class="kep_ikonok jobbra"><span class="kep_nagymeret"><a href="kepek/fej11_kep8_w439_full.html" title="Kép megtekintése külön ablakban" >A fenti kép <span class="kepnev">()</span> megtekintése külön ablakban</a></span></div></div><div class="uresmargo"></div><!--ENDfej11_kep_8--><p class="vissza"><a href="#fejezetek">Vissza a tartalom<span class="gyorsb">j</span>egyzékhez</a></p> 
+  </div>
+</div>
+<div class="utmutato_also">
+  <div class="utm_hivatkozasok_also"><a class="oldalteteje" accesskey="f" href="#teteje"><span class="gyorsb">F</span>el a lap tetejére</a>
+  <a class="elozotanlap" id="navialsoelozo" href="lecke11_lap5.html"><img src="navi/ikon_elozolap.gif" alt="Ugrás a tananyag előző oldalára" title="Ugrás a tananyag előző oldalára" width="36" height="36" /></a>
+  <a id='navialsokov' class="kovetktanlap" href="lecke11_lap7.html" ><img src="navi/ikon_kovetklap.gif" alt="Ugrás a tananyag következő oldalára" title="Ugrás a tananyag következő oldalára" width="36" height="36"/></a>
+  </div>
+</div>
+<div class="ki_stilus"></div>
+<div class="impresszum">
+  <table class="uszt">
+    <tr>
+      <td><div class="imp_eltetatklogo"><img alt="ELTE és ELTE TáTK logó" src="css/arculat/elte_plus_tatk.png" style="width:100%;height:auto;" /></div>
+        <div class="imp_elteiklogo"><img alt="ELTE és ELTE IK logó" src="css/arculat/elte_plus_ik.png" style="width:100%;height:auto;" /></div></td>
+      <td><div class="imp_uszt"><img alt="Új Széchenyi terv" src="css/arculat/USZT_logo_cmyk.jpg" style="width:100%;height:auto;" /></div></td>
+      <td><div class="imp_eu"><img alt="A projekt az Európai Unió támogatásával, az Európai Szociális Alap társfinanszirozásával valósul meg." title="A projekt az Európai Unió támogatásával, az Európai Szociális Alap társfinanszirozásával valósul meg." src="css/arculat/ESZA.png" style="width:100%;height:auto;"/></div></td>
+    </tr>
+  </table>
+</div>
+</body>
+</html>

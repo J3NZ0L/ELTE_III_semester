@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="hu" lang="hu">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="css/scormelte_alap.css" rel="stylesheet" type="text/css" title="" />
+<link href="css/style_spec.css" rel="stylesheet" type="text/css" />
+<link href="css/scormelte_nagy.css" rel="alternate stylesheet" type="text/css" title="nagy" />
+<link href="css/scormelte_inverz.css" rel="alternate stylesheet" type="text/css" title="inverz" />
+<!--[if lte IE 6]>
+<link href="css/scormelte_ie6.css" rel="stylesheet" type="text/css" title="" />
+<![endif]-->
+<!-- syntax highlight -->
+<link rel="stylesheet" type="text/css" href="css/shCore.css" />
+<link rel="stylesheet" type="text/css" href="css/shThemeDefault.css" />
+<script type="text/javascript" src="js/shCore.js"></script>
+<script type="text/javascript" src="js/shBrushCpp.js"></script>
+<script type="text/javascript" src="js/shBrushCSharp.js"></script>
+<script type="text/javascript" src="js/shBrushDelphi.js"></script>
+<script type="text/javascript" src="js/shBrushXml.js"></script>
+<script type="text/javascript" src="js/shBrushCss.js"></script>
+<script type="text/javascript" src="js/shBrushJScript.js"></script>
+<script type="text/javascript" src="js/shBrushSql.js"></script>
+<script type="text/javascript">
+SyntaxHighlighter.all()
+</script>
+<title>
+Számítógépes alapismeretek II.</title>
+<meta name="description" content="A tananyag  fejlesztése a TÁMOP-4.1.2.A/2-10/1 pályázat keretén belül történt." />
+<meta name="keywords" content="Hardver alapismeretek, operációs rendszer, számítógépes alapismeretek, operációs rendszer fogalma, operációs rendszerek története, operációs rendszer feladata, operációs rendszer generációk, operációs rendszer típusok, folyamatok, folyamat táblázat, szál &ndash; folyamatok, rendszerhívások, operációs rendszer struktúrák, kernelmód, kernel, felhasználói mód, B/K művelet, folyamatok modellje, szinkron rendszerhívás, asszinkron rendszerhívás, állapotai, megvalósításuk, folyamatok kommunikációja, IPC (Inter Process Communication), megszakítástábla, IDT, megszakításvezérlő, PIC, megszakítás, interrupt, megszakításkérelem, IRQ, megszakításkezelési folyamat, kivétel, hibakeresés (debuggolás), töréspont, fájlrendszer, MBR, partíciós szektor, Ntldr, klaszter (cluster), szektor, FAT, NTFS, ext, TSS, csapda, ütemezés, szál, szemafor, mutex, monitor, POSIX, szignál, osztott memória, csővezeték, kritikus szakasz, Wybe Dijkstra, CPU, erőforrás, holtpont, kiéheztetés, integrált áramkör, multiprogramozás, beágyazott rendszerek, partíció, MMU, lapcsere, FIFO, socket, lapozás, swap, interaktív rendszer, kötegelt rendszer, kliens, job, jogosultság, metaadat, könyvtár, UNIX, GNU/LINUX, erőforrás-foglalási gráf, fizikai memória, virtuális memória, merevlemez, floppy, fregmentáció, defregmentáló program, MFT, API, i-node, cache memory, SSH, HyperThread, párhuzamosság" />
+<script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="js/kep.js"></script>
+<script type="text/javascript" src="js/jquery.media.js"></script>
+<script type="text/javascript" src="js/jquery.highlight-3.js"></script>
+<script type="text/javascript" src="js/kereses.js"></script>
+<script type="text/javascript" src="js/stylesheetToggle.js"></script>
+<script type="text/javascript" src="js/cookie.js"></script>
+<script type="text/javascript" src="js/stilusvalto.js"></script>
+<script type="text/javascript" src="js/fogalmak.js"></script>
+<script type="text/javascript" src="js/fogalom.js"></script>
+<script type="text/javascript" src="js/jwplayer.js"></script>
+<script type="text/javascript">
+$(document).ready(function() 
+{
+$("a.hang").media( {width: 250, height: 50,  autoplay: false} );
+});
+</script>
+<script type="text/javascript" src="js/navigacio.js"></script>
+</head>
+<body>
+<div><a name="teteje"  id="teteje"></a></div>
+<div class="jawsfmenu">
+  <ul>
+    <li><a class="tartalom" href="#tartalom" accesskey="t" tabindex="2">Ugrás a <span class="gyorsb">t</span>artalomra</a></li>
+    <li><a class="tartalomj" href="#fejezetek" accesskey="j" tabindex="5">Ugrás a tartalom<span class="gyorsb">j</span>egyzékre</a></li>
+    <li><a class="tanutm" href="#tanutm" accesskey="u" tabindex="7">Ugrás a tan<span class="gyorsb">u</span>lási útmutatóra</a></li>
+  </ul>
+</div>
+<div class="ki_kereses"></div>
+<div class="oldal">
+  <div class="utmutato">
+    <div class="utm_hivatkozasok"><span class="elozolap"><img src="navi/ikon_vissza_dis.gif" alt="Vissza az előzőleg látogatott oldalra (nem elérhető funkció)" title="Vissza az előzőleg látogatott oldalra (nem elérhető funkció)" /></span><a class="kezdolap" href="index.html" accesskey="p" tabindex="21"><img src="navi/ikon_kezdolap.gif" alt="Vissza a modul kezdőlapjára" title="Vissza a modul kezdőlapjára" width="36" height="36"/></a><a class="elozotanlap" href="teszt/lecke3/teszt.html" accesskey="e" tabindex="22"><img src="navi/ikon_elozolap.gif" alt="Ugrás a tananyag előző oldalára" title="Ugrás a tananyag előző oldalára" width="36" height="36" /></a><a class="kovetktanlap" href="lecke4_lap2.html" accesskey="v" tabindex="23"><img src="navi/ikon_kovetklap.gif" alt="Ugrás a tananyag következő oldalára" title="Ugrás a tananyag következő oldalára" width="36" height="36"/></a><span class="ki_fogalomkapcs"><img src="navi/ikon_fogalmakbe_dis.gif" alt="Fogalom megjelenítés (nem elérhető funckió)" title="Fogalom megjelenítés (nem elérhető funckió)" /></span><span class="ki_fogalomlista"><img src="navi/ikon_fogalmaklista_dis.gif" alt="Fogalmak listája (nem elérhető funkció)" title="Fogalmak listája (nem elérhető funkció)" /></span><span class="ki_nyomtatas"><img src="navi/ikon_nyomtatas_dis.gif" alt="Oldal nyomtatása (nem elérhető funkció)" title="Oldal nyomtatása (nem elérhető funkció)" /></span><a class="oldalterkep" href="oldalterkep.html" accesskey="d" tabindex="31"><img src="navi/ikon_oldalterkep.gif" alt="Oldaltérkép megtekintése" title="Oldaltérkép megtekintése"  width="36" height="36" /></a><a class="sugo" href="sugo.html" accesskey="s" tabindex="33"><img src="navi/ikon_sugo.gif" alt="Súgó megtekintése" title="Súgó megtekintése"  width="36" height="36" /></a></div>
+    <h1 class="utmutato"><a name="tanutm"  id="tanutm"></a>Tanulási útmutató</h1>
+    <div class="osszefoglalas">
+      <h2>Összefoglalás </h2>
+      <!--{fej4_video_1}--><div class="video"> <div class="felirat">Összefoglaló (4.fejezet) című videó megtekintése,letöltése</div><div class="jaws"><ul><li><a href="#tartalmi_1"> Ugrás a videó tartalmi összefoglalójára. A videó címe: Összefoglaló (4.fejezet).</a></li><li><a href="#teljesszov_1">Ugrás a videó teljes szövegű leírására. A videó címe: Összefoglaló (4.fejezet).</a></li><li><a href="#video_1">Ugrás a videó kisebb felbontású változatának letöltéséhez. A videó címe: Összefoglaló (4.fejezet).</a></li><li><a href="#video_2">Ugrás a videó nagy felbontású változatának letöltéséhez. A videó címe: Összefoglaló (4.fejezet).</a></li></ul></div><div class="kepkockak"><span>A film néhány jellemző képkockája: </span><div class="kep kozep sz550"> <img src="videok/film_video.jpg" alt="Néhány képkocka a filmből." style="width:100%; height:auto;" title="Néhány képkocka a filmből." /> </div></div><div class="filmtartalom"><p><span class="filmtartalom"><a name="tartalmi_1"  id="tartalmi_1">Tartalom:</a></span>A videón az összefoglaló hallgatható meg.</p><p class="videohtml"><a href="videok/osszefoglalo_4.html" name="teljesszov_1"  id="teljesszov_1"><span class="jaws">Összefoglaló (4.fejezet) című </span> Videó szöveges leírásának megtekintése HTML formátumban.</a> </p></div><div class="letoltes_doboz"><div id="player1"><p class="vid_flv"><a title="" href="videok/4_agk.flv"><span class="jaws">Összefoglaló (4.fejezet) című  </span>Videó letöltése Flash videó formátumban. <span class="filemeret"><span class="filemeret_cimke">A fájl mérete:</span>0.85<abbr title="megabájt">MB</abbr></span></a></p></div><script type="text/javascript">jwplayer("player1").setup({flashplayer: "player.swf",file:"videok/4_agk.flv",wmode: "opaque",width: "100%",skin: "css/skins/darkrv5.zip",controlbar: "over"});</script></div><div class="ido">A videó hossza: 0000 perc 17 másodperc.</div><div class="letoltes"><div class="letoltes_felirat"><span class="jaws">Összefoglaló (4.fejezet) című </span>Videó kisebb és nagyobb felbontású változatainak letöltése különböző formátumokban</div><a name="video_1"  id="video_1"></a><ul><li><a title="Összefoglaló (4.fejezet) című videó letöltése 3GP formátumban (kis változat)" href="videok/4_agk_kismeret.3gp"><span class="jaws">Összefoglaló (4.fejezet) című  videó kis felbontású változatának letöltése <span class="formatum">3GP</span> formátumban. </span><span class="meret_3gp_kis"><img src="css/3gp_kis.gif"  alt="Kis felbontású, 3GP változat letöltése" /><span class="jaws">Fájlméret:</span><span class="videomeret"><span class="meret_megabajt">0.12</span><span class="megabajt"><abbr title="megabájt">MB</abbr></span></span></span></a></li><li><a title="Összefoglaló (4.fejezet) című videó letöltése AVI (DivX) formátumban (kis változat)" href="videok/4_agk_kismeret.avi"><span class="jaws">Összefoglaló (4.fejezet) című videó kis felbontású változatának letöltése <span class="formatum">AVI (DivX)</span> formátumban.</span><span class="meret_avi_kis"><img src="css/avi_kis.gif"  alt="Kis felbontású, AVI változat letöltése" /><span class="jaws">Fájlméret:</span><span class="videomeret"><span class="meret_megabajt">0.56</span><span class="megabajt"><abbr title="megabájt">MB</abbr></span></span></span></a></li><li><a title="Összefoglaló (4.fejezet) című videó letöltése MP4 formátumban (kis változat)" href="videok/4_agk_kismeret.mp4"><span class="jaws">Összefoglaló (4.fejezet) című  videó kis felbontású változatának letöltése <span class="formatum">MP4</span> formátumban. </span><span class="meret_mp4_kis"><img src="css/mp4_kis.gif"  alt="Kis felbontású, MP4 változat letöltése" /><span class="jaws">Fájlméret:</span><span class="videomeret"><span class="meret_megabajt">0.56</span><span class="megabajt"><abbr title="megabájt">MB</abbr></span></span></span></a></li><li><a title="Összefoglaló (4.fejezet) című videó letöltése WMV formátumban (kis változat)" href="videok/4_agk_kismeret.wmv"><span class="jaws">Összefoglaló (4.fejezet) című videó kis felbontású változatának letöltése <span class="formatum">WMV</span> formátumban.</span><span class="meret_wmv_kis"><img src="css/wmv_kis.gif"  alt="Kis felbontású, WMV változat letöltése" /><span class="jaws">Fájlméret:</span><span class="videomeret"><span class="meret_megabajt">0.6</span><span class="megabajt"><abbr title="megabájt">MB</abbr></span></span></span></a></li></ul><a name="video_2"  id="video_2"></a><ul><li><a title="Összefoglaló (4.fejezet) című videó letöltése 3GP formátumban (nagy változat)" href="videok/4_agk.3gp"><span class="jaws">Összefoglaló (4.fejezet) című  videó nagy felbontású változatának letöltése <span class="formatum">3GP</span> formátumban. </span><span class="meret_3gp_nagy"><img src="css/3gp_nagy.gif"  alt="Nagyobb felbontású, 3GP változat letöltése" /><span class="jaws">Fájlméret:</span><span class="videomeret"><span class="meret_megabajt">0.41</span><span class="megabajt"><abbr title="megabájt">MB</abbr></span></span></span></a></li><li><a title="Összefoglaló (4.fejezet) című videó letöltése AVI (DivX) formátumban (nagy változat)" href="videok/4_agk.avi"><span class="jaws">Összefoglaló (4.fejezet) című videó nagy felbontású változatának letöltése <span class="formatum">AVI (DivX)</span> formátumban.</span><span class="meret_avi_nagy"><img src="css/avi_nagy.gif"  alt="Nagyobb felbontású, AVI változat letöltése" /><span class="jaws">Fájlméret:</span><span class="videomeret"><span class="meret_megabajt">1.35</span><span class="megabajt"><abbr title="megabájt">MB</abbr></span></span></span></a></li><li><a title="Összefoglaló (4.fejezet) című videó letöltése MP4 formátumban (nagy változat)" href="videok/4_agk.mp4"><span class="jaws">Összefoglaló (4.fejezet) című  videó nagy felbontású változatának letöltése <span class="formatum">MP4</span> formátumban. </span><span class="meret_mp4_nagy"><img src="css/mp4_nagy.gif"  alt="Nagyobb felbontású, MP4 változat letöltése" /><span class="jaws">Fájlméret:</span><span class="videomeret"><span class="meret_megabajt">1.52</span><span class="megabajt"><abbr title="megabájt">MB</abbr></span></span></span></a></li><li><a title="Összefoglaló (4.fejezet) című videó letöltése WMV formátumban (nagy változat)" href="videok/4_agk.wmv"><span class="jaws">Összefoglaló (4.fejezet) című videó nagy felbontású változatának letöltése <span class="formatum">WMV</span> formátumban.</span><span class="meret_wmv_nagy"><img src="css/wmv_nagy.gif"  alt="Nagyobb felbontású, WMV változat letöltése" /><span class="jaws">Fájlméret:</span><span class="videomeret"><span class="meret_megabajt">1.45</span><span class="megabajt"><abbr title="megabájt">MB</abbr></span></span></span></a></li></ul><div class="nemlebeg"></div></div><div class="nemlebeg"></div></div><!--END{fej4_video_1}--><p>Ebben a fejezetben a függvényrendszer-kezeléssel, illetve a könyvtárkezeléssel kapcsolatos <span class="fogalom" title="rendszerhívás">rendszerhívásokat</span> tekintjük át.</p> 
+    </div>
+    <div class="kovetelmeny">
+      <h2>Követelmény </h2>
+      <p>A tanulónak legyen ismerete az egyes könyvtárkezeléssel kapcsolatos rendszerfüggvényekről, a kapcsolódó előre definiált típusokról</p> 
+    </div>
+    <div class="feladatok">
+      <h2>Önállóan megoldható feladatok</h2>
+      <ul><li>Készítsünk egy programot, amelyik az aktuális könyvtár legnagyobb méretű állományának nevét kiírja!</li><li>Írjuk ki az aktuális könyvtár adott dátumnál frissebben módosított állományait!</li><li>Készítsünk programot, amelyik az adott könyvtár összes alkönyvtárainak számát meghatározza!</li><li>Írjuk ki egy az útvonalával együtt megadott könyvtárban azokat az állományokat, amelyeknek futási jogot adtak a csoport vagy a külvilág számára!</li></ul> 
+    </div>
+  </div>
+  <div class="tartalommenu">
+    <div class="tartalommenu_fejlec"><span id="lapteteje"><a  href="#teteje"><span class="gyorsb">F</span>el a lap tetejére</a></span><a name="fejezetek"   id="fejezetek">Tartalomjegyzék</a></div>
+    <ul><li><a href="#hiv1">A fájlrendszerbeli könyvtárak és jogosultságok kezelése</a><ul><li><a href="#hiv2">Bevezetés</a></li></ul></li></ul> 
+  </div>
+  <div class="tartalom"> <a name="tartalom" id="tartalom"></a> 
+    <h1><a name="hiv1" id="hiv1" ></a>A fájlrendszerbeli könyvtárak és jogosultságok kezelése</h1><h2><a name="hiv2" id="hiv2" ></a>Bevezetés</h2><p>Ebben a leckében már nem az egyedi fájlokkal kapcsolatos, hanem az egész <span class="fogalom" title="Fájlrendszer">fájlrendszerrel</span>, könyvtárkezeléssel kapcsolatos függvényekről lesz szó a <span class="fogalom" title="rendszerhívás">rendszerhívások</span> szintjén. </p><p>Ne felejtsük el, hogy a <span class="fogalom" title="rendszerhívás">rendszerhívások</span> platformfüggők, így az alábbiak csak a <span class="fogalom" title="POSIX">POSIX</span> szabványnak megfelelő <span class="fogalom" title="operációs rendszer">operációs rendszerben</span> használhatóak, így például a <span class="fogalom" title="UNIX">UNIX</span> és a <span class="fogalom" title="UNIX">UNIX</span>-szerű <span class="fogalom" title="operációs rendszer">operációs rendszerek</span> esetében, mint például a <span class="fogalom" title="GNU/LINUX">GNU/LINUX</span> <span class="fogalom" title="operációs rendszer">operációs rendszerben</span>. </p><p>Az előző lecke folyamán már volt arról szó, hogy a <span class="fogalom" title="UNIX">UNIX</span> <span class="fogalom" title="operációs rendszer">operációs rendszerben</span> minden fájlt egy úgynevezett i-szám azonosít, amely a fájl sorszáma egy úgynevezett i-csomópont táblázatban. Itt tároljuk például a fájl tulajdonosának adatait, a lemez blokkjainak helyét stb. Egy <span class="fogalom" title="könyvtár">könyvtár</span> a <span class="fogalom" title="UNIX">UNIX</span> és a <span class="fogalom" title="UNIX">UNIX</span> -szerű <span class="fogalom" title="operációs rendszer">operációs rendszerek</span> esetében (pl. a <span class="fogalom" title="GNU/LINUX">GNU/LINUX</span>) tulajdonképpen olyan fájlok összessége, amelyekben az i-szám és a fájl neve szerepel együtt. Az <span class="fogalom" title="operációs rendszer">operációs rendszer</span> nyilvántartja az adott állományra vonatkozó hivatkozások, linkek számát is. Ezt az információt fel kell használnia például a törlések kezelésében, hiszen az állományhoz tartozó adatok fizikai törlése csak abban az esetben lehetséges, ha már semmi sem hivatkozik rá. </p><p>Nézzük át, hogy milyen <span class="fogalom" title="rendszerhívás">rendszerhívásokat</span> ismerünk ebben a témakörben!</p><table class="lecke">
+<tr><th><p>Rendszerhívás</p></th><th><p>Leírás</p></th></tr><tr><td><p>s = mkdir(konyvtarnev,mod);</p></td><td><p>Egy új <span class="fogalom" title="könyvtár">könyvtár</span> létrehozása.</p></td></tr><tr><td><p>s = rmdir(konyvtarnev);</p></td><td><p>Egy üres <span class="fogalom" title="könyvtár">könyvtár</span> megszüntetése.</p></td></tr><tr><td><p>s = chdir(konyvtarnev);</p></td><td><p>Az aktuális munkakönyvtár megváltoztatása.</p></td></tr><tr><td><p>s = link(fajlnev1,fajlnev2);</p></td><td><p>Egy új, a fajlnev1-re mutató fajlnev2 bejegyzés létrehozása.</p></td></tr><tr><td><p>s = unlink(fajlnev);</p></td><td><p>Egy meglévő link felbontása, azaz egy könyvtárbejegyzés megszüntetése.</p></td></tr><tr><td><p>kleiro = opendir(konyvtarnev);</p></td><td><p>Egy létező <span class="fogalom" title="könyvtár">könyvtár</span> megnyitása.</p></td></tr><tr><td><p>s = closedir(kleiro);</p></td><td><p>Egy létező <span class="fogalom" title="könyvtár">könyvtár</span> zárása.</p></td></tr><tr><td><p>allomanyleiro = readdir(kleiro);</p></td><td><p>Egy létező <span class="fogalom" title="könyvtár">könyvtár</span> beolvasása.</p></td></tr><tr><td><p>rewinddir(kleiro);</p></td><td><p>A pozicionálás kezdőállapotba állítása.</p></td></tr><tr><td><p>seekdir(kleiro,pozicio);</p></td><td><p>A létező <span class="fogalom" title="könyvtár">könyvtáron</span> belül a pozíció átállítása.</p></td></tr><tr><td><p>pozicio=telldir(kleiro);</p></td><td><p>A létező <span class="fogalom" title="könyvtár">könyvtáron</span> belüli pozíció lekérdezése.</p></td></tr></table><p class="vissza"><a href="#fejezetek">Vissza a tartalom<span class="gyorsb">j</span>egyzékhez</a></p> 
+  </div>
+</div>
+<div class="utmutato_also">
+  <div class="utm_hivatkozasok_also"><a class="oldalteteje" accesskey="f" href="#teteje"><span class="gyorsb">F</span>el a lap tetejére</a>
+  <a class="elozotanlap" id="navialsoelozo" href="teszt/lecke3/teszt.html"><img src="navi/ikon_elozolap.gif" alt="Ugrás a tananyag előző oldalára" title="Ugrás a tananyag előző oldalára" width="36" height="36" /></a>
+  <a id='navialsokov' class="kovetktanlap" href="lecke4_lap2.html"><img src="navi/ikon_kovetklap.gif" alt="Ugrás a tananyag következő oldalára" title="Ugrás a tananyag következő oldalára" width="36" height="36"/></a>
+  </div>
+</div>
+<div class="ki_stilus"></div>
+<div class="impresszum">
+  <table class="uszt">
+    <tr>
+      <td><div class="imp_eltetatklogo"><img alt="ELTE és ELTE TáTK logó" src="css/arculat/elte_plus_tatk.png" style="width:100%;height:auto;" /></div>
+        <div class="imp_elteiklogo"><img alt="ELTE és ELTE IK logó" src="css/arculat/elte_plus_ik.png" style="width:100%;height:auto;" /></div></td>
+      <td><div class="imp_uszt"><img alt="Új Széchenyi terv" src="css/arculat/USZT_logo_cmyk.jpg" style="width:100%;height:auto;" /></div></td>
+      <td><div class="imp_eu"><img alt="A projekt az Európai Unió támogatásával, az Európai Szociális Alap társfinanszirozásával valósul meg." title="A projekt az Európai Unió támogatásával, az Európai Szociális Alap társfinanszirozásával valósul meg." src="css/arculat/ESZA.png" style="width:100%;height:auto;"/></div></td>
+    </tr>
+  </table>
+</div>
+</body>
+</html>

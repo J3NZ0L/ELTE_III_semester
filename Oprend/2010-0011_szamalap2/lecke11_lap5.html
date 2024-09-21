@@ -1,0 +1,281 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="hu" lang="hu">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="css/scormelte_alap.css" rel="stylesheet" type="text/css" title="" />
+<link href="css/style_spec.css" rel="stylesheet" type="text/css" />
+<link href="css/scormelte_nagy.css" rel="alternate stylesheet" type="text/css" title="nagy" />
+<link href="css/scormelte_inverz.css" rel="alternate stylesheet" type="text/css" title="inverz" />
+<!--[if lte IE 6]>
+<link href="css/scormelte_ie6.css" rel="stylesheet" type="text/css" title="" />
+<![endif]-->
+<!-- syntax highlight -->
+<link rel="stylesheet" type="text/css" href="css/shCore.css" />
+<link rel="stylesheet" type="text/css" href="css/shThemeDefault.css" />
+<script type="text/javascript" src="js/shCore.js"></script>
+<script type="text/javascript" src="js/shBrushCpp.js"></script>
+<script type="text/javascript" src="js/shBrushCSharp.js"></script>
+<script type="text/javascript" src="js/shBrushDelphi.js"></script>
+<script type="text/javascript" src="js/shBrushXml.js"></script>
+<script type="text/javascript" src="js/shBrushCss.js"></script>
+<script type="text/javascript" src="js/shBrushJScript.js"></script>
+<script type="text/javascript" src="js/shBrushSql.js"></script>
+<script type="text/javascript">
+SyntaxHighlighter.all()
+</script>
+<title>
+Számítógépes alapismeretek II. / 
+Osztott memória, üzenetküldés, rendszerhívások és alkalmazásaik. A folyamatok közötti kommunikáció
+/A nevesített csővezeték (FIFO)</title>
+<meta name="description" content="A tananyag  fejlesztése a TÁMOP-4.1.2.A/2-10/1 pályázat keretén belül történt." />
+<meta name="keywords" content="Hardver alapismeretek, operációs rendszer, számítógépes alapismeretek, operációs rendszer fogalma, operációs rendszerek története, operációs rendszer feladata, operációs rendszer generációk, operációs rendszer típusok, folyamatok, folyamat táblázat, szál &ndash; folyamatok, rendszerhívások, operációs rendszer struktúrák, kernelmód, kernel, felhasználói mód, B/K művelet, folyamatok modellje, szinkron rendszerhívás, asszinkron rendszerhívás, állapotai, megvalósításuk, folyamatok kommunikációja, IPC (Inter Process Communication), megszakítástábla, IDT, megszakításvezérlő, PIC, megszakítás, interrupt, megszakításkérelem, IRQ, megszakításkezelési folyamat, kivétel, hibakeresés (debuggolás), töréspont, fájlrendszer, MBR, partíciós szektor, Ntldr, klaszter (cluster), szektor, FAT, NTFS, ext, TSS, csapda, ütemezés, szál, szemafor, mutex, monitor, POSIX, szignál, osztott memória, csővezeték, kritikus szakasz, Wybe Dijkstra, CPU, erőforrás, holtpont, kiéheztetés, integrált áramkör, multiprogramozás, beágyazott rendszerek, partíció, MMU, lapcsere, FIFO, socket, lapozás, swap, interaktív rendszer, kötegelt rendszer, kliens, job, jogosultság, metaadat, könyvtár, UNIX, GNU/LINUX, erőforrás-foglalási gráf, fizikai memória, virtuális memória, merevlemez, floppy, fregmentáció, defregmentáló program, MFT, API, i-node, cache memory, SSH, HyperThread, párhuzamosság" />
+<script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="js/kep.js"></script>
+<script type="text/javascript" src="js/jquery.media.js"></script>
+<script type="text/javascript" src="js/jquery.highlight-3.js"></script>
+<script type="text/javascript" src="js/kereses.js"></script>
+<script type="text/javascript" src="js/stylesheetToggle.js"></script>
+<script type="text/javascript" src="js/cookie.js"></script>
+<script type="text/javascript" src="js/stilusvalto.js"></script>
+<script type="text/javascript" src="js/fogalmak.js"></script>
+<script type="text/javascript" src="js/fogalom.js"></script>
+<script type="text/javascript" src="js/jwplayer.js"></script>
+<script type="text/javascript">
+$(document).ready(function() 
+{
+$("a.hang").media( {width: 250, height: 50,  autoplay: false} );
+});
+</script>
+<script type="text/javascript" src="js/navigacio.js"></script>
+</head>
+<body>
+<div><a name="teteje"  id="teteje"></a></div>
+<div class="jawsfmenu">
+  <ul>
+    <li><a class="tartalom" href="#tartalom" accesskey="t" tabindex="2">Ugrás a <span class="gyorsb">t</span>artalomra</a></li>
+    <li><a class="tartalomj" href="#fejezetek" accesskey="j" tabindex="5">Ugrás a tartalom<span class="gyorsb">j</span>egyzékre</a></li>
+    <li><a class="tanutm" href="#tanutm" accesskey="u" tabindex="7">Ugrás a tan<span class="gyorsb">u</span>lási útmutatóra</a></li>
+  </ul>
+</div>
+<div class="ki_kereses"></div>
+<div class="oldal">
+  <div class="utmutato">
+    <div class="utm_hivatkozasok"><span class="elozolap"><img src="navi/ikon_vissza_dis.gif" alt="Vissza az előzőleg látogatott oldalra (nem elérhető funkció)" title="Vissza az előzőleg látogatott oldalra (nem elérhető funkció)" /></span><a class="kezdolap" href="index.html" accesskey="p" tabindex="21"><img src="navi/ikon_kezdolap.gif" alt="Vissza a modul kezdőlapjára" title="Vissza a modul kezdőlapjára" width="36" height="36"/></a><a class="elozotanlap" href="lecke11_lap4.html" accesskey="e" tabindex="22"><img src="navi/ikon_elozolap.gif" alt="Ugrás a tananyag előző oldalára" title="Ugrás a tananyag előző oldalára" width="36" height="36" /></a><a class="kovetktanlap" href="lecke11_lap6.html" accesskey="v" tabindex="23"><img src="navi/ikon_kovetklap.gif" alt="Ugrás a tananyag következő oldalára" title="Ugrás a tananyag következő oldalára" width="36" height="36"/></a><span class="ki_fogalomkapcs"><img src="navi/ikon_fogalmakbe_dis.gif" alt="Fogalom megjelenítés (nem elérhető funckió)" title="Fogalom megjelenítés (nem elérhető funckió)" /></span><span class="ki_fogalomlista"><img src="navi/ikon_fogalmaklista_dis.gif" alt="Fogalmak listája (nem elérhető funkció)" title="Fogalmak listája (nem elérhető funkció)" /></span><span class="ki_nyomtatas"><img src="navi/ikon_nyomtatas_dis.gif" alt="Oldal nyomtatása (nem elérhető funkció)" title="Oldal nyomtatása (nem elérhető funkció)" /></span><a class="oldalterkep" href="oldalterkep.html" accesskey="d" tabindex="31"><img src="navi/ikon_oldalterkep.gif" alt="Oldaltérkép megtekintése" title="Oldaltérkép megtekintése"  width="36" height="36" /></a><a class="sugo" href="sugo.html" accesskey="s" tabindex="33"><img src="navi/ikon_sugo.gif" alt="Súgó megtekintése" title="Súgó megtekintése"  width="36" height="36" /></a></div>
+  </div>
+  <div class="tartalommenu">
+    <div class="tartalommenu_fejlec"><span id="lapteteje"><a  href="#teteje"><span class="gyorsb">F</span>el a lap tetejére</a></span><a name="fejezetek"   id="fejezetek">Tartalomjegyzék</a></div>
+    <ul><li><a href="#hiv1">Osztott memória, üzenetküldés, rendszerhívások és alkalmazásaik. A folyamatok közötti kommunikáció</a><ul><li><a href="#hiv2">A folyamatok közötti kommunikáció</a><ul><li><a href="#hiv3">A nevesített csővezeték (FIFO)</a><ul><li><a href="#hiv4">Egy FIFO típusú fájl létrehozása, az mkfifo függvény</a></li><li><a href="#hiv5">Példa a nevesített csővezeték (FIFO) használatára</a></li><li><a href="#hiv6">Egy összetettebb példa a nevesített cső használatára</a></li></ul></li></ul></li></ul></li></ul> 
+  </div>
+  <div class="tartalom"> <a name="tartalom"    id="tartalom"></a> 
+    <h1><a name="hiv1" id="hiv1"></a>Osztott memória, üzenetküldés, rendszerhívások és alkalmazásaik. A folyamatok közötti kommunikáció</h1><h2><a name="hiv2" id="hiv2"></a>A folyamatok közötti kommunikáció</h2><h3><a name="hiv3" id="hiv3"></a>A nevesített csővezeték (FIFO)</h3><p>A nevesített <span class="fogalom" title="csővezeték">csővezeték</span> a név nélküli <span class="fogalom" title="csővezeték">csővezetékhez</span> (pipeline) hasonlóan egyszerű kommunikációs eszköz, amelynek segítségével könnyen megvalósíthatjuk az információátadást tetszőleges (nem csak &#132;családtag&#148;) folyamatok között. A <span class="fogalom" title="csővezeték">csővezeték</span> a felhasználó számára egy speciális nevű állomány formájában jelenik meg. Tudunk a fájl nevére hivatkozni, nem kell a fájlleírókat továbbítani a kommunikációban részt vevő folyamatok között, ezért könnyen használhatják nemcsak leszármazott folyamatok, hanem más &#132;külső&#148; folyamatok is. </p><p>Mindegyik folyamat használhatja, amelyik ismeri a fájl nevét, és megfelelőek a jogosultságai. Az adatokat a beírás sorrendjében tudjuk kiolvasni. Egy <span class="fogalom" title="FIFO">FIFO</span> típusú fájlt az <em>mknod</em> vagy az <em>mkfifo</em> függvénnyel tudunk létrehozni, majd az <em>open</em> függvénnyel megnyitva a név nélküli <span class="fogalom" title="csővezeték">csővezetékhez</span> hasonló módon használhatjuk. Hasonlóan a név nélküli <span class="fogalom" title="csővezeték">csővezetékhez</span>, ha kiürül a <span class="fogalom" title="csővezeték">csővezeték</span>, akkor az olvasófolyamat várakozik, ha megtelik a <span class="fogalom" title="csővezeték">csővezeték</span>, akkor az írófolyamat várakozik. A folyamatoknak maguknak kell megnyitni a fájlt, a megnyitásnál várakoznak, ha a fájl nincs megnyitva &#132;mindkét irányban&#148; (read, write). A kommunikáció végén a fájl törléséről a folyamatoknak kell gondoskodni.</p><h4><a name="hiv4" id="hiv4"></a>Egy FIFO típusú fájl létrehozása, az mkfifo függvény</h4><div class="forraskod"><div class="bekezdes1cm">
+
+#include &lt;sys/types.h&gt; 
+#include &lt;sys/stat.h&gt; 
+
+int mkfifo(const char * pathname, mode_t mode);
+</div>
+</div><p>Az mkfifo függvény paraméterei:</p><ul><li><strong>pathname</strong>: a FIFO fájl neve (elérési útvonala).</li><li><strong>mode</strong>: a hozzáférési jogosultságok S_IXY alakban, ahol:<ul><li>az X jogosultság a következők egyike:<ul><li>R: olvasás, </li><li>W: írás, </li><li>X: végrehajtás;</li></ul></li><li>az Y jogosultság a következők egyike:<ul><li>USR: felhasználó, </li><li>GRP: felhasználói csoport, </li><li>OTH: egyéb felhasználó. </li></ul></li></ul></li></ul><p>Az mkfifo függvény visszatérési értéke: </p><ul><li>Sikeres végrehajtás esetén nulla.</li><li>Hiba esetén -1, illetve beállítja a globális errno hibaértéket. </li></ul><p><em>Az mkfifo függvénnyel tudunk egy <span class="fogalom" title="FIFO">FIFO</span> típusú fájlt létrehozni, ám a <span class="fogalom" title="FIFO">FIFO</span> típusú fájl létrehozásakor különböző hibák merülhetnek fel. Az mkfifo függvény beállítja a globális errno hibaértéket, ami a szokásos értékeken kívül például a következő értékekkel bővül ki:</em></p><table class="lecke">
+<tr><th><p><strong>Konstans</strong></p></th><th><p>Leírás</p></th></tr><tr><td><p><strong>EACCES</strong></p></td><td><p>A megadott útvonalon (pathname) nincs végrehajtási jogosultságunk.</p></td></tr><tr><td><p><strong>EEXIST</strong></p></td><td><p>A megadott név (pathname) már létezik.</p></td></tr><tr><td><p><strong>ENOENT</strong></p></td><td><p>A megadott útvonal (pathname) egyik <span class="fogalom" title="könyvtár">könyvtára</span> nem létezik-</p></td></tr><tr><td><p><strong>ENOTDIR</strong></p></td><td><p>A megadott útvonal (pathname) egyik <span class="fogalom" title="könyvtár">könyvtára</span> nem <span class="fogalom" title="könyvtár">könyvtár</span>.</p></td></tr><tr><td><p><strong>ENAMETOOLONG</strong></p></td><td><p>A megadott név, útvonal (pathname) túl hosszú.</p></td></tr><tr><td><p><strong>ENOSPC</strong></p></td><td><p>Nincs elég hely.</p></td></tr><tr><td><p><strong>EROFS</strong></p></td><td><p>A megadott útvonal (pathname) csak olvasható fájlrendszeren van.</p></td></tr></table><p>További hibaértékek a referencia-kézikönyvben (manual) találhatók.</p><h4><a name="hiv5" id="hiv5"></a>Példa a nevesített csővezeték (FIFO) használatára</h4><p>Nézzünk egy példát! A szülőfolyamat létrehoz egy nevesített <span class="fogalom" title="csővezeték">csővezetéket</span>, a gyerekfolyamat beleír egy szöveget a <span class="fogalom" title="csővezeték">csővezetékbe</span>, a szülőfolyamat ezt kiolvassa, és kiírja a standard kimenetre (az stdout-ra).</p><div class="forraskod"><div class="bekezdes1cm">
+
+#include&lt;stdio.h&gt; 
+#include&lt;unistd.h&gt; 
+#include&lt;sys/types.h&gt; 
+#include&lt;sys/stat.h&gt; 
+#include&lt;fcntl.h&gt; 
+
+int main() { 
+    int child; 
+    
+/* Itt hozzuk létre a FIFO fájlt. A felhasználónak írási és olvasási joga lesz. */ 
+    mkfifo("fifo_teszt", S_IRUSR | S_IWUSR ); 
+    
+    child = fork(); 
+    
+    if(child &gt; 0) { 
+        char s[1024]; 
+        int fd; 
+        
+/* A szülőfolyamat megnyitja a fájlt olvasásra, mert csak olvasni fog, majd kiolvassa az üzenetet. */ 
+        fd = open("fifo_teszt", O_RDONLY); 
+        read(fd, s, sizeof(s)); 
+        printf("%s", s); 
+/* Lezárja és törli a fájlt. */ 
+        close(fd); 
+        unlink("fifo_teszt"); 
+    } else if(child == 0) { 
+        int fd;
+        
+/* A gyerekfolyamat megnyitja a fájlt írásra, mert csak írni fog, majd beleírja az üzenetet, végül lezárja. */ 
+        fd = open("fifo_teszt", O_WRONLY); 
+        write(fd, "Szia Mami!\n", 12); 
+        close(fd); 
+    } 
+    
+    return 0; 
+}
+</div>
+</div><p>A következő képernyőkép a példaprogram fordítását és futtatását mutatja.</p><!--fej11_kep_5--><div class="kep kozep" style="max-width:375px;"><img src="kepek/fej11_kep5_w375.jpg" alt="A képen a program látható futás közben" style="width:100%; height:auto;" title="A képen a program látható futás közben" /><span class="kepalairas">A program futása</span><div class="kep_ikonok jobbra"><span class="kep_nagymeret"><a href="kepek/fej11_kep5_w375_full.html" title="Kép megtekintése külön ablakban" >A fenti kép <span class="kepnev">()</span> megtekintése külön ablakban</a></span></div></div><div class="uresmargo"></div><!--ENDfej11_kep_5--><h4><a name="hiv6" id="hiv6"></a>Egy összetettebb példa a nevesített cső használatára</h4><p>Az alábbi program megadja egy pontról és egy egyenesről, hogy a pont az egyenes alatt, felett vagy rajta helyezkedik-e el, az adatátvitelhez nevesített csövet használ.</p><!--{fej11_letoltes_1}--><div class="allomanyletoltes"><ul><li><strong>Fájl letöltése:</strong> <a href="letoltes/11_fel1.c">A program az alábbi linkre kattintva tölthető le! <span class="jaws">című háttéranyag letöltése</span> </a></li><li><strong>Információ az állományról: </strong></li><li><strong>Fájlméret:</strong> 3.66 <abbr title="kilobájt">KB</abbr></li></ul></div><!--END{fej11_letoltes_1}--><div class="forraskod"><div class="bekezdes1cm">
+
+#include &lt;stdio.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;signal.h&gt;
+#include &lt;sys/stat.h&gt;
+#include &lt;sys/wait.h&gt;
+#include &lt;fcntl.h&gt;
+
+// Ez mondja meg, hogy megjött-e a szinkronizációs szignál.
+// Fork után kettő is lesz belőle, csakúgy mint a szignálkezelőkből, tehát nem fog összekeveredni.
+volatile sig_atomic_t _sync = 0;
+
+struct point
+{
+ double x, y;
+};
+
+// Ez kezeli a szinkronizációs szignálokat (SIGUSR1-re fog lefutni).
+void synchHandler(int sig)
+{
+ _sync = 1;
+ signal(SIGUSR1, synchHandler);
+}
+
+// Ez állítja le a gyerek taskot.
+// A SIGUSR2-re fog lefutni, a szülőnek ez nincs beállítva, de ő nem is fog ilyet kapni (viszont küld majd egyet a végén a gyereknek).
+void endHandler(int sig)
+{
+ _exit(0);
+}
+
+// Ez blokkolja azt a taskot, aminek be kell várnia a másikat (megvárja, amíg megjön a szignál).
+inline void synchronize(void)
+{
+ sigset_t mask, oldmask;
+ sigemptyset (&mask);
+    sigaddset (&mask, SIGUSR1);
+    sigprocmask (SIG_BLOCK, &mask, &oldmask);
+ if(!_sync) /**/ sigsuspend (&oldmask) /**/; // Itt van a várakozás, amíg meg nem jön a SIGUSR1, de csak ha nem jött már meg előbb, mint várnánk.
+ sigprocmask (SIG_UNBLOCK, &mask, NULL);
+ _sync = 0; // Vissza kell állítani, mert később is ezzel fogunk szinkronizálni.
+}
+
+int main(void)
+{
+ //Létrehozom a nevesített csövet
+ mkfifo("myfifo", S_IRUSR|S_IWUSR);
+ signal(SIGUSR1, synchHandler);
+ pid_t child = fork(); //létrehozom a gyerekfolyamatot
+ if(child == 0) //A gyerek
+ {
+  signal(SIGUSR2, endHandler);
+  struct point pont1;
+  struct point pont2;
+  struct point pont3;
+
+  while(1) //végtelen ciklus, az endHandler tudja lelőni
+  {
+   int fd = open("myfifo", O_RDONLY); //megnyitom olvasásra a csövet
+    synchronize();
+    read(fd, &pont1, sizeof(pont1));
+    read(fd, &pont2, sizeof(pont2));
+    read(fd, &pont3, sizeof(pont3));
+   close(fd);
+   kill(getppid(), SIGUSR1);
+
+   int answer;
+  
+   if ((((pont2.y-pont1.y)/(pont2.x-pont1.x))*(pont3.x-1)-pont1.y) &gt; pont3.y) answer = 3; //felett
+   if ((((pont2.y-pont1.y)/(pont2.x-pont1.x))*(pont3.x-1)-pont1.y) == pont3.y) answer = 2; //rajta
+   if ((((pont2.y-pont1.y)/(pont2.x-pont1.x))*(pont3.x-1)-pont1.y) &lt; pont3.y) answer = 1; //alatt
+  
+   fd = open("myfifo", O_WRONLY);
+   write(fd, &answer, sizeof(int));
+   kill(getppid(), SIGUSR1);
+   synchronize();
+   close(fd);
+  }
+ }
+ else //A szülő
+ {
+  int fd, answer = 1;
+  struct point pont1;
+  struct point pont2;
+  struct point pont3;
+
+  while(answer)
+  {
+   printf("Kerem a vonal 1. pontjanak koordinatait:\n");
+   printf("x: ");
+   scanf("%lf", &pont1.x);
+   printf("y: ");
+   scanf("%lf", &pont1.y);
+   printf("Kerem a vonal 2. pontjanak koordinatait:\n");
+   printf("x: ");
+   scanf("%lf", &pont2.x);
+   printf("y: ");
+   scanf("%lf", &pont2.y);
+   printf("Kerem a pont kordinatait:\n");
+   printf("x: ");
+   scanf("%lf", &pont3.x);
+   printf("y: ");
+   scanf("%lf", &pont3.y);
+
+   fd = open("myfifo", O_WRONLY);
+    write(fd, &pont1, sizeof(pont1));
+    write(fd, &pont2, sizeof(pont2));
+    write(fd, &pont3, sizeof(pont3));
+    kill(child, SIGUSR1);
+    synchronize();
+   close(fd);
+
+   fd = open("myfifo", O_RDONLY);
+    synchronize();
+    read(fd, &answer, sizeof(int));
+    close(fd);
+   kill(child, SIGUSR1);
+
+   if(answer == 3)
+   {
+    printf("A pont az egyenes felett van.");
+   }
+   if(answer == 2)
+   {
+    printf("A pont az egyenesen van.");
+   }
+   if(answer == 1)
+   {
+    printf("A pont az egyenes alatt van.");
+   }
+   
+   printf("Menjen tovább? (0 ha nem)");
+   scanf("%d", &answer);
+   pont3.y *= -1;
+  }
+  kill(child, SIGUSR2);
+ }
+ unlink("myfifo");
+ return 0;
+}
+
+</div>
+</div><p>Az alábbi képeken a program látható futás közben:</p><!--fej11_kep_14--><div class="kep kozep" style="max-width:291px;"><img src="kepek/fej11_kep14_w291.jpg" alt="A képen a program látható futás közben" style="width:100%; height:auto;" title="A képen a program látható futás közben" /><span class="kepalairas">A program futása</span><div class="kep_ikonok jobbra"><span class="kep_nagymeret"><a href="kepek/fej11_kep14_w291_full.html" title="Kép megtekintése külön ablakban" >A fenti kép <span class="kepnev">()</span> megtekintése külön ablakban</a></span></div></div><div class="uresmargo"></div><!--ENDfej11_kep_14--><!--fej11_kep_15--><div class="kep kozep" style="max-width:374px;"><img src="kepek/fej11_kep15_w374.jpg" alt="A képen a program látható futás közben" style="width:100%; height:auto;" title="A képen a program látható futás közben" /><span class="kepalairas">A program futása</span><div class="kep_ikonok jobbra"><span class="kep_nagymeret"><a href="kepek/fej11_kep15_w374_full.html" title="Kép megtekintése külön ablakban" >A fenti kép <span class="kepnev">()</span> megtekintése külön ablakban</a></span></div></div><div class="uresmargo"></div><!--ENDfej11_kep_15--><!--fej11_kep_16--><div class="kep kozep" style="max-width:389px;"><img src="kepek/fej11_kep16_w389.jpg" alt="A képen a program látható futás közben" style="width:100%; height:auto;" title="A képen a program látható futás közben" /><span class="kepalairas">A program futása</span><div class="kep_ikonok jobbra"><span class="kep_nagymeret"><a href="kepek/fej11_kep16_w389_full.html" title="Kép megtekintése külön ablakban" >A fenti kép <span class="kepnev">()</span> megtekintése külön ablakban</a></span></div></div><div class="uresmargo"></div><!--ENDfej11_kep_16--><!--fej11_kep_17--><div class="kep kozep" style="max-width:490px;"><img src="kepek/fej11_kep17_w490.jpg" alt="A képen a program látható futás közben" style="width:100%; height:auto;" title="A képen a program látható futás közben" /><span class="kepalairas">A program futása</span><div class="kep_ikonok jobbra"><span class="kep_nagymeret"><a href="kepek/fej11_kep17_w490_full.html" title="Kép megtekintése külön ablakban" >A fenti kép <span class="kepnev">()</span> megtekintése külön ablakban</a></span></div></div><div class="uresmargo"></div><!--ENDfej11_kep_17--><!--fej11_kep_18--><div class="kep kozep" style="max-width:469px;"><img src="kepek/fej11_kep18_w469.jpg" alt="A képen a program látható futás közben" style="width:100%; height:auto;" title="A képen a program látható futás közben" /><span class="kepalairas">A program futása</span><div class="kep_ikonok jobbra"><span class="kep_nagymeret"><a href="kepek/fej11_kep18_w469_full.html" title="Kép megtekintése külön ablakban" >A fenti kép <span class="kepnev">()</span> megtekintése külön ablakban</a></span></div></div><div class="uresmargo"></div><!--ENDfej11_kep_18--><!--fej11_kep_19--><div class="kep kozep" style="max-width:500px;"><img src="kepek/fej11_kep19_w500.jpg" alt="A képen a program látható futás közben" style="width:100%; height:auto;" title="A képen a program látható futás közben" /><span class="kepalairas">A program futása</span><div class="kep_ikonok jobbra"><span class="kep_nagymeret"><a href="kepek/fej11_kep19_w500_full.html" title="Kép megtekintése külön ablakban" >A fenti kép <span class="kepnev">()</span> megtekintése külön ablakban</a></span></div></div><div class="uresmargo"></div><!--ENDfej11_kep_19--><!--fej11_kep_20--><div class="kep kozep" style="max-width:472px;"><img src="kepek/fej11_kep20_w472.jpg" alt="A képen a program látható futás közben" style="width:100%; height:auto;" title="A képen a program látható futás közben" /><span class="kepalairas">A program futása</span><div class="kep_ikonok jobbra"><span class="kep_nagymeret"><a href="kepek/fej11_kep20_w472_full.html" title="Kép megtekintése külön ablakban" >A fenti kép <span class="kepnev">()</span> megtekintése külön ablakban</a></span></div></div><div class="uresmargo"></div><!--ENDfej11_kep_20--><p class="vissza"><a href="#fejezetek">Vissza a tartalom<span class="gyorsb">j</span>egyzékhez</a></p> 
+  </div>
+</div>
+<div class="utmutato_also">
+  <div class="utm_hivatkozasok_also"><a class="oldalteteje" accesskey="f" href="#teteje"><span class="gyorsb">F</span>el a lap tetejére</a>
+  <a class="elozotanlap" id="navialsoelozo" href="lecke11_lap4.html"><img src="navi/ikon_elozolap.gif" alt="Ugrás a tananyag előző oldalára" title="Ugrás a tananyag előző oldalára" width="36" height="36" /></a>
+  <a id='navialsokov' class="kovetktanlap" href="lecke11_lap6.html" ><img src="navi/ikon_kovetklap.gif" alt="Ugrás a tananyag következő oldalára" title="Ugrás a tananyag következő oldalára" width="36" height="36"/></a>
+  </div>
+</div>
+<div class="ki_stilus"></div>
+<div class="impresszum">
+  <table class="uszt">
+    <tr>
+      <td><div class="imp_eltetatklogo"><img alt="ELTE és ELTE TáTK logó" src="css/arculat/elte_plus_tatk.png" style="width:100%;height:auto;" /></div>
+        <div class="imp_elteiklogo"><img alt="ELTE és ELTE IK logó" src="css/arculat/elte_plus_ik.png" style="width:100%;height:auto;" /></div></td>
+      <td><div class="imp_uszt"><img alt="Új Széchenyi terv" src="css/arculat/USZT_logo_cmyk.jpg" style="width:100%;height:auto;" /></div></td>
+      <td><div class="imp_eu"><img alt="A projekt az Európai Unió támogatásával, az Európai Szociális Alap társfinanszirozásával valósul meg." title="A projekt az Európai Unió támogatásával, az Európai Szociális Alap társfinanszirozásával valósul meg." src="css/arculat/ESZA.png" style="width:100%;height:auto;"/></div></td>
+    </tr>
+  </table>
+</div>
+</body>
+</html>

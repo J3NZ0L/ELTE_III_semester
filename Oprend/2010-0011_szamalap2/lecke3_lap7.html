@@ -1,0 +1,215 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="hu" lang="hu">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="css/scormelte_alap.css" rel="stylesheet" type="text/css" title="" />
+<link href="css/style_spec.css" rel="stylesheet" type="text/css" />
+<link href="css/scormelte_nagy.css" rel="alternate stylesheet" type="text/css" title="nagy" />
+<link href="css/scormelte_inverz.css" rel="alternate stylesheet" type="text/css" title="inverz" />
+<!--[if lte IE 6]>
+<link href="css/scormelte_ie6.css" rel="stylesheet" type="text/css" title="" />
+<![endif]-->
+<!-- syntax highlight -->
+<link rel="stylesheet" type="text/css" href="css/shCore.css" />
+<link rel="stylesheet" type="text/css" href="css/shThemeDefault.css" />
+<script type="text/javascript" src="js/shCore.js"></script>
+<script type="text/javascript" src="js/shBrushCpp.js"></script>
+<script type="text/javascript" src="js/shBrushCSharp.js"></script>
+<script type="text/javascript" src="js/shBrushDelphi.js"></script>
+<script type="text/javascript" src="js/shBrushXml.js"></script>
+<script type="text/javascript" src="js/shBrushCss.js"></script>
+<script type="text/javascript" src="js/shBrushJScript.js"></script>
+<script type="text/javascript" src="js/shBrushSql.js"></script>
+<script type="text/javascript">
+SyntaxHighlighter.all()
+</script>
+<title>
+Számítógépes alapismeretek II. / 
+A fájlrendszer-kezelés függvényei, alapvető feladatai
+/Rendszerhívások</title>
+<meta name="description" content="A tananyag  fejlesztése a TÁMOP-4.1.2.A/2-10/1 pályázat keretén belül történt." />
+<meta name="keywords" content="Hardver alapismeretek, operációs rendszer, számítógépes alapismeretek, operációs rendszer fogalma, operációs rendszerek története, operációs rendszer feladata, operációs rendszer generációk, operációs rendszer típusok, folyamatok, folyamat táblázat, szál &ndash; folyamatok, rendszerhívások, operációs rendszer struktúrák, kernelmód, kernel, felhasználói mód, B/K művelet, folyamatok modellje, szinkron rendszerhívás, asszinkron rendszerhívás, állapotai, megvalósításuk, folyamatok kommunikációja, IPC (Inter Process Communication), megszakítástábla, IDT, megszakításvezérlő, PIC, megszakítás, interrupt, megszakításkérelem, IRQ, megszakításkezelési folyamat, kivétel, hibakeresés (debuggolás), töréspont, fájlrendszer, MBR, partíciós szektor, Ntldr, klaszter (cluster), szektor, FAT, NTFS, ext, TSS, csapda, ütemezés, szál, szemafor, mutex, monitor, POSIX, szignál, osztott memória, csővezeték, kritikus szakasz, Wybe Dijkstra, CPU, erőforrás, holtpont, kiéheztetés, integrált áramkör, multiprogramozás, beágyazott rendszerek, partíció, MMU, lapcsere, FIFO, socket, lapozás, swap, interaktív rendszer, kötegelt rendszer, kliens, job, jogosultság, metaadat, könyvtár, UNIX, GNU/LINUX, erőforrás-foglalási gráf, fizikai memória, virtuális memória, merevlemez, floppy, fregmentáció, defregmentáló program, MFT, API, i-node, cache memory, SSH, HyperThread, párhuzamosság" />
+<script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="js/kep.js"></script>
+<script type="text/javascript" src="js/jquery.media.js"></script>
+<script type="text/javascript" src="js/jquery.highlight-3.js"></script>
+<script type="text/javascript" src="js/kereses.js"></script>
+<script type="text/javascript" src="js/stylesheetToggle.js"></script>
+<script type="text/javascript" src="js/cookie.js"></script>
+<script type="text/javascript" src="js/stilusvalto.js"></script>
+<script type="text/javascript" src="js/fogalmak.js"></script>
+<script type="text/javascript" src="js/fogalom.js"></script>
+<script type="text/javascript" src="js/jwplayer.js"></script>
+<script type="text/javascript">
+$(document).ready(function() 
+{
+$("a.hang").media( {width: 250, height: 50,  autoplay: false} );
+});
+</script>
+<script type="text/javascript" src="js/navigacio.js"></script>
+</head>
+<body>
+<div><a name="teteje"  id="teteje"></a></div>
+<div class="jawsfmenu">
+  <ul>
+    <li><a class="tartalom" href="#tartalom" accesskey="t" tabindex="2">Ugrás a <span class="gyorsb">t</span>artalomra</a></li>
+    <li><a class="tartalomj" href="#fejezetek" accesskey="j" tabindex="5">Ugrás a tartalom<span class="gyorsb">j</span>egyzékre</a></li>
+    <li><a class="tanutm" href="#tanutm" accesskey="u" tabindex="7">Ugrás a tan<span class="gyorsb">u</span>lási útmutatóra</a></li>
+  </ul>
+</div>
+<div class="ki_kereses"></div>
+<div class="oldal">
+  <div class="utmutato">
+    <div class="utm_hivatkozasok"><span class="elozolap"><img src="navi/ikon_vissza_dis.gif" alt="Vissza az előzőleg látogatott oldalra (nem elérhető funkció)" title="Vissza az előzőleg látogatott oldalra (nem elérhető funkció)" /></span><a class="kezdolap" href="index.html" accesskey="p" tabindex="21"><img src="navi/ikon_kezdolap.gif" alt="Vissza a modul kezdőlapjára" title="Vissza a modul kezdőlapjára" width="36" height="36"/></a><a class="elozotanlap" href="lecke3_lap6.html" accesskey="e" tabindex="22"><img src="navi/ikon_elozolap.gif" alt="Ugrás a tananyag előző oldalára" title="Ugrás a tananyag előző oldalára" width="36" height="36" /></a><a class="kovetktanlap" href="lecke3_lap8.html" accesskey="v" tabindex="23"><img src="navi/ikon_kovetklap.gif" alt="Ugrás a tananyag következő oldalára" title="Ugrás a tananyag következő oldalára" width="36" height="36"/></a><span class="ki_fogalomkapcs"><img src="navi/ikon_fogalmakbe_dis.gif" alt="Fogalom megjelenítés (nem elérhető funckió)" title="Fogalom megjelenítés (nem elérhető funckió)" /></span><span class="ki_fogalomlista"><img src="navi/ikon_fogalmaklista_dis.gif" alt="Fogalmak listája (nem elérhető funkció)" title="Fogalmak listája (nem elérhető funkció)" /></span><span class="ki_nyomtatas"><img src="navi/ikon_nyomtatas_dis.gif" alt="Oldal nyomtatása (nem elérhető funkció)" title="Oldal nyomtatása (nem elérhető funkció)" /></span><a class="oldalterkep" href="oldalterkep.html" accesskey="d" tabindex="31"><img src="navi/ikon_oldalterkep.gif" alt="Oldaltérkép megtekintése" title="Oldaltérkép megtekintése"  width="36" height="36" /></a><a class="sugo" href="sugo.html" accesskey="s" tabindex="33"><img src="navi/ikon_sugo.gif" alt="Súgó megtekintése" title="Súgó megtekintése"  width="36" height="36" /></a></div>
+  </div>
+  <div class="tartalommenu">
+    <div class="tartalommenu_fejlec"><span id="lapteteje"><a  href="#teteje"><span class="gyorsb">F</span>el a lap tetejére</a></span><a name="fejezetek"   id="fejezetek">Tartalomjegyzék</a></div>
+    <ul><li><a href="#hiv1">A fájlrendszer-kezelés függvényei, alapvető feladatai</a><ul><li><a href="#hiv2">Rendszerhívások</a></li><li><a href="#hiv3">A fájlkezelő függvények leírása (minireferencia)</a><ul><li><a href="#hiv4">A UNIX operációs rendszer kernelének tipikus rendszerhívásai: a fájlkezelő műveletek</a></li><li><a href="#hiv5">A fájlok megnyitása és létrehozása</a></li><li><a href="#hiv6">A fájlokból való olvasás és a fájlokba történő írás</a></li></ul></li></ul></li></ul> 
+  </div>
+  <div class="tartalom"> <a name="tartalom"    id="tartalom"></a> 
+    <h1><a name="hiv1" id="hiv1"></a>A fájlrendszer-kezelés függvényei, alapvető feladatai</h1><h2><a name="hiv2" id="hiv2"></a>Rendszerhívások</h2><p>A fájlkezeléssel kapcsolatos feladatok alacsony szinten (low level file handling) a rendszer szintjén is elvégezhetőek. Ennek eredményeképpen szabadabban kezelhetjük a fájlokat, és olyan feladatokat is teljesíthetünk, amelyeket a magasabb szintű fájlkezelés nem tesz lehetővé. Ennek az az ára, hogy kicsit bonyolultabbá válik a munka. Míg a magas szintű fájlkezelésben az állományokat leginkább szöveges állományként, sorszerkezetként foghattuk fel, most az állományokat csak binárisként kezelhetjük. </p><p>A fájlokhoz a megnyitáskor a rendszer egy fájlleírót (egy egész típusú számot) rendel. A fájlleírók számozása minden folyamatban 0-tól kezdődik. A standard bemenet (stdin) opcionálisan a 0 fájlleíróval azonosítható, az 1-es a standard kimenetet (stdout), a 2-es pedig a standard hibakimenetet (stderr) jelöli.</p><p>Minden fájlhoz tartozik egy mutató, amelyik a fájl aktuális pozíciójára mutat. Az olvasási vagy írási műveletek ettől a pozíciótól kezdve olvasnak vagy írnak; a pozíció szükség esetén átállítható. Ha ugyanazt a fájlt többször nyitjuk meg, akkor több ilyen mutató jön létre, amelyek egymástól függetlenül is használhatóak. Ez persze felvet különböző problémákat (pl. többszörös fájlba írás), amelyekkel részletesebben a későbbi leckékben fogunk megismerkedni. </p><p>A <span class="fogalom" title="rendszerhívás">rendszerhívások</span> szintjén is ugyanazokra az alapműveletekre van szükség, mint amelyeket megismertünk korábban a magas szintű fájlkezelésnél. Itt is a megnyitás, olvasás, írás, zárás, illetve a fájlhoz kapcsolódó <span class="fogalom" title="jogosultság">jogosultságok</span> lekérdezésének lehetősége fordul elő. Tekintsük át a fájlkezeléssel kapcsolatos <span class="fogalom" title="rendszerhívás">rendszerhíváspl</span> körét, majd írjunk néhány rövid programocskát! (A függvények megvalósítása a C programozási nyelvi <span class="fogalom" title="könyvtár">könyvtárakban</span> található, amelyeket megadunk a leírásban.)</p><table class="lecke">
+<tr><th><p>Rendszerhívás</p></th><th><p>Leírás</p></th></tr><tr><td><p>fájlleíró=creat(fájlnév,mód);</p></td><td><p>A fájl létrehozása.</p></td></tr><tr><td><p>fájlleíró =mknod(fájlnév,mód,cím);</p></td><td><p>Az i-csomópont létrehozása.</p></td></tr><tr><td><p>fájlleíró =open(fájlnév,mire,..);</p></td><td><p>A fájl megnyitása.</p></td></tr><tr><td><p>s=close(fájlleíró);</p></td><td><p>A fájl bezárása.</p></td></tr><tr><td><p>n=read(fájlleíró,hova,db);</p></td><td><p>A fájlból olvas db darabnyi bájtot.</p></td></tr><tr><td><p>n=write(fájlleíró,honnan,db);</p></td><td><p>A fájlba ír db darabnyi bájtot.</p></td></tr><tr><td><p>pozíció=lseek(fájlleíró,offszet cím,relativkezdes);</p></td><td><p>A fájl aktuális pozíciójának beállítása.</p></td></tr><tr><td><p>s=stat(nev,statusz);</p></td><td><p>A fájl állapotinformációinak lekérdezése.</p></td></tr><tr><td><p>s=fstat(fájlleíró,statusz);</p></td><td><p>A fájl állapotinformációinak lekérdezése.</p></td></tr><tr><td><p>fájlleíró=dup(fájlleíró);</p></td><td><p>A fájl fájlleírójának másolata.</p></td></tr><tr><td><p>s=pipe(fájlleíró[2]);</p></td><td><p>Az adatcső (pipe) )létrehozása.</p></td></tr><tr><td><p>s=ioctl(fájlleíró,keres,argumentum);</p></td><td><p>Speciális művelet végrehajtása.</p></td></tr><tr><td><p>s=access(fájlnév,mod);</p></td><td><p>A fájl elérhetőségének lekérdezése.</p></td></tr><tr><td><p>s=rename(reginev,ujnev);</p></td><td><p>A fájl átnevezése.</p></td></tr><tr><td><p>s=fcntl(fájlleíró,parancs,..);</p></td><td><p>A fájl lefoglalása.</p></td></tr></table><p>Figyelem! Az alacsony szintű műveletek az egyes platformokon különbözőek lehetnek, így a kód hordozhatósága csorbát szenvedhet. Az alábbiak a <span class="fogalom" title="POSIX">POSIX</span> szabványnak kívánnak megfelelni.</p><h2><a name="hiv3" id="hiv3"></a>A fájlkezelő függvények leírása (minireferencia)</h2><p>A fájlkezelő függvények használatához ne felejtsük el használatba venni minden esetben az <em>unistd.h</em>, az <em>fcntl.h</em>, az <em>stdio.h</em>, a <em>sys/types.h</em>, és a <em>sys/stat.h </em>header fájlok közül az éppen szükséges header fájlokat! </p><div class="forraskod"><div class="bekezdes1cm">
+#include &lt;unistd.h&gt;
+#include &lt;fcntl.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;sys/stat.h&gt;
+</div>
+</div><h3><a name="hiv4" id="hiv4"></a>A UNIX operációs rendszer kernelének tipikus rendszerhívásai: a fájlkezelő műveletek</h3><table class="lecke">
+<tr><th><p>Művelet</p></th><th><p>Leírás</p></th></tr><tr><td><p>fd = creat(name, mode);</p></td><td><p>Egy új fájl létrehozásának elavult változata.</p></td></tr><tr><td><p>fd = mknod(name, mode, addr);</p></td><td><p>Reguláris, specifikus vagy <span class="fogalom" title="könyvtár">könyvtári</span> csomópont létrehozása.</p></td></tr><tr><td><p>fd = open(file, how, ...);</p></td><td><p>Egy létező fájl megnyitása olvasásra, írásra vagy mindkettőre.</p></td></tr><tr><td><p>s = close(fd);</p></td><td><p>Egy megnyitott fájl bezárása.</p></td></tr><tr><td><p>n = read(fd, buffer, nbytes);</p></td><td><p>Egy bizonyos mennyiségű adat beolvasása egy buffer nevű tárolóba egy megadott fájlból.</p></td></tr><tr><td><p>n = write(fd, buffer, nbytes);</p></td><td><p>Egy bizonyos mennyiségű adat kiírása egy buffer nevű tárolóból egy megadott fájlba.</p></td></tr><tr><td><p>pos = lseek(fd, offset, whence);</p></td><td><p>A fájlmutató (aktuális pozíció) mozgatása.</p></td></tr><tr><td><p>s = stat(name, &#38;buf);</p></td><td><p>A fájl állapotinformációinak lekérdezése.</p></td></tr><tr><td><p>s = fstat(fd, &#38;buf);</p></td><td><p>A fájl állapotinformációinak lekérdezése.</p></td></tr><tr><td><p>fd = dup(fd);</p></td><td><p>A megnyitott fájl fájlleírójának az átmásolása.</p></td></tr><tr><td><p>s = pipe(&#38;fd[0]) ;</p></td><td><p>Egy adatcső létrehozása.</p></td></tr><tr><td><p>s = ioctl(fd, request, argp);</p></td><td><p>A fájlokon való speciális műveletek végrehajtása.</p></td></tr><tr><td><p>s = access(name, amode);</p></td><td><p>A fájl elérhetőségének a vizsgálata.</p></td></tr><tr><td><p>s = rename(old, new);</p></td><td><p>A fájl átnevezése.</p></td></tr><tr><td><p>s = fcntl(fd, cmd, ...);</p></td><td><p>A fájl zárolása és egyéb műveletek.</p></td></tr></table><p class="vissza"><a href="#fejezetek">Vissza a tartalom<span class="gyorsb">j</span>egyzékhez</a></p><h3><a name="hiv5" id="hiv5"></a>A fájlok megnyitása és létrehozása</h3><p>Lehetőség van arra is, hogy az adatállományokat mint bájtsorozatokat kezeljük, kihagyva a puffert. Ekkor nem pointert használunk, hanem egy fájlleírót, aminek egyedi sorszáma van.</p><div class="forraskod"><div class="bekezdes1cm">
+#include &lt;sys/types.h&gt;
+#include &lt;sys/stat.h&gt;
+#include &lt;fcntl.h&gt;
+int open(const char * fajlnev, int kapcsolok);
+int open(const char * fajlnev, int kapcsolok, mode_t jogok);
+</div>
+</div><p>Az open függvény megnyitja a fájlnévvel megadott állományt, és a megnyitás után visszaad egy egész értéket (fájlleírót, fájldeszkiptort) a fájl azonosítására. A második paraméterben a megnyitás módját adhatjuk meg, szükség esetén &#132;vagy&#148; művelettel összekapcsolhatók. Hibás megnyitási kísérletnél a visszaadott érték &ndash;1. A megnyitáskor egy mutatót rendel a rendszer az állományhoz &ndash; minden egyes megnyitás megint egy újat.</p><div class="forraskod"><div class="bekezdes1cm">
+#include &lt;sys/types.h&gt;
+#include &lt;sys/stat.h&gt;
+#include &lt;fcntl.h&gt;
+int creat(const char * fajlnev, mode_t jogok); 
+</div>
+</div><p>A create függvény létrehozza az első paraméterben meghatározott fájlt, a második paraméterben megadott jogokkal. Ma már inkább az open függvényt használják erre a célra, mivel a create függvény ekvivalens az open függvénnyel, ha az open függvénynek adott a harmadik paramétere is.</p><p><em>A kapcsolók vezérlik az adatállomány elérését. A &lt;fcntl.h&gt; header fájlban például a következő konstansok vannak definiálva:</em></p><table class="lecke">
+<tr><th><p><strong>Konstans</strong></p></th><th><p>Leírás</p></th></tr><tr><td><p><strong>O_RDONLY</strong></p></td><td><p>Olvasásra nyitja meg a fájlt.</p></td></tr><tr><td><p><strong>O_WRONLY</strong></p></td><td><p>Írásra nyitja meg a fájlt.</p></td></tr><tr><td><p><strong>O_EXEC</strong></p></td><td><p>Végrehajtásra nyitja meg a fájlt. Nem szabványos.</p></td></tr><tr><td><p><strong>O_CREAT</strong></p></td><td><p>Megnyitás létrehozásra.</p></td></tr><tr><td><p><strong>O_APPEND</strong></p></td><td><p>Megnyitás hozzáfűzésre.</p></td></tr><tr><td><p><strong>O_TRUNC</strong></p></td><td><p>Ha a fájl létezik, akkor levágja 0 hosszúságúra.</p></td></tr><tr><td><p><strong>O_BINARY</strong></p></td><td><p>A fájlt bináris kezelési módban nyitja meg.</p></td></tr><tr><td><p><strong>O_TEXT</strong></p></td><td><p>A fájlt szöveges kezelési módban nyitja meg.</p></td></tr></table><p><em>Az open függvény az errno értékét határozza meg, amely a következő lehet:</em></p><table class="lecke">
+<tr><th><p><strong>Konstans</strong></p></th><th><p>Leírás</p></th></tr><tr><td><p><strong>EACCES</strong></p></td><td><p>Nincs megfelelő <span class="fogalom" title="jogosultság">jogosultság</span>.</p></td></tr><tr><td><p><strong>EEXIST</strong></p></td><td><p>Már létezik a fájl, az O_CREATE|O_EXCL be volt állítva, és újra létre akartuk hozni.</p></td></tr><tr><td><p><strong>OENOENT</strong></p></td><td><p>Az állomány nem létezik.</p></td></tr><tr><td><p><strong>ENFILE</strong></p></td><td><p>Túl sok állomány van nyitva.</p></td></tr></table><p><em>Az open függvény harmadik paramétere egy új fájl létrehozásánál használatos, amellyel, az új fájllal kapcsolatos <span class="fogalom" title="jogosultság">jogosultságokat</span> állíthatjuk be. A <span class="fogalom" title="jogosultság">jogosultságokra</span> a következő értékekkel hivatkozhatunk:</em></p><table class="lecke">
+<tr><th><p><strong>Konstans</strong></p></th><th><p>Érték</p></th><th><p>Leírás</p></th></tr><tr><td><p><strong>S_IRUSR</strong></p></td><td><p>00400</p></td><td><p>A felhasználónak olvasási joga van.</p></td></tr><tr><td><p><strong>S_IWUSR</strong></p></td><td><p>00200</p></td><td><p>A felhasználónak írási joga van.</p></td></tr><tr><td><p><strong>S_IXUSR</strong></p></td><td><p>00100</p></td><td><p>A felhasználónak futtatási joga van.</p></td></tr><tr><td><p><strong>S_IRWXU</strong></p></td><td><p>00700</p></td><td><p>A felhasználónak minden joga megvan.</p></td></tr><tr><td><p><strong>S_IRGRP</strong></p></td><td><p>00040</p></td><td><p>A csoportnak olvasási joga van.</p></td></tr><tr><td><p><strong>S_IWGRP</strong></p></td><td><p>00020</p></td><td><p>A csoportnak írási joga van.</p></td></tr><tr><td><p><strong>S_IXGRP</strong></p></td><td><p>00010</p></td><td><p>A csoportnak futtatási joga van.</p></td></tr><tr><td><p><strong>S_IRWXG</strong></p></td><td><p>00070</p></td><td><p>A csoportnak minden joga megvan.</p></td></tr><tr><td><p><strong>S_IROTH</strong></p></td><td><p>00004</p></td><td><p>Mindenkinek van olvasási joga.</p></td></tr><tr><td><p><strong>S_IWOTH</strong></p></td><td><p>00002</p></td><td><p>Mindenkinek van írási joga.</p></td></tr><tr><td><p><strong>S_IXOTH</strong></p></td><td><p>00001</p></td><td><p>Mindenkinek van futtatási joga.</p></td></tr></table><p>A fenti <span class="fogalom" title="jogosultság">jogosultságok</span> közötti vagy művelettel összetett <span class="fogalom" title="jogosultság">jogosultságokat</span> is megfogalmazhatunk. Például az S_IWUSR|S_IRUSR|S_IRGRP azt jelenti, hogy a felhasználónak olvasási és írásjoga van, a csoportnak pedig csak olvasási joga.</p><div class="forraskod"><div class="bekezdes1cm">
+#include &lt;unistd.h&gt;
+int pipe( int fajlleiro[2] ); 
+</div>
+</div><p>A pipe függvénnyel <span class="fogalom" title="csővezeték">csővezeték</span> megnyitását érhetjük el. A <span class="fogalom" title="csővezeték">csővezeték</span> egyirányú adatcsatorna. A 0-s számú fájlleíró az olvasást, az 1-es az írást jelenti. A visszatérési érték hiba esetén -1. <em>A későbbiekben részletesebben lesz szó a <span class="fogalom" title="csővezeték">csővezetékekről</span>.</em></p><p><em>Példák fájlok megnyitására:</em></p><div class="forraskod"><div class="bekezdes1cm">
+int f;
+char fnev[] = "adataink.txt";
+f=open(fnev, O_RDONLY);
+</div>
+</div><p>A példa azt mutatja, hogy hogyan tudunk könnyen az open függvénnyel egy fájlt megnyitni egyszerűen olvasás céljából. Az fnev változónevű karaktertömbünkben található a fájl elérési útvonala, ami jelen esetben az &#132;adataink.txt&#148;. Ezt a példafájlunkat tudjuk ezzel a művelettel olvasásra megnyitni.</p><p><span class="forraskod">f=open(fnev, 0_WRONLY, 0666);</span></p><p>A példa azt mutatja, hogyan tudunk az open függvénnyel egy fájlt írásra megnyitni, meghatározott <span class="fogalom" title="jogosultság">jogosultságok</span> átadásával. Ebben az esetben írásra nyitjuk meg az &#132;adataink.txt&#148; példafájlunkat, mindenkinek (azaz a saját felhasználó részére, a csoportunk részére és minden más felhasználó részére) írási és olvasási joggal.</p><p><span class="forraskod"> f=open(fnev, O_WRONLY | O_CREAT, S_IRUSR | S_IWUSR); </span></p><p>A példa azt mutatja, hogy hogyan tudunk az open függvénnyel egy fájlt többféle módon megnyitni. A példánkban írásra vagy létrehozásra nyitjuk meg az &#132;adataink.txt&#148; példafájlunkat, a saját felhasználó részére írási és olvasási joggal.</p><p class="vissza"><a href="#fejezetek">Vissza a tartalom<span class="gyorsb">j</span>egyzékhez</a></p><h3><a name="hiv6" id="hiv6"></a>A fájlokból való olvasás és a fájlokba történő írás</h3><div class="forraskod"><div class="bekezdes1cm">
+#include &lt;unistd.h&gt;
+size_t read(int fajlleiro, void * memoriacim, size_t meret); 
+</div>
+</div><p>A read függvény az első paraméterrel megadott fájlból (azaz konkrétan a fájlleírót adjuk meg a függvénynek) olvassa be a harmadik paraméterben megadott méretű bájtsorozatot a második paraméter által megadott címre. A visszatérési érték a sikeresen beolvasott bájtok száma. Hiba esetén ez az érték -1, és beállítja az errno hibaértéket. A lehetséges errno értékekről a referencia-kézikönyvből (manual) tájékozódhat.</p><div class="forraskod"><div class="bekezdes1cm">
+ #include &lt;unistd.h&gt;
+size_t write(int fajlleiro, const void * memoriacim, size_t meret);
+</div>
+</div><p>A write függvény kiírja a második paraméterben megadott memóriacímről a harmadik paraméterben megadott számú bájtot az első paraméterben megadott fájlba (ebben az esetben is konkrétan a fájl fájlleíróját kell megadni a függvénynek). A kiírt bájtok száma a visszatérési érték helyes lefutás esetén, hiba esetén -1. </p><div class="forraskod"><div class="bekezdes1cm">
+#include &lt;sys/types.h&gt;
+#include &lt;unistd.h&gt;
+off_t lseek(int fajlleiro, off_t offszet, int hogyan);
+</div>
+</div><p>Az lseek függvény beállítja a fájl aktuális pozícióját az offszetben megadott relatív értékkel eltolva. A harmadik paraméter adja meg azt, hogy mihez képest kell érteni az eltolást. Ha hiba történik a függvény végrehajtása esetén, akkor a visszatérési értéke -1 lesz.</p><p><em>Az lseek függvény harmadik paramétere az aktuális pozíció beállításánál meghatározza, hogy ezt a pozíciót pontosan honnan kell számítani a fájlban. A fájlbeli pozíciókra a következő értékekkel hivatkozhatunk:</em></p><table class="lecke">
+<tr><th><p><strong>Érték</strong></p></th><th><p>Leírás</p></th></tr><tr><td><p><strong>SEEK_SET</strong></p></td><td><p>A fájl elejéhez képest toljuk el a fájl aktuális pozícióját.</p></td></tr><tr><td><p><strong>SEEK_CUR</strong></p></td><td><p>A jelenleg aktuális pozícióhoz képest toljuk el a pozíciót, azaz ehhez viszonyítsuk az offszet relatív értéket.</p></td></tr><tr><td><p><strong>SEEK_END</strong></p></td><td><p>A fájl végéhez képest toljuk el a fájl aktuális pozícióját.</p></td></tr></table><p><em>Példa a fájlok beolvasására, írására és pozicionálására:</em></p><div class="forraskod"><div class="bekezdes1cm">
+#include &lt;fcntl.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;stdio.h&gt;
+int f;
+int g;
+// Az f és a g egész típusú változóink lesznek a fájlleíróink 
+// ebben a példában.
+char szoveg[80];
+// Létrehozunk egy 80 karakter hosszú karaktertömböt, amibe fogjuk 
+// belerakni a példafájlunkból kiolvasott karakterláncainkat. 
+f=open(&#148;input_fajl_eleresi_utvonala&#148;, O_RDONLY); 
+// Ez a művelet egy már létező fájl megnyitására szolgál, 
+// amiből csak olvasni fogunk. Az open függvény első paraméterében
+// a bemeneti fájlunk elérési útvonalát kell megadnunk.
+// Az input fájlunkhoz rendelt fájlleíró értéket az f változóban
+// tároljuk el, mert ezzel a fájllal szeretnénk a későbbiekben 
+// foglalkozni, és a fájlra való hivatkozást a beolvasó (read) 
+// függvényünknél a fájlleírón keresztül tehetjük csak meg.
+g=open(&#148;output_fajl_eleresi_utvonala&#148;, O_WRONLY); 
+// Ez a művelet egy már létező fájl megnyitására szolgál, 
+// amibe csak írni fogunk. Az open függvény első paraméterében
+// a kimeneti fájlunk elérési útvonalát kell megadnunk.
+// Az output fájlunkhoz rendelt fájlleíró értéket az g változóban
+// tároljuk el, mert ezzel a fájllal szeretnénk a későbbiekben 
+// foglalkozni, és a fájlra való hivatkozást a kiíró (write)
+// függvényünknél a fájlleírón keresztül tehetjük csak meg.
+if (read(f, szoveg, 80) == -1){ perror(&#132;Hibas a beolvasas&#148;); exit(0); }
+// Az elágazás logikai feltétele a read függvény lesz, 
+// amivel kiolvasunk az &#132;f&#148; fájlleíróval ellátott bemeneti 
+// fájlunkból 80 karaktert a &#132;szoveg&#148; nevű karaktertömbünkbe. 
+// Ha nem olvasásra nyitottuk volna meg az &#132;f&#148; fájlleíróval 
+// azonosított bemeneti fájlunkat, akkor a read függvény 
+// hibával térne vissza. Ettől függetlenül azért írunk a 
+// read függvény &#132;köré&#148; egy elágazást, mert a beolvasás során 
+// egyéb más hibák is előfordulhatnak, ami miatt a read 
+// függvény még visszatérhet -1 értékkel.
+// Ha a read függvényünk -1 értékkel tér vissza, akkor meg kell
+// szakítanunk a példaprogramunkat. Erre szolgál ez az elágazás.
+// A perror függvénnyel tudjuk a &#132;Hibas a beolvasas&#148; hibaüzenetet 
+// kiírni a standard hibakimenetre (stderr), természetesen ezt 
+// csak hiba esetén.
+if (write(g, szoveg, 80) == -1){ perror(&#132;Hibas a kiiras&#148;); exit(0); }
+// Az elágazás logikai feltétele a write függvény lesz, 
+// amivel kiírunk az &#132;g&#148; fájlleíróval ellátott kimeneti 
+// fájlunkba 80 karaktert a &#132;szoveg&#148; nevű karaktertömbünkből. 
+// Ha nem írásra nyitottuk volna meg az &#132;g&#148; fájlleíróval 
+// azonosított kimeneti fájlunkat, akkor a write függvény 
+// hibával térne vissza. Ettől függetlenül azért írunk a write 
+// függvény &#132;köré&#148; is egy elágazást, mert a kiírás során egyéb 
+// más hibák is előfordulhatnak, ami miatt a write függvény 
+// még visszatérhet -1 értékkel.
+// Ha a write függvényünk -1 értékkel tér vissza, akkor meg kell
+// szakítanunk a példaprogramunkat. Erre szolgál ez az elágazás.
+// A perror függvénnyel tudjuk a &#132;Hibas a kiiras&#148; hibaüzenetet 
+// kiírni a standard hibakimenetre (stderr), természetesen ezt 
+// is csak hiba esetén.
+lseek(f, 10, SEEK_SET);  
+// Az lseek függvény beállítja a fájl aktuális pozícióját a 
+// fájl elejére a második paraméterben megadott relatív 
+// értékkel eltolva, azaz ebben az esetben a fájl elejétől 
+// nézve 10 értékkel.
+read(f, szoveg, 20); 
+// Miután az lseek függvénnyel eltoltuk a fájl aktuális 
+// pozícióját a fájl elejétől számolva a 10. pozícióra, 
+// a read függvény azt csinálja, hogy ettől a 10-es pozíciótól 
+// kezdve a beolvas 20 bájtot (azaz 20 karaktert) az &#132;f&#148; 
+// fájlleíróval ellátott bemeneti fájlunkból a &#132;szoveg&#148; nevű 
+// karaktertömbünkbe. 
+// Ha nem olvasásra nyitottuk volna meg eredetileg az &#132;f&#148; 
+// fájlleíróval azonosított bemeneti fájlunkat, akkor a read 
+// függvény hibával térne vissza. Ettől függetlenül a beolvasás 
+// során egyéb más hibák is előfordulhatnak, ami miatt a read 
+// függvény még visszatérhet -1 értékkel, ám itt nem kezeljük 
+// ezt a hibalehetőséget egy elágazással
+</div>
+</div><p class="vissza"><a href="#fejezetek">Vissza a tartalom<span class="gyorsb">j</span>egyzékhez</a></p> 
+  </div>
+</div>
+<div class="utmutato_also">
+  <div class="utm_hivatkozasok_also"><a class="oldalteteje" accesskey="f" href="#teteje"><span class="gyorsb">F</span>el a lap tetejére</a>
+  <a class="elozotanlap" id="navialsoelozo" href="lecke3_lap6.html"><img src="navi/ikon_elozolap.gif" alt="Ugrás a tananyag előző oldalára" title="Ugrás a tananyag előző oldalára" width="36" height="36" /></a>
+  <a id='navialsokov' class="kovetktanlap" href="lecke3_lap8.html" ><img src="navi/ikon_kovetklap.gif" alt="Ugrás a tananyag következő oldalára" title="Ugrás a tananyag következő oldalára" width="36" height="36"/></a>
+  </div>
+</div>
+<div class="ki_stilus"></div>
+<div class="impresszum">
+  <table class="uszt">
+    <tr>
+      <td><div class="imp_eltetatklogo"><img alt="ELTE és ELTE TáTK logó" src="css/arculat/elte_plus_tatk.png" style="width:100%;height:auto;" /></div>
+        <div class="imp_elteiklogo"><img alt="ELTE és ELTE IK logó" src="css/arculat/elte_plus_ik.png" style="width:100%;height:auto;" /></div></td>
+      <td><div class="imp_uszt"><img alt="Új Széchenyi terv" src="css/arculat/USZT_logo_cmyk.jpg" style="width:100%;height:auto;" /></div></td>
+      <td><div class="imp_eu"><img alt="A projekt az Európai Unió támogatásával, az Európai Szociális Alap társfinanszirozásával valósul meg." title="A projekt az Európai Unió támogatásával, az Európai Szociális Alap társfinanszirozásával valósul meg." src="css/arculat/ESZA.png" style="width:100%;height:auto;"/></div></td>
+    </tr>
+  </table>
+</div>
+</body>
+</html>

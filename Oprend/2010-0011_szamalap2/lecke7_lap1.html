@@ -1,0 +1,154 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="hu" lang="hu">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="css/scormelte_alap.css" rel="stylesheet" type="text/css" title="" />
+<link href="css/style_spec.css" rel="stylesheet" type="text/css" />
+<link href="css/scormelte_nagy.css" rel="alternate stylesheet" type="text/css" title="nagy" />
+<link href="css/scormelte_inverz.css" rel="alternate stylesheet" type="text/css" title="inverz" />
+<!--[if lte IE 6]>
+<link href="css/scormelte_ie6.css" rel="stylesheet" type="text/css" title="" />
+<![endif]-->
+<!-- syntax highlight -->
+<link rel="stylesheet" type="text/css" href="css/shCore.css" />
+<link rel="stylesheet" type="text/css" href="css/shThemeDefault.css" />
+<script type="text/javascript" src="js/shCore.js"></script>
+<script type="text/javascript" src="js/shBrushCpp.js"></script>
+<script type="text/javascript" src="js/shBrushCSharp.js"></script>
+<script type="text/javascript" src="js/shBrushDelphi.js"></script>
+<script type="text/javascript" src="js/shBrushXml.js"></script>
+<script type="text/javascript" src="js/shBrushCss.js"></script>
+<script type="text/javascript" src="js/shBrushJScript.js"></script>
+<script type="text/javascript" src="js/shBrushSql.js"></script>
+<script type="text/javascript">
+SyntaxHighlighter.all()
+</script>
+<title>
+Számítógépes alapismeretek II.</title>
+<meta name="description" content="A tananyag  fejlesztése a TÁMOP-4.1.2.A/2-10/1 pályázat keretén belül történt." />
+<meta name="keywords" content="Hardver alapismeretek, operációs rendszer, számítógépes alapismeretek, operációs rendszer fogalma, operációs rendszerek története, operációs rendszer feladata, operációs rendszer generációk, operációs rendszer típusok, folyamatok, folyamat táblázat, szál &ndash; folyamatok, rendszerhívások, operációs rendszer struktúrák, kernelmód, kernel, felhasználói mód, B/K művelet, folyamatok modellje, szinkron rendszerhívás, asszinkron rendszerhívás, állapotai, megvalósításuk, folyamatok kommunikációja, IPC (Inter Process Communication), megszakítástábla, IDT, megszakításvezérlő, PIC, megszakítás, interrupt, megszakításkérelem, IRQ, megszakításkezelési folyamat, kivétel, hibakeresés (debuggolás), töréspont, fájlrendszer, MBR, partíciós szektor, Ntldr, klaszter (cluster), szektor, FAT, NTFS, ext, TSS, csapda, ütemezés, szál, szemafor, mutex, monitor, POSIX, szignál, osztott memória, csővezeték, kritikus szakasz, Wybe Dijkstra, CPU, erőforrás, holtpont, kiéheztetés, integrált áramkör, multiprogramozás, beágyazott rendszerek, partíció, MMU, lapcsere, FIFO, socket, lapozás, swap, interaktív rendszer, kötegelt rendszer, kliens, job, jogosultság, metaadat, könyvtár, UNIX, GNU/LINUX, erőforrás-foglalási gráf, fizikai memória, virtuális memória, merevlemez, floppy, fregmentáció, defregmentáló program, MFT, API, i-node, cache memory, SSH, HyperThread, párhuzamosság" />
+<script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="js/kep.js"></script>
+<script type="text/javascript" src="js/jquery.media.js"></script>
+<script type="text/javascript" src="js/jquery.highlight-3.js"></script>
+<script type="text/javascript" src="js/kereses.js"></script>
+<script type="text/javascript" src="js/stylesheetToggle.js"></script>
+<script type="text/javascript" src="js/cookie.js"></script>
+<script type="text/javascript" src="js/stilusvalto.js"></script>
+<script type="text/javascript" src="js/fogalmak.js"></script>
+<script type="text/javascript" src="js/fogalom.js"></script>
+<script type="text/javascript" src="js/jwplayer.js"></script>
+<script type="text/javascript">
+$(document).ready(function() 
+{
+$("a.hang").media( {width: 250, height: 50,  autoplay: false} );
+});
+</script>
+<script type="text/javascript" src="js/navigacio.js"></script>
+</head>
+<body>
+<div><a name="teteje"  id="teteje"></a></div>
+<div class="jawsfmenu">
+  <ul>
+    <li><a class="tartalom" href="#tartalom" accesskey="t" tabindex="2">Ugrás a <span class="gyorsb">t</span>artalomra</a></li>
+    <li><a class="tartalomj" href="#fejezetek" accesskey="j" tabindex="5">Ugrás a tartalom<span class="gyorsb">j</span>egyzékre</a></li>
+    <li><a class="tanutm" href="#tanutm" accesskey="u" tabindex="7">Ugrás a tan<span class="gyorsb">u</span>lási útmutatóra</a></li>
+  </ul>
+</div>
+<div class="ki_kereses"></div>
+<div class="oldal">
+  <div class="utmutato">
+    <div class="utm_hivatkozasok"><span class="elozolap"><img src="navi/ikon_vissza_dis.gif" alt="Vissza az előzőleg látogatott oldalra (nem elérhető funkció)" title="Vissza az előzőleg látogatott oldalra (nem elérhető funkció)" /></span><a class="kezdolap" href="index.html" accesskey="p" tabindex="21"><img src="navi/ikon_kezdolap.gif" alt="Vissza a modul kezdőlapjára" title="Vissza a modul kezdőlapjára" width="36" height="36"/></a><a class="elozotanlap" href="teszt/lecke6/teszt.html" accesskey="e" tabindex="22"><img src="navi/ikon_elozolap.gif" alt="Ugrás a tananyag előző oldalára" title="Ugrás a tananyag előző oldalára" width="36" height="36" /></a><a class="kovetktanlap" href="lecke7_lap2.html" accesskey="v" tabindex="23"><img src="navi/ikon_kovetklap.gif" alt="Ugrás a tananyag következő oldalára" title="Ugrás a tananyag következő oldalára" width="36" height="36"/></a><span class="ki_fogalomkapcs"><img src="navi/ikon_fogalmakbe_dis.gif" alt="Fogalom megjelenítés (nem elérhető funckió)" title="Fogalom megjelenítés (nem elérhető funckió)" /></span><span class="ki_fogalomlista"><img src="navi/ikon_fogalmaklista_dis.gif" alt="Fogalmak listája (nem elérhető funkció)" title="Fogalmak listája (nem elérhető funkció)" /></span><span class="ki_nyomtatas"><img src="navi/ikon_nyomtatas_dis.gif" alt="Oldal nyomtatása (nem elérhető funkció)" title="Oldal nyomtatása (nem elérhető funkció)" /></span><a class="oldalterkep" href="oldalterkep.html" accesskey="d" tabindex="31"><img src="navi/ikon_oldalterkep.gif" alt="Oldaltérkép megtekintése" title="Oldaltérkép megtekintése"  width="36" height="36" /></a><a class="sugo" href="sugo.html" accesskey="s" tabindex="33"><img src="navi/ikon_sugo.gif" alt="Súgó megtekintése" title="Súgó megtekintése"  width="36" height="36" /></a></div>
+    <h1 class="utmutato"><a name="tanutm"  id="tanutm"></a>Tanulási útmutató</h1>
+    <div class="osszefoglalas">
+      <h2>Összefoglalás </h2>
+      <!--{fej7_hang_1}--><div class="hang"><ul><li><strong>Cím:</strong> <a href="hangok/7.mp3">A gyermekfolyamatok</a></li><li><strong>Hossz:</strong>1 perc 55 <abbr title="másodperc">mp.</abbr></li><li><strong>Fájlméret:</strong> 1.76 <abbr title="megabájt">MB</abbr></li><li><a class="media hang" name="playerf25" id="playerf25" href="hangok/7.mp3">A gyermekfolyamatok című hanganyag letöltése</a></li><li><a href="hangok/7.html"><span class="jaws">A gyermekfolyamatok című hanganyag</span>Szöveges változat megtekintése</a></li></ul></div><!--END{fej7_hang_1}--><p>A <span class="fogalom" title="UNIX">UNIX</span> többfeladatos, többfelhasználós <span class="fogalom" title="operációs rendszer">operációs rendszer</span>, így egy időben több folyamat is fut rajta. Az ütemező feladata a processzoridő szétosztása az egymással versengő folyamatok között. Az egyes folyamatok saját gyermekfolyamatokat is létrehozhatnak a &#132;fork&#148; függvény meghívásával. Minden folyamatnak &ndash; így a gyermekfolyamatnak is &ndash; egyedi azonosítója, úgynevezett PID száma van. </p><p>A gyermekfolyamatot a szülőfolyamat &#132;másolataként&#148; lehet elképzelni. A gyermekfolyamat örökli a fork hívás előtt deklarált változókat, a felhasználóra vonatkozó adatokat (felhasználói azonosító és csoportazonosító), a munkakönyvtárat, a szignálkezelő eljárásokat és az umask értéket. Megkapja a szülőfolyamat fájlleíróinak másolatát, de nem kapja meg a szülőfolyamat által kért &#132;alarm&#148; jelzést. </p><p>A folyamatok előre meg nem jósolható sorrendben futnak, így előfordulhat, hogy a szülőfolyamat, de az is, hogy a gyermekfolyamat fejeződik be hamarabb. Abban az esetben, ha a szülőfolyamat nem várja meg a gyermekfolyamat befejeződését, a gyermek úgynevezett zombi folyamattá válik. Ha a szülőfolyamat hamarabb ér véget, mint a gyermekfolyamat, akkor a gyermekfolyamat automatikusan kap egy új szülőfolyamatot, ami általában az &#132;init&#148;. Az init folyamat időnként megszünteti a felgyűlt zombi folyamatokat. </p><p>Egy folyamat memóriatérképe lecserélhető egy másikra az exec függvénycsalád alkalmazásával. Ez azt jelenti, hogy a folyamat eredeti tartalma helyett egy másik programot is végrehajtathatunk. Természetesen egyúttal ez azt is jelenti, hogy a gyermekfolyamat eredeti tartalma már nem érhető el, vagyis az exec utáni kódsorok már nem hajtódnak végre. Az exec híváson kívül van még egy lehetőség kódból parancs vagy program futtatására: a system függvény hívásával. </p><p>A system <span class="fogalom" title="rendszerhívás">rendszerhívás</span> úgy működik, hogy létrehoz egy gyermekfolyamatot, amelyben egy exec hívás segítségével lefuttatja a kért parancsot. Ebből következik, hogy a közvetlen exec hívással ellentétben a system hívás utáni sorok is végrehajtódnak, hiszen nem az eredeti folyamat memóriatérképét cseréltük le a kívánt programra, hanem a gyermekét. </p><p>A folyamatok &ndash; ami igaz a szülő- és a gyermekfolyamatokra is &ndash; egymással különböző módokon kommunikálhatnak. A folyamatok közötti kommunikációt röviden IPC-nek (Inter Process Communication) nevezzük. A kommunikáció legegyszerűbb módja egy jelzés küldése. A jelzéseket küldheti az <span class="fogalom" title="operációs rendszer">operációs rendszer</span>, vagy akár mi magunk is néhány billentyű leütésével, például a Ctrl + C billentyűkombinációval, vagy parancssorból a kill paranccsal, illetve kódból a kill függvény hívásával. </p><p>Az elküldött jelről a fogadó fél csak azt tudja megállapítani, hogy milyen típusú <span class="fogalom" title="szignál">szignált</span> kapott. Jelenleg (a <span class="fogalom" title="POSIX">POSIX</span> szabványban) 31 különböző jelzéssel számolhatunk, amelyeket egész számokkal jelenítenek meg, de a számokhoz a könnyebb megjegyzés érdekében szimbolikus konstansokat is rendeltek. </p><p>A folyamatok a jelzésekre előre meghatározott módon reagálnak. Ez az alapértelmezett viselkedés persze a legtöbb esetben átírható, kivéve a nem maszkolható SIGSTOP és SIGKILL <span class="fogalom" title="szignál">szignálokat</span>. A folyamatok blokkolhatják a beérkező jelzéseket, ekkor a jelzés a blokkolás feloldásáig várakozik. Lehetőségünk van a jelzések ignorálására (azaz figyelmen kívül hagyására) is, ekkor a jelzést egyszerűen &#132;eldobjuk&#148;. Az alapértelmezett viselkedést módosíthatjuk jelzéskezelő-függvény beállításával. Ekkor az adott jelzés fogadásakor a kijelölt függvény fut le, majd a folyamat folytathatja az eredeti feladatának végrehajtását. A kezelőfüggvények típusa kötött, hiszen ezek úgynevezett &#132;callback&#148; függvényként (más néven visszahívható függvényként) működnek. A jelzéseket jelzéscsoportokba is foglalhatjuk, amelyeket közösen blokkolhatunk, figyelmen kívül hagyhatunk, vagy amelyekre azonos jelzéskezelővel reagálhatunk. Abban az esetben, ha a jelzésre reagáló függvény lefutása közben újabb jelzést kap a folyamat, a rendszer blokkolja az új jelzést. A jelzés küldése és a jelzés fogadása közben eltelt időben (pl. blokkolás közben) a jelzés &#132;függő&#148;, azaz &#132;pending&#148; állapotban van, ami azt jelenti, hogy feldolgozásra vár. Több feldolgozásra váró <span class="fogalom" title="szignál">szignál</span> esetén a feldolgozás sorrendje előre nem megjósolható.</p> 
+    </div>
+    <div class="kovetelmeny">
+      <h2>Követelmény </h2>
+      <p>A tanuló ismerje a <span class="fogalom" title="UNIX">UNIX</span> <span class="fogalom" title="operációs rendszer">operációs rendszerben</span> a szülő- és a gyermekfolyamatok működési elvét. Legyen képes egyszerű programokban létrehozni apa-fiú folyamatokat. Tudja helyettesíteni a gyermekfolyamatot egy másik programmal. Ismerje a <span class="fogalom" title="UNIX">UNIX</span> <span class="fogalom" title="operációs rendszer">operációs rendszerben</span> meglévő különböző típusú <span class="fogalom" title="szignál">szignálokat</span>. Képes legyen olyan egyszerű programkódot készíteni, amelyik küld és fogad is <span class="fogalom" title="szignál">szignálokat</span>. Ismerje a szülő- és a gyermekfolyamatok lényegét. Képes legyen létrehozni és kezelni különböző folyamatokat.</p> 
+    </div>
+    <div class="feladatok">
+      <h2>Önállóan megoldható feladatok</h2>
+      <ul><li>Készítsen el egy programot, amelyben a szülőfolyamatnak két gyermekfolyamata van! A gyermekfolyamatok végezzenek különböző feladatokat (pl. a páros és a páratlan számok kiírása), és a szülőfolyamat várja be mindkettő befejeződését! </li><li>Készítsen el egy programot, amelyik létrehoz egy apa-fiú folyamatot! A gyermekfolyamat írjon ki másodpercenként három véletlen számot! A szülőfolyamat várjon öt másodpercet, és küldjön egy jelzést a gyermekfolyamatnak, majd várja be annak befejeződését! </li><li>Készítsen el egy programot, amelyik létrehoz egy apa-fiú folyamatot, ahol a gyermekfolyamat a háttérben elindít egy programot (pl. egy fájl beolvasását)! </li><li>Készítsen el egy programot, amelyik két gyermekfolyamatot hoz létre! Az első gyermeke írjon ki öt véletlen számot, majd küldjön jelzést a szülőfolyamatnak, aki ekkor indítsa a második gyermekfolyamatot, amelyik öt egymást követő számot ír ki! </li></ul> 
+    </div>
+  </div>
+  <div class="tartalommenu">
+    <div class="tartalommenu_fejlec"><span id="lapteteje"><a  href="#teteje"><span class="gyorsb">F</span>el a lap tetejére</a></span><a name="fejezetek"   id="fejezetek">Tartalomjegyzék</a></div>
+    <ul><li><a href="#hiv1">Szignálok, a szülő-gyerek viszony gyakorlati szempontból</a><ul><li><a href="#hiv2">A szülő- és a gyermekfolyamatok</a><ul><li><a href="#hiv3">Példák a szülő- és a gyermekfolyamatokra egy C programozási nyelven írt programban</a><ul><li><a href="#hiv4">Feladat: a szülő- és a gyermekfolyamat ugyanazt a szöveget írja ki!</a></li></ul></li></ul></li></ul></li></ul> 
+  </div>
+  <div class="tartalom"> <a name="tartalom" id="tartalom"></a> 
+    <h1><a name="hiv1" id="hiv1" ></a>Szignálok, a szülő-gyerek viszony gyakorlati szempontból</h1><h2><a name="hiv2" id="hiv2" ></a>A szülő- és a gyermekfolyamatok</h2><p>Mint tudjuk, a <span class="fogalom" title="UNIX">UNIX</span> többfelhasználós, többfeladatos <span class="fogalom" title="operációs rendszer">operációs rendszer</span>. Ez azt jelenti, hogy egyszerre több folyamat is futhat. A folyamatok akár több gyermekfolyamatot is indíthatnak egyszerre, amely (vagy amelyek) a szülőfolyamattal egy időben futnak. A folyamatok mindegyike használja a processzort, és az ütemező feladata annak a beosztása, hogy mikor melyikre kerül sor. Emiatt nem tudjuk előre megjósolni, hogy mikor melyik folyamaté lesz a processzoridő, és mikor adja azt át a következőnek. Ez a tény érdekes következményekkel jár, amit a későbbiekben magunk is megfigyelhetünk. Hogyan is kell a <span class="fogalom" title="UNIX">UNIX</span> <span class="fogalom" title="operációs rendszer">operációs rendszerben</span> gyermekfolyamatot létrehozni? A válasz igen egyszerű: a fork() függvényt kell meghívni, amit a programozók egymás között csak &#132;forkolásnak&#148; neveznek. Ennek az eredménye az lesz, hogy a fork hívás utáni kód mintegy megkettőződik (azaz &#132;lemásolódik&#148;), és ezt hajtja végre a létrejött gyermekfolyamat. Lássunk néhány nagyon egyszerű kis példaprogramot!</p><h3><a name="hiv3" id="hiv3" ></a>Példák a szülő- és a gyermekfolyamatokra egy C programozási nyelven írt programban</h3><div class="feladat"><span class="feladat">Feladat</span><h4><a name="hiv4" id="hiv4" ></a>Feladat: a szülő- és a gyermekfolyamat ugyanazt a szöveget írja ki!</h4><p>Legyen a feladatunk az, hogy készítsünk C programozási nyelven írt programot, amelyik létrehoz egy gyermekfolyamatot, és a szülőfolyamattal együtt mindketten kiírják a standard kimenetre (azaz a stdout-ra) a &#132;Hello vilag&#148; szöveget.</p></div><div class="forraskod"><div class="bekezdes1cm">
+
+//-------------------- 
+// Hello.c 
+//--------------------
+#include &lt;stdlib.h&gt; 
+#include &lt;stdio.h&gt; 
+#include &lt;unistd.h&gt; 
+// Az unistd.h header fájlt be kell szerkeszteni, amelyben 
+// például a fork függvény is szerepel. 
+int main() { 
+     char ki[] = "vilag"; 
+     fork(); 
+     // Itt keletkezik a gyermekfolyamat, amelyik 
+     // a szülőfolyamat másolataként fogható fel. 
+     printf("Hello %s\n", ki); 
+     // A fork utáni részt a szülő- és a gyermekfolyamat is 
+     // végrehajtja. 
+     return 0; 
+} 
+//--------------------
+</div>
+</div><p><strong>A futtatás eredménye</strong></p><div class="forraskod"><div class="bekezdes1cm">
+
+&gt;gcc Hello.c &ndash;o Hello 
+&gt;./Hello 
+Hello vilag 
+Hello vilag 
+&gt;
+</div>
+</div><p><strong>Megfigyelés</strong></p><p>A fork meghívásakor tehát létrejött a futó folyamat &#132;másolata&#148;. Az eredeti kódban és a másolatban is megtalálható a printf függvény, ami a kiírás, így a kiírás kétszer hajtódik végre. A gyermekfolyamat megkapja a fork hívás előtt esetlegesen deklarált változók másolatát is (char ki[]), ezért a &#132;ki&#148; nevű változó tartalma, a &#132;vilag&#148; szöveg is mindkettőből elérhető. </p><p>Nyilván nem lenne túl sok értelme, ha a szülő- és a gyermekfolyamatok csak és kizárólag ugyanazt a feladatot tudnák elvégezni, ezért célszerű lenne valahogy megkülönböztetni ezeket egymástól. Mint tudjuk, minden folyamathoz tartozik a <span class="fogalom" title="UNIX">UNIX</span> <span class="fogalom" title="operációs rendszer">operációs rendszerben</span> egy-egy egyedi azonosító (PID). A fork függvény visszatérési értéke éppen ezt az azonosítót adja vissza (más néven PID számot &ndash; process identification). Az így megkapott PID szám módot ad arra, hogy a kódon belül megkülönböztethessük a gyermek- és a szülőfolyamatot. Ritkán az is előfordulhat, hogy az <span class="fogalom" title="operációs rendszer">operációs rendszer</span> már nem tud újabb folyamatot létrehozni, hiszen a folyamatok száma maximalizálva van az <span class="fogalom" title="operációs rendszer">operációs rendszerben</span>. Ezt onnan vehetjük észre, hogy a fork függvény által visszaadott érték nullánál kisebb. A fentiek alapján így el elképzelni a kód vázlatát.</p><div class="forraskod"><div class="bekezdes1cm">
+
+pid_t child = fork(); //Itt keletkezik a gyermekfolyamat, 
+                      // amelyik a szülőfolyamat másolataként 
+                      // fogható fel. 
+if (child &lt; 0) { 
+     perror(&#132;Nem sikerult folyamatot letrehozni\n&#148;); 
+     exit(1); 
+} 
+     // Kilépünk, mert nem sikerült új gyermekfolyamatot 
+     // létrehozni a perror függvény hibaüzenetet ír ki a 
+     // hibacsatornára. 
+if (child &gt; 0) { 
+     // Ide kerül az a kódrészlet, amelyet csak a szülőfolyamat 
+     // hajt végre, hiszen látja a child változó értékét, 
+     // amit az általa meghívott fork adott vissza. 
+} 
+if (child == 0) { 
+     // Ezt a kódrészletet csak a gyermekfolyamat hajtja végre, 
+     // hiszen a gyermekfolyamat nem látja a child változó értékét. 
+}
+</div>
+</div><p>A kódrészletből látszik, hogy a <strong>fork</strong> függvény által létrehozott folyamat PID számát (process identification) egy változóban tároljuk. Már korábban említettük, hogy a gyermekfolyamat létrehozásakor, a <strong>fork</strong> hívás előtt deklarált &#132;i&#148; változókról másolat készül a gyermekfolyamat számára. Ez az oka annak, hogy a szülőágban a PID számot tartalmazó child változó tud a <strong>fork</strong> által visszaadott értékről, a gyermekfolyamat pedig csak magáról a változóról tud, az értékéről nem. </p><p class="vissza"><a href="#fejezetek">Vissza a tartalom<span class="gyorsb">j</span>egyzékhez</a></p> 
+  </div>
+</div>
+<div class="utmutato_also">
+  <div class="utm_hivatkozasok_also"><a class="oldalteteje" accesskey="f" href="#teteje"><span class="gyorsb">F</span>el a lap tetejére</a>
+  <a class="elozotanlap" id="navialsoelozo" href="teszt/lecke6/teszt.html"><img src="navi/ikon_elozolap.gif" alt="Ugrás a tananyag előző oldalára" title="Ugrás a tananyag előző oldalára" width="36" height="36" /></a>
+  <a id='navialsokov' class="kovetktanlap" href="lecke7_lap2.html"><img src="navi/ikon_kovetklap.gif" alt="Ugrás a tananyag következő oldalára" title="Ugrás a tananyag következő oldalára" width="36" height="36"/></a>
+  </div>
+</div>
+<div class="ki_stilus"></div>
+<div class="impresszum">
+  <table class="uszt">
+    <tr>
+      <td><div class="imp_eltetatklogo"><img alt="ELTE és ELTE TáTK logó" src="css/arculat/elte_plus_tatk.png" style="width:100%;height:auto;" /></div>
+        <div class="imp_elteiklogo"><img alt="ELTE és ELTE IK logó" src="css/arculat/elte_plus_ik.png" style="width:100%;height:auto;" /></div></td>
+      <td><div class="imp_uszt"><img alt="Új Széchenyi terv" src="css/arculat/USZT_logo_cmyk.jpg" style="width:100%;height:auto;" /></div></td>
+      <td><div class="imp_eu"><img alt="A projekt az Európai Unió támogatásával, az Európai Szociális Alap társfinanszirozásával valósul meg." title="A projekt az Európai Unió támogatásával, az Európai Szociális Alap társfinanszirozásával valósul meg." src="css/arculat/ESZA.png" style="width:100%;height:auto;"/></div></td>
+    </tr>
+  </table>
+</div>
+</body>
+</html>

@@ -1,0 +1,267 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="hu" lang="hu">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="css/scormelte_alap.css" rel="stylesheet" type="text/css" title="" />
+<link href="css/style_spec.css" rel="stylesheet" type="text/css" />
+<link href="css/scormelte_nagy.css" rel="alternate stylesheet" type="text/css" title="nagy" />
+<link href="css/scormelte_inverz.css" rel="alternate stylesheet" type="text/css" title="inverz" />
+<!--[if lte IE 6]>
+<link href="css/scormelte_ie6.css" rel="stylesheet" type="text/css" title="" />
+<![endif]-->
+<!-- syntax highlight -->
+<link rel="stylesheet" type="text/css" href="css/shCore.css" />
+<link rel="stylesheet" type="text/css" href="css/shThemeDefault.css" />
+<script type="text/javascript" src="js/shCore.js"></script>
+<script type="text/javascript" src="js/shBrushCpp.js"></script>
+<script type="text/javascript" src="js/shBrushCSharp.js"></script>
+<script type="text/javascript" src="js/shBrushDelphi.js"></script>
+<script type="text/javascript" src="js/shBrushXml.js"></script>
+<script type="text/javascript" src="js/shBrushCss.js"></script>
+<script type="text/javascript" src="js/shBrushJScript.js"></script>
+<script type="text/javascript" src="js/shBrushSql.js"></script>
+<script type="text/javascript">
+SyntaxHighlighter.all()
+</script>
+<title>
+Számítógépes alapismeretek II. / 
+A párhuzamosság alapjai &ndash; folyamatok kommunikációja, versenyhelyzetek, kritikus szekciók, szemaforok, monitorok és szignálok
+/Mutexek és monitorok</title>
+<meta name="description" content="A tananyag  fejlesztése a TÁMOP-4.1.2.A/2-10/1 pályázat keretén belül történt." />
+<meta name="keywords" content="Hardver alapismeretek, operációs rendszer, számítógépes alapismeretek, operációs rendszer fogalma, operációs rendszerek története, operációs rendszer feladata, operációs rendszer generációk, operációs rendszer típusok, folyamatok, folyamat táblázat, szál &ndash; folyamatok, rendszerhívások, operációs rendszer struktúrák, kernelmód, kernel, felhasználói mód, B/K művelet, folyamatok modellje, szinkron rendszerhívás, asszinkron rendszerhívás, állapotai, megvalósításuk, folyamatok kommunikációja, IPC (Inter Process Communication), megszakítástábla, IDT, megszakításvezérlő, PIC, megszakítás, interrupt, megszakításkérelem, IRQ, megszakításkezelési folyamat, kivétel, hibakeresés (debuggolás), töréspont, fájlrendszer, MBR, partíciós szektor, Ntldr, klaszter (cluster), szektor, FAT, NTFS, ext, TSS, csapda, ütemezés, szál, szemafor, mutex, monitor, POSIX, szignál, osztott memória, csővezeték, kritikus szakasz, Wybe Dijkstra, CPU, erőforrás, holtpont, kiéheztetés, integrált áramkör, multiprogramozás, beágyazott rendszerek, partíció, MMU, lapcsere, FIFO, socket, lapozás, swap, interaktív rendszer, kötegelt rendszer, kliens, job, jogosultság, metaadat, könyvtár, UNIX, GNU/LINUX, erőforrás-foglalási gráf, fizikai memória, virtuális memória, merevlemez, floppy, fregmentáció, defregmentáló program, MFT, API, i-node, cache memory, SSH, HyperThread, párhuzamosság" />
+<script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="js/kep.js"></script>
+<script type="text/javascript" src="js/jquery.media.js"></script>
+<script type="text/javascript" src="js/jquery.highlight-3.js"></script>
+<script type="text/javascript" src="js/kereses.js"></script>
+<script type="text/javascript" src="js/stylesheetToggle.js"></script>
+<script type="text/javascript" src="js/cookie.js"></script>
+<script type="text/javascript" src="js/stilusvalto.js"></script>
+<script type="text/javascript" src="js/fogalmak.js"></script>
+<script type="text/javascript" src="js/fogalom.js"></script>
+<script type="text/javascript" src="js/jwplayer.js"></script>
+<script type="text/javascript">
+$(document).ready(function() 
+{
+$("a.hang").media( {width: 250, height: 50,  autoplay: false} );
+});
+</script>
+<script type="text/javascript" src="js/navigacio.js"></script>
+</head>
+<body>
+<div><a name="teteje"  id="teteje"></a></div>
+<div class="jawsfmenu">
+  <ul>
+    <li><a class="tartalom" href="#tartalom" accesskey="t" tabindex="2">Ugrás a <span class="gyorsb">t</span>artalomra</a></li>
+    <li><a class="tartalomj" href="#fejezetek" accesskey="j" tabindex="5">Ugrás a tartalom<span class="gyorsb">j</span>egyzékre</a></li>
+    <li><a class="tanutm" href="#tanutm" accesskey="u" tabindex="7">Ugrás a tan<span class="gyorsb">u</span>lási útmutatóra</a></li>
+  </ul>
+</div>
+<div class="ki_kereses"></div>
+<div class="oldal">
+  <div class="utmutato">
+    <div class="utm_hivatkozasok"><span class="elozolap"><img src="navi/ikon_vissza_dis.gif" alt="Vissza az előzőleg látogatott oldalra (nem elérhető funkció)" title="Vissza az előzőleg látogatott oldalra (nem elérhető funkció)" /></span><a class="kezdolap" href="index.html" accesskey="p" tabindex="21"><img src="navi/ikon_kezdolap.gif" alt="Vissza a modul kezdőlapjára" title="Vissza a modul kezdőlapjára" width="36" height="36"/></a><a class="elozotanlap" href="lecke6_lap4.html" accesskey="e" tabindex="22"><img src="navi/ikon_elozolap.gif" alt="Ugrás a tananyag előző oldalára" title="Ugrás a tananyag előző oldalára" width="36" height="36" /></a><a class="kovetktanlap" href="lecke6_lap6.html" accesskey="v" tabindex="23"><img src="navi/ikon_kovetklap.gif" alt="Ugrás a tananyag következő oldalára" title="Ugrás a tananyag következő oldalára" width="36" height="36"/></a><span class="ki_fogalomkapcs"><img src="navi/ikon_fogalmakbe_dis.gif" alt="Fogalom megjelenítés (nem elérhető funckió)" title="Fogalom megjelenítés (nem elérhető funckió)" /></span><span class="ki_fogalomlista"><img src="navi/ikon_fogalmaklista_dis.gif" alt="Fogalmak listája (nem elérhető funkció)" title="Fogalmak listája (nem elérhető funkció)" /></span><span class="ki_nyomtatas"><img src="navi/ikon_nyomtatas_dis.gif" alt="Oldal nyomtatása (nem elérhető funkció)" title="Oldal nyomtatása (nem elérhető funkció)" /></span><a class="oldalterkep" href="oldalterkep.html" accesskey="d" tabindex="31"><img src="navi/ikon_oldalterkep.gif" alt="Oldaltérkép megtekintése" title="Oldaltérkép megtekintése"  width="36" height="36" /></a><a class="sugo" href="sugo.html" accesskey="s" tabindex="33"><img src="navi/ikon_sugo.gif" alt="Súgó megtekintése" title="Súgó megtekintése"  width="36" height="36" /></a></div>
+  </div>
+  <div class="tartalommenu">
+    <div class="tartalommenu_fejlec"><span id="lapteteje"><a  href="#teteje"><span class="gyorsb">F</span>el a lap tetejére</a></span><a name="fejezetek"   id="fejezetek">Tartalomjegyzék</a></div>
+    <ul><li><a href="#hiv1">A párhuzamosság alapjai &ndash; folyamatok kommunikációja, versenyhelyzetek, kritikus szekciók, szemaforok, monitorok és szignálok</a><ul><li><a href="#hiv2">A gyártó-fogyasztó probléma, az alvás-ébredés módszere</a><ul><li><a href="#hiv3">Mutexek és monitorok</a><ul><li><a href="#hiv4">A mutex</a></li><li><a href="#hiv5">A monitor</a></li></ul></li></ul></li></ul></li></ul> 
+  </div>
+  <div class="tartalom"> <a name="tartalom"    id="tartalom"></a> 
+    <h1><a name="hiv1" id="hiv1"></a>A párhuzamosság alapjai &ndash; folyamatok kommunikációja, versenyhelyzetek, kritikus szekciók, szemaforok, monitorok és szignálok</h1><h2><a name="hiv2" id="hiv2"></a>A gyártó-fogyasztó probléma, az alvás-ébredés módszere</h2><h3><a name="hiv3" id="hiv3"></a>Mutexek és monitorok</h3><h4><a name="hiv4" id="hiv4"></a>A mutex</h4><p>Láttuk az előző részben, hogy a <span class="fogalom" title="szemafor">szemafor</span> olyan egész értékű változó, amelyen elemi műveletként alkalmazható a &#132;down&#148; vagy az &#132;up&#148; művelet, mint értékcsökkentés vagy értéknövelés. Ha a <span class="fogalom" title="szemafor">szemafor</span> értéke pozitív, akkor nyitott állapotban van, ha nulla, akkor tilosat mutat. Amekkora értékkel inicializáljuk a <span class="fogalom" title="szemafor">szemafort</span>, annyi &#132;vonatot&#148; enged át, mielőtt tilosat mutatna. Sok esetben nincs is szükség arra, hogy egynél nagyobb értékkel hozzunk létre szemaforváltozót.</p><p>Ha csak kölcsönös kizárás (mutual exclusion) biztosítására kell a <span class="fogalom" title="szemafor">szemafort</span> létrehozni, és nincs szükség annak számlálási képességére, akkor azt &ndash; ahogy a korábbi példákban is láttuk &ndash; egy kezdőértékkel hozzuk létre. Ezt a kétállapotú <span class="fogalom" title="szemafor">szemafort</span> sok környezetben speciális névvel, az angol kölcsönös kizárás kifejezésből <span class="fogalom" title="mutex"><strong>mutexnek</strong></span> nevezzük. </p><p>Ha egy folyamatnak zárolásra van szüksége, a &#132;mutex_lock&#148; eljárást hívja, míg ha a zárolást meg akarja szüntetni, a &#132;mutex_unlock&#148; utasítást hívja. Aki másodszor (vagy harmadszor) hívja a &#132;mutex_lock&#148; eljárást, az blokkolódik, és csak a &#132;mutex_unlock&#148; hatására tudja folytatni a végrehajtást. Ha több folyamat is blokkolódott a &#132;mutex_lock&#148; hívás hatására, akkor a &#132;mutex_unlock&#148; után az <span class="fogalom" title="operációs rendszer">operációs rendszer</span> valamilyen stratégia alapján (sokszor ez az első a blokkoltak közül, vagy véletlenszerűen) választ a blokkolt folyamatok közül, amelyik megszerezheti a zárolást!</p><p>Egy <span class="fogalom" title="UNIX">UNIX</span> <span class="fogalom" title="operációs rendszer">operációs rendszerbeli</span> környezetben a <span class="fogalom" title="POSIX">POSIX</span> szabvány <span class="fogalom" title="mutex">mutex</span> objektumának használatához a &#132;pthread.h&#148; header állományt kell csatolni, és a &#132;pthread_mutex_init&#148; utasítás szolgál a <span class="fogalom" title="mutex">mutex</span> objektum létrehozására. A &#132;pthread_mutex_lock&#148; függvény a &#132;mutex_lock&#148;, a &#132;pthread_mutex_unlock&#148; függvény a &#132;mutex_unlock&#148; megfelelője.</p><p><strong>Példa három szál leírására</strong></p><p>A három <span class="fogalom" title="szál">szál</span> közül kettőnek az inc_my_value nevű függvény írja le működését, hétszer növeli a _my_value változó értékét. A harmadik <span class="fogalom" title="szál">szál</span>, melyet a verify_my_value nevű függvény ír le, azt az eseményt várja, hogy a _my_value változó értéke elérje a tizenkettőt, és jelzi ezt.</p><div class="forraskod"><div class="bekezdes1cm">
+
+#include &lt;pthread.h&gt; 
+     int _my_value = 0; 
+     pthread_mutex_t mutex_my_value = PTHREAD_MUTEX_INITIALIZER; 
+     pthread_cond_t cond_my_value = PTHREAD_COND_INITIALIZER; 
+     int thid[3] = { 0, 1, 2 }; 
+     
+     void inc_my_value (int *id) { 
+          int i;  printf ("\nSTART inc_my_value %d\n", *id); 
+          for (i = 0; i &lt; 7; i++) { 
+               sleep(random() % 3); 
+               pthread_mutex_lock (&#38;mutex_my_value); 
+               _my_value ++; 
+               printf("\n inc_my_value: thread %d old _my_value %d new 
+                    _my_value %d", *id, _my_value - 1, _my_value); 
+               if (_my_value == 12) 
+                    pthread_cond_signal (&#38;cond_my_value); 
+               pthread_mutex_unlock (&#38;mutex_my_value); 
+          } 
+          printf ("\nSTOP inc_my_value %d\n", *id); 
+     } 
+     
+     void verify_my_value (int *id) { 
+          printf ("\nSTART verify_my_value \n"); 
+          pthread_mutex_lock (&#38;mutex_my_value); 
+          while (_my_value &lt;= 12) { 
+               pthread_cond_wait (&#38;cond_my_value, &#38;mutex_my_value); 
+               printf ("\n verify_my_value: thread %d _my_value %d", *id, 
+                    _my_value); 
+               break; 
+          } 
+          pthread_mutex_unlock (&#38;mutex_my_value); 
+          printf ("\nSTOP verify_my_value \n"); 
+     } 
+     
+     main () { 
+          pthread_t th[3]; 
+          int i; 
+          // A három szál létrehozása. 
+          pthread_create ((pthread_t *) &#38; th[0], NULL, (void *) 
+               verify_my_value, &#38;thid[0]); 
+          pthread_create ((pthread_t *) &#38; th[1], NULL, (void *) 
+               inc_my_value, &#38;thid[1]); 
+          pthread_create ((pthread_t *) &#38; th[2], NULL, (void *) 
+               inc_my_value, &#38;thid[2]); 
+          // Várakozás a szálak befejezésére: 
+          for (i = 0; i &lt; 3; i++) 
+               pthread_join (th[i], NULL); 
+     }
+</div>
+</div><p>A Microsoft .NET keretrendszerbeli környezetben Mutex néven érhetjük el ezt a szolgáltatást, aminek például a &#132;WaitOne&#148; metódus hívása jelenti a &#132;mutex_lock&#148; utasítást, míg a &#132;ReleaseMutex&#148; metódus hívása jelenti a &#132;mutex_unlock&#148; eljárást. A korábbi <span class="fogalom" title="UNIX">UNIX</span> felületen mutatott példa után nézzük meg a <span class="fogalom" title="mutex">mutex</span> osztály és metódusainak részletesebb magyarázata nélkül az alábbi mintát a használatára.</p><div class="forraskod"><div class="bekezdes1cm">
+
+using System; 
+using System.Collections.Generic; 
+using System.Linq; 
+using System.Text; 
+using System.Threading; 
+namespace mutex 
+{ 
+    class Program 
+    { 
+    // Készítsünk új mutexet. A szál nem tartalmazza a mutexet. 
+    private static Mutex mut = new Mutex(); 
+    private const int szálak_száma = 3; 
+    
+    static void Main() 
+    { 
+        // Készítünk néhány szálat. 
+        for(int i = 0; i &lt; szálak_száma; i++) 
+        { 
+            Thread myThread = new Thread(new ThreadStart(mutex_fv)); 
+            myThread.Name = String.Format("Szál{0}", i + 1); 
+            myThread.Start(); 
+        } 
+        
+        // A főprogram befejeződik, de az alkalmazás még fut, mert a szálak még futnak 
+        // Az alkalmazás is befejeződik a szálak befejeződése során. 
+    } 
+        
+        // Ez az eljárás végzi a szikronizációt, kölcsönös kizárást biztosító 
+        // lépéseket, tehát egyszerre csak egy folyamat (szál) &#132;éli túl&#148;, 
+        // jut túl a WaitOne híváson. Megjegyezzük, hogy több alakja is van. 
+    private static void mutex_fv() 
+    { 
+        // Várakozás, amíg nem biztonságos a belépés. Első hívás &#132;mutex_lock&#148;-ot csinál. 
+        mut.WaitOne(); 
+        
+        Console.WriteLine("{0} belépett a kölcsönös kizárással védett területre!", 
+            Thread.CurrentThread.Name); 
+            
+        // Itt szerepelhet a szükséges védettséget kívánó utasítássor. 
+        Console.WriteLine("{0} most komoly munkát végez!", 
+            Thread.CurrentThread.Name); 
+            
+            
+        // A komoly munka most nem más, mint egy kis várakozás. 
+        Thread.Sleep(500); 
+        
+        Console.WriteLine("{0} kilép a védett területről\r\n", 
+            Thread.CurrentThread.Name); 
+            
+        // A mutex elengedése. 
+        mut.ReleaseMutex(); 
+    } 
+} 
+}
+</div>
+</div><p>A példaprogram futtatása az alábbi önmagáért beszélő eredményt adja <em>(6.4. ábra)</em>. A teljes nyelvi példa több részből áll, és a tananyaghoz mellékelt párhuzamos.zip tömörített állomány tartalmazza a Microsoft .NET Framework rendszert használó teljes projekt forrását.</p><!--fej6_kep_4--><div class="kep kozep sz650"><img src="kepek/fej6_kep4_w650.jpg" alt="A képen egy terminál ablakban látható a 3 szál működése" style="width:100%; height:auto;" title="A képen egy terminál ablakban látható a 3 szál működése" /><span class="kepalairas">6.4. ábra: Három szál a mutex használatára</span><div class="kep_ikonok jobbra"><span class="kep_nagymeret"><a href="kepek/fej6_kep4_w650_full.html" title="Kép megtekintése külön ablakban" >A fenti kép <span class="kepnev">(fej6_kep4_full.jpg)</span> megtekintése külön ablakban</a></span></div></div><div class="uresmargo"></div><!--ENDfej6_kep_4--><h4><a name="hiv5" id="hiv5"></a>A monitor</h4><p>Mind a <span class="fogalom" title="szemafor">szemafor</span>, mind a <span class="fogalom" title="mutex">mutex</span> esetében az <span class="fogalom" title="operációs rendszer">operációs rendszer</span> biztosítja az elemi művelet meglétét, amivel elérhetjük a megfelelő kritikus szekció védelmét.</p><p>Nézzük meg alább a módosított &#132;pék&#148; folyamatot! A szabad és az üres <span class="fogalom" title="szemafor">szemaforok</span> down utasítását cseréltük csak fel.</p><div class="forraskod"><div class="bekezdes1cm">
+
+void pék() { /* cserélt recept */ 
+     int kenyér;
+     while (1) { 
+          kenyér = pék_süt(); 
+          down(&#38;szabad); /* Itt van a csere! */ 
+          down(&#38;üres); 
+          kenyér_polcra(kenyér); 
+          up(&#38;szabad); 
+          up(&#38;tele); 
+     } 
+}
+</div>
+</div><p>Ez az apróság olyan hibát okoz, hogy amikor a bolt tele van, mindkét folyamat blokkolna. A pék folyamatát ugyanis a &#132;down(&#38;üres)&#148; sor akasztja meg, ha tele van a polc, de előtte a &#132;szabad&#148; <span class="fogalom" title="mutex">mutexet</span> már tilosra állította; emiatt a vásárló már sose fér a pékséghez, hiszen az ahhoz való hozzáférést engedő jelzőberendezés (&#132;szabad&#148; <span class="fogalom" title="szemafor">szemafor</span>) tilosat mutat (<span class="fogalom" title="holtpont">holtpont</span>). </p><p>A példával azt kívántuk megmutatni, hogy a <span class="fogalom" title="szemafor">szemaforok</span> jók, de a használatuk nagy körültekintést igényel. A hibamentes programok írásának megkönnyítésére Brinch Hansen (1973) és Charles Anthony Richard Hoare (1974) magasabb szintű nyelvű konstrukciót javasoltak. Ezt a konstrukciót <span class="fogalom" title="monitor">monitornak</span> nevezték el. A <span class="fogalom" title="monitor">monitor</span> kicsit a mai osztálydefinícióra emlékeztet, eljárásokat, változókat és feltételváltozót is tartalmazhat, ahogy az alábbi formális részlet szemlélteti.</p><div class="forraskod"><div class="bekezdes1cm">
+
+Monitor veszélyes_zóna 
+     Integer polc[]; 
+     Condition c; 
+     Procedure pék(x); 
+     ... 
+     End; 
+     Procedure vásárló(x); 
+     ... 
+     End; 
+End monitor;
+</div>
+</div><p>A <span class="fogalom" title="monitor">monitornak</span> a legfontosabb tulajdonsága, hogy egy adott időpillanatban csak egy folyamat lehet aktív benne. A fejlesztési környezetektől függ, hogy ezt a feltételt, hogyan biztosítja. A &#132;feltétel&#148; (condition) változó tulajdonsága az, hogy rajtuk blokkoló (wait), illetve ébresztő (signal) utasítás értelmezhető, ha a <span class="fogalom" title="monitor">monitorban</span> aktív folyamat úgy látja jónak. Például rájön arra, hogy tele van a bolt, és a péknek blokkolni kell, vagy fordítva: üres a bolt, és a vásárlóknak kell várakozni.</p><div class="forraskod"><div class="bekezdes1cm">
+
+monitor Pék-Vásárló 
+     condition tele, üres; 
+     int darab; 
+     kenyeret_polcra_helyez(kenyér elem) 
+     { 
+          if (darab == N) wait(tele); 
+          polcra(elem); 
+          darab++; 
+          if (darab == 1) signal(üres); 
+     } 
+     kenyér kenyeret_levesz_a_polcról() 
+     { 
+          if (darab == 0) wait(üres); 
+          kenyér elem = kenyér_polcról(); 
+          darab--; 
+          if (darab == N - 1) signal(tele); 
+          return elem; 
+     } 
+end monitor
+
+pék() 
+{ 
+     while(1) 
+     { 
+          kenyér új; 
+          elem = kenyér_sütés(); 
+          Pék-Vásárló.kenyeret_polcra_helyez(új); 
+     } 
+} 
+vásárló() 
+{ 
+     while(1) 
+     { 
+          kenyér új_kenyér; 
+          új_kenyér = Pék-Vásárló.kenyeret_a_polcról(); 
+          lakoma(új_kenyér); 
+     } 
+}
+</div>
+</div><p>Láthattuk, hogy a monitorkonstrukció a <span class="fogalom" title="szemafor">szemaforos</span> lehetőségeknél magasabb szintű, és az egyes fejlesztő környezetekben más és más módon biztosítják. A részletes magyarázat mellőzésével a tananyaghoz mellékelt párhuzamos.zip tömörített állomány tartalmazza a Microsoft .NET Framework rendszert használó teljes projekt forrását a monitorkonstrukció használatára.</p><p>Összefoglalásképpen elmondhatjuk, hogy a <span class="fogalom" title="szemafor">szemaforokat</span> (<span class="fogalom" title="mutex">mutexeket</span>) és a <span class="fogalom" title="monitor">monitorokat</span> kifejezetten a kölcsönös kizárás biztosítására tervezték. Ha a számítógépünk (ami tartalmazzon egy-vagy több processzort) egy közös memóriát használ, akkor a <span class="fogalom" title="szemafor">szemaforjaink</span> és a <span class="fogalom" title="monitor">monitorjaink</span> remekül végzik a munkájukat. A &#132;TSL utasítás&#148; segítségével meg tudjuk védeni a szemaforváltozóinkat, így ezzel el tudjuk kerülni a versenyhelyzet kialakulását.</p><p>Ha olyan osztott, többprocesszoros rendszert használunk, ahol a központi egységeknek saját memóriájuk van, akkor ezek a módszerek nem igazán használhatóak.</p><p class="vissza"><a href="#fejezetek">Vissza a tartalom<span class="gyorsb">j</span>egyzékhez</a></p> 
+  </div>
+</div>
+<div class="utmutato_also">
+  <div class="utm_hivatkozasok_also"><a class="oldalteteje" accesskey="f" href="#teteje"><span class="gyorsb">F</span>el a lap tetejére</a>
+  <a class="elozotanlap" id="navialsoelozo" href="lecke6_lap4.html"><img src="navi/ikon_elozolap.gif" alt="Ugrás a tananyag előző oldalára" title="Ugrás a tananyag előző oldalára" width="36" height="36" /></a>
+  <a id='navialsokov' class="kovetktanlap" href="lecke6_lap6.html" ><img src="navi/ikon_kovetklap.gif" alt="Ugrás a tananyag következő oldalára" title="Ugrás a tananyag következő oldalára" width="36" height="36"/></a>
+  </div>
+</div>
+<div class="ki_stilus"></div>
+<div class="impresszum">
+  <table class="uszt">
+    <tr>
+      <td><div class="imp_eltetatklogo"><img alt="ELTE és ELTE TáTK logó" src="css/arculat/elte_plus_tatk.png" style="width:100%;height:auto;" /></div>
+        <div class="imp_elteiklogo"><img alt="ELTE és ELTE IK logó" src="css/arculat/elte_plus_ik.png" style="width:100%;height:auto;" /></div></td>
+      <td><div class="imp_uszt"><img alt="Új Széchenyi terv" src="css/arculat/USZT_logo_cmyk.jpg" style="width:100%;height:auto;" /></div></td>
+      <td><div class="imp_eu"><img alt="A projekt az Európai Unió támogatásával, az Európai Szociális Alap társfinanszirozásával valósul meg." title="A projekt az Európai Unió támogatásával, az Európai Szociális Alap társfinanszirozásával valósul meg." src="css/arculat/ESZA.png" style="width:100%;height:auto;"/></div></td>
+    </tr>
+  </table>
+</div>
+</body>
+</html>

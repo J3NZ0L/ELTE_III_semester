@@ -1,0 +1,348 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="hu" lang="hu">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="css/scormelte_alap.css" rel="stylesheet" type="text/css" title="" />
+<link href="css/style_spec.css" rel="stylesheet" type="text/css" />
+<link href="css/scormelte_nagy.css" rel="alternate stylesheet" type="text/css" title="nagy" />
+<link href="css/scormelte_inverz.css" rel="alternate stylesheet" type="text/css" title="inverz" />
+<!--[if lte IE 6]>
+<link href="css/scormelte_ie6.css" rel="stylesheet" type="text/css" title="" />
+<![endif]-->
+<!-- syntax highlight -->
+<link rel="stylesheet" type="text/css" href="css/shCore.css" />
+<link rel="stylesheet" type="text/css" href="css/shThemeDefault.css" />
+<script type="text/javascript" src="js/shCore.js"></script>
+<script type="text/javascript" src="js/shBrushCpp.js"></script>
+<script type="text/javascript" src="js/shBrushCSharp.js"></script>
+<script type="text/javascript" src="js/shBrushDelphi.js"></script>
+<script type="text/javascript" src="js/shBrushXml.js"></script>
+<script type="text/javascript" src="js/shBrushCss.js"></script>
+<script type="text/javascript" src="js/shBrushJScript.js"></script>
+<script type="text/javascript" src="js/shBrushSql.js"></script>
+<script type="text/javascript">
+SyntaxHighlighter.all()
+</script>
+<title>
+Számítógépes alapismeretek II. / 
+Osztott memória, üzenetküldés, rendszerhívások és alkalmazásaik. A folyamatok közötti kommunikáció
+/Példa a socketek használatára: hálózati kommunikáció</title>
+<meta name="description" content="A tananyag  fejlesztése a TÁMOP-4.1.2.A/2-10/1 pályázat keretén belül történt." />
+<meta name="keywords" content="Hardver alapismeretek, operációs rendszer, számítógépes alapismeretek, operációs rendszer fogalma, operációs rendszerek története, operációs rendszer feladata, operációs rendszer generációk, operációs rendszer típusok, folyamatok, folyamat táblázat, szál &ndash; folyamatok, rendszerhívások, operációs rendszer struktúrák, kernelmód, kernel, felhasználói mód, B/K művelet, folyamatok modellje, szinkron rendszerhívás, asszinkron rendszerhívás, állapotai, megvalósításuk, folyamatok kommunikációja, IPC (Inter Process Communication), megszakítástábla, IDT, megszakításvezérlő, PIC, megszakítás, interrupt, megszakításkérelem, IRQ, megszakításkezelési folyamat, kivétel, hibakeresés (debuggolás), töréspont, fájlrendszer, MBR, partíciós szektor, Ntldr, klaszter (cluster), szektor, FAT, NTFS, ext, TSS, csapda, ütemezés, szál, szemafor, mutex, monitor, POSIX, szignál, osztott memória, csővezeték, kritikus szakasz, Wybe Dijkstra, CPU, erőforrás, holtpont, kiéheztetés, integrált áramkör, multiprogramozás, beágyazott rendszerek, partíció, MMU, lapcsere, FIFO, socket, lapozás, swap, interaktív rendszer, kötegelt rendszer, kliens, job, jogosultság, metaadat, könyvtár, UNIX, GNU/LINUX, erőforrás-foglalási gráf, fizikai memória, virtuális memória, merevlemez, floppy, fregmentáció, defregmentáló program, MFT, API, i-node, cache memory, SSH, HyperThread, párhuzamosság" />
+<script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="js/kep.js"></script>
+<script type="text/javascript" src="js/jquery.media.js"></script>
+<script type="text/javascript" src="js/jquery.highlight-3.js"></script>
+<script type="text/javascript" src="js/kereses.js"></script>
+<script type="text/javascript" src="js/stylesheetToggle.js"></script>
+<script type="text/javascript" src="js/cookie.js"></script>
+<script type="text/javascript" src="js/stilusvalto.js"></script>
+<script type="text/javascript" src="js/fogalmak.js"></script>
+<script type="text/javascript" src="js/fogalom.js"></script>
+<script type="text/javascript" src="js/jwplayer.js"></script>
+<script type="text/javascript">
+$(document).ready(function() 
+{
+$("a.hang").media( {width: 250, height: 50,  autoplay: false} );
+});
+</script>
+<script type="text/javascript" src="js/navigacio.js"></script>
+</head>
+<body>
+<div><a name="teteje"  id="teteje"></a></div>
+<div class="jawsfmenu">
+  <ul>
+    <li><a class="tartalom" href="#tartalom" accesskey="t" tabindex="2">Ugrás a <span class="gyorsb">t</span>artalomra</a></li>
+    <li><a class="tartalomj" href="#fejezetek" accesskey="j" tabindex="5">Ugrás a tartalom<span class="gyorsb">j</span>egyzékre</a></li>
+    <li><a class="tanutm" href="#tanutm" accesskey="u" tabindex="7">Ugrás a tan<span class="gyorsb">u</span>lási útmutatóra</a></li>
+  </ul>
+</div>
+<div class="ki_kereses"></div>
+<div class="oldal">
+  <div class="utmutato">
+    <div class="utm_hivatkozasok"><span class="elozolap"><img src="navi/ikon_vissza_dis.gif" alt="Vissza az előzőleg látogatott oldalra (nem elérhető funkció)" title="Vissza az előzőleg látogatott oldalra (nem elérhető funkció)" /></span><a class="kezdolap" href="index.html" accesskey="p" tabindex="21"><img src="navi/ikon_kezdolap.gif" alt="Vissza a modul kezdőlapjára" title="Vissza a modul kezdőlapjára" width="36" height="36"/></a><a class="elozotanlap" href="lecke11_lap6.html" accesskey="e" tabindex="22"><img src="navi/ikon_elozolap.gif" alt="Ugrás a tananyag előző oldalára" title="Ugrás a tananyag előző oldalára" width="36" height="36" /></a><a class="kovetktanlap" href="teszt/lecke11/teszt.html" accesskey="v" tabindex="23"><img src="navi/ikon_kovetklap.gif" alt="Ugrás a tananyag következő oldalára" title="Ugrás a tananyag következő oldalára" width="36" height="36"/></a><span class="ki_fogalomkapcs"><img src="navi/ikon_fogalmakbe_dis.gif" alt="Fogalom megjelenítés (nem elérhető funckió)" title="Fogalom megjelenítés (nem elérhető funckió)" /></span><span class="ki_fogalomlista"><img src="navi/ikon_fogalmaklista_dis.gif" alt="Fogalmak listája (nem elérhető funkció)" title="Fogalmak listája (nem elérhető funkció)" /></span><span class="ki_nyomtatas"><img src="navi/ikon_nyomtatas_dis.gif" alt="Oldal nyomtatása (nem elérhető funkció)" title="Oldal nyomtatása (nem elérhető funkció)" /></span><a class="oldalterkep" href="oldalterkep.html" accesskey="d" tabindex="31"><img src="navi/ikon_oldalterkep.gif" alt="Oldaltérkép megtekintése" title="Oldaltérkép megtekintése"  width="36" height="36" /></a><a class="sugo" href="sugo.html" accesskey="s" tabindex="33"><img src="navi/ikon_sugo.gif" alt="Súgó megtekintése" title="Súgó megtekintése"  width="36" height="36" /></a></div>
+  </div>
+  <div class="tartalommenu">
+    <div class="tartalommenu_fejlec"><span id="lapteteje"><a  href="#teteje"><span class="gyorsb">F</span>el a lap tetejére</a></span><a name="fejezetek"   id="fejezetek">Tartalomjegyzék</a></div>
+    <ul><li><a href="#hiv1">Osztott memória, üzenetküldés, rendszerhívások és alkalmazásaik. A folyamatok közötti kommunikáció</a><ul><li><a href="#hiv2">A folyamatok közötti kommunikáció</a><ul><li><a href="#hiv3">A Socket, avagy a foglalat</a><ul><li><a href="#hiv4">Példa a socketek használatára: hálózati kommunikáció</a></li></ul></li></ul></li></ul></li></ul> 
+  </div>
+  <div class="tartalom"> <a name="tartalom"    id="tartalom"></a> 
+    <h1><a name="hiv1" id="hiv1"></a>Osztott memória, üzenetküldés, rendszerhívások és alkalmazásaik. A folyamatok közötti kommunikáció</h1><h2><a name="hiv2" id="hiv2"></a>A folyamatok közötti kommunikáció</h2><h3><a name="hiv3" id="hiv3"></a>A Socket, avagy a foglalat</h3><h4><a name="hiv4" id="hiv4"></a>Példa a socketek használatára: hálózati kommunikáció</h4><p>Most írjuk át a példát hálózatos változatra! A kiszolgáló és az ügyfélfolyamatot különböző számítógépen futtatjuk!</p><div class="forraskod"><div class="bekezdes1cm">
+
+// A kiszolgáló folyamat: 
+
+#include &lt;stdio.h&gt; 
+#include &lt;stdlib.h&gt; 
+#include &lt;netdb.h&gt; 
+#include &lt;sys/socket.h&gt; 
+#include &lt;unistd.h&gt; 
+
+#define PORT 1001 
+
+int main() { 
+     int sockfd; 
+     struct sockaddr_in * cim; 
+     char uzenet[1024]; 
+     
+/* Az internetcím megadása (az IP cím és a PORT). A kiszolgáló bármely IP címről fogadhat adatot (INADDR_ANY) */ 
+     
+     cim.sin_family = AF_INET; 
+     cim.sin_port = htons( PORT ); 
+     cim.sin_addr.s_addr = htonl( INADDR_ANY ); 
+     
+     sockfd = socket( PF_INET, SOCK_DGRAM, 0 ); 
+     bind(sockfd, (struct sockaddr *) &#38;cim, sizeof(cim) ); 
+     
+     read(sockfd, uzenet, sizeof(uzenet) ); 
+     printf("Az uzenet: %s\n", uzenet ); 
+     
+     close(sockfd); 
+     
+     return 0; 
+}
+// Az ügyfélfolyamat: 
+
+#include &lt;stdio.h&gt; 
+#include &lt;stdlib.h&gt; 
+#include &lt;netdb.h&gt; 
+#include &lt;sys/socket.h&gt; 
+#include &lt;string.h&gt; 
+#include &lt;unistd.h&gt; 
+
+#define PORT 1001 
+
+int main() { 
+     int sockfd; 
+     struct sockaddr_in * server_cim; 
+     struct hostent * halo_adatok; 
+     char buffer[] = "Hello!"; 
+     
+     
+/* A kiszolgálónak csak a DNS nevét ismerjük, tehát megszerezzük az IP címét. */ 
+     
+     halo_adatok = gethostbyname("oprendszer.inf.elte.hu"); 
+          
+/* A kiszolgáló internetcímének a megadása (IP cím és PORT). */ 
+     
+     server_cim.sin_family = AF_INET; 
+     server_cim.sin_port   = htons( PORT ); 
+     server_cim.sin_addr   = *(struct in_addr *)halo_adatok-&gt;h_addr; 
+     
+     sockfd = socket(PF_INET, SOCK_DGRAM, 0 ); 
+     connect(sockfd,(struct sockaddr *) &#38;server_cim, sizeof(server_cim)); 
+     
+     write( sockfd, buffer, strlen(buffer) + 1 ); 
+     
+    close(sockfd); 
+     
+    return 0; 
+}
+</div>
+</div><p><strong>Egy sockethez való csatlakozás &ndash; kétoldalú adatátvitellel, a listen függvény</strong></p><p>Ha kétoldalú adatátvitelt szeretnénk megvalósítani, akkor a SOCK_STREAM típusú kapcsolatot kell használnunk. A &#132;<em>listen&#148;</em> függvénnyel tudjuk beállítani, hogy hány kapcsolat várakozzon, amíg a szerver el nem fogadja a kapcsolatot az <em>&#132;accept&#148;</em> függvénnyel.</p><div class="forraskod"><div class="bekezdes1cm">
+
+ #include &lt;sys/socket.h&gt; 
+
+int listen(int sockfd, int backlog); 
+</div>
+</div><p>A listen függvény paraméterei:</p><ul><li><strong>sockfd</strong>: a foglalat fájlleírója (a socket függvény adja meg).</li><li><strong>backlog</strong>: a várakozó kapcsolatok maximális száma.</li></ul><p>A listen függvény visszatérési értéke: </p><ul><li>Sikeres végrehajtás esetén nulla.</li><li>Hiba esetén -1, illetve beállítja a globális errno hibaértéket. </li></ul><p><em>A listen függvénnyel tudjuk beállítani, hogy hány kapcsolat várakozzon, amíg a szerver el nem fogadja a kapcsolatot, ám a kétoldalú adatátvitelt megvalósítása közben különböző hibák merülhetnek fel. A listen függvény beállítja a globális errno hibaértéket, ami a szokásos értékeken kívül például a következő értékekkel bővül ki:</em></p><table class="lecke">
+<tr><th><p><strong>Konstans</strong></p></th><th><p>Leírás</p></th></tr><tr><td><p><strong>EADDRINUSE</strong></p></td><td><p>A cím már kapcsolva van foglalathoz (a port foglalt).</p></td></tr><tr><td><p><strong>EBADF</strong></p></td><td><p>Hibás a &#132;sockfd&#148;.</p></td></tr><tr><td><p><strong>ENOTSOCK</strong></p></td><td><p>A &#132;sockfd&#148; nem egy foglalat leírója.</p></td></tr><tr><td><p><strong>EOPNOTSUPPP</strong></p></td><td><p>A foglalat típusa nem támogatja a listen hívást.</p></td></tr></table><p>További hibaértékek a referencia-kézikönyvben (manual) találhatók.</p><p><strong>Egy sockethez való csatlakozás &ndash; kétoldalú adatátvitellel, az accept függvény</strong></p><p>Az accept függvény segítségével várakozhatunk a kapcsolódó <span class="fogalom" title="kliens">kliensre</span>. Ha kapcsolódott a <span class="fogalom" title="kliens">kliens</span>, akkor a függvény egy új foglalat azonosítójával tér vissza. Ezzel a <span class="fogalom" title="kliens">klienssel</span> a továbbiakban ezen az új foglalaton keresztül tudunk kommunikálni.</p><div class="forraskod"><div class="bekezdes1cm">
+
+#include &lt;sys/socket.h&gt; 
+#include &lt;sys/typpes.h&gt; 
+
+int accept(int sockfd, struct sockaddr * addr, socklen_t * addrlen);
+</div>
+</div><p>Az accept függvény paraméterei:</p><ul><li><strong>sockfd</strong>: a foglalat fájlleírója (a <span class="fogalom" title="socket">socket</span> függvény adja meg).</li><li><strong>addr</strong>: az ügyfél címét ide rakja a függvény.</li><li><strong>addrlen</strong>: az addr mérete.</li></ul><p>Az accept függvény visszatérési értéke: </p><ul><li>Sikeres végrehajtás esetén az új foglalat fájlleírója.</li><li>Hiba esetén -1, illetve beállítja a globális errno hibaértéket. </li></ul><p><em>Az accept f függvény segítségével várakozhatunk a kapcsolódó <span class="fogalom" title="kliens">kliensre</span>, ám a kétoldalú adatátvitelt megvalósítása közben különböző hibák merülhetnek fel. Az accept függvény beállítja a globális errno hibaértéket, ami a szokásos értékeken kívül például a következő értékekkel bővül ki:</em></p><table class="lecke">
+<tr><th><p><strong>Konstans</strong></p></th><th><p>Leírás</p></th></tr><tr><td><p><strong>EAGAIN</strong></p></td><td><p>Nem blokkoló mód esetén nincs ügyfél.</p></td></tr><tr><td><p><strong>EWOULDBLOCK</strong></p></td><td><p>Nem blokkoló mód esetén nincs ügyfél.</p></td></tr><tr><td><p><strong>EBADF</strong></p></td><td><p>Hibás a &#132;sockfd&#148;.</p></td></tr><tr><td><p><strong>ENOTSOCK</strong></p></td><td><p>A &#132;sockfd&#148; nem egy foglalat leírója.</p></td></tr><tr><td><p><strong>EOPNOTSUPPP</strong></p></td><td><p>A foglalat típusa nem támogatja az accept hívást.</p></td></tr><tr><td><p><strong>EINTR</strong></p></td><td><p>A kapcsolatot jelzés szakította félbe.</p></td></tr><tr><td><p><strong>ECONNABORTED</strong></p></td><td><p>A kapcsolat meg lett szakítva.</p></td></tr><tr><td><p><strong>EINVAL</strong></p></td><td><p>Nem hívtuk sikeresen a listen függvényt, vagy az &#132;addrlen&#148; hibás.</p></td></tr><tr><td><p><strong>EMFILE</strong></p></td><td><p>Túl sok fájlt nyitott meg a folyamat.</p></td></tr><tr><td><p><strong>ENFILE</strong></p></td><td><p>Túl sok fájl van nyitva a rendszeren.</p></td></tr><tr><td><p><strong>EFAULT</strong></p></td><td><p>Az &#132;addr&#148; nem írható memóriaterületre mutat.</p></td></tr><tr><td><p><strong>ENOMEM</strong></p></td><td><p>Nincs elég memória.</p></td></tr><tr><td><p><strong>ENOBUFS</strong></p></td><td><p>Nincs elég memória.</p></td></tr><tr><td><p><strong>EPROTO</strong></p></td><td><p>Protokollhiba.</p></td></tr><tr><td><p><strong>EPERM</strong></p></td><td><p>A tűzfal beállításai tiltják a kapcsolatot.</p></td></tr></table><p>További hibaértékek a referencia-kézikönyvben (manual) találhatók.</p><p><strong>Egy socket lezárása, a shutdown függvény</strong></p><p>A shutdown függvénnyel tudjuk lezárni a foglalatot úgy, hogy a másik fél is értesüljön róla.</p><div class="forraskod"><div class="bekezdes1cm">
+
+#include &lt;sys/socket.h&gt; 
+
+int shutdown(int sosckfd, int how);
+</div>
+</div><p>A shutdown függvény paraméterei:</p><ul><li><strong>sockfd</strong>: a foglalat fájlleírója (a <span class="fogalom" title="socket">socket</span> függvény adja meg).</li><li><strong>how</strong>: a lezárás módja. A lehetséges értékek:<ul><li>SHUT_RD: olvasás lezárása, </li><li>SHUT_WR: írás lezárása,</li><li>SHUT_RDWR: olvasás és írás lezárása. </li></ul></li></ul><p>A shutdown függvény visszatérési értéke: </p><ul><li>Sikeres végrehajtás esetén nulla.</li><li>Hiba esetén -1, illetve beállítja a globális errno hibaértéket. </li></ul><p><em>A shutdown függvénnyel tudjuk a <span class="fogalom" title="socket">socketet</span> lezárni, ám a <span class="fogalom" title="socket">socketek</span> lezárásakor különböző hibák merülhetnek fel. A shutdown függvény beállítja a globális errno hibaértéket, ami a szokásos értékeken kívül például a következő értékekkel bővül ki:</em></p><table class="lecke">
+<tr><th><p><strong>Konstans</strong></p></th><th><p>Leírás</p></th></tr><tr><td><p><strong>EBADF</strong></p></td><td><p>Hibás a &#132;sockfd&#148;.</p></td></tr><tr><td><p><strong>ENOTSOCK</strong></p></td><td><p>A &#132;sockfd&#148; nem egy foglalat leírója.</p></td></tr><tr><td><p><strong>ENOTCONN</strong></p></td><td><p>A foglalat nem kapcsolódott címhez.</p></td></tr></table><p>További hibaértékek a referencia-kézikönyvben (manual) találhatók.</p><p><strong>Példa az egyszerű stream szerverre és egy hozzá kapcsolódó kliensre</strong></p><p>Az egyszerű stream szerver működési elve a következő: várakozik (accept) a <span class="fogalom" title="kliens">kliensre</span>, majd miután a <span class="fogalom" title="kliens">kliens</span> kapcsolódott, az accept visszatér egy új foglalattal. A szerver fork <span class="fogalom" title="rendszerhívás">rendszerhívással</span> létrehoz egy gyerekfolyamatot, a gyerekfolyamat kommunikál az új foglalaton a <span class="fogalom" title="kliens">klienssel</span>, a szülőfolyamat pedig várakozik az újabb <span class="fogalom" title="kliens">kliens</span>re.</p><p>Lássunk egy példát stream szerverre és <span class="fogalom" title="kliens">kliensre</span>! A szerver visszaküldi a &#148;Hello, World!\n&#148; szöveget a <span class="fogalom" title="kliens">klienseknek</span>. (Forrás: <a href="http://people.inf.elte.hu/triasz/progi/bgnet.html#streamszerver">http://people.inf.elte.hu/triasz/progi/bgnet.html#streamszerver</a>).</p><div class="forraskod"><div class="bekezdes1cm">
+
+/* 
+  ** server.c - egy stream socket szerver demo 
+  */ 
+
+#include &lt;stdio.h&gt; 
+#include &lt;stdlib.h&gt; 
+#include &lt;unistd.h&gt; 
+#include &lt;errno.h&gt; 
+#include &lt;string.h&gt; 
+#include &lt;sys/types.h&gt; 
+#include &lt;sys/socket.h&gt; 
+#include &lt;netinet/in.h&gt; 
+#include &lt;arpa/inet.h&gt; 
+#include &lt;sys/wait.h&gt; 
+#include &lt;signal.h&gt; 
+
+#define MYPORT 3490 // A port használói ide fognak csatlakozni. 
+
+#define BACKLOG 10 // Ennyi kezeletlen kapcsolat várakozhat sorban 
+
+void sigchld_handler(int s) { 
+     while(wait(NULL) &gt; 0);
+} 
+
+int main(void) { 
+     int sockfd, new_fd; // Figyelés-hallgatás a sock_fd-n, 
+                         // új kapcsolat a new_fd-n.
+     struct sockaddr_in my_addr;    // A saját címinformációm. 
+     struct sockaddr_in their_addr; // aA csatlakozó címinformációja. 
+     int sin_size; 
+     struct sigaction sa;
+     int yes=1;
+     
+     if ((sockfd = socket(AF_INET, SOCK_STREAM, 0)) == -1) { 
+          perror("socket"); 
+          exit(1); 
+     } 
+     
+     if (setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &#38;yes, sizeof(int)) 
+         == -1) { 
+          perror("setsockopt"); 
+          exit(1); 
+     } 
+     
+     my_addr.sin_family = AF_INET; // host byte order 
+     my_addr.sin_port = htons(MYPORT); // short, network byte order
+     my_addr.sin_addr.s_addr = INADDR_ANY; 
+                                 // Automatikusan kitölti az IP címemmel.
+     memset(&#38;(my_addr.sin_zero), &rsquo;\0&rsquo;, 8); 
+                                 // Nulla a struktúra többi részében 
+     
+     if (bind(sockfd, (struct sockaddr *)&#38;my_addr, sizeof(struct sockaddr))     
+         == -1) { 
+          perror("bind"); 
+          exit(1); 
+     }
+     
+     if (listen(sockfd, BACKLOG) == -1) { 
+          perror("listen"); 
+          exit(1); 
+     }
+  sa.sa_handler = sigchld_handler; // Levág minden halott folyamatot. 
+     sigemptyset(&#38;sa.sa_mask); 
+     sa.sa_flags = SA_RESTART; 
+     
+     if (sigaction(SIGCHLD, &#38;sa, NULL) == -1) { 
+          perror("sigaction"); 
+          exit(1); 
+     } 
+     
+     while(1) { // main accept() loop 
+          sin_size = sizeof(struct sockaddr_in); 
+          if ((new_fd = accept(sockfd, (struct sockaddr *)&#38;their_addr, 
+             &#38;sin_size)) == -1) { 
+               perror("accept"); 
+               continue; 
+          } 
+          printf("server: got connection from %s\n", 
+                 inet_ntoa(their_addr.sin_addr)); 
+          
+          if (!fork()) { // ez a gyerekfolyamat 
+               close(sockfd); // a gyereknek nincs szüksége a listázóra. 
+               if (send(new_fd, "Hello, world!\n", 14, 0) == -1) 
+                    perror("send"); 
+               close(new_fd); 
+               exit(0); 
+          } 
+          
+          close(new_fd); // a szülőnek nincs szüksége erre.
+     } 
+
+     return 0; 
+}
+</div>
+</div><p>A <span class="fogalom" title="kliens">kliens</span> kapcsolódik a szerverhez, majd fogadja a szerver által küldött üzenetet.</p><div class="forraskod"><div class="bekezdes1cm">
+
+/* 
+   ** client.c - egy stream socket kliens demo 
+   */ 
+
+#include &lt;stdio.h&gt; 
+#include &lt;stdlib.h&gt; 
+#include &lt;unistd.h&gt; 
+#include &lt;errno.h&gt; 
+#include &lt;string.h&gt; 
+#include &lt;netdb.h&gt; 
+#include &lt;sys/types.h&gt; 
+#include &lt;netinet/in.h&gt; 
+#include &lt;sys/socket.h&gt; 
+
+#define PORT 3490 // Az a port, ahova a kliens csatlakozni fog. 
+
+#define MAXDATASIZE 100 // Az egyszerre kapható bájtok maximális értéke. 
+
+int main(int argc, char * argv[]) { 
+     int sockfd, numbytes; 
+     char buf[MAXDATASIZE]; 
+     struct hostent * he; 
+     struct sockaddr_in their_addr; // A csatlakozó címinformációja. 
+     
+     if (argc != 2) { 
+          fprintf(stderr,"usage: client hostname\n"); 
+          exit(1); 
+     } 
+     
+     if ((he=gethostbyname(argv[1])) == NULL) { 
+                                    // Megkapja a hosztinformációt. 
+          perror("gethostbyname"); 
+          exit(1); 
+     } 
+     
+     if ((sockfd = socket(AF_INET, SOCK_STREAM, 0)) == -1) { 
+          perror("socket"); 
+          exit(1); 
+     } 
+     
+     their_addr.sin_family = AF_INET; // host byte order 
+     their_addr.sin_port = htons(PORT); // short, network byte order 
+     their_addr.sin_addr = *((struct in_addr *)he-&gt;h_addr); 
+     memset(&#38;(their_addr.sin_zero), &rsquo;\0&rsquo;, 8); 
+                                  // Kinullázza a struktúra többi részét. 
+     
+     if (connect(sockfd, (struct sockaddr *)&#38;their_addr, 
+        sizeof(struct sockaddr)) == -1) { 
+          perror("connect"); 
+          exit(1); 
+     } 
+     
+     if ((numbytes=recv(sockfd, buf, MAXDATASIZE-1, 0)) == -1) { 
+          perror("recv"); 
+          exit(1); 
+     } 
+     
+     buf[numbytes] = &rsquo;\0&rsquo;; 
+     
+     printf("Received: %s",buf); 
+     
+     close(sockfd); 
+      
+    return 0; 
+}
+</div>
+</div><p>A következő képernyőkép a példaprogram fordítását és futtatását mutatja. Először a szervert lefordítjuk és elindítjuk. A szerver vár a <span class="fogalom" title="kliens">kliensre</span>.</p><!--fej11_kep_9--><div class="kep kozep" style="max-width:447px;"><img src="kepek/fej11_kep9_w447.jpg" alt="A képen a program látható futás közben" style="width:100%; height:auto;" title="A képen a program látható futás közben" /><span class="kepalairas">A program futása</span><div class="kep_ikonok jobbra"><span class="kep_nagymeret"><a href="kepek/fej11_kep9_w447_full.html" title="Kép megtekintése külön ablakban" >A fenti kép <span class="kepnev">()</span> megtekintése külön ablakban</a></span></div></div><div class="uresmargo"></div><!--ENDfej11_kep_9--><p>Majd a <span class="fogalom" title="kliens">klienst</span> fordítjuk és indítjuk egy másik terminálon. A <span class="fogalom" title="kliens">kliens</span> megkapja a szervertől az üzenetet.</p><!--fej11_kep_10--><div class="kep kozep" style="max-width:522px;"><img src="kepek/fej11_kep10_w522.jpg" alt="A képen a program látható futás közben" style="width:100%; height:auto;" title="A képen a program látható futás közben" /><span class="kepalairas">A program futása</span><div class="kep_ikonok jobbra"><span class="kep_nagymeret"><a href="kepek/fej11_kep10_w522_full.html" title="Kép megtekintése külön ablakban" >A fenti kép <span class="kepnev">()</span> megtekintése külön ablakban</a></span></div></div><div class="uresmargo"></div><!--ENDfej11_kep_10--><p>A szerver kiírja, hogy a <span class="fogalom" title="kliens">kliens</span> milyen IP címről kapcsolódott.</p><!--fej11_kep_11--><div class="kep kozep" style="max-width:454px;"><img src="kepek/fej11_kep11_w454.jpg" alt="A képen a program látható futás közben" style="width:100%; height:auto;" title="A képen a program látható futás közben" /><span class="kepalairas">A program futása</span><div class="kep_ikonok jobbra"><span class="kep_nagymeret"><a href="kepek/fej11_kep11_w454_full.html" title="Kép megtekintése külön ablakban" >A fenti kép <span class="kepnev">()</span> megtekintése külön ablakban</a></span></div></div><div class="uresmargo"></div><!--ENDfej11_kep_11--><p>Most próbáljuk többször is elindítani a <span class="fogalom" title="kliens">kliens</span> programot.</p><!--fej11_kep_12--><div class="kep kozep" style="max-width:544px;"><img src="kepek/fej11_kep12_w544.jpg" alt="A képen a program látható futás közben" style="width:100%; height:auto;" title="A képen a program látható futás közben" /><span class="kepalairas">A program futása</span><div class="kep_ikonok jobbra"><span class="kep_nagymeret"><a href="kepek/fej11_kep12_w544_full.html" title="Kép megtekintése külön ablakban" >A fenti kép <span class="kepnev">()</span> megtekintése külön ablakban</a></span></div></div><div class="uresmargo"></div><!--ENDfej11_kep_12--><!--fej11_kep_13--><div class="kep kozep" style="max-width:398px;"><img src="kepek/fej11_kep13_w398.jpg" alt="A képen a program látható futás közben" style="width:100%; height:auto;" title="A képen a program látható futás közben" /><span class="kepalairas">A program futása</span><div class="kep_ikonok jobbra"><span class="kep_nagymeret"><a href="kepek/fej11_kep13_w398_full.html" title="Kép megtekintése külön ablakban" >A fenti kép <span class="kepnev">()</span> megtekintése külön ablakban</a></span></div></div><div class="uresmargo"></div><!--ENDfej11_kep_13--><p class="vissza"><a href="#fejezetek">Vissza a tartalom<span class="gyorsb">j</span>egyzékhez</a></p> 
+  </div>
+</div>
+<div class="utmutato_also">
+  <div class="utm_hivatkozasok_also"><a class="oldalteteje" accesskey="f" href="#teteje"><span class="gyorsb">F</span>el a lap tetejére</a>
+  <a class="elozotanlap" id="navialsoelozo" href="lecke11_lap6.html"><img src="navi/ikon_elozolap.gif" alt="Ugrás a tananyag előző oldalára" title="Ugrás a tananyag előző oldalára" width="36" height="36" /></a>
+  <a id='navialsokov' class="kovetktanlap" href="teszt/lecke11/teszt.html"><img src="navi/ikon_kovetklap.gif" alt="Ugrás a tananyag következő oldalára" title="Ugrás a tananyag következő oldalára" width="36" height="36"/></a>
+  </div>
+</div>
+<div class="ki_stilus"></div>
+<div class="impresszum">
+  <table class="uszt">
+    <tr>
+      <td><div class="imp_eltetatklogo"><img alt="ELTE és ELTE TáTK logó" src="css/arculat/elte_plus_tatk.png" style="width:100%;height:auto;" /></div>
+        <div class="imp_elteiklogo"><img alt="ELTE és ELTE IK logó" src="css/arculat/elte_plus_ik.png" style="width:100%;height:auto;" /></div></td>
+      <td><div class="imp_uszt"><img alt="Új Széchenyi terv" src="css/arculat/USZT_logo_cmyk.jpg" style="width:100%;height:auto;" /></div></td>
+      <td><div class="imp_eu"><img alt="A projekt az Európai Unió támogatásával, az Európai Szociális Alap társfinanszirozásával valósul meg." title="A projekt az Európai Unió támogatásával, az Európai Szociális Alap társfinanszirozásával valósul meg." src="css/arculat/ESZA.png" style="width:100%;height:auto;"/></div></td>
+    </tr>
+  </table>
+</div>
+</body>
+</html>

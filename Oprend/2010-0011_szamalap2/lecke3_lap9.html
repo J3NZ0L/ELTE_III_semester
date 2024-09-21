@@ -1,0 +1,498 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="hu" lang="hu">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="css/scormelte_alap.css" rel="stylesheet" type="text/css" title="" />
+<link href="css/style_spec.css" rel="stylesheet" type="text/css" />
+<link href="css/scormelte_nagy.css" rel="alternate stylesheet" type="text/css" title="nagy" />
+<link href="css/scormelte_inverz.css" rel="alternate stylesheet" type="text/css" title="inverz" />
+<!--[if lte IE 6]>
+<link href="css/scormelte_ie6.css" rel="stylesheet" type="text/css" title="" />
+<![endif]-->
+<!-- syntax highlight -->
+<link rel="stylesheet" type="text/css" href="css/shCore.css" />
+<link rel="stylesheet" type="text/css" href="css/shThemeDefault.css" />
+<script type="text/javascript" src="js/shCore.js"></script>
+<script type="text/javascript" src="js/shBrushCpp.js"></script>
+<script type="text/javascript" src="js/shBrushCSharp.js"></script>
+<script type="text/javascript" src="js/shBrushDelphi.js"></script>
+<script type="text/javascript" src="js/shBrushXml.js"></script>
+<script type="text/javascript" src="js/shBrushCss.js"></script>
+<script type="text/javascript" src="js/shBrushJScript.js"></script>
+<script type="text/javascript" src="js/shBrushSql.js"></script>
+<script type="text/javascript">
+SyntaxHighlighter.all()
+</script>
+<title>
+Számítógépes alapismeretek II. / 
+A fájlrendszer-kezelés függvényei, alapvető feladatai
+/Fájlkezelés a feladatok tükrében</title>
+<meta name="description" content="A tananyag  fejlesztése a TÁMOP-4.1.2.A/2-10/1 pályázat keretén belül történt." />
+<meta name="keywords" content="Hardver alapismeretek, operációs rendszer, számítógépes alapismeretek, operációs rendszer fogalma, operációs rendszerek története, operációs rendszer feladata, operációs rendszer generációk, operációs rendszer típusok, folyamatok, folyamat táblázat, szál &ndash; folyamatok, rendszerhívások, operációs rendszer struktúrák, kernelmód, kernel, felhasználói mód, B/K művelet, folyamatok modellje, szinkron rendszerhívás, asszinkron rendszerhívás, állapotai, megvalósításuk, folyamatok kommunikációja, IPC (Inter Process Communication), megszakítástábla, IDT, megszakításvezérlő, PIC, megszakítás, interrupt, megszakításkérelem, IRQ, megszakításkezelési folyamat, kivétel, hibakeresés (debuggolás), töréspont, fájlrendszer, MBR, partíciós szektor, Ntldr, klaszter (cluster), szektor, FAT, NTFS, ext, TSS, csapda, ütemezés, szál, szemafor, mutex, monitor, POSIX, szignál, osztott memória, csővezeték, kritikus szakasz, Wybe Dijkstra, CPU, erőforrás, holtpont, kiéheztetés, integrált áramkör, multiprogramozás, beágyazott rendszerek, partíció, MMU, lapcsere, FIFO, socket, lapozás, swap, interaktív rendszer, kötegelt rendszer, kliens, job, jogosultság, metaadat, könyvtár, UNIX, GNU/LINUX, erőforrás-foglalási gráf, fizikai memória, virtuális memória, merevlemez, floppy, fregmentáció, defregmentáló program, MFT, API, i-node, cache memory, SSH, HyperThread, párhuzamosság" />
+<script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="js/kep.js"></script>
+<script type="text/javascript" src="js/jquery.media.js"></script>
+<script type="text/javascript" src="js/jquery.highlight-3.js"></script>
+<script type="text/javascript" src="js/kereses.js"></script>
+<script type="text/javascript" src="js/stylesheetToggle.js"></script>
+<script type="text/javascript" src="js/cookie.js"></script>
+<script type="text/javascript" src="js/stilusvalto.js"></script>
+<script type="text/javascript" src="js/fogalmak.js"></script>
+<script type="text/javascript" src="js/fogalom.js"></script>
+<script type="text/javascript" src="js/jwplayer.js"></script>
+<script type="text/javascript">
+$(document).ready(function() 
+{
+$("a.hang").media( {width: 250, height: 50,  autoplay: false} );
+});
+</script>
+<script type="text/javascript" src="js/navigacio.js"></script>
+</head>
+<body>
+<div><a name="teteje"  id="teteje"></a></div>
+<div class="jawsfmenu">
+  <ul>
+    <li><a class="tartalom" href="#tartalom" accesskey="t" tabindex="2">Ugrás a <span class="gyorsb">t</span>artalomra</a></li>
+    <li><a class="tartalomj" href="#fejezetek" accesskey="j" tabindex="5">Ugrás a tartalom<span class="gyorsb">j</span>egyzékre</a></li>
+    <li><a class="tanutm" href="#tanutm" accesskey="u" tabindex="7">Ugrás a tan<span class="gyorsb">u</span>lási útmutatóra</a></li>
+  </ul>
+</div>
+<div class="ki_kereses"></div>
+<div class="oldal">
+  <div class="utmutato">
+    <div class="utm_hivatkozasok"><span class="elozolap"><img src="navi/ikon_vissza_dis.gif" alt="Vissza az előzőleg látogatott oldalra (nem elérhető funkció)" title="Vissza az előzőleg látogatott oldalra (nem elérhető funkció)" /></span><a class="kezdolap" href="index.html" accesskey="p" tabindex="21"><img src="navi/ikon_kezdolap.gif" alt="Vissza a modul kezdőlapjára" title="Vissza a modul kezdőlapjára" width="36" height="36"/></a><a class="elozotanlap" href="lecke3_lap8.html" accesskey="e" tabindex="22"><img src="navi/ikon_elozolap.gif" alt="Ugrás a tananyag előző oldalára" title="Ugrás a tananyag előző oldalára" width="36" height="36" /></a><a class="kovetktanlap" href="teszt/lecke3/teszt.html" accesskey="v" tabindex="23"><img src="navi/ikon_kovetklap.gif" alt="Ugrás a tananyag következő oldalára" title="Ugrás a tananyag következő oldalára" width="36" height="36"/></a><span class="ki_fogalomkapcs"><img src="navi/ikon_fogalmakbe_dis.gif" alt="Fogalom megjelenítés (nem elérhető funckió)" title="Fogalom megjelenítés (nem elérhető funckió)" /></span><span class="ki_fogalomlista"><img src="navi/ikon_fogalmaklista_dis.gif" alt="Fogalmak listája (nem elérhető funkció)" title="Fogalmak listája (nem elérhető funkció)" /></span><span class="ki_nyomtatas"><img src="navi/ikon_nyomtatas_dis.gif" alt="Oldal nyomtatása (nem elérhető funkció)" title="Oldal nyomtatása (nem elérhető funkció)" /></span><a class="oldalterkep" href="oldalterkep.html" accesskey="d" tabindex="31"><img src="navi/ikon_oldalterkep.gif" alt="Oldaltérkép megtekintése" title="Oldaltérkép megtekintése"  width="36" height="36" /></a><a class="sugo" href="sugo.html" accesskey="s" tabindex="33"><img src="navi/ikon_sugo.gif" alt="Súgó megtekintése" title="Súgó megtekintése"  width="36" height="36" /></a></div>
+  </div>
+  <div class="tartalommenu">
+    <div class="tartalommenu_fejlec"><span id="lapteteje"><a  href="#teteje"><span class="gyorsb">F</span>el a lap tetejére</a></span><a name="fejezetek"   id="fejezetek">Tartalomjegyzék</a></div>
+    <ul><li><a href="#hiv1">A fájlrendszer-kezelés függvényei, alapvető feladatai</a><ul><li><a href="#hiv2">Fájlkezelés a feladatok tükrében</a><ul><li><a href="#hiv3">Egy fájl tartalmának beolvasása</a></li><li><a href="#hiv4">Egy fájl tartalmának átmásolása</a></li><li><a href="#hiv5">Egy állomány közepén lévő bájt írása</a></li><li><a href="#hiv6">Végül nézzünk egy összetettebb példát</a></li></ul></li></ul></li></ul> 
+  </div>
+  <div class="tartalom"> <a name="tartalom"    id="tartalom"></a> 
+    <h1><a name="hiv1" id="hiv1"></a>A fájlrendszer-kezelés függvényei, alapvető feladatai</h1><h2><a name="hiv2" id="hiv2"></a>Fájlkezelés a feladatok tükrében</h2><p>Nézzük meg a gyakorlatban, hogy hogyan használnánk az előzőleg megismert alacsony szintű függvényeket egyszerű feladatok megoldásában!</p><h3><a name="hiv3" id="hiv3"></a>Egy fájl tartalmának beolvasása</h3><p>Legyen az első feladatunk az, hogy olvassuk be egy fájl tartalmát!A fájlból olvasáshoz meg kell nyitni a fájlt olvasásra. A megnyitás nem biztos, hogy sikeres, így a nyitási hibára is figyelni kell. Az előzőekben megismert módon tudjuk, hogy hiba esetén a hiba kódja az errno változóba kerül, és a standard hibakimenetre a perror függvénnyel írhatunk. Ha megnyitunk egy fájlt olvasásra, akkor az aktuális pozíciója az első bájtra kerül. Egy ciklussal olvassuk be a fájl tartalmát, és egyesével írassuk ki a fájlból kiolvasott karaktereket a képernyőre. A beolvasás visszaadott értéke a beolvasott bájtok száma. Ha hibás a beolvasás, akkor visszatérési értékként -1-et kapunk. Ezt használjuk ki a ciklus megszervezéséhez. Végezetül zárjuk be az olvasásra megnyitott fájlt!</p><div class="forraskod"><div class="bekezdes1cm">
+#include &lt;stdlib.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;errno.h&gt; //hibakezeléshez kell
+int main(int argc, char* argv[]) {
+     int f;
+     char karakter;
+     char sor[80];
+     f=open("szoveg.txt",0); //olvasásra nyit meg
+     if (errno) {
+     perror("Hiba &ndash; ");
+          exit(0);
+     };
+     while(read(f, &#38;karakter, 1)) {
+          printf("%c", karakter);
+     };
+     close(f);
+     return 0;
+}
+</div>
+</div><p class="vissza"><a href="#fejezetek">Vissza a tartalom<span class="gyorsb">j</span>egyzékhez</a></p><h3><a name="hiv4" id="hiv4"></a>Egy fájl tartalmának átmásolása</h3><p>A következő feladat legyen az, hogy az egyik fájl tartalmát másoljuk át egy másikba! A fájlok nevét olvassuk be a billentyűzetről futási időben!</p><p>A feladat megoldásához készítsünk függvényeket a beolvasás és a megnyitás megvalósításához! A függvények esetében figyeljünk a paraméterátadásra! A megnyitás függvénynél szükség van arra, hogy a létrejött fájlleírót visszaadjuk a hívónak. Ehhez a C++ programozási nyelvben referenciát alkalmaznánk, de a C programozási nyelvben megismert mutatókkal kell megoldani a feladatot. Olvasásra nyitásnál most külön ellenőrizzük, hogy létezik-e az adott fájl elérési útvonala. Az atmasol függvényben tulajdonképpen felhasználjuk az előző feladat lényegét. </p><div class="forraskod"><div class="bekezdes1cm">
+#include &lt;stdlib.h&gt; 
+#include &lt;stdio.h&gt; 
+#include &lt;fcntl.h&gt; 
+#include &lt;unistd.h&gt; 
+#include &lt;sys/stat.h&gt; 
+#include &lt;sys/types.h&gt; 
+#include &lt;errno.h&gt; // A hibakezeléshez kell. 
+void megnyitas(char* fnev, int* fajlleiro) { 
+      (*fajlleiro)=open(fnev,O_RDONLY); 
+     if(errno != 0) { perror(&#148;Hibás megnyitás!\n&#148;); exit(0); };
+} 
+void kozepreallit(int fajlleiro) { 
+     struct stat status; 
+     int pozicio; 
+     if(fstat(fajlleiro,&#38;statusz)) { 
+     perror("Hibas status olvasas!\n"); exit(0); }; 
+     pozicio=(int)((status.st_size)/2); 
+     printf("%i\n", pozicio); 
+     if(!lseek(fajlleiro,pozicio, SEEK_SET)) { 
+          perror("Hibas pozicio beallitas!\n"); exit(0); 
+     }; 
+} 
+void olvas_ir(int fajlleiro) { 
+     char c; 
+     if(!read(fajlleiro,&#38;c,1)) { perror("Hibas olvasas!\n"); exit(0); }; 
+     printf("A kozepso karakter: %c \n",c); 
+} 
+int main() { 
+     int f; 
+     megnyitas(inputnev, &#38;f); 
+     kozepreallit(f); 
+     olvas_ir(f); 
+     close(f); 
+     return 0; 
+} 
+</div>
+</div><p class="vissza"><a href="#fejezetek">Vissza a tartalom<span class="gyorsb">j</span>egyzékhez</a></p><h3><a name="hiv5" id="hiv5"></a>Egy állomány közepén lévő bájt írása</h3><p>Oldjuk meg azt a problémát, hogy írjuk ki egy állomány közepén lévő bájtot! A feladat megoldásához nyilván meg kell nyitnunk a fájlt, ezután le kell olvasnunk a hosszúságát, majd az aktuális pozíciót a hosszúság felére kell állítani, és onnan olvasni egy bájtot. A fájl megnyitása hasonlóan történhet, mint az előző feladatokban. A fájl hossza a stat vagy fstat függvények által visszaadott stat struktúrából olvasható ki. A fájl aktuális pozíciója pedig az lseek függvénnyel állítható. A bájt olvasása itt is a read függvénnyel valósítható meg.</p><div class="forraskod"><div class="bekezdes1cm">
+#include &lt;stdlib.h&gt; 
+#include &lt;stdio.h&gt; 
+#include &lt;fcntl.h&gt; 
+#include &lt;unistd.h&gt; 
+#include &lt;errno.h&gt; // A hibakezeléshez kell. 
+void beolvas(char* fnev) { 
+     printf("Kerek egy fajlnevet:"); 
+     if(scanf("%s", fnev)==EOF) { 
+          perror("Nem adott meg fajlnevet!\n"); exit(0); }; 
+}; 
+void megnyit(char* fnev, int* fajlleiro, int mire) { 
+     if(mire == O_RDONLY) { 
+          if(access(fnev,F_OK) != 0) { 
+               perror("Nem letezik a fajl!\n"); exit(0); 
+          }; 
+     }; 
+      (*fajlleiro)=open(fnev,mire); 
+     if(errno != 0) { perror("Hibás megnyitás!\n"); exit(0); }; 
+}; 
+void atmasol(int f, int g) { 
+     char c; 
+     while(read(f,&#38;c,1) { 
+     if(write(g,&#38;c, 1) != 1) { perror("Hibas iras!\n"); exit(0); }; 
+     }; 
+}; 
+int main() { 
+     int f, g; 
+     char inputnev[80], outputnev[80]; 
+     beolvas(inputnev); 
+     beolvas(outputnev); 
+     megnyit(inputnev, &#38;f, O_RDONLY); 
+     megnyit(outputnev, &#38;g, O_RDONLY|O_WRONLY|O_CREAT); 
+     atmasol(f,g); 
+     close(f); 
+     close(g); 
+     printf("Kesz..."); 
+     return 0; 
+};
+</div>
+</div><p class="vissza"><a href="#fejezetek">Vissza a tartalom<span class="gyorsb">j</span>egyzékhez</a></p><h3><a name="hiv6" id="hiv6"></a>Végül nézzünk egy összetettebb példát</h3><p>Az alábbi példaprogram zeneszámok nyilvántartását teszi lehetővé.</p><!--{fej3_specialis_1}--><video controls="controls" width="854" height="480"><source src="./specialis/minta1.mp4" type='video/mp4'><source src="./specialis/minta1.ogv"  type='application/ogg' ></video><!--END{fej3_specialis_1}--><!--{fej3_letoltes_1}--><div class="allomanyletoltes"><ul><li><strong>Fájl letöltése:</strong> <a href="letoltes/3_fel1.c">Az alábbi mintaprogram letölthető ide kattintva! <span class="jaws">című háttéranyag letöltése</span> </a></li><li><strong>Információ az állományról: </strong>Az alábbi mintaprogram letölthető ide kattintva!</li><li><strong>Fájlméret:</strong> 0.01 <abbr title="megabájt">MB</abbr></li></ul></div><!--END{fej3_letoltes_1}--><div class="forraskod"><div class="bekezdes1cm">
+#include &lt;stdlib.h&gt;
+#include &lt;stdio.h&gt;
+struct szamlistaelem {
+  int szerzo;
+  char cim[30];
+  int mufaj;
+  int hossz;
+  struct szamlistaelem *next;
+};
+struct roviditeselem {
+ int sorsz;
+ char jelentes[30];
+ struct roviditeselem *next;
+};
+struct szamlistaelem *szamok = 0; 
+struct roviditeselem *roviditesek = 0;
+int is_the_same(char a[], char b[]) {
+ int i;
+ for (i = 0; i &lt; 30; i++) if (a[i] != b[i]) return 0;
+ return 1;
+}
+char* dekod(int mit) {
+ struct roviditeselem *seged = roviditesek;
+  
+ if (seged != 0) {
+ 
+   while ((seged-&gt;next != 0) && (seged-&gt;sorsz != mit)) seged = seged-&gt;next;
+   return seged-&gt;jelentes;
+ }
+ 
+ return "Proba"; 
+}
+void addrovidites(char jelentes[], int sorsz) {
+ struct roviditeselem *elem;
+ elem = malloc( sizeof(struct roviditeselem) );
+ elem-&gt;next = roviditesek;
+ elem-&gt;sorsz = sorsz;
+ int i;
+ for (i = 0; i &lt; 30; i++) elem-&gt;jelentes[i] = jelentes[i];
+ roviditesek = elem;
+}
+int ujrovidites(char mit[]) {
+ int i;
+ int sorsz;
+ int l = 0;
+ struct roviditeselem *seged = roviditesek;
+ struct roviditeselem *elozo = roviditesek;
+ 
+ if (seged != 0) {
+ 
+   while ((seged-&gt;next != 0) && (l == 0)) {
+    l = 1; 
+    for (i = 0; i &lt; 30; i++) if (seged-&gt;jelentes[i] != mit[i]) l = 0;
+    elozo = seged;
+    seged = seged-&gt;next;
+   }
+   if (l == 1) return elozo-&gt;sorsz;
+ }
+ 
+ if (roviditesek == 0) sorsz = 1;
+ else sorsz = roviditesek-&gt;sorsz + 1;
+ addrovidites(mit, sorsz);
+ return sorsz;
+}
+//Listázás:
+void listazas() {
+ printf("\nA rendszerben talalhato zenefajlok:\n\n");
+ struct szamlistaelem *seged = szamok;
+  
+ if (seged != 0) {
+ int i = 1;
+   do {
+    printf("\n%d. ", i);
+    printf("Szerzo: %s", dekod(seged-&gt;szerzo));
+    printf(" Cim: %s", seged-&gt;cim);
+    printf(" Mufaj: %s", dekod(seged-&gt;mufaj));
+    printf(" Hossz: %d", seged-&gt;hossz);
+    i++;
+    seged = seged-&gt;next;
+   } while (seged != 0);
+ }
+ else printf("Ures lista \n");
+ 
+}
+void addelem(char szerzo[], char cim[], char mufaj[], int hossz) {
+ int i;  
+ struct szamlistaelem *elem;
+ elem = malloc( sizeof(struct szamlistaelem) );
+ elem-&gt;next = szamok;
+ elem-&gt;szerzo = ujrovidites(szerzo);
+ for (i = 0; i &lt; 30; i++) elem-&gt;cim[i] = cim[i];
+ elem-&gt;mufaj = ujrovidites(mufaj);
+ elem-&gt;hossz = hossz;
+ szamok = elem;
+}
+//Beszúrás:
+void beszuras() {
+ char szerzo[30];
+ char cim[30];
+ char mufaj[30];
+ int hossz; //mp
+ printf("\nSzam beszurasa:\n");
+ printf("Add meg a szam szerzojet:");
+ 
+ scanf("%[^\n]s", szerzo);
+ getchar();
+ printf("\nAdd meg a szam cimet:\n");
+ scanf("%[^\n]s", &cim);
+ getchar();
+ printf("\nAdd meg a szam mufajat:\n");
+ scanf("%[^\n]s", &mufaj);
+ getchar();
+ printf("\nAdd meg a szam hosszat (masodpercben):\n");
+ scanf("%d", &hossz);
+ getchar();
+ 
+ addelem(szerzo, cim, mufaj, hossz);
+ 
+ printf("\nA bejegyzes beszurva!\n");
+}
+//Keresés:
+void kereses() {
+ char cim[30];
+ printf("\nAdd meg a szam cimet:\n");
+ scanf("%[^\n]s", &cim);
+ getchar();
+ 
+ printf("\nA rendszerben talalhato ilyen cimu zenefajlok:\n\n");
+ struct szamlistaelem *seged = szamok;
+ int db = 0; 
+ int l = 1;
+ int i;
+ if (seged != 0) {
+   do {
+    if (is_the_same(cim, seged-&gt;cim) == 1) {
+     printf("Szerzo: %s", dekod(seged-&gt;szerzo));
+     printf(" Cim: %s", seged-&gt;cim);
+     printf(" Mufaj: %s", dekod(seged-&gt;mufaj));
+     printf(" Hossz: %d", seged-&gt;hossz);
+     db++;
+    }
+    seged = seged-&gt;next;
+   } while (seged != 0);
+ }
+ 
+ 
+ 
+}
+//Módosítás:
+void modositas() {
+ char szerzo[30];
+ char cim[30];
+ char mufaj[30];
+ int hossz; //mp
+ int melyik;
+ listazas();
+ printf("\nAdd meg hanyadik bejegyzest szeretned modositani! ");
+ scanf("%d", &melyik);
+ getchar();
+ printf("\nMost pedig add meg az uj parametereket:\n");
+ printf("Add meg a szam szerzojet: ");
+ scanf("%[^\n]s", &szerzo);
+ getchar();
+ printf("\nAdd meg a szam cimet: ");
+ scanf("%[^\n]s", &cim);
+ getchar();
+ printf("\nAdd meg a szam mufajat: ");
+ scanf("%[^\n]s", &mufaj);
+ getchar();
+ printf("\nAdd meg a szam hosszat (masodpercben): ");
+ scanf("%d", &hossz);
+ getchar();
+ 
+ struct szamlistaelem *seged = szamok;
+  
+ int i = 1;
+   while (seged != 0 && i != melyik) {
+    seged = seged-&gt;next;
+    i++;
+   }
+   if (seged == 0) printf("Nincs ilyen sorszamu elem a listaban!\n");
+   else {
+    seged-&gt;szerzo = ujrovidites(szerzo);
+    for (i = 0; i &lt; 30; i++) seged-&gt;cim[i] = cim[i];
+    seged-&gt;mufaj = ujrovidites(mufaj);
+    seged-&gt;hossz = hossz;
+   }
+ 
+ printf("\nA bejegyzes modositva!\n");
+}
+//Törlés:
+void torles() {
+ int melyik;
+ listazas();
+ printf("\nAdd meg hanyadik bejegyzest szeretned torolni! ");
+ scanf("%d", &melyik);
+ getchar();
+ 
+ struct szamlistaelem *seged = szamok;
+ struct szamlistaelem *elozo = 0;
+  
+ int i = 1;
+   while (seged != 0 && i != melyik) {
+    elozo = seged;
+    seged = seged-&gt;next;
+    i++;
+   }
+   if (seged == 0) printf("Nincs ilyen sorszamu elem a listaban!\n");
+   else {
+    if (elozo == 0) szamok = seged-&gt;next;
+    else elozo-&gt;next = seged-&gt;next;
+    free(seged);
+   }
+ 
+ printf("\nA bejegyzes torolve!\n");
+}
+//Adatok betöltése
+void betoltes() {
+if( access("rovidites.bin", 0 ) != -1 ) {
+ FILE *roviditesfile;
+ roviditesfile = fopen("rovidites.bin", "r");
+ if (roviditesfile != NULL) {
+  struct roviditeselem seged;
+  while (fread(&seged, sizeof(seged), 1, roviditesfile)) {
+   addrovidites(seged.jelentes, seged.sorsz);
+   
+  }
+ }
+ fclose(roviditesfile);
+if( access("szamlista.bin", 0 ) != -1 ) {
+ FILE *szamlistafile;
+ szamlistafile = fopen("szamlista.bin", "rb");
+ if (szamlistafile != NULL) {
+  struct szamlistaelem seged2;
+  while (fread(&seged2, sizeof(seged2), 1, szamlistafile)) {
+   addelem(dekod(seged2.szerzo), seged2.cim, dekod(seged2.mufaj), seged2.hossz);
+  }
+ }
+ fclose(szamlistafile);
+}
+}
+}
+//Adatok kimentése
+void mentes() {
+ FILE *roviditesfile;
+ roviditesfile = fopen("rovidites.bin", "w");
+ struct roviditeselem *seged = roviditesek;
+ while (seged != 0) {
+  fwrite(seged, sizeof(*seged), 1, roviditesfile);
+  seged = seged-&gt;next;
+ }
+ fclose(roviditesfile);
+ 
+ FILE *szamlistafile;
+ szamlistafile = fopen("szamlista.bin", "w");
+ struct szamlistaelem *seged2 = szamok;
+ while (seged2 != 0) {
+  fwrite(seged2, sizeof(*seged2), 1, szamlistafile);
+  seged2 = seged2-&gt;next;
+ }
+ fclose(szamlistafile);
+}
+int main() {
+ betoltes();
+ printf("Ez a program zeneszamok adatait tartja nyilvan!\n");
+ int vege; 
+ do {
+  printf("\n\n---------------\nMenu\n\n");
+  printf("1. Listazas\n");
+  printf("2. Kereses\n");
+  printf("3. Beszuras\n");
+  printf("4. Modositas\n");
+  printf("5. Torles\n");
+  printf("6. Kilepes");
+  printf("\n\n---------------\n");
+  scanf("%d", &vege);
+  getchar();
+  switch (vege) {
+   case 1:
+    //Listazas
+    listazas();
+   break;
+   case 2:
+    //Kereses
+    kereses();
+   break;
+   case 3:
+    //Beszuras
+    beszuras();
+   break;
+   case 4:
+    //Modositas
+    modositas();
+   break;
+   case 5:
+    //Torles
+    torles();
+   break;
+   case 6:
+   break;
+   default:
+    printf("\n\nNem letezo menupont!\n");
+   break;
+  }
+ } while (vege != 6);
+ mentes();
+ return 0;
+}
+</div>
+</div><p>Az alábbi ábrákon a program látható futás közben:</p><!--fej3_kep_3--><div class="kep kozep" style="max-width:322px;"><img src="kepek/fej3_kep3_w322.jpg" alt="A képen a program látható futás közben." style="width:100%; height:auto;" title="A képen a program látható futás közben." /><span class="kepalairas">A program futás közben</span></div><div class="uresmargo"></div><!--ENDfej3_kep_3--><!--fej3_kep_4--><div class="kep kozep" style="max-width:404px;"><img src="kepek/fej3_kep4_w404.jpg" alt="A képen a program látható futás közben." style="width:100%; height:auto;" title="A képen a program látható futás közben." /><span class="kepalairas">A program futás közben</span></div><div class="uresmargo"></div><!--ENDfej3_kep_4--><!--fej3_kep_5--><div class="kep kozep" style="max-width:420px;"><img src="kepek/fej3_kep5_w420.jpg" alt="A képen a program látható futás közben." style="width:100%; height:auto;" title="A képen a program látható futás közben." /><span class="kepalairas">A program futás közben</span></div><div class="uresmargo"></div><!--ENDfej3_kep_5--><!--fej3_kep_6--><div class="kep kozep" style="max-width:588px;"><img src="kepek/fej3_kep6_w588.jpg" alt="A képen a program látható futás közben." style="width:100%; height:auto;" title="A képen a program látható futás közben." /><span class="kepalairas">A program futás közben</span></div><div class="uresmargo"></div><!--ENDfej3_kep_6--><!--fej3_kep_7--><div class="kep kozep" style="max-width:616px;"><img src="kepek/fej3_kep7_w616.jpg" alt="A képen a program látható futás közben." style="width:100%; height:auto;" title="A képen a program látható futás közben." /><span class="kepalairas">A program futás közben</span></div><div class="uresmargo"></div><!--ENDfej3_kep_7--><!--fej3_kep_8--><div class="kep kozep" style="max-width:508px;"><img src="kepek/fej3_kep8_w508.jpg" alt="A képen a program látható futás közben." style="width:100%; height:auto;" title="A képen a program látható futás közben." /><span class="kepalairas">A program futás közben</span></div><div class="uresmargo"></div><!--ENDfej3_kep_8--><p class="vissza"><a href="#fejezetek">Vissza a tartalom<span class="gyorsb">j</span>egyzékhez</a></p> 
+  </div>
+</div>
+<div class="utmutato_also">
+  <div class="utm_hivatkozasok_also"><a class="oldalteteje" accesskey="f" href="#teteje"><span class="gyorsb">F</span>el a lap tetejére</a>
+  <a class="elozotanlap" id="navialsoelozo" href="lecke3_lap8.html"><img src="navi/ikon_elozolap.gif" alt="Ugrás a tananyag előző oldalára" title="Ugrás a tananyag előző oldalára" width="36" height="36" /></a>
+  <a id='navialsokov' class="kovetktanlap" href="teszt/lecke3/teszt.html"><img src="navi/ikon_kovetklap.gif" alt="Ugrás a tananyag következő oldalára" title="Ugrás a tananyag következő oldalára" width="36" height="36"/></a>
+  </div>
+</div>
+<div class="ki_stilus"></div>
+<div class="impresszum">
+  <table class="uszt">
+    <tr>
+      <td><div class="imp_eltetatklogo"><img alt="ELTE és ELTE TáTK logó" src="css/arculat/elte_plus_tatk.png" style="width:100%;height:auto;" /></div>
+        <div class="imp_elteiklogo"><img alt="ELTE és ELTE IK logó" src="css/arculat/elte_plus_ik.png" style="width:100%;height:auto;" /></div></td>
+      <td><div class="imp_uszt"><img alt="Új Széchenyi terv" src="css/arculat/USZT_logo_cmyk.jpg" style="width:100%;height:auto;" /></div></td>
+      <td><div class="imp_eu"><img alt="A projekt az Európai Unió támogatásával, az Európai Szociális Alap társfinanszirozásával valósul meg." title="A projekt az Európai Unió támogatásával, az Európai Szociális Alap társfinanszirozásával valósul meg." src="css/arculat/ESZA.png" style="width:100%;height:auto;"/></div></td>
+    </tr>
+  </table>
+</div>
+</body>
+</html>

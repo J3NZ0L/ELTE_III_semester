@@ -1,0 +1,183 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="hu" lang="hu">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="css/scormelte_alap.css" rel="stylesheet" type="text/css" title="" />
+<link href="css/style_spec.css" rel="stylesheet" type="text/css" />
+<link href="css/scormelte_nagy.css" rel="alternate stylesheet" type="text/css" title="nagy" />
+<link href="css/scormelte_inverz.css" rel="alternate stylesheet" type="text/css" title="inverz" />
+<!--[if lte IE 6]>
+<link href="css/scormelte_ie6.css" rel="stylesheet" type="text/css" title="" />
+<![endif]-->
+<!-- syntax highlight -->
+<link rel="stylesheet" type="text/css" href="css/shCore.css" />
+<link rel="stylesheet" type="text/css" href="css/shThemeDefault.css" />
+<script type="text/javascript" src="js/shCore.js"></script>
+<script type="text/javascript" src="js/shBrushCpp.js"></script>
+<script type="text/javascript" src="js/shBrushCSharp.js"></script>
+<script type="text/javascript" src="js/shBrushDelphi.js"></script>
+<script type="text/javascript" src="js/shBrushXml.js"></script>
+<script type="text/javascript" src="js/shBrushCss.js"></script>
+<script type="text/javascript" src="js/shBrushJScript.js"></script>
+<script type="text/javascript" src="js/shBrushSql.js"></script>
+<script type="text/javascript">
+SyntaxHighlighter.all()
+</script>
+<title>
+Számítógépes alapismeretek II. / 
+A fájlrendszerbeli könyvtárak és jogosultságok} kezelése
+/Könyvtárak megnyitása, bezárása, olvasása és a könyvtárfolyamok pozicionálása</title>
+<meta name="description" content="A tananyag  fejlesztése a TÁMOP-4.1.2.A/2-10/1 pályázat keretén belül történt." />
+<meta name="keywords" content="Hardver alapismeretek, operációs rendszer, számítógépes alapismeretek, operációs rendszer fogalma, operációs rendszerek története, operációs rendszer feladata, operációs rendszer generációk, operációs rendszer típusok, folyamatok, folyamat táblázat, szál &ndash; folyamatok, rendszerhívások, operációs rendszer struktúrák, kernelmód, kernel, felhasználói mód, B/K művelet, folyamatok modellje, szinkron rendszerhívás, asszinkron rendszerhívás, állapotai, megvalósításuk, folyamatok kommunikációja, IPC (Inter Process Communication), megszakítástábla, IDT, megszakításvezérlő, PIC, megszakítás, interrupt, megszakításkérelem, IRQ, megszakításkezelési folyamat, kivétel, hibakeresés (debuggolás), töréspont, fájlrendszer, MBR, partíciós szektor, Ntldr, klaszter (cluster), szektor, FAT, NTFS, ext, TSS, csapda, ütemezés, szál, szemafor, mutex, monitor, POSIX, szignál, osztott memória, csővezeték, kritikus szakasz, Wybe Dijkstra, CPU, erőforrás, holtpont, kiéheztetés, integrált áramkör, multiprogramozás, beágyazott rendszerek, partíció, MMU, lapcsere, FIFO, socket, lapozás, swap, interaktív rendszer, kötegelt rendszer, kliens, job, jogosultság, metaadat, könyvtár, UNIX, GNU/LINUX, erőforrás-foglalási gráf, fizikai memória, virtuális memória, merevlemez, floppy, fregmentáció, defregmentáló program, MFT, API, i-node, cache memory, SSH, HyperThread, párhuzamosság" />
+<script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="js/kep.js"></script>
+<script type="text/javascript" src="js/jquery.media.js"></script>
+<script type="text/javascript" src="js/jquery.highlight-3.js"></script>
+<script type="text/javascript" src="js/kereses.js"></script>
+<script type="text/javascript" src="js/stylesheetToggle.js"></script>
+<script type="text/javascript" src="js/cookie.js"></script>
+<script type="text/javascript" src="js/stilusvalto.js"></script>
+<script type="text/javascript" src="js/fogalmak.js"></script>
+<script type="text/javascript" src="js/fogalom.js"></script>
+<script type="text/javascript" src="js/jwplayer.js"></script>
+<script type="text/javascript">
+$(document).ready(function() 
+{
+$("a.hang").media( {width: 250, height: 50,  autoplay: false} );
+});
+</script>
+<script type="text/javascript" src="js/navigacio.js"></script>
+</head>
+<body>
+<div><a name="teteje"  id="teteje"></a></div>
+<div class="jawsfmenu">
+  <ul>
+    <li><a class="tartalom" href="#tartalom" accesskey="t" tabindex="2">Ugrás a <span class="gyorsb">t</span>artalomra</a></li>
+    <li><a class="tartalomj" href="#fejezetek" accesskey="j" tabindex="5">Ugrás a tartalom<span class="gyorsb">j</span>egyzékre</a></li>
+    <li><a class="tanutm" href="#tanutm" accesskey="u" tabindex="7">Ugrás a tan<span class="gyorsb">u</span>lási útmutatóra</a></li>
+  </ul>
+</div>
+<div class="ki_kereses"></div>
+<div class="oldal">
+  <div class="utmutato">
+    <div class="utm_hivatkozasok"><span class="elozolap"><img src="navi/ikon_vissza_dis.gif" alt="Vissza az előzőleg látogatott oldalra (nem elérhető funkció)" title="Vissza az előzőleg látogatott oldalra (nem elérhető funkció)" /></span><a class="kezdolap" href="index.html" accesskey="p" tabindex="21"><img src="navi/ikon_kezdolap.gif" alt="Vissza a modul kezdőlapjára" title="Vissza a modul kezdőlapjára" width="36" height="36"/></a><a class="elozotanlap" href="lecke4_lap4.html" accesskey="e" tabindex="22"><img src="navi/ikon_elozolap.gif" alt="Ugrás a tananyag előző oldalára" title="Ugrás a tananyag előző oldalára" width="36" height="36" /></a><a class="kovetktanlap" href="lecke4_lap6.html" accesskey="v" tabindex="23"><img src="navi/ikon_kovetklap.gif" alt="Ugrás a tananyag következő oldalára" title="Ugrás a tananyag következő oldalára" width="36" height="36"/></a><span class="ki_fogalomkapcs"><img src="navi/ikon_fogalmakbe_dis.gif" alt="Fogalom megjelenítés (nem elérhető funckió)" title="Fogalom megjelenítés (nem elérhető funckió)" /></span><span class="ki_fogalomlista"><img src="navi/ikon_fogalmaklista_dis.gif" alt="Fogalmak listája (nem elérhető funkció)" title="Fogalmak listája (nem elérhető funkció)" /></span><span class="ki_nyomtatas"><img src="navi/ikon_nyomtatas_dis.gif" alt="Oldal nyomtatása (nem elérhető funkció)" title="Oldal nyomtatása (nem elérhető funkció)" /></span><a class="oldalterkep" href="oldalterkep.html" accesskey="d" tabindex="31"><img src="navi/ikon_oldalterkep.gif" alt="Oldaltérkép megtekintése" title="Oldaltérkép megtekintése"  width="36" height="36" /></a><a class="sugo" href="sugo.html" accesskey="s" tabindex="33"><img src="navi/ikon_sugo.gif" alt="Súgó megtekintése" title="Súgó megtekintése"  width="36" height="36" /></a></div>
+  </div>
+  <div class="tartalommenu">
+    <div class="tartalommenu_fejlec"><span id="lapteteje"><a  href="#teteje"><span class="gyorsb">F</span>el a lap tetejére</a></span><a name="fejezetek"   id="fejezetek">Tartalomjegyzék</a></div>
+    <ul><li><a href="#hiv1">A fájlrendszerbeli könyvtárak és jogosultságok kezelése</a><ul><li><a href="#hiv2">A könyvtárkezelő függvények leírása (minireferencia)</a><ul><li><a href="#hiv3">Könyvtárak megnyitása, bezárása, olvasása és a könyvtárfolyamok pozicionálása</a><ul><li><a href="#hiv4">Könyvtár megnyitása, az opendir függvény</a></li><li><a href="#hiv5">Könyvtár bezárása, a closedir függvény</a></li><li><a href="#hiv6">Könyvtár olvasása, a readdir függvény</a></li></ul></li></ul></li></ul></li></ul> 
+  </div>
+  <div class="tartalom"> <a name="tartalom"    id="tartalom"></a> 
+    <h1><a name="hiv1" id="hiv1"></a>A fájlrendszerbeli könyvtárak és jogosultságok kezelése</h1><h2><a name="hiv2" id="hiv2"></a>A könyvtárkezelő függvények leírása (minireferencia)</h2><h3><a name="hiv3" id="hiv3"></a>Könyvtárak megnyitása, bezárása, olvasása és a könyvtárfolyamok pozicionálása</h3><h4><a name="hiv4" id="hiv4"></a>Könyvtár megnyitása, az opendir függvény</h4><div class="forraskod"><div class="bekezdes1cm">
+
+#include &lt;sys/types.h&gt;
+#include &lt;dirent.h&gt;
+DIR * opendir(const char * konyvtarnev);
+</div>
+</div><p>Az opendir függvény megnyitja a könyvtárfolyamot (directory stream), és visszatérési értékként egy előre definiált (DIR*) típusú mutatót ad vissza a könyvtárbejegyzésekre. A DIR típus a könyvtárfolyamot ábrázoló adattípus. Hibás végrehajtási művelet esetén a függvény visszatérési értéke a NULL mutató lesz. A függvény beállítja az errno hibaértéket is. </p><p><em>Az opendir függvény egy könyvtárfolyamot nyit meg, ám egy könyvtárfolyam megnyitásakor különböző hibák merülhetnek fel. Az opendir függvény beállítja a globális errno hibaértéket, ami a szokásos értékeken kívül például a következő értékekkel bővül ki:</em></p><table class="lecke">
+<tr><th><p><strong>Érték</strong></p></th><th><p>Leírás</p></th></tr><tr><td><p><strong>EACCES</strong></p></td><td><p>A szülőkönyvtárban nincs olvasási joga a folyamatnak a megadott <span class="fogalom" title="könyvtár">könyvtárra</span>. </p></td></tr><tr><td><p><strong>ENFILE</strong></p></td><td><p>A művelet nem végrehajtható a túl sok megnyitott fájl miatt.</p></td></tr><tr><td><p><strong>ENOENT</strong></p></td><td><p>A megadott elérési útvonal nem létezik, vagy az elérési útvonal egy üres karakterlánc.</p></td></tr><tr><td><p><strong>ENOTDIR</strong></p></td><td><p>A megadott könyvtárnév nem egy <span class="fogalom" title="könyvtár">könyvtár</span> elérési útvonalát írja le.</p></td></tr></table><p>További hibaértékek a referencia-kézikönyvben (manual) találhatók.</p><p><em>Példa az opendir függvény használatára:</em></p><div class="forraskod"><div class="bekezdes1cm">
+
+DIR * d;
+if (d=opendir("konyvtarnev")) {
+     perror("Hiba a konyvtarnyitasnal");
+     exit(1);
+};
+
+// Első körben deklarálunk egy &#132;DIR*&#148; típusú &#132;d&#148; nevű változót, ami 
+// a könyvtárfolyamot (directory stream) ábrázolja.
+// Az elágazás logikai feltétele az opendir függvény lesz, 
+// amivel megnyitunk egy könyvtárfolyamot (directory stream)
+// a paraméterként átadott "konyvtarnev&#148; nevű könyvtárból,
+// és az opendir függvényünk visszatérési értékként az előre 
+// definiált (DIR*) típusú mutatót ad vissza a könyvtárbejegyzésekre.
+// Ezzel definiáljuk a &#132;d&#148; nevű változónkat.
+// Ha nem sikerül az opendir függvénynek megnyitnia a könyvtárfolyamot,
+// akkor az opendir függvény visszatérési értéke a NULL mutató lesz.
+// Ezért írunk az opendir függvény &#132;köré&#148; egy elágazást, mert a
+// könyvtárfolyam létrehozása során egyéb más hibák is előfordulhatnak, 
+// ami miatt az opendir függvény még visszatérhet a NULL mutatóval.
+// Ha az opendir függvényünk a NULL mutatóval tér vissza, akkor meg kell
+// szakítanunk a példaprogramunkat. Erre szolgál ez az elágazás.
+// A perror függvénnyel tudjuk a &#132;Hiba a konyvtarnyitasnal&#148; hibaüzenetet 
+// kiírni a standard hibakimenetre (stderr), természetesen ezt 
+// csak hiba esetén.
+</div>
+</div><h4><a name="hiv5" id="hiv5"></a>Könyvtár bezárása, a closedir függvény</h4><div class="forraskod"><div class="bekezdes1cm">
+
+#include &lt;sys/types.h&gt;
+#include &lt;dirent.h&gt;
+int closedir(DIR * konyvtarleiro);
+</div>
+</div><p>A closedir függvény lezárja a paraméterében megadott könyvtárfolyamot (directory stream). Sikeres végrehajtás esetében a függvény visszaadott értéke nulla, valamilyen hiba bekövetkezése esetén pedig -1.  A függvény beállítja az errno hibaértéket is. </p><p><em>A closedir függvény egy könyvtárfolyamot zár be, ám egy könyvtárfolyam bezárásakor különböző hibák merülhetnek fel. A closedir függvény beállítja a globális errno hibaértéket, ami a szokásos értékeken kívül például a következő értékekkel bővül ki:</em></p><table class="lecke">
+<tr><th><p><strong>Konstans</strong></p></th><th><p>Leírás</p></th></tr><tr><td><p><strong>EBADF</strong></p></td><td><p>A paraméterként átadott könyvtárfolyam nem egy nyitott könyvtárfolyam.</p></td></tr><tr><td><p><strong>EINTR</strong></p></td><td><p>A műveletet egy <span class="fogalom" title="szignál">szignál</span> megszakította.</p></td></tr></table><p>További hibaértékek referencia-kézikönyvben (manual) találhatóak.</p><p><em>Példa a closedir függvény használatára:</em></p><div class="forraskod"><div class="bekezdes1cm">
+DIR * d;
+d = opendir(&#148;konyvtarnev&#148;);
+closedir(d);
+
+// Első körben deklarálunk egy &#132;DIR*&#148; típusú &#132;d&#148; nevű változót, ami 
+// a könyvtárfolyamot (directory stream) ábrázolja.
+// Az opendir függvénnyel megnyitunk egy könyvtárfolyamot (directory 
+// stream) a paraméterként átadott &#132;konyvtarnev&#148; nevű könyvtárból,
+// és az opendir függvényünk visszatérési értékként az előre 
+// definiált (DIR*) típusú mutatót adja vissza a könyvtárbejegyzésekre.
+// Ezzel definiáljuk a &#132;d&#148; nevű változónkat.
+// A closedir függvény lezárja a paraméterében megadott &#132;d&#148; névvel
+// megadott könyvtárfolyamot (directory stream).
+</div>
+</div><h4><a name="hiv6" id="hiv6"></a>Könyvtár olvasása, a readdir függvény</h4><div class="forraskod"><div class="bekezdes1cm">
+#include &lt;sys/types.h&gt;
+#include &lt;dirent.h&gt;
+struct dirent * readdir(DIR * konyvtarleiro);
+</div>
+</div><p>A readdir függvény egy már megnyitott könyvtárfolyamból (directory stream) olvassa ki a könyvtárbejegyzéseket. A függvény paramétereként a könyvtárfolyamot adjuk meg. A visszaadott könyvtárbejegyzés típusa dirent. Hibás végrehajtási művelet esetén a függvény visszatérési értéke a NULL mutató lesz. A függvény beállítja az errno hibaértéket is. </p><p><em>A readdir függvény egy már megnyitott könyvtárfolyamból (directory stream) olvassa ki a könyvtárbejegyzéseket, ám egy könyvtárbejegyzés kiolvasásakor különböző hibák merülhetnek fel. A readdir függvény beállítja a globális errno hibaértéket, ami a szokásos értékeken kívül például a következő értékekkel bővül ki:</em></p><table class="lecke">
+<tr><th><p><strong>Konstans</strong></p></th><th><p>Leírás</p></th></tr><tr><td><p><strong>EOVERFLOW</strong></p></td><td><p>A visszaadott struktúrában egy elemet nem lehet reprezentálni. </p></td></tr><tr><td><p><strong>EBADF</strong></p></td><td><p>A paraméterként megadott könyvtárfolyam egy nem megnyitott könyvtárfolyam.</p></td></tr><tr><td><p><strong>ENOENT</strong></p></td><td><p>A paraméterként megadott könyvtárfolyam nem létezik.</p></td></tr></table><p>További hibaértékek a referencia-kézikönyvben (manual) találhatók.</p><p><em> A dirent típusú struktúra felépítése a következő:</em></p><div class="forraskod"><div class="bekezdes1cm">
+
+struct dirent { 
+ino_t     d_ino;     // Az állomány azonosító száma. 
+char      d_name[]; // A bejegyzés neve. 
+}
+</div>
+</div><p>A dirent típusú struktúra ino_t típusa a sys/types.h header fájlban található meg.</p><p>Példa a readdir függvény használatára:</p><div class="forraskod"><div class="bekezdes1cm">
+
+DIR * d; 
+struct dirent * de; 
+d = opendir(&#148;konyvtar&#148;); 
+de = readdir(d); 
+printf("%s", de-&gt;d_name); 
+
+// Első körben deklarálunk egy &#132;DIR*&#148; típusú &#132;d&#148; nevű változót, ami 
+// a könyvtárfolyamot (directory stream) ábrázolja, illetve deklarálunk
+// egy &#132;dirent*&#148; típusú &#132;de&#148; nevű változót.
+// Az opendir függvénnyel megnyitunk egy könyvtárfolyamot (directory 
+// stream) a paraméterként átadott &#132;konyvtarnev&#148; nevű könyvtárból,
+// és az opendir függvényünk visszatérési értékként az előre 
+// definiált (DIR*) típusú mutatót adja vissza a könyvtárbejegyzésekre.
+// Ezzel definiáljuk a &#132;d&#148; nevű változónkat.
+// A readdir függvény egy már megnyitott &#132;d&#148; könyvtárfolyamból 
+// (directory stream) olvassa ki az első könyvtárbejegyzést és a readdir
+// függvényünk visszatérési értékként az előre definiált (dirent*) 
+// típusú mutatót adja vissza a könyvtárbejegyzésre.
+// Ezzel definiáljuk a &#132;de&#148; nevű változónkat.
+// A printf függvény segítségével kiírjuk az első bejegyzés nevét.
+</div>
+</div><p class="vissza"><a href="#fejezetek">Vissza a tartalom<span class="gyorsb">j</span>egyzékhez</a></p> 
+  </div>
+</div>
+<div class="utmutato_also">
+  <div class="utm_hivatkozasok_also"><a class="oldalteteje" accesskey="f" href="#teteje"><span class="gyorsb">F</span>el a lap tetejére</a>
+  <a class="elozotanlap" id="navialsoelozo" href="lecke4_lap4.html"><img src="navi/ikon_elozolap.gif" alt="Ugrás a tananyag előző oldalára" title="Ugrás a tananyag előző oldalára" width="36" height="36" /></a>
+  <a id='navialsokov' class="kovetktanlap" href="lecke4_lap6.html" ><img src="navi/ikon_kovetklap.gif" alt="Ugrás a tananyag következő oldalára" title="Ugrás a tananyag következő oldalára" width="36" height="36"/></a>
+  </div>
+</div>
+<div class="ki_stilus"></div>
+<div class="impresszum">
+  <table class="uszt">
+    <tr>
+      <td><div class="imp_eltetatklogo"><img alt="ELTE és ELTE TáTK logó" src="css/arculat/elte_plus_tatk.png" style="width:100%;height:auto;" /></div>
+        <div class="imp_elteiklogo"><img alt="ELTE és ELTE IK logó" src="css/arculat/elte_plus_ik.png" style="width:100%;height:auto;" /></div></td>
+      <td><div class="imp_uszt"><img alt="Új Széchenyi terv" src="css/arculat/USZT_logo_cmyk.jpg" style="width:100%;height:auto;" /></div></td>
+      <td><div class="imp_eu"><img alt="A projekt az Európai Unió támogatásával, az Európai Szociális Alap társfinanszirozásával valósul meg." title="A projekt az Európai Unió támogatásával, az Európai Szociális Alap társfinanszirozásával valósul meg." src="css/arculat/ESZA.png" style="width:100%;height:auto;"/></div></td>
+    </tr>
+  </table>
+</div>
+</body>
+</html>

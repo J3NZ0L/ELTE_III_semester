@@ -1,0 +1,119 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="hu" lang="hu">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="css/scormelte_alap.css" rel="stylesheet" type="text/css" title="" />
+<link href="css/style_spec.css" rel="stylesheet" type="text/css" />
+<link href="css/scormelte_nagy.css" rel="alternate stylesheet" type="text/css" title="nagy" />
+<link href="css/scormelte_inverz.css" rel="alternate stylesheet" type="text/css" title="inverz" />
+<!--[if lte IE 6]>
+<link href="css/scormelte_ie6.css" rel="stylesheet" type="text/css" title="" />
+<![endif]-->
+
+<title>
+Számítógépes alapismeretek II.</title>
+<meta name="description" content="A tananyag  fejlesztése a TÁMOP-4.1.2.A/2-10/1 pályázat keretén belül történt." />
+<meta name="keywords" content="Hardver alapismeretek, operációs rendszer, számítógépes alapismeretek, operációs rendszer fogalma, operációs rendszerek története, operációs rendszer feladata, operációs rendszer generációk, operációs rendszer típusok, folyamatok, folyamat táblázat, szál &ndash; folyamatok, rendszerhívások, operációs rendszer struktúrák, kernelmód, kernel, felhasználói mód, B/K művelet, folyamatok modellje, szinkron rendszerhívás, asszinkron rendszerhívás, állapotai, megvalósításuk, folyamatok kommunikációja, IPC (Inter Process Communication), megszakítástábla, IDT, megszakításvezérlő, PIC, megszakítás, interrupt, megszakításkérelem, IRQ, megszakításkezelési folyamat, kivétel, hibakeresés (debuggolás), töréspont, fájlrendszer, MBR, partíciós szektor, Ntldr, klaszter (cluster), szektor, FAT, NTFS, ext, TSS, csapda, ütemezés, szál, szemafor, mutex, monitor, POSIX, szignál, osztott memória, csővezeték, kritikus szakasz, Wybe Dijkstra, CPU, erőforrás, holtpont, kiéheztetés, integrált áramkör, multiprogramozás, beágyazott rendszerek, partíció, MMU, lapcsere, FIFO, socket, lapozás, swap, interaktív rendszer, kötegelt rendszer, kliens, job, jogosultság, metaadat, könyvtár, UNIX, GNU/LINUX, erőforrás-foglalási gráf, fizikai memória, virtuális memória, merevlemez, floppy, fregmentáció, defregmentáló program, MFT, API, i-node, cache memory, SSH, HyperThread, párhuzamosság" />
+<script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="js/kep.js"></script>
+<script type="text/javascript" src="js/jquery.media.js"></script>
+<script type="text/javascript" src="js/jquery.highlight-3.js"></script>
+<script type="text/javascript" src="js/kereses.js"></script>
+<script type="text/javascript" src="js/stylesheetToggle.js"></script>
+<script type="text/javascript" src="js/cookie.js"></script>
+<script type="text/javascript" src="js/stilusvalto.js"></script>
+<script type="text/javascript" src="js/fogalmak.js"></script>
+<script type="text/javascript" src="js/fogalom.js"></script><script type="text/javascript">
+$(document).ready(function() 
+{
+$("a.media").media();
+});
+</script>
+<script type="text/javascript" src="js/navigacio.js"></script>
+
+</head>
+<body>
+<div><a name="teteje"  id="teteje"></a></div>
+<div class="jawsfmenu">
+  <ul>
+    <li><a class="tartalom" href="#tartalom" accesskey="t" tabindex="2">Ugrás a <span class="gyorsb">t</span>artalomra</a></li>
+    <li><a class="tartalomj" href="#fejezetek" accesskey="j" tabindex="5">Ugrás a tartalom<span class="gyorsb">j</span>egyzékre</a></li>
+  </ul>
+</div>
+<div class="ki_kereses"></div>
+<div class="oldal">
+  <div class="utmutato">
+    <div class="utm_hivatkozasok"><a class="ujablak" href="index.html" target="_blank" title="Amennyiben képernyőolvasó programot használ, célszerű a tananyagot külön ablakban megnyitnia." tabindex="17"><img src="navi/ikon_ujablak.gif" alt="Tananyag megnyitása új ablakban" title="Tananyag megnyitása új ablakban"  width="36" height="36" /></a><span class="elozolap"><img src="navi/ikon_vissza_dis.gif" alt="Vissza az előzőleg látogatott oldalra (nem elérhető funkció)" title="Vissza az előzőleg látogatott oldalra (nem elérhető funkció)" /></span><a class="kezdolap" href="index.html" accesskey="p" tabindex="21"><img src="navi/ikon_kezdolap.gif" alt="Vissza a modul kezdőlapjára" title="Vissza a modul kezdőlapjára" width="36" height="36"/></a><span class="elozotanlap"><img src="navi/ikon_elozolap_dis.gif" alt="Ugrás a tananyag előző oldalára (nem elérhető funkció)" title="Ugrás a tananyag előző oldalára (nem elérhető funkció)" width="36" height="36" /></span><a class="kovetktanlap" href="lecke1_lap1.html" accesskey="v" tabindex="23"><img src="navi/ikon_kovetklap.gif" alt="Ugrás a tananyag következő oldalára" title="Ugrás a tananyag következő oldalára" width="36" height="36"/></a><span class="ki_fogalomkapcs"><img src="navi/ikon_fogalmakbe_dis.gif" alt="Fogalom megjelenítés (nem elérhető funckió)" title="Fogalom megjelenítés (nem elérhető funckió)" /></span><span class="ki_fogalomlista"><img src="navi/ikon_fogalmaklista_dis.gif" alt="Fogalmak listája (nem elérhető funkció)" title="Fogalmak listája (nem elérhető funkció)" /></span><span class="ki_nyomtatas"><img src="navi/ikon_nyomtatas_dis.gif" alt="Oldal nyomtatása (nem elérhető funkció)" title="Oldal nyomtatása (nem elérhető funkció)" /></span><a class="oldalterkep" href="oldalterkep.html" accesskey="d" tabindex="31"><img src="navi/ikon_oldalterkep.gif" alt="Oldaltérkép megtekintése" title="Oldaltérkép megtekintése"  width="36" height="36" /></a><a class="sugo" href="sugo.html" accesskey="s" tabindex="33"><img src="navi/ikon_sugo.gif" alt="Súgó megtekintése" title="Súgó megtekintése"  width="36" height="36" /></a></div>
+  </div>
+  <div class="tartalommenu">
+    <div class="tartalommenu_fejlec"><span id="lapteteje"><a  href="#teteje"><span class="gyorsb">F</span>el a lap tetejére</a></span><a name="fejezetek"    id="fejezetek">Tartalomjegyzék</a></div>
+    <ul id="mozToc">
+      <li><a href="#modulcim">
+Számítógépes alapismeretek II.</a>
+        <ul>
+          <li><a href="#modulszerzok">Szerzők</a></li>
+          <li><a href="#modulcel">A modul célja és tartalma</a></li>
+          <li><a href="#modullecke">A modul leckéi, a megértéshez szükséges előismeretek, tárgyi feltételek</a></li>
+          <li><a href="#modulelvarasok">Elvárások a tanuló felé</a></li>
+          <li><a href="#modulirodalom">A modul irodalomjegyzéke</a></li>
+          <li><a href="#modulkulcs">Kulcsszavak</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <div class="tartalom"> <a name="tartalom"  id="tartalom" ></a> <a name="modulcim"  id="modulcim"></a>
+    <div class="imp_eltetatklogo"><img alt="ELTE és ELTE TáTK logó" src="css/arculat/elte_plus_tatk.png" style="width:100%;height:auto;" /></div>
+    <div class="imp_elteiklogo"><img alt="ELTE és ELTE IK logó" src="css/arculat/elte_plus_ik.png" style="width:100%;height:auto;" /></div>
+    <h1 class="tananyagcim">
+Számítógépes alapismeretek II.</h1>
+    <h2><a name="modulszerzok"  id="modulszerzok"></a>Szerzők</h2>
+    <p>
+
+Heizlerné Bakonyi Viktória, Horváth László, Illés Zoltán, Nagy Tibor, Lutár Patrícia</p>
+    <p class="vissza"><a href="#fejezetek">Vissza a tartalom<span class="gyorsb">j</span>egyzékhez</a></p>
+    <h2><a name="modulcel"  id="modulcel"></a>A modul célja és tartalma</h2>
+    <p>A &#132;Számítógépes Alapismeretek I.&#148; modul folytatásaként elméleti és gyakorlati oldalról mutatja meg az operációs rendszer közeli tevékenységeket, a rendszerhívások jelentését, a rendszerfeladatokat, illetve a folyamatok kezelését. </p><p>A főbb tartalmi egységek a modulon belül:</p><ul><li>A számítógépek operációs rendszerei:<ul><li>Az operációs rendszer fogalma, típusai, legfontosabb jellemzői és feladatai</li><li>Az operációs rendszerek története és generációi</li></ul></li><li>Rendszerhívások és fájlrendszerek fogalma, elemei, szerepe:<ul><li>Fontosabb rendszerhívás kategóriák stb.</li></ul></li></ul>
+    <p class="vissza"><a href="#fejezetek">Vissza a tartalom<span class="gyorsb">j</span>egyzékhez</a></p>
+    <h2><a name="modullecke"  id="modullecke"></a>A modul leckéi, a megértéshez szükséges előismeretek, tárgyi feltételek</h2>
+    <h3>Leckék</h3>
+    <ol class="leckek"><li><a href="lecke1_lap1.html">Az operációs rendszer szerepe, fogalma és feladatai. Az operációs rendszerek generációi  </a></li><li><a href="lecke2_lap1.html">A rendszerhívások és a fájlrendszerek fogalma, szerepe, ezek jellemzői  </a></li><li><a href="lecke3_lap1.html">Fájlrendszer-kezelés függvényei, alapvető feladatai  </a></li><li><a href="lecke4_lap1.html">A fájlrendszerbeli könyvtárak és jogosultságok kezelése  </a></li><li><a href="lecke5_lap1.html">Folyamatok, folyamatleírók, táblázatok és szálak fogalma. A folyamatok és a szálak közötti különbségek, a folyamatok ütemezése  </a></li><li><a href="lecke6_lap1.html">A párhuzamosság alapjai: folyamatok kommunikációja, versenyhelyzetek, kritikus szekciók, szemaforok, monitorok és szignálok  </a></li><li><a href="lecke7_lap1.html">Szignálok, a szülő-gyerek viszony gyakorlati szempontból  </a></li><li><a href="lecke8_lap1.html">A párhuzamosság kezelése, szemaforok a gyakorlatban, alapvető megoldások  </a></li><li><a href="lecke9_lap1.html">Erőforrások kezelése, input- és outputütemezések, a holtpont fogalma és kezelése, illetve az alapvető holtpontkezelő algoritmusok </a></li><li><a href="lecke10_lap1.html">Memóriakezelés, alapvető módszerek, virtuális memória, szegmentálás és megvalósításuk a mai processzorokban  </a></li><li><a href="lecke11_lap1.html">Osztott memória, üzenetküldés, rendszerhívások és alkalmazásaik. A folyamatok közötti kommunikáció  </a></li><li><a href="lecke12_lap1.html">Esettanulmány az operációs rendszerbeli funkciók (OS funkciók) megvalósításához  </a></li></ol> 
+    <h3>Előismeretek</h3>
+    <p>A modul megértéséhez alapvető számítógép-alkalmazói ismeretek, illetve a Számítógépes alapismeretek I. modul ismerete szükséges.</p>
+    <h3>Tárgyi feltételek</h3>
+    <p>A modul elsajátításához a hallgatónak rendelkeznie kell egy hálózati kapcsolattal ellátott számítógéppel, amelyre a tananyagban megnevezett alkalmazások telepítve vannak. Ehhez terminál emulátorra, fájltranszfer-szolgáltatásra vagy a számítógépen elérhető Linux operációs rendszerre van szükség.</p>
+    <p class="vissza"><a href="#fejezetek">Vissza a tartalom<span class="gyorsb">j</span>egyzékhez</a></p>
+    <h2><a name="modulelvarasok"  id="modulelvarasok"></a>Elvárások a tanuló felé (minimum&ndash; és optimumszint)</h2>
+    <h3>Minimumszint</h3>
+    <p>A tanuló ismerje a &#132;Számítógépes Alapismeretek I.&#148; tananyaggal kapcsolatos ismeretanyagot, legyen képes az egyes felhasználói felületeken az alapvető számítógépes programok használatára, illetve ismerje az alapvető szkiptírási lehetőségeket mind a <span class="fogalom" title="UNIX">UNIX</span> és a <span class="fogalom" title="UNIX">UNIX</span> -szerű operációs rendszerek (ilyen például a <span class="fogalom" title="GNU/LINUX">GNU/LINUX</span>), mind a Microsoft Windows környezetben.</p>
+    <h3>Optimumszint</h3>
+    <p>A tanuló ismerje és biztonsággal használja az alapvető operációs rendszerbeli parancsokat, mind a grafikus mind a szöveges konzolon keresztül. Legyen képes alapvető felhasználói programok kezelésére, az egyes adminisztrációs feladatok esetén tudja kiválasztani és megvalósítani a feladat teljesítéséhez szükséges alapvető szkriptnyelven írt megoldást mind a <span class="fogalom" title="UNIX">UNIX</span> és a <span class="fogalom" title="UNIX">UNIX</span> -szerű operációs rendszerek (ilyen például a <span class="fogalom" title="GNU/LINUX">GNU/LINUX</span>), mind a Microsoft Windows környezetben.</p>
+    <p class="vissza"><a href="#fejezetek">Vissza a tartalom<span class="gyorsb">j</span>egyzékhez</a></p>
+    <h2><a name="modulirodalom"  id="modulirodalom"></a>A modul irodalomjegyzéke, források</h2>
+    <h3>Kötelező irodalom</h3>
+    <ul><li>A. S. Tanenbaum, A. S. Woodhull: <em>Operációs</em> <em>rendszerek</em> (Panem &ndash; Prentice Hall, 1999) </li><li>B. W. Kernighan, R. Pike: <em>A UNIX operációs rendszer</em> (Műszaki Könyvkiadó, 1994) </li><li>Pere L.: UNIX &ndash; GNU/Linux Programozás C nyelven (Kiskapu Kiadó, 2003) </li></ul><p class="vissza"><a href="#fejezetek">Vissza a tartalom<span class="gyorsb">j</span>egyzékhez</a></p>
+    <h3>Ajánlott irodalom</h3>
+    <ul><li>Dr. Galambos G.: <em>Operációs rendszerek</em> (Műszaki Könyvkiadó, 2003) </li><li>Horváth G.: Bepillantás az operációs rendszerek világába (LSI oktatóközpont, 2000) </li><li>Kóczy A., Kondorosi K.: Operációs rendszerek mérnöki megközelítésben (Panem, 2000) </li><li>Knapp G.: <em>Operációs rendszerek</em> (LSI oktatóközpont, 1999) </li><li>Bakos T., Zsadányi P.: <em>Operációs Rendszerek</em> (LSI oktatóközpont, 1989) </li><li>Abraham S., Peter B., Galvin, Greg Gagne: <em>Operating System Concepts</em> (Wiley Text Books, 2002) </li><li>Andrew S. Tanenbaum: <em>Modern Operating Systems</em> (Second Edition. Prentice Hall, 2001) </li><li>Daniel P. Bovet, Marco Cesati: <em>Understanding the Linux-kernel</em> (Second Edition. O&rsquo;Reilly, 2002) </li><li>David A. Solmon, Mark E. Russinovich: <em>Inside Microsoft Windows 2000</em> (Microsoft Press, 2000) </li><li>David D. Miller: <em>OpenVMS Operating System Concepts</em> (Second Edition. Digital Press, 1997) </li><li>Frank G. Soltis: <em>Inside the AS/400</em> (Duke Press, 1996) </li><li>John M.: <em>Inside</em> <em>Microsoft Windows CE</em> (Microsoft Press, 1998)</li></ul>
+    <p class="vissza"><a href="#fejezetek">Vissza a tartalom<span class="gyorsb">j</span>egyzékhez</a></p>
+    <h2><a name="modulkulcs"  id="modulkulcs"></a>Kulcsszavak</h2>
+    <p>Hardver alapismeretek, operációs rendszer, számítógépes alapismeretek, operációs rendszer fogalma, operációs rendszerek története, operációs rendszer feladata, operációs rendszer generációk, operációs rendszer típusok, folyamatok, folyamat táblázat, szál &ndash; folyamatok, rendszerhívások, operációs rendszer struktúrák, kernelmód, kernel, felhasználói mód, B/K művelet, folyamatok modellje, szinkron rendszerhívás, asszinkron rendszerhívás, állapotai, megvalósításuk, folyamatok kommunikációja, IPC (Inter Process Communication), megszakítástábla, IDT, megszakításvezérlő, PIC, megszakítás, interrupt, megszakításkérelem, IRQ, megszakításkezelési folyamat, kivétel, hibakeresés (debuggolás), töréspont, fájlrendszer, MBR, partíciós szektor, Ntldr, klaszter (cluster), szektor, FAT, NTFS, ext, TSS, csapda, ütemezés, szál, szemafor, mutex, monitor, POSIX, szignál, osztott memória, csővezeték, kritikus szakasz, Wybe Dijkstra, CPU, erőforrás, holtpont, kiéheztetés, integrált áramkör, multiprogramozás, beágyazott rendszerek, partíció, MMU, lapcsere, FIFO, socket, lapozás, swap, interaktív rendszer, kötegelt rendszer, kliens, job, jogosultság, metaadat, könyvtár, UNIX, GNU/LINUX, erőforrás-foglalási gráf, fizikai memória, virtuális memória, merevlemez, floppy, fregmentáció, defregmentáló program, MFT, API, i-node, cache memory, SSH, HyperThread, párhuzamosság</p>
+    <p class="vissza"><a href="#fejezetek">Vissza a tartalom<span class="gyorsb">j</span>egyzékhez</a></p>
+  </div>
+</div>
+<div class="utmutato_also">
+  <div class="utm_hivatkozasok_also"><a class="oldalteteje" accesskey="f" href="#teteje"><span class="gyorsb">F</span>el a lap tetejére</a>
+  <a id="navialsokov" class="kovetktanlap" href="lecke1_lap1.html" ><img src="navi/ikon_kovetklap.gif" alt="Ugrás a tananyag következő oldalára" title="Ugrás a tananyag következő oldalára" width="36" height="36"/></a>
+  </div>
+</div>
+<div class="ki_stilus"></div>
+<div class="impresszum">
+  <table class="uszt">
+    <tr>
+      <td><div class="imp_eltetatklogo"><img alt="ELTE és ELTE TáTK logó" src="css/arculat/elte_plus_tatk.png" style="width:100%;height:auto;" /></div>
+        <div class="imp_elteiklogo"><img alt="ELTE és ELTE IK logó" src="css/arculat/elte_plus_ik.png" style="width:100%;height:auto;" /></div></td>
+      <td><div class="imp_uszt"><img alt="Új Széchenyi terv" src="css/arculat/USZT_logo_cmyk.jpg" style="width:100%;height:auto;" /></div></td>
+      <td><div class="imp_eu"><img alt="A projekt az Európai Unió támogatásával, az Európai Szociális Alap társfinanszirozásával valósul meg." title="A projekt az Európai Unió támogatásával, az Európai Szociális Alap társfinanszirozásával valósul meg." src="css/arculat/ESZA.png" style="width:100%;height:auto;"/></div></td>
+    </tr>
+  </table>
+</div>
+</body>
+</html>

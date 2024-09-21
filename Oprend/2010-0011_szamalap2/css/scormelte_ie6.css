@@ -1,0 +1,69 @@
+/*v20110525*/
+/* stilusok<=ie6 */
+
+
+span.fogalomdoboz {
+color:inherit;
+clear:none;
+float:none;  
+display:inline;
+border:0;
+background-color:transparent;
+padding:0px;
+font-weight:normal;
+margin:0;
+width:auto;
+font-size:100%;
+}
+
+span.fogalomdoboz img {display:none;}
+
+
+div.sz100 {
+	max-width:100px;
+ width:expression(document.body.clientWidth >100? "100px":"auto");
+}
+div.sz150 {
+	max-width:150px;
+ width:expression(document.body.clientWidth >150? "150px":"auto");
+}
+div.sz200 {
+	max-width:200px;
+ width:expression(document.body.clientWidth >200? "200px":"auto");
+}
+div.sz250 {
+	max-width:250px;
+ width:expression(document.body.clientWidth >250? "250px":"auto");
+}
+div.sz300 {
+	max-width:300px;
+ width:expression(document.body.clientWidth >300? "300px":"auto");
+}
+div.sz350 {
+	max-width:350px;
+ width:expression(document.body.clientWidth >350? "350px":"auto");
+}
+div.sz400 {
+	max-width:400px;
+ width:expression(document.body.clientWidth >400? "400px":"auto");
+}
+div.sz50 {
+	max-width:50px;
+ width:expression(document.body.clientWidth >50? "50px":"auto");
+}
+div.sz500 {
+	max-width:500px;
+ width:expression(document.body.clientWidth >500? "500px":"auto");
+}
+div.sz600 {
+	max-width:600px;
+ width:expression(document.body.clientWidth >600? "600px":"auto");
+}
+div.sz650 {
+	max-width:650px;
+ width:expression(document.body.clientWidth >650? "650px":"auto");
+}
+div.sz75 {
+	max-width:75px;
+ width:expression(document.body.clientWidth >75? "75px":"auto");
+}

@@ -1,0 +1,18 @@
+﻿/*v20110525*/
+body, div,h1,h2,h3,h4,h5,h6 {color: black; background-color: white; font-family:"Times New Roman", Times, serif;
+font-size:13pt;}
+
+@page {  
+    margin: 2cm;  
+} 
+
+div.utm_hivatkozasok,div.utm_hivatkozasok_also, div.stilus, span#lapteteje, p.vissza,
+div.kereses,div.letoltes,p.vid_flv,div.kep_ikonok {
+				display:none;
+}
+
+body div.oldal div {border:none;}
+
+h1, h2, h3, h4, h5, h6 {page-break-after: avoid;} 
+a:link, a:visited, a:hover, a:active {text-decoration: underline; color: black;} 
+a[href ^="http://"]:after {content: " [" attr(href) "] ";}

@@ -1,0 +1,34 @@
+﻿/*v20110525*/
+body {
+ volume: medium;
+ azimuth: center;
+ voice-family:male;				
+}
+
+
+h1,h2,h3,h4,h5,h6 {
+ volume: loud;
+ azimuth: left;
+ voice-family: female;
+  }
+  
+
+body.filmleiras blockquote.szereplo_gyerek {
+voice-family:child;
+azimuth:left;
+
+}
+body.filmleiras blockquote.szereplo_no {
+ voice-family:female;
+ azimuth:right;
+}
+body.filmleiras blockquote.szereplo_ffi {
+	voice-family:male;	
+	azimuth:left;
+	}
+body.filmleiras .narrator {
+	voice-family:male;	
+	azimuth: center-right;
+	pitch:low;
+	}
+

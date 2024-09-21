@@ -1,0 +1,220 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="hu" lang="hu">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="css/scormelte_alap.css" rel="stylesheet" type="text/css" title="" />
+<link href="css/style_spec.css" rel="stylesheet" type="text/css" />
+<link href="css/scormelte_nagy.css" rel="alternate stylesheet" type="text/css" title="nagy" />
+<link href="css/scormelte_inverz.css" rel="alternate stylesheet" type="text/css" title="inverz" />
+<!--[if lte IE 6]>
+<link href="css/scormelte_ie6.css" rel="stylesheet" type="text/css" title="" />
+<![endif]-->
+<!-- syntax highlight -->
+<link rel="stylesheet" type="text/css" href="css/shCore.css" />
+<link rel="stylesheet" type="text/css" href="css/shThemeDefault.css" />
+<script type="text/javascript" src="js/shCore.js"></script>
+<script type="text/javascript" src="js/shBrushCpp.js"></script>
+<script type="text/javascript" src="js/shBrushCSharp.js"></script>
+<script type="text/javascript" src="js/shBrushDelphi.js"></script>
+<script type="text/javascript" src="js/shBrushXml.js"></script>
+<script type="text/javascript" src="js/shBrushCss.js"></script>
+<script type="text/javascript" src="js/shBrushJScript.js"></script>
+<script type="text/javascript" src="js/shBrushSql.js"></script>
+<script type="text/javascript">
+SyntaxHighlighter.all()
+</script>
+<title>
+Számítógépes alapismeretek II. / 
+A párhuzamosság alapjai &ndash; folyamatok kommunikációja, versenyhelyzetek, kritikus szekciók, szemaforok, monitorok és szignálok
+/A szemaforok használata</title>
+<meta name="description" content="A tananyag  fejlesztése a TÁMOP-4.1.2.A/2-10/1 pályázat keretén belül történt." />
+<meta name="keywords" content="Hardver alapismeretek, operációs rendszer, számítógépes alapismeretek, operációs rendszer fogalma, operációs rendszerek története, operációs rendszer feladata, operációs rendszer generációk, operációs rendszer típusok, folyamatok, folyamat táblázat, szál &ndash; folyamatok, rendszerhívások, operációs rendszer struktúrák, kernelmód, kernel, felhasználói mód, B/K művelet, folyamatok modellje, szinkron rendszerhívás, asszinkron rendszerhívás, állapotai, megvalósításuk, folyamatok kommunikációja, IPC (Inter Process Communication), megszakítástábla, IDT, megszakításvezérlő, PIC, megszakítás, interrupt, megszakításkérelem, IRQ, megszakításkezelési folyamat, kivétel, hibakeresés (debuggolás), töréspont, fájlrendszer, MBR, partíciós szektor, Ntldr, klaszter (cluster), szektor, FAT, NTFS, ext, TSS, csapda, ütemezés, szál, szemafor, mutex, monitor, POSIX, szignál, osztott memória, csővezeték, kritikus szakasz, Wybe Dijkstra, CPU, erőforrás, holtpont, kiéheztetés, integrált áramkör, multiprogramozás, beágyazott rendszerek, partíció, MMU, lapcsere, FIFO, socket, lapozás, swap, interaktív rendszer, kötegelt rendszer, kliens, job, jogosultság, metaadat, könyvtár, UNIX, GNU/LINUX, erőforrás-foglalási gráf, fizikai memória, virtuális memória, merevlemez, floppy, fregmentáció, defregmentáló program, MFT, API, i-node, cache memory, SSH, HyperThread, párhuzamosság" />
+<script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="js/kep.js"></script>
+<script type="text/javascript" src="js/jquery.media.js"></script>
+<script type="text/javascript" src="js/jquery.highlight-3.js"></script>
+<script type="text/javascript" src="js/kereses.js"></script>
+<script type="text/javascript" src="js/stylesheetToggle.js"></script>
+<script type="text/javascript" src="js/cookie.js"></script>
+<script type="text/javascript" src="js/stilusvalto.js"></script>
+<script type="text/javascript" src="js/fogalmak.js"></script>
+<script type="text/javascript" src="js/fogalom.js"></script>
+<script type="text/javascript" src="js/jwplayer.js"></script>
+<script type="text/javascript">
+$(document).ready(function() 
+{
+$("a.hang").media( {width: 250, height: 50,  autoplay: false} );
+});
+</script>
+<script type="text/javascript" src="js/navigacio.js"></script>
+</head>
+<body>
+<div><a name="teteje"  id="teteje"></a></div>
+<div class="jawsfmenu">
+  <ul>
+    <li><a class="tartalom" href="#tartalom" accesskey="t" tabindex="2">Ugrás a <span class="gyorsb">t</span>artalomra</a></li>
+    <li><a class="tartalomj" href="#fejezetek" accesskey="j" tabindex="5">Ugrás a tartalom<span class="gyorsb">j</span>egyzékre</a></li>
+    <li><a class="tanutm" href="#tanutm" accesskey="u" tabindex="7">Ugrás a tan<span class="gyorsb">u</span>lási útmutatóra</a></li>
+  </ul>
+</div>
+<div class="ki_kereses"></div>
+<div class="oldal">
+  <div class="utmutato">
+    <div class="utm_hivatkozasok"><span class="elozolap"><img src="navi/ikon_vissza_dis.gif" alt="Vissza az előzőleg látogatott oldalra (nem elérhető funkció)" title="Vissza az előzőleg látogatott oldalra (nem elérhető funkció)" /></span><a class="kezdolap" href="index.html" accesskey="p" tabindex="21"><img src="navi/ikon_kezdolap.gif" alt="Vissza a modul kezdőlapjára" title="Vissza a modul kezdőlapjára" width="36" height="36"/></a><a class="elozotanlap" href="lecke6_lap3.html" accesskey="e" tabindex="22"><img src="navi/ikon_elozolap.gif" alt="Ugrás a tananyag előző oldalára" title="Ugrás a tananyag előző oldalára" width="36" height="36" /></a><a class="kovetktanlap" href="lecke6_lap5.html" accesskey="v" tabindex="23"><img src="navi/ikon_kovetklap.gif" alt="Ugrás a tananyag következő oldalára" title="Ugrás a tananyag következő oldalára" width="36" height="36"/></a><span class="ki_fogalomkapcs"><img src="navi/ikon_fogalmakbe_dis.gif" alt="Fogalom megjelenítés (nem elérhető funckió)" title="Fogalom megjelenítés (nem elérhető funckió)" /></span><span class="ki_fogalomlista"><img src="navi/ikon_fogalmaklista_dis.gif" alt="Fogalmak listája (nem elérhető funkció)" title="Fogalmak listája (nem elérhető funkció)" /></span><span class="ki_nyomtatas"><img src="navi/ikon_nyomtatas_dis.gif" alt="Oldal nyomtatása (nem elérhető funkció)" title="Oldal nyomtatása (nem elérhető funkció)" /></span><a class="oldalterkep" href="oldalterkep.html" accesskey="d" tabindex="31"><img src="navi/ikon_oldalterkep.gif" alt="Oldaltérkép megtekintése" title="Oldaltérkép megtekintése"  width="36" height="36" /></a><a class="sugo" href="sugo.html" accesskey="s" tabindex="33"><img src="navi/ikon_sugo.gif" alt="Súgó megtekintése" title="Súgó megtekintése"  width="36" height="36" /></a></div>
+  </div>
+  <div class="tartalommenu">
+    <div class="tartalommenu_fejlec"><span id="lapteteje"><a  href="#teteje"><span class="gyorsb">F</span>el a lap tetejére</a></span><a name="fejezetek"   id="fejezetek">Tartalomjegyzék</a></div>
+    <ul><li><a href="#hiv1">A párhuzamosság alapjai &ndash; folyamatok kommunikációja, versenyhelyzetek, kritikus szekciók, szemaforok, monitorok és szignálok</a><ul><li><a href="#hiv2">A gyártó-fogyasztó probléma, az alvás-ébredés módszere</a><ul><li><a href="#hiv3">A szemaforok használata</a><ul><li><a href="#hiv4">Szemafor létrehozása</a></li><li><a href="#hiv5">Szemaforkontroll</a></li><li><a href="#hiv6">Szemaforoperáció</a></li></ul></li></ul></li></ul></li></ul> 
+  </div>
+  <div class="tartalom"> <a name="tartalom"    id="tartalom"></a> 
+    <h1><a name="hiv1" id="hiv1"></a>A párhuzamosság alapjai &ndash; folyamatok kommunikációja, versenyhelyzetek, kritikus szekciók, szemaforok, monitorok és szignálok</h1><h2><a name="hiv2" id="hiv2"></a>A gyártó-fogyasztó probléma, az alvás-ébredés módszere</h2><h3><a name="hiv3" id="hiv3"></a>A szemaforok használata</h3><p>A &#132;hely&#148; változó megfelelő kezelésére E. W. Dijkstra 1965-ben tett javaslatot. Vezessünk be egy egész változót <span class="fogalom" title="szemafor">szemafor</span> néven. Ez olyan <strong>elemi műveletet</strong> biztosít ezen az egész változón, amit nem lehet megszakítani. Emlékezzünk csak, minden bajunk forrása az volt, hogy a &#132;hely&#148; vizsgálatának utasítását meg lehetett szakítani!</p><p>A <span class="fogalom" title="szemafor">szemafor</span> fogalma, mint az IPC egyik eszköze, valószínűleg egy vasutas ősöktől származott <span class="fogalom" title="UNIX">UNIXos</span> fejlesztőnek juthatott eszébe. Miről is van itt szó? Nézzünk meg egy példát erre! A vonat megáll egy piros <span class="fogalom" title="szemafor">szemafor</span> előtt, és addig várakozik, amíg szabad utat nem kap, mert valamilyen oknál fogva (elaludt a bakter, foglalt a pálya stb.) a továbbhaladás meg van tiltva. </p><p>Az <span class="fogalom" title="operációs rendszer">operációs rendszerben</span> is erről van szó. Természetesen az &#132;egész&#148; feltételezi azt, hogy mondjuk, van egy kritikus <span class="fogalom" title="erőforrás">erőforrásunk</span>, amit nem használhat egyszerre több folyamat. Tekintsünk egy egész számot! Legyen, mondjuk, a kezdőértéke egy! Amikor a kritikus művelethez érek, akkor azt mondom, hogy jelzem az erőforrás-használati igényemet. A jelzés jelentse azt, hogy eggyel csökkentem a szám értékét. Ezt szokás &#132;down&#148; vagy sok más helyen &#132;P&#148; operációnak (<strong>P</strong>robeer te verlagen, megpróbálni csökkenteni, holland kifejezés) is nevezni. Ha a csökkentés eredmény nem negatív lesz, akkor szabad az út, és végzi a dolgát a program. Ha ezután érkezik egy másik folyamat, ami ugyanezt az <span class="fogalom" title="erőforrás">erőforrást</span> szeretné használni, szintén hasonló módon kezdi a dolgot, de neki már a P operáció pirosra állítja a &#132;<span class="fogalom" title="szemafor">szemafort</span>&#148;, hiszen az &#132;egész&#148; értéke mínusz egy lesz. Ekkor ez a második folyamat mindaddig vár, amíg az &#132;egész&#148;-<span class="fogalom" title="szemafor">szemafor</span> értékét egy úgynevezett &#132;up&#148; vagy &#132;V&#148; operációval (<strong>V</strong>erhogen, növelni, holland szó) &ndash; ami az eggyel való növelést jelenti &ndash; fel nem szabadítja az <span class="fogalom" title="erőforrás">erőforrást</span>, ami után a P operációnál várakozó program tovább haladhat. Ezzel tulajdonképpen újra tilos jelzés lesz érvényben a kritikus <span class="fogalom" title="erőforrás">erőforrásra</span>, ha a kezdőérték egy volt. Egy <span class="fogalom" title="szemafor">szemafor</span> kezdőértéke nemcsak egy lehet, hanem tetszőleges egész szám. Ha a <span class="fogalom" title="szemafor">szemafor</span> kezdőértéke egy, akkor bináris szemafornak is nevezik, hiszen ha egy az értéke, akkor az a szabad jelzést, ha nulla az értéke, az a tilos jelzést jelenti, azaz csak a nulla és egy értékeket veheti fel.</p><p>Természetesen az <span class="fogalom" title="operációs rendszer">operációs rendszer</span> gondoskodik arról, hogy egy P vagy V operáció egyben végrehajtásra kerüljön (elemi művelet), hiszen ellenkező esetben inkonzisztencia állna elő. Gondoljunk arra például, hogy P operáció kellős közepén járunk. Ekkor már tudjuk, hogy az eredmény nem negatív lesz, már készülünk az <span class="fogalom" title="erőforrás">erőforrást</span> birtokba venni, de a P operációt se tudtuk éppen még befejezni, mert lejárt az időszeletünk, és egy következő folyamat kapja meg a processzort (<span class="fogalom" title="CPU">CPU</span> -t). Ez pedig szintén a mi <span class="fogalom" title="erőforrás">erőforrás</span>unkat szeretné magáénak tudni, de mivel nem fejeztük előzőleg mi be a P operációt, a következő folyamat boldogan birtokba veszi <span class="fogalom" title="erőforrás">erőforrásunkat</span>, míg mi a következő körben &#132;váratlanul&#148; toppanunk így be, kialakítva a nem kívánt hármas társaságot. </p><p>Lássuk ezek után, hogy a szemaforművelet segítségével hogyan oldhatjuk meg a kritikus &#132;hely&#148; változó kezelését (pontosabban az előző pontban említett &#132;elveszett ébresztést&#148;). A &#132;hely&#148; változó szerepét két <span class="fogalom" title="szemafor">szemaforral</span> helyettesítjük. Az &#132;üres&#148; <span class="fogalom" title="szemafor">szemafor</span> biztosítja, hogy a pék elaludjon, ha tele a polc. (Az <em>N</em> értéke nullára csökken. Ha az &#132;üres&#148; értéke &#132;N&#148;, akkor üres a polc.) A &#132;tele&#148; <span class="fogalom" title="szemafor">szemafor</span> viszont azt biztosítja, hogy a vásárló aludjon el, ha üres a polc. Ahogy látható az alábbi kódrészletben, ez kezdőérték, vagyis üres a polc (üres = N, tele = 0). A szabad <span class="fogalom" title="szemafor">szemafort</span> a kölcsönös kizárás biztosítására használjuk, tehát a pékség polcain egyidejűleg csak egy folyamat, vagy a pék, vagy a vásárló matasson.</p><div class="forraskod"><div class="bekezdes1cm">
+
+typedef int szemafor; 
+szemafor szabad = 1;                  /* Bináris szemafor, ha egy az 
+                                         értéke, akkor mehet tovább, 
+                                         szabad a jelzés. */ 
+szemafor üres = N;                    /* Üres a polc, ez szabad jelzést 
+                                         mutat. */ 
+szemafor tele = 0; 
+
+void pék() {                          /* Az N értéke a &#132;kenyerespolc&#148; 
+                                         mérete. */ 
+     int kenyér; 
+     while (1) { 
+          kenyér = pék_süt(); 
+          down(&#38;üres);                /* Az üres szemafor értéke csökken, 
+                                         ha előtte nagyobb volt az értéke, 
+                                         mint nulla, mehet tovább. */ 
+          down(&#38;szabad);              /* Piszkálhatjuk-e a pékség polcát? */ 
+          kenyér_polcra(kenyér);      /* Igen, betesszük a kenyeret. */ 
+          up(&#38;szabad);                /* Elengedjük a pékség polcát. */ 
+          up(&#38;tele);                  /* Jelezzük a vásárlónak, hogy van 
+                                         kenyér. */ 
+     } 
+} 
+
+void vásárló() {                      /* A vásárló szemaforja a tele 
+                                         szemafor. */ 
+     int kenyér; 
+     while (1) { 
+          down(&#38;tele);                /* A tele szemafor értéke csökken, 
+                                         ha előtte nagyobb volt az értéke, 
+                                         mint nulla, mehet tovább. */ 
+          down(&#38;szabad);              /* Piszkálhatjuk-e a pékség polcát? */ 
+          kenyér = kenyér_polcról();  /* Igen, levesszük a kenyeret. */ 
+          up(&#38;szabad);                /* Elengedjük a pékség polcát. */ 
+          up(&#38;üres);                  /* Jelezzük a péknek, hogy van hely, 
+                                         lehet sütni. */ 
+          kenyér_elfogyasztása(kenyér); 
+     } 
+}
+</div>
+</div><p>Ahogy a kódrészletből is látható, a &#132;tele&#148; és az &#132;üres&#148; nevű változók a két folyamat alvását-ébredését szabályozzák olyan módon, hogy akkor engedik az egyik vagy a másik folyamat működését, amikor egyáltalán tudnak működni. Ezzel szinkronizációs szerepet töltenek be! Összegzésül elmondhatjuk, amint az előbbi megoldásból is kitűnik, hogy a <span class="fogalom" title="szemafor">szemaforokat</span> kétféle szerepben használhatjuk. Ahogy a példa szabad <span class="fogalom" title="szemafor">szemaforja</span> mutatja, a kölcsönös kizárást biztosíthatja, míg az &#132;üres&#148; és a &#132;tele&#148; <span class="fogalom" title="szemafor">szemaforok</span> szinkronizációs feladatot oldanak meg. </p><p>A korábban leírt vasutaselv megmaradt, csak kicsit módosult. Amikor a <span class="fogalom" title="szemafor">szemaforok</span> létrehozásáról beszélünk (semget függvény), akkor igazából egy szemaforcsoportot hozunk létre, amiben több önálló <span class="fogalom" title="szemafor">szemafor</span> lehet. Egy <span class="fogalom" title="szemafor">szemafornak</span> nem feltétlenül egy értékkel kell alapra állnia, azaz tetszőleges egész lehet a kezdőértéke. Egy P operáció nem feltétlenül eggyel csökkenti, mint ahogy egy V operáció sem feltétlenül eggyel növeli az egész értékű <span class="fogalom" title="szemafor">szemafor</span> értékét. </p><p>Ezek után pedig nézzük meg néhány kis gyakorlati példán keresztül, hogy az elmondottak hogyan valósulnak meg a System V <span class="fogalom" title="UNIX">UNIX</span> verzió alatt! </p><h4><a name="hiv4" id="hiv4"></a>Szemafor létrehozása</h4><div class="forraskod"><div class="bekezdes1cm">
+
+#include &lt;iostream.h&gt; 
+#include &lt;sys/ipc.h&gt; 
+#include &lt;sys/sem.h&gt; 
+
+void main() { 
+     int sid; 
+     sid = semget((key_t)0xaaa, 3, IPC_CREAT | 0666 ); 
+     // A kulcs valamilyen hexa számból készül, 
+     // de készíthető az ftok függvennyel is! 
+     cout &lt;&lt; "A szemafor azonositoja :" &lt;&lt; sid &lt;&lt; '\n'; 
+     // A három szemafort tartalmazó csomag létrejön. 
+}
+</div>
+</div><p>Ehhez a kulcsfüggvény a &#132;semget&#148;, aminek első paramétere egy számból, adott esetben egy hexadecimális számból konvertált &#132;key_t&#148; típus, a második paramétere azt mondja meg, hogy a szemaforcsoport hány tagból álljon, míg a harmadik paramétere a <span class="fogalom" title="szemafor">szemaforhoz</span> való hozzáférési jogosultságot mondja meg (666).</p><p>Tételezzük fel, hogy a fenti program a sem1.c file-ban van, akkor a következő paranccsal fordíthatjuk le:</p><p><strong><span class="forraskod"> CC -o sem1 sem1.c </span></strong></p><p>Ezután a sem1 parancsot kiadva létrejön a sid azonosítóval a szemaforcsoport, amiben három <span class="fogalom" title="szemafor">szemafor</span> van igazából. Adjuk ki a shell promptból az &#132;ipcs &ndash;s&#148; parancsot, és láthatjuk a létrejött <span class="fogalom" title="szemafor">szemafort</span>.</p><h4><a name="hiv5" id="hiv5"></a>Szemaforkontroll</h4><div class="forraskod"><div class="bekezdes1cm">
+#include &lt;iostream.h&gt; 
+#include &lt;sys/ipc.h&gt; 
+#include &lt;sys/sem.h&gt; 
+ 
+void main() { 
+     int j; 
+     cout &lt;&lt; &#148;Kerem a szemaforcsoport azonositot:&#148;; 
+     cin &gt;&gt; j; 
+     int i = semctl(j, 1, GETVAL); 
+     cout &lt;&lt; "A beirt szemaforcsoport 1 szamu szemafor erteke: "&lt;&lt; i &lt;&lt; '\n'; 
+     // A szemaforok a csoportban nullával kezdődően sorszámozódnak. 
+     semctl(j, 1, SETVAL, 2); // Beállítjuk az új értekét kettőre. 
+     i = semctl(j, 1, GETVAL); 
+     cout &lt;&lt; "A beirt szemaforcsoport 1 szamu szemafor erteke: "&lt;&lt; i &lt;&lt; '\n'; 
+}
+</div>
+</div><p>Amint olvasható, a szemaforkontroll utasítása a &#132;semctl&#148;. Az első paraméter a szemaforcsoport azonosítója, a &#132;semget&#148; függvény visszatérési értéke. A második paraméter a csoporton belüli szemaforsorszám. A harmadik paraméter a végrehajtásra utaló flag, hogy beállítunk-e, vagy lekérdezünk-e valamit. A negyedik paraméter akkor van megadva, ha beállítunk értéket.</p><h4><a name="hiv6" id="hiv6"></a>Szemaforoperáció</h4><div class="forraskod"><div class="bekezdes1cm">
+#include &lt;iostream.h&gt; 
+#include &lt;sys/ipc.h&gt; 
+#include &lt;sys/sem.h&gt; 
+ 
+void main() { 
+     int j; 
+     sembuf sbuf[3];          // A három szemafornak való hely. 
+     unsigned int nsop = 1;   // Hány szemafort állítok az sbuf-ban? 
+     sbuf[0].sem_num = 0;     // A nulladik szemafor. 
+     sbuf[0].sem_op = -1;     // A P operáció, ha negatív lesz a szemafor, 
+                              // akkor megállunk... márpedig az lesz, 
+                              // hiszen a nulladik szemafor nulla 
+                              // kezdőértékkel jelenik meg.
+     sbuf[0].sem_flg = 0; 
+     cout &lt;&lt; "Kerem a szemaforcsoport azonositot:&#148;; 
+     cin &gt;&gt; j; 
+     cout &lt;&lt; "Elkezdek egy szemaforoperaciot!\n"; 
+     cout &lt;&lt; "Ez egy P operacio lesz a 0. szemaforon!\n" &lt;&lt; endl; 
+     semop(j, sbuf, nsop);     // A j. szemaforcsoportnak állítás 
+                               // azt eredményezi, hogy a processz addig 
+                               // vár, amíg valaki a V operációt nem 
+                               // csinálja a nulladik szemaforral. 
+     cout &lt;&lt; "Hala az egnek, befejeztem!\n"; 
+}
+</div>
+</div><p>A sembuf struktúratípus a &#132;sem.h&#148; header fájlban van definiálva, és a következő formájú:</p><div class="forraskod"><div class="bekezdes1cm">
+
+struct sembuf { 
+        ushort_t sem_num;       /* A szemafor azonosítószáma. */ 
+        short   sem_op;         /* A szemafor operációja. */ 
+        short   sem_flg;        /* A szemafor operációjának kapcsolói. */ 
+};
+</div>
+</div><p>A programban olvasható megjegyzések magyarázzák a végrehajtást. Hívjuk a fenti programot &#132;sem3.c&#148; fájlnqk, majd a </p><p><strong><span class="forraskod"> CC -o sem3 sem3.c </span></strong></p><p>paranccsal fordítsuk le, ezt követően a</p><p><span class="forraskod"> sem3 </span></p><p>parancs kiadásával indítsuk el ezt a parancsot. </p><p>Azt tapasztaljuk, hogy nem kapjuk vissza a shell promptot, a &#132;semop&#148; operáció várakozik, hiszen a P operáció (ha a &#132;sem_op&#148; értéke negatív, akkor P, ha a &#132;sem_op&#148; értéke pozitív, akkor V) negatív eredményt ad, ezért a &#132;semop&#148; várakozik!</p><p>Most indítsunk egy másik shell-t, amiben a következő programot fordítsuk le!</p><div class="forraskod"><div class="bekezdes1cm">
+
+#include &lt;iostream.h&gt; 
+#include &lt;sys/ipc.h&gt; 
+#include &lt;sys/sem.h&gt; 
+ 
+void main() { 
+     sembuf sbuf[3];         // A három szemafornak való hely. 
+     unsigned int nsop = 1; 
+     sbuf[0].sem_num = 0;    // A nulladik szemafor. 
+     sbuf[0].sem_op = 1;     // A V operáció, ha nem negatív lesz  
+                             // a szemafor, akkor az esetleg 
+                             // a szemafornál álló másik processz 
+                             // továbbmegy. 
+     sbuf[0].sem_flg = 0; 
+     cout &lt;&lt; "Elkezdek egy szemaforoperaciot!\n"; 
+     cout &lt;&lt; "Ez egy V operacio lesz a 0. szemaforon!\n" &lt;&lt; endl; 
+     semop(1, sbuf, nsop);   // Az első szemaforcsoportnak állítás. 
+     cout &lt;&lt; "Befejeztem, es ezzel allo sem3 is tovabbmehet!\n"; 
+}
+</div>
+</div><p>Terjedelmi okokból itt nem törekszünk teljes, precíz függvényleírásokat adni, sokkal inkább a lényeget igyekszünk bemutatni, és rendszer referencia-kézikönyvére, azaz a manualra (man) hagyjuk a részletes leírást.</p><p>A <span class="fogalom" title="szemafor">szemaforokkal</span> kapcsolatban zárásképpen megjegyezzük, hogy a tananyaghoz mellékelt párhuzamos.zip tömörített állomány több, a Microsoft .NET Framework rendszert használó projektet tartalmaz, például egy pék-vásárló problémamegoldást, ami a klasszikus algoritmust valósítja meg C# programozási nyelven. </p><p class="vissza"><a href="#fejezetek">Vissza a tartalom<span class="gyorsb">j</span>egyzékhez</a></p> 
+  </div>
+</div>
+<div class="utmutato_also">
+  <div class="utm_hivatkozasok_also"><a class="oldalteteje" accesskey="f" href="#teteje"><span class="gyorsb">F</span>el a lap tetejére</a>
+  <a class="elozotanlap" id="navialsoelozo" href="lecke6_lap3.html"><img src="navi/ikon_elozolap.gif" alt="Ugrás a tananyag előző oldalára" title="Ugrás a tananyag előző oldalára" width="36" height="36" /></a>
+  <a id='navialsokov' class="kovetktanlap" href="lecke6_lap5.html" ><img src="navi/ikon_kovetklap.gif" alt="Ugrás a tananyag következő oldalára" title="Ugrás a tananyag következő oldalára" width="36" height="36"/></a>
+  </div>
+</div>
+<div class="ki_stilus"></div>
+<div class="impresszum">
+  <table class="uszt">
+    <tr>
+      <td><div class="imp_eltetatklogo"><img alt="ELTE és ELTE TáTK logó" src="css/arculat/elte_plus_tatk.png" style="width:100%;height:auto;" /></div>
+        <div class="imp_elteiklogo"><img alt="ELTE és ELTE IK logó" src="css/arculat/elte_plus_ik.png" style="width:100%;height:auto;" /></div></td>
+      <td><div class="imp_uszt"><img alt="Új Széchenyi terv" src="css/arculat/USZT_logo_cmyk.jpg" style="width:100%;height:auto;" /></div></td>
+      <td><div class="imp_eu"><img alt="A projekt az Európai Unió támogatásával, az Európai Szociális Alap társfinanszirozásával valósul meg." title="A projekt az Európai Unió támogatásával, az Európai Szociális Alap társfinanszirozásával valósul meg." src="css/arculat/ESZA.png" style="width:100%;height:auto;"/></div></td>
+    </tr>
+  </table>
+</div>
+</body>
+</html>
