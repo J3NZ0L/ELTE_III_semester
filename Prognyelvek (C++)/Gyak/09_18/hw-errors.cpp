@@ -10,7 +10,14 @@ void greet(std::string name){
 
 int main() {
     // std::cout << "Hello world! << std::endl;
-    // hw-errors.cpp:1:2: error: invalid preprocessing directive #nclude; did you mean #include?
+    /*
+     hw-errors.cpp:17:18: warning: missing terminating " character
+   17 |     std::cout << "Hello world! << std::endl;
+      |                  ^
+    hw-errors.cpp:17:18: error: missing terminating " character
+   17 |     std::cout << "Hello world! << std::endl;
+      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+    */
     // Lexikalis elemzo szol erte (szintaktikai es szemantiakai hibat is von maga utan)
     // correct usage:
 

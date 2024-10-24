@@ -5,6 +5,7 @@
 #include <unistd.h> //fork
 #include <string.h> //strlen
 #include <fcntl.h> //lock
+#include <sys/wait.h> //waitpid
 
 
 int main()
