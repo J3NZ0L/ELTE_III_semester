@@ -71,6 +71,8 @@ void modify_record(const char *filename) {
         return;
     }
 
+    // search for record, query new data if found
+    // format string specifier is explained a bit above in list_records method
     while (fscanf(file, " %49[^|]|%29[^|]|%d|%d\n", record.winery, record.grape_type, &record.volume, &record.sugar_content) == 4) {
         if (strcmp(record.winery, winery) == 0 && strcmp(record.grape_type, grape_type) == 0) {
             printf("Enter new volume in liters: ");
@@ -98,13 +100,13 @@ void delete_record(const char *filename) {
     int found = 0;
 
     printf("Enter winery name to delete: ");
-    getchar();  // Clear newline character from buffer
+    getchar();  // consume newline character from buffer
     fgets(winery, MAX_NAME_LEN, stdin);
-    winery[strcspn(winery, "\n")] = 0;  // Remove newline character
+    winery[strcspn(winery, "\n")] = 0;  // remove newline character
 
     printf("Enter grape type: ");
     fgets(grape_type, MAX_TYPE_LEN, stdin);
-    grape_type[strcspn(grape_type, "\n")] = 0;  // Remove newline character
+    grape_type[strcspn(grape_type, "\n")] = 0;  // remove newline character
 
     FILE *file = fopen(filename, "r");
     FILE *temp = fopen("temp.txt", "w");  // temporary file for all other records
@@ -114,7 +116,7 @@ void delete_record(const char *filename) {
     }
 
     // copy each record to the temporary file except the one to be deleted
-    // format string specifier is explained a bit above 
+    // format string specifier is explained a bit above in list_records method
     while (fscanf(file, " %49[^|]|%29[^|]|%d|%d\n", record.winery, record.grape_type, &record.volume, &record.sugar_content) == 4) {
         if (strcmp(record.winery, winery) == 0 && strcmp(record.grape_type, grape_type) == 0) {
             found = 1;
