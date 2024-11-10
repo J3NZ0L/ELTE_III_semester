@@ -2,7 +2,12 @@ const startButton = document.querySelector("#buttonStartGame")
 const gamePageDiv = document.querySelector("#gamePage")
 const menuPageDiv = document.querySelector("#menuPage")
 
+const inGamePlayerNameP = document.querySelector("#inGamePlayerName")
+
 const difficultyButtons = document.querySelectorAll(".difficulty-button")
+
+let startTime;
+let timerInterval;
 
 startButton.addEventListener("click", onStartButtonClick)
 
@@ -22,6 +27,7 @@ function onStartButtonClick(e){
     //toggleDisplay(gamePageDiv);
     toggleMenuAndGamePage()
     createMatrix();
+    initGame();
 }
 
 class Tile{
@@ -58,4 +64,32 @@ function createMatrix() {
     }
   }
   
-  // Initialize with 5x5 grid
+function initGame(){
+  const playerName = document.querySelector("#playerNameInput").value
+  console.log(playerName)
+  inGamePlayerNameP.innerHTML = playerName
+
+  startTime = Date.now(); // Capture the starting time (milliseconds)
+  timerInterval = setInterval(updateElapsedTime, 1000); // Update every second
+}
+
+function updateElapsedTime() {
+  // Calculate elapsed time in seconds
+  let elapsedTime = Math.floor((Date.now() - startTime) / 1000);
+
+  // Calculate minutes and seconds
+  let minutes = Math.floor(elapsedTime / 60);  // Divide by 60 to get minutes
+  let seconds = elapsedTime % 60;  // Remainder is the seconds
+
+  // Format minutes and seconds with leading zeros if necessary
+  minutes = minutes < 10 ? '0' + minutes : minutes;
+  seconds = seconds < 10 ? '0' + seconds : seconds;
+
+  // Update the displayed time
+  document.getElementById("elapsedTime").textContent = `${minutes}:${seconds}`;
+}
+
+// To stop the timer when the game ends (e.g., on game over):
+function stopGame() {
+  clearInterval(timerInterval); // Stop the timer
+}

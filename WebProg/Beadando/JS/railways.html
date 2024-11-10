@@ -14,7 +14,7 @@
       <input type="text" placeholder="ADD MEG A NEVED!" id="playerNameInput">
     </div>
 
-    <div id="difficultySetting" class="difficulty-box">
+    <div id="difficultySetting" class="container-box">
       <p>Állítsd be a nehézséget!</p>
       <div id="difficultySettingButtons">
         <button class="difficulty-button" id="buttonEasy">5 X 5<br>KÖNNYŰ</button>
@@ -49,7 +49,11 @@
 
   <div id="gamePage" class="hidden">
     <h1 class="gameTitle">RAILWAYS</h1>
-    <div id="box"></div>
+    <div id="gameInfo" class="container-box">
+      <p>Útvonaltervező:</p>
+      <p id="inGamePlayerName"></p>
+      <p>Eltelt idő: <span id="elapsedTime">00:00</span></p>
+    </div>
     <div id="playfield"></div>
   </div>
   <script src="game.js"></script>

@@ -42,8 +42,7 @@ body {
     color: #b08b5b;
 }
 
-.difficulty-box {
-  width: 78%; /* Reduce slightly from 80% */
+.container-box{
   padding: 10px;
   font-size: 1.2em;
   border: 2px solid #9bbf8f;
@@ -55,6 +54,15 @@ body {
   width: 80%;
 }
 
+#difficultySetting {
+  color: #6B8E23;
+  border-color: #9bbf8f;
+}
+
+#gameInfo {
+  color: black;
+  border-color: #b08b5b;
+}
 
 /* Difficulty buttons styling */
 #difficultySettingButtons {
@@ -64,6 +72,7 @@ body {
   gap: 5px;              /* Space between elements */
   margin: 0 auto 0 auto;
   width: 100%;
+
 }
 
 #difficultySettingButtons button:hover {
@@ -82,12 +91,11 @@ body {
   float: left; /* Float the buttons side by side */
 }
   
-#difficultySetting p {
+.container-box p {
   display:block;
   margin: 0; /* Removes default paragraph margin */
   padding-bottom: 5px;
   font-size: 18px;
-  color: #6B8E23; /* Adjust based on your color scheme */
 }
 
 #difficultySettingButtons .difficulty-button.selected {
