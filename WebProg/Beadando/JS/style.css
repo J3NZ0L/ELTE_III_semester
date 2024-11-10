@@ -1,0 +1,186 @@
+/* General reset and styling */
+* {
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f7f7ed;
+    margin: 0;
+}
+#menuPage {
+    text-align: center;
+    padding: 20px;
+}
+
+/* Title styling */
+#menuPage h1 {
+    font-size: 3em;
+    font-weight: bold;
+    color: #d2b48c;
+    text-shadow: 2px 2px #b08b5b;
+    margin-bottom: 20px;
+}
+
+/* Input styling */
+#playerNameSetting input {
+    padding: 10px;
+    font-size: 1.2em;
+    border: 2px solid #d2b48c;
+    border-radius: 8px;
+    width: 80%;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #b08b5b;
+}
+
+.difficulty-box{
+  padding: 10px;
+  font-size: 1.2em;
+  border: 2px solid greenyellow;
+  border-radius: 8px;
+  width: 80%;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #b08b5b;
+  background-color: white;
+  margin: 0 auto 0 auto;
+}
+
+/* Difficulty buttons styling */
+#difficultySettingButtons {
+    display: flex;
+    flex: 1;
+    flex-direction: row; /* Stack elements vertically */
+    gap: 10px;              /* Space between elements */
+    margin: 0 auto 0 auto;
+  }
+  
+  #difficultySetting p {
+    display:block;
+    margin: 0; /* Removes default paragraph margin */
+    padding-bottom: 5px;
+    font-size: 18px;
+    color: #6B8E23; /* Adjust based on your color scheme */
+  }
+  
+  #difficultySetting button {
+    display: flex;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #E8E8E8;
+    border: none;
+    cursor: pointer;
+    border-radius: 15px;
+  }
+
+.difficulty-button.selected {
+    background-color: #b8c99b;
+    color: #4a5f3e;
+    font-weight: bold;
+}
+
+/* Description and start button styling */
+#description, #startGame {
+    margin: 10px 0;
+}
+.menu-button {
+    padding: 15px;
+    font-size: 1em;
+    border-radius: 10px;
+    border: none;
+    background-color: #d3d3c3;
+    color: #4a4a4a;
+    cursor: pointer;
+    width: 120px;
+}
+#startGame .menu-button {
+    background-color: #b3b3b3;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+/* Decorative rail track (simplified) */
+#railTrack {
+    width: 100%;
+    height: 20px;
+    background: repeating-linear-gradient(
+    to right,
+    #d2b48c,
+    #d2b48c 20px,
+    #b08b5b 20px,
+    #b08b5b 40px
+    );
+    margin-top: 20px;
+}
+
+#playfield {
+    display: grid;
+    gap: 5px; /* Space between cells */
+    justify-content: center;
+    margin: 20px auto;
+    width: 90vw; /* Set to a percentage for responsiveness */
+    max-width: 400px; /* Set a max width for larger screens */
+  }
+  
+  #playfield.small {
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+  }
+  
+  #playfield.large {
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: repeat(7, 1fr);
+  }
+  
+  #playfield div {
+    width: 100%;
+    padding-top: 100%; /* Makes each cell square by setting height as a percentage of width */
+    background-color: #e0e0e0; /* Placeholder color */
+    background-size: cover;
+    background-position: center;
+    border-radius: 5px;
+  }
+
+/* Modal background overlay */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Ensure it appears above other elements */
+  }
+  
+  /* Modal content box */
+  .modal-content {
+    background-color: #fefefe;
+    padding: 20px;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 400px;
+    text-align: center;
+    position: relative;
+  }
+  
+  /* Close button */
+  .close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+  }
+
+
+.hidden {
+    display: none;
+}
+  
