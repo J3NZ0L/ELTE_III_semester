@@ -11,14 +11,17 @@ difficultyButtons.forEach(diffButton => {
 })
 
 function toggleSelectedDifficulty(e){
+  if (!e.currentTarget.classList.contains("selected")) {
     difficultyButtons.forEach(diffButton => {
       diffButton.classList.toggle("selected")
     })
+  }
 }
 
 function onStartButtonClick(e){
     //toggleDisplay(gamePageDiv);
     toggleMenuAndGamePage()
+    createMatrix();
 }
 
 class Tile{
@@ -37,7 +40,7 @@ function toggleMenuAndGamePage(){
 function createMatrix() {
     const playfield = document.querySelector("#playfield");
     const size = parseInt(document.querySelector(".difficulty-button.selected").textContent.charAt(0))
-
+    console.log(size)
     // Clear any existing cells
     playfield.innerHTML = "";
   
@@ -56,4 +59,3 @@ function createMatrix() {
   }
   
   // Initialize with 5x5 grid
-  createMatrix();
