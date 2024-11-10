@@ -147,12 +147,12 @@ body {
   max-width: 400px; /* Set a max width for larger screens */
 }
 
-#playfield.small {
+#playfield.easy {
   grid-template-columns: repeat(5, 1fr);
   grid-template-rows: repeat(5, 1fr);
 }
 
-#playfield.large {
+#playfield.hard {
   grid-template-columns: repeat(7, 1fr);
   grid-template-rows: repeat(7, 1fr);
 }
@@ -236,3 +236,7 @@ body {
 .Tile-bridge_rail{
   background-image: url("./kiindulo_hun/pics/tiles/bridge_rail.png")
 }
+
+.rotate-90 { transform: rotate(90deg); }
+.rotate-180 { transform: rotate(180deg); }
+.rotate-270 { transform: rotate(270deg); }
