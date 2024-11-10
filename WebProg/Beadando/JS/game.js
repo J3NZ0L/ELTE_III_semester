@@ -1,4 +1,4 @@
-import { baseEasyLevels } from "./levels.js"
+import { baseEasyLevels, baseHardLevels } from "./levels.js"
 
 const startButton = document.querySelector("#buttonStartGame")
 const gamePageDiv = document.querySelector("#gamePage")
@@ -10,6 +10,8 @@ const difficultyButtons = document.querySelectorAll(".difficulty-button")
 
 let startTime;
 let timerInterval;
+
+let difficulty = "hard";
 
 startButton.addEventListener("click", onStartButtonClick)
 
@@ -23,6 +25,7 @@ function toggleSelectedDifficulty(e){
       diffButton.classList.toggle("selected")
     })
   }
+  
 }
 
 function onStartButtonClick(e){
@@ -49,12 +52,6 @@ const Direction = Object.freeze({
   WEST: 3
 })
 
-
-
-
-
-
-
 function isCoordinateOfSide(x, y){
   return x==0 || y==0 || x==size-1 || y==size-1
 }
@@ -75,16 +72,18 @@ function createStaticMatrix() {
     // Apply appropriate class for grid size
     playfield.className = size === 5 ? "easy" : "hard";
 
-    let numberOfLevel = 4//Math.floor(Math.random()*5)
+    let numberOfLevel = 4 //Math.floor(Math.random()*5)
     console.log("N: ", numberOfLevel)
     // Generate cells for the matrix
     let numOfRotations = 0
+    let levels = size === 5 ? baseEasyLevels : baseHardLevels; 
+
     for (let i = 0; i < size; i++) {
       for (let j =0; j< size; j++){
         const cell = document.createElement("div");
-        cell.classList.add(baseEasyLevels[numberOfLevel][i][j].getStyleClass())
-        if (baseEasyLevels[numberOfLevel][i][j].isToBeRotated()){
-          numOfRotations = baseEasyLevels[numberOfLevel][i][j].getNumberOfRotations()
+        cell.classList.add(levels[numberOfLevel][i][j].getStyleClass())
+        if (levels[numberOfLevel][i][j].isToBeRotated()){
+          numOfRotations = levels[numberOfLevel][i][j].getNumberOfRotations()
           cell.classList.add(`rotate-${numOfRotations*90}`)
         }
         playfield.appendChild(cell);

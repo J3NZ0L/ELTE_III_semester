@@ -59,7 +59,7 @@ export class EmptyTile extends Tile{
 
 export class MountainTile extends Tile{
     #numberOfRotations
-    constructor(numberOfRotations){
+    constructor(numberOfRotations = 0){
         super()
         this.possibleEntrances = basePossibleDirections["mountainTile"]
         this.possibleTravelDirection = basePossibleDirections["mountainTile"]
@@ -82,7 +82,7 @@ export class MountainTile extends Tile{
 
 export class BridgeTile extends Tile{
     #numberOfRotations
-    constructor(numberOfRotations){
+    constructor(numberOfRotations = 0){
         super()
         this.possibleEntrances = basePossibleDirections["mountainTile"]
         this.possibleTravelDirection = basePossibleDirections["mountainTile"]
