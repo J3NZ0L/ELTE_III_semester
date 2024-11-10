@@ -140,7 +140,7 @@ body {
 
 #playfield {
   display: grid;
-  gap: 5px; /* Space between cells */
+  gap: 1.5px; /* Space between cells */
   justify-content: center;
   margin: 20px auto;
   width: 90vw; /* Set to a percentage for responsiveness */
@@ -163,7 +163,7 @@ body {
   background-color: #e0e0e0; /* Placeholder color */
   background-size: cover;
   background-position: center;
-  border-radius: 5px;
+  border-radius: 3px;
 }
 
 /* Modal background overlay */
@@ -204,4 +204,35 @@ body {
 .hidden {
     display: none;
 }
-  
+
+.Tile-straight-rail{
+  background-image: url("./kiindulo_hun/pics/tiles/straight_rail.png")
+}
+
+.Tile-oasis{
+  background-image: url("./kiindulo_hun/pics/tiles/oasis.png")
+}
+
+.Tile-mountain{
+  background-image: url("./kiindulo_hun/pics/tiles/mountain.png")
+}
+
+.Tile-mountain_rail{
+  background-image: url("./kiindulo_hun/pics/tiles/mountain_rail.png")
+}
+
+.Tile-empty{
+  background-image: url("./kiindulo_hun/pics/tiles/empty.png")
+}
+
+.Tile-curve_rail{
+  background-image: url("./kiindulo_hun/pics/tiles/curve_rail.png")
+}
+
+.Tile-bridge{
+  background-image: url("./kiindulo_hun/pics/tiles/bridge.png")
+}
+
+.Tile-bridge_rail{
+  background-image: url("./kiindulo_hun/pics/tiles/bridge_rail.png")
+}
