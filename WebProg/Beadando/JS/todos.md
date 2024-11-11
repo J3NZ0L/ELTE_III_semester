@@ -4,5 +4,9 @@
 
 - [ ] do the methods tryToPlaceRail and tryToRotateRail, which should return a bool if there has been an altering of the gameField
     - [ ] do the method placeRail in the tiles classes
+    
 - [ ] create a rendering or updating method, and call it after a successful tryToPlaceRail method 
+
+- [ ] check all the code
+    - [ ] railways.html is done
 

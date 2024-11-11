@@ -7,6 +7,10 @@ class Tile{
     isToBeRotated(){
         return false
     }
+
+    isRotatable(){
+        return false
+    }
   
     rotateDirections( numOfTimes){
       this.possibleEntrances.forEach(element => {
@@ -25,13 +29,17 @@ class Tile{
     getStyleClass(){
     }
   }
+
 export class EmptyTile extends Tile{
+    #numberOfRotations
     constructor(){
         super()
         this.possibleEntrances = basePossibleDirections["emptyTile"]
         this.possibleTravelDirection = basePossibleDirections["emptyTile"]
         this.hasStraightRail = false
         this.hasCurveRail = false
+        this.numberOfRotations = 0
+
     }
 
     placeRail(){
@@ -44,15 +52,6 @@ export class EmptyTile extends Tile{
         return true
     }
 
-    placeStraightRail(){
-        this.hasStraightRail = true
-    }
-
-    placeCurveRail(){
-        this.hasCurveRail = true
-    }
-
-
     getStyleClass(){
         if (this.hasStraightRail){
         return "Tile-straight-rail"
@@ -61,6 +60,17 @@ export class EmptyTile extends Tile{
         } else {
         return "Tile-empty"
         }
+    }
+    isRotatable(){
+        return this.hasStraightRail || this.hasCurveRail
+    }
+
+    rotate(){
+        this.numberOfRotations=(this.numberOfRotations+1)%4
+    }
+  
+    getNumberOfRotations(){
+        return this.numberOfRotations
     }
 
     canHaveStraightRail(){
@@ -84,6 +94,14 @@ export class MountainTile extends Tile{
         this.rotateDirections(numberOfRotations)
     }
 
+    placeRail(){
+        if (!this.hasRail){
+            this.hasRail = true
+            return true
+        } 
+        return false
+    }
+    
     getStyleClass(){
         return this.hasRail ? "Tile-mountain_rail": "Tile-mountain"
     }
@@ -105,6 +123,14 @@ export class BridgeTile extends Tile{
         this.hasRail = false
 
         this.rotateDirections(numberOfRotations)
+    }
+
+    placeRail(){
+        if (!this.hasRail){
+            this.hasRail = true
+            return true
+        } 
+        return false
     }
 
     getStyleClass(){

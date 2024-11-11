@@ -73,15 +73,35 @@ function tryToPlaceRail(arrOfCoords){
   }
 }
 
-function tryToRotateRail(){}
+function tryToRotateRail(arrOfCoords){
+  const x = arrOfCoords[0]
+  const y = arrOfCoords[1]
+  if (gameFieldModel[x][y].isRotatable()){
+    gameFieldModel[x][y].rotate()
+    updateDisplay(arrOfCoords)
+  }
+}
 
 function updateDisplay(arrOfCoords){
   const gameFieldDivs = Array.from(document.querySelector("#gameField").querySelectorAll("div"));
-  const flatIndex = arrOfCoords[0]*size+arrOfCoords[1]
+
+  const x = arrOfCoords[0]
+  const y = arrOfCoords[1]
+  const flatIndex = x*size+y
+
+  const numOfRotations = gameFieldModel[x][y].getNumberOfRotations()
+  const regex = new RegExp(`\\b${numOfRotations}\\b`);
+
   for (let className of gameFieldDivs[flatIndex].classList) {
     if (className.includes("Tile")) {
-      gameFieldDivs[flatIndex].classList.replace(className, gameFieldModel[arrOfCoords[0]][arrOfCoords[1]].getStyleClass()); // Replace with your desired class name
-        break; // Exit after replacing to avoid modifying additional classes
+      gameFieldDivs[flatIndex].classList.replace(className, gameFieldModel[x][y].getStyleClass()); 
+    }
+    if (className.includes("rotate") && !regex.test(className)){
+
+      gameFieldDivs[flatIndex].classList.replace(className, `rotate-${numOfRotations*90}`);
+    } else if (!className.includes("rotate") && numOfRotations>0){
+
+      gameFieldDivs[flatIndex].classList.add(`rotate-${numOfRotations*90}`)
     }
   }
 }
@@ -131,7 +151,6 @@ function createStaticMatrix() {
     gamefield.className = size === 5 ? "easy" : "hard";
 
     let numberOfLevel = Math.floor(Math.random()*5)
-    console.log("N: ", numberOfLevel)
     // Generate cells for the matrix
     let numOfRotations = 0
     let levels = size === 5 ? baseEasyLevels : baseHardLevels; 

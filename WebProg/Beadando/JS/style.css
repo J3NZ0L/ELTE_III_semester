@@ -187,8 +187,24 @@ body {
   border-radius: 8px;
   width: 80%;
   max-width: 400px;
+  max-height: 80vh; /* Set a max height relative to viewport */
+  overflow-y: auto; /* Enable vertical scrolling if content exceeds max height */
   text-align: center;
   position: relative;
+}
+
+/* Optional: Add padding to the right to make space for the scrollbar */
+.modal-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 4px;
+}
+
+.modal-content::-webkit-scrollbar-thumb:hover {
+  background-color: #aaa;
 }
 
 /* Close button */
@@ -200,6 +216,26 @@ body {
   cursor: pointer;
 }
 
+.user-guide {
+  margin-top: 20px;
+  padding: 10px;
+  border-top: 1px solid #ddd;
+  font-size: 0.9em;
+  text-align: left;
+}
+
+.user-guide img {
+  width: 2em; /* Match text height */
+  height: 2em; /* Keep aspect ratio */
+  vertical-align: middle; /* Align vertically with text */
+}
+
+
+
+.user-guide h4 {
+  margin: 0 0 10px;
+  font-weight: bold;
+}
 
 .hidden {
     display: none;
@@ -240,3 +276,11 @@ body {
 .rotate-90 { transform: rotate(90deg); }
 .rotate-180 { transform: rotate(180deg); }
 .rotate-270 { transform: rotate(270deg); }
+
+p i {
+  font-size:small;
+}
+
+.modal-content p {
+  font-size: medium;
+}
