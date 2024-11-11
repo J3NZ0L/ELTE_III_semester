@@ -138,7 +138,7 @@ body {
   margin-top: 20px;
 }
 
-#playfield {
+#gameField {
   display: grid;
   gap: 1.5px; /* Space between cells */
   justify-content: center;
@@ -147,17 +147,17 @@ body {
   max-width: 400px; /* Set a max width for larger screens */
 }
 
-#playfield.easy {
+#gameField.easy {
   grid-template-columns: repeat(5, 1fr);
   grid-template-rows: repeat(5, 1fr);
 }
 
-#playfield.hard {
+#gameField.hard {
   grid-template-columns: repeat(7, 1fr);
   grid-template-rows: repeat(7, 1fr);
 }
 
-#playfield div {
+#gameField div {
   width: 100%;
   padding-top: 100%; /* Makes each cell square by setting height as a percentage of width */
   background-color: #e0e0e0; /* Placeholder color */

@@ -3,6 +3,8 @@ import { baseEasyLevels, baseHardLevels } from "./levels.js"
 const startButton = document.querySelector("#buttonStartGame")
 const gamePageDiv = document.querySelector("#gamePage")
 const menuPageDiv = document.querySelector("#menuPage")
+const gameFieldDiv = document.querySelector("#gameField")
+
 
 const inGamePlayerNameP = document.querySelector("#inGamePlayerName")
 
@@ -13,11 +15,44 @@ let timerInterval;
 
 let difficulty = "hard";
 
+let size;
+
+let gameFieldModel;
+
 startButton.addEventListener("click", onStartButtonClick)
 
 difficultyButtons.forEach(diffButton => {
   diffButton.addEventListener("click", toggleSelectedDifficulty)
 })
+
+gameFieldDiv.addEventListener("click", onPrimaryMouseButtonClick)
+
+gameFieldDiv.addEventListener("contextmenu", onSecondaryMouseButtonClick)
+
+
+
+function onPrimaryMouseButtonClick(e){
+  if (e.target.matches('#gameField div')){
+    tryToPlaceRail(getXY(e))
+  }
+}
+
+function onSecondaryMouseButtonClick(e){
+  if (e.target.matches('#gameField div')){
+    e.preventDefault()
+    tryToRotateRail(getXY(e))
+  }
+}
+
+function getXY(e){
+  const closestDiv = e.target.closest("div")
+  const siblingDivs = Array.from(closestDiv.parentNode.querySelectorAll("div")); // Get all div siblings
+  const flatIndex = siblingDivs.indexOf(closestDiv); // Get the index of the clicked div
+  // calculate the appropriate matrix index
+  const x = Math.floor(flatIndex/size);
+  const y = flatIndex%size;
+  return [x, y]
+}
 
 function toggleSelectedDifficulty(e){
   if (!e.currentTarget.classList.contains("selected")) {
@@ -26,6 +61,29 @@ function toggleSelectedDifficulty(e){
     })
   }
   
+}
+
+function tryToPlaceRail(arrOfCoords){
+  const x = arrOfCoords[0]
+  const y = arrOfCoords[1]
+  if (gameFieldModel[x][y].isRailable()){
+    if (gameFieldModel[x][y].placeRail()){
+      updateDisplay(arrOfCoords)
+    }
+  }
+}
+
+function tryToRotateRail(){}
+
+function updateDisplay(arrOfCoords){
+  const gameFieldDivs = Array.from(document.querySelector("#gameField").querySelectorAll("div"));
+  const flatIndex = arrOfCoords[0]*size+arrOfCoords[1]
+  for (let className of gameFieldDivs[flatIndex].classList) {
+    if (className.includes("Tile")) {
+      gameFieldDivs[flatIndex].classList.replace(className, gameFieldModel[arrOfCoords[0]][arrOfCoords[1]].getStyleClass()); // Replace with your desired class name
+        break; // Exit after replacing to avoid modifying additional classes
+    }
+  }
 }
 
 function onStartButtonClick(e){
@@ -64,29 +122,31 @@ function toggleMenuAndGamePage(){
 
 
 function createStaticMatrix() {
-    const playfield = document.querySelector("#playfield");
-    const size = parseInt(document.querySelector(".difficulty-button.selected").textContent.charAt(0))
+    const gamefield = document.querySelector("#gameField");
+    size = parseInt(document.querySelector(".difficulty-button.selected").textContent.charAt(0))
     // Clear any existing cells
-    playfield.innerHTML = "";
+    gamefield.innerHTML = "";
   
     // Apply appropriate class for grid size
-    playfield.className = size === 5 ? "easy" : "hard";
+    gamefield.className = size === 5 ? "easy" : "hard";
 
-    let numberOfLevel = 4 //Math.floor(Math.random()*5)
+    let numberOfLevel = Math.floor(Math.random()*5)
     console.log("N: ", numberOfLevel)
     // Generate cells for the matrix
     let numOfRotations = 0
     let levels = size === 5 ? baseEasyLevels : baseHardLevels; 
 
+    gameFieldModel = levels[numberOfLevel]
+
     for (let i = 0; i < size; i++) {
       for (let j =0; j< size; j++){
         const cell = document.createElement("div");
-        cell.classList.add(levels[numberOfLevel][i][j].getStyleClass())
-        if (levels[numberOfLevel][i][j].isToBeRotated()){
-          numOfRotations = levels[numberOfLevel][i][j].getNumberOfRotations()
+        cell.classList.add(gameFieldModel[i][j].getStyleClass())
+        if (gameFieldModel[i][j].isToBeRotated()){
+          numOfRotations = gameFieldModel[i][j].getNumberOfRotations()
           cell.classList.add(`rotate-${numOfRotations*90}`)
         }
-        playfield.appendChild(cell);
+        gamefield.appendChild(cell);
 
       }  
     }

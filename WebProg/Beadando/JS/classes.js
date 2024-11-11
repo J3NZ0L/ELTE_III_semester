@@ -34,9 +34,24 @@ export class EmptyTile extends Tile{
         this.hasCurveRail = false
     }
 
+    placeRail(){
+        if (!this.hasStraightRail && !this.hasCurveRail){
+            this.hasStraightRail = true
+        } else {
+            this.hasStraightRail = !this.hasStraightRail
+            this.hasCurveRail = !this.hasCurveRail
+        }
+        return true
+    }
+
     placeStraightRail(){
         this.hasStraightRail = true
     }
+
+    placeCurveRail(){
+        this.hasCurveRail = true
+    }
+
 
     getStyleClass(){
         if (this.hasStraightRail){
