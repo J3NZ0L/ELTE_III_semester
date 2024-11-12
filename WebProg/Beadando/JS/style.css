@@ -1,4 +1,3 @@
-/* General reset and styling */
 * {
     box-sizing: border-box;
     font-family: Arial, sans-serif;
@@ -11,32 +10,27 @@ body {
     background-color: #f7f7ed;
     margin: 0;
 }
-#menuPage {
-    text-align: center;
-    padding: 20px;
-}
 
-#gamePage {
+#gamePage, #menuPage {
   text-align: center;
   padding: 20px;
 }
 
-/* Title styling */
 .gameTitle {
     margin: 0 auto 20px auto;
-    font-size: 3em;
+    font-size: 4em;
     font-weight: bold;
     color: #d2b48c;
     text-shadow: 2px 2px #b08b5b;
 }
 
-/* Input styling */
 #playerNameSetting input {
     padding: 10px;
-    font-size: 1.2em;
+    font-size: 1em;
     border: 2px solid #d2b48c;
     border-radius: 8px;
-    width: 80%;
+    width: 55vw;
+    max-width: 300px;
     margin-bottom: 20px;
     text-align: center;
     color: #b08b5b;
@@ -47,11 +41,11 @@ body {
   font-size: 1.2em;
   border: 2px solid #9bbf8f;
   border-radius: 8px;
-  margin: 0 auto; /* ensure center alignment of the box */
-  text-align: center;
+  margin: 0 auto;
   color: #b08b5b;
   background-color: white;
-  width: 80%;
+  width: 55vw;
+  max-width: 300px;
 }
 
 #difficultySetting {
@@ -64,15 +58,13 @@ body {
   border-color: #b08b5b;
 }
 
-/* Difficulty buttons styling */
 #difficultySettingButtons {
   display: flex;
   flex: 1;
-  flex-direction: row; /* Stack elements vertically */
-  gap: 5px;              /* Space between elements */
+  flex-direction: row; /* place buttons explicitly in a row */
+  gap: 5px;              /* space buttons a bit */
   margin: 0 auto 0 auto;
   width: 100%;
-
 }
 
 #difficultySettingButtons button:hover {
@@ -80,22 +72,21 @@ body {
 }
 
 #difficultySettingButtons button {
-  padding: 10px; /* Adjust padding as needed */
+  padding: 10px;
   font-size: 15px;
   background-color: white;
   border-radius: 15px;
   margin: 0 auto;
-  border: 2px solid #9bbf8f; /* Green border */
-  color: #9bbf8f; /* Adjust based on your color scheme */
-  cursor: pointer; /* Pointer/hand icon */
-  float: left; /* Float the buttons side by side */
+  border: 2px solid #9bbf8f; 
+  color: #9bbf8f; 
+  cursor: pointer; 
 }
   
 .container-box p {
   display:block;
-  margin: 0; /* Removes default paragraph margin */
+  margin: 0;
   padding-bottom: 5px;
-  font-size: 18px;
+  font-size: 1em;
 }
 
 #difficultySettingButtons .difficulty-button.selected {
@@ -104,10 +95,10 @@ body {
   font-weight: bold;
 }
 
-/* Description and start button styling */
 #description, #startGame {
   margin: 10px 0;
 }
+
 .menu-button {
   padding: 15px;
   font-size: 1em;
@@ -116,37 +107,28 @@ body {
   background-color: #d3d3c3;
   color: #4a4a4a;
   cursor: pointer;
-  width: 120px;
+  width: 10em;
 }
+
 #startGame .menu-button {
   background-color: #b3b3b3;
   color: #ffffff;
   font-weight: bold;
 }
 
-/* Decorative rail track (simplified) */
 #railTrack {
   width: 100%;
-  height: 20px;
-  background: repeating-linear-gradient(
-  to right,
-  #d2b48c,
-  #d2b48c 20px,
-  #b08b5b 20px,
-  #b08b5b 40px
-  );
-  margin-top: 20px;
+  max-width: 65vw;
+  margin-top: 0.5em;
 }
-
-/* DONE TILL HERE, LOOK UPWARDS */
 
 #gameField {
   display: grid;
   gap: 1.5px; /* Space between cells */
   justify-content: center;
   margin: 20px auto;
-  width: 90vw; /* Set to a percentage for responsiveness */
-  max-width: 400px; /* Set a max width for larger screens */
+  width: 85vw; /* Set to a percentage for responsiveness */
+  max-width: 600px; /* Set a max width for larger screens */
 }
 
 #gameField.easy {
@@ -190,7 +172,7 @@ body {
   padding: 20px;
   border-radius: 8px;
   width: 80%;
-  max-width: 400px;
+  max-width: 600px;
   max-height: 80vh; 
   overflow-y: auto; /* enable vertical scrolling if needed */
   text-align: center;
