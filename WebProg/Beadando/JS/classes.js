@@ -1,5 +1,6 @@
 import { basePossibleDirections } from "./consts.js";
 
+// base class of all tiles
 class Tile{
     placeRail(){
     }
@@ -12,14 +13,11 @@ class Tile{
         return false
     }
   
+    // currently unused, might be needed for future features
     rotateDirections( numOfTimes){
       this.possibleEntrances.forEach(element => {
         element=(element+numOfTimes)%4
       });
-    }
-  
-    incTravelDirection(){
-  
     }
   
     isRailable(){

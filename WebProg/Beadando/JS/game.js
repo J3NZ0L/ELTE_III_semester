@@ -4,32 +4,32 @@ const startButton = document.querySelector("#buttonStartGame")
 const gamePageDiv = document.querySelector("#gamePage")
 const menuPageDiv = document.querySelector("#menuPage")
 const gameFieldDiv = document.querySelector("#gameField")
-
-
+const difficultyButtons = document.querySelectorAll(".difficulty-button")
+const elapsedTimeSpan = document.querySelector("#elapsedTime")
 const inGamePlayerNameP = document.querySelector("#inGamePlayerName")
 
-const difficultyButtons = document.querySelectorAll(".difficulty-button")
+let startTime
+let timerInterval
 
-let startTime;
-let timerInterval;
+let difficulty = "hard"
+let size
 
-let difficulty = "hard";
-
-let size;
-
-let gameFieldModel;
+let gameFieldModel
 
 startButton.addEventListener("click", onStartButtonClick)
-
-difficultyButtons.forEach(diffButton => {
-  diffButton.addEventListener("click", toggleSelectedDifficulty)
-})
 
 gameFieldDiv.addEventListener("click", onPrimaryMouseButtonClick)
 
 gameFieldDiv.addEventListener("contextmenu", onSecondaryMouseButtonClick)
 
+difficultyButtons.forEach(diffButton => {
+  diffButton.addEventListener("click", toggleSelectedDifficulty)
+})
 
+function toggleMenuAndGamePage(){
+  menuPageDiv.classList.toggle("hidden")
+  gamePageDiv.classList.toggle("hidden")
+}
 
 function onPrimaryMouseButtonClick(e){
   if (e.target.matches('#gameField div')){
@@ -46,11 +46,11 @@ function onSecondaryMouseButtonClick(e){
 
 function getXY(e){
   const closestDiv = e.target.closest("div")
-  const siblingDivs = Array.from(closestDiv.parentNode.querySelectorAll("div")); // Get all div siblings
-  const flatIndex = siblingDivs.indexOf(closestDiv); // Get the index of the clicked div
-  // calculate the appropriate matrix index
-  const x = Math.floor(flatIndex/size);
-  const y = flatIndex%size;
+  const siblingDivs = Array.from(closestDiv.parentNode.querySelectorAll("div")) // collect all div siblings into an array
+  const flatIndex = siblingDivs.indexOf(closestDiv) // get flat index of the div
+  // calculate the corresponding matrix index
+  const x = Math.floor(flatIndex/size)
+  const y = flatIndex%size
   return [x, y]
 }
 
@@ -59,6 +59,13 @@ function toggleSelectedDifficulty(e){
     difficultyButtons.forEach(diffButton => {
       diffButton.classList.toggle("selected")
     })
+  }
+  if (size==5){
+    console.log("belep7re")
+    size==7
+  } else {
+    console.log("belep5re")
+    size==5
   }
   
 }
@@ -83,24 +90,23 @@ function tryToRotateRail(arrOfCoords){
 }
 
 function updateDisplay(arrOfCoords){
-  const gameFieldDivs = Array.from(document.querySelector("#gameField").querySelectorAll("div"));
+  const gameFieldDivs = Array.from(document.querySelector("#gameField").querySelectorAll("div"))
 
   const x = arrOfCoords[0]
   const y = arrOfCoords[1]
   const flatIndex = x*size+y
 
   const numOfRotations = gameFieldModel[x][y].getNumberOfRotations()
-  const regex = new RegExp(`\\b${numOfRotations}\\b`);
+  const regex = new RegExp(`\\b${numOfRotations}\\b`) // regex for searching for the value of numOfRotations in the list of classes
+  const currentClassName = gameFieldModel[x][y].getStyleClass()
 
   for (let className of gameFieldDivs[flatIndex].classList) {
-    if (className.includes("Tile")) {
-      gameFieldDivs[flatIndex].classList.replace(className, gameFieldModel[x][y].getStyleClass()); 
+    if (className.includes("Tile") && className !== currentClassName) {
+      gameFieldDivs[flatIndex].classList.replace(className, currentClassName) 
     }
     if (className.includes("rotate") && !regex.test(className)){
-
-      gameFieldDivs[flatIndex].classList.replace(className, `rotate-${numOfRotations*90}`);
+      gameFieldDivs[flatIndex].classList.replace(className, `rotate-${numOfRotations*90}`)
     } else if (!className.includes("rotate") && numOfRotations>0){
-
       gameFieldDivs[flatIndex].classList.add(`rotate-${numOfRotations*90}`)
     }
   }
@@ -108,65 +114,37 @@ function updateDisplay(arrOfCoords){
 
 function onStartButtonClick(e){
     toggleMenuAndGamePage()
-    createStaticMatrix();
-    initGame();
+    createStaticMatrix()
+    initGame()
 }
 
-const tileTypes = ["emptyTile", "bridgeTile", "mountainTile", "oasisTile"]
-
-const railedTileTypes = {
-  "emptyTile": ["curve-rail", "straight-rail"],
-  "bridgeTile": "bridge-rail",
-  "mountainTile": "mountain-rail",
-}
-
-const possibleTravelDirectionMap = {
-}
-
-const Direction = Object.freeze({
-  NORTH: 0,
-  EAST: 1,
-  SOUTH: 2,
-  WEST: 3
-})
-
+// currently unused (might be needed for a feature later)
 function isCoordinateOfSide(x, y){
   return x==0 || y==0 || x==size-1 || y==size-1
 }
 
-
-function toggleMenuAndGamePage(){
-    menuPageDiv.classList.toggle("hidden");
-    gamePageDiv.classList.toggle("hidden");
-}
-
-
 function createStaticMatrix() {
-    const gamefield = document.querySelector("#gameField");
     size = parseInt(document.querySelector(".difficulty-button.selected").textContent.charAt(0))
-    // Clear any existing cells
-    gamefield.innerHTML = "";
-  
-    // Apply appropriate class for grid size
-    gamefield.className = size === 5 ? "easy" : "hard";
+    
+    // apply class corresponding to grid size
+    gameFieldDiv.className = size === 5 ? "easy" : "hard"
 
     let numberOfLevel = Math.floor(Math.random()*5)
     // Generate cells for the matrix
     let numOfRotations = 0
-    let levels = size === 5 ? baseEasyLevels : baseHardLevels; 
+    let levels = size === 5 ? baseEasyLevels : baseHardLevels 
 
     gameFieldModel = levels[numberOfLevel]
 
     for (let i = 0; i < size; i++) {
       for (let j =0; j< size; j++){
-        const cell = document.createElement("div");
+        const cell = document.createElement("div")
         cell.classList.add(gameFieldModel[i][j].getStyleClass())
         if (gameFieldModel[i][j].isToBeRotated()){
           numOfRotations = gameFieldModel[i][j].getNumberOfRotations()
           cell.classList.add(`rotate-${numOfRotations*90}`)
         }
-        gamefield.appendChild(cell);
-
+        gameFieldDiv.appendChild(cell)
       }  
     }
   }
@@ -175,27 +153,26 @@ function initGame(){
   const playerName = document.querySelector("#playerNameInput").value
   inGamePlayerNameP.innerHTML = playerName
 
-  startTime = Date.now(); // Capture the starting time (milliseconds)
-  timerInterval = setInterval(updateElapsedTime, 1000); // Update every second
+  // start and set the timer to update
+  startTime = Date.now()
+  timerInterval = setInterval(updateElapsedTime, 1000) 
 }
 
 function updateElapsedTime() {
-  // Calculate elapsed time in seconds
-  let elapsedTime = Math.floor((Date.now() - startTime) / 1000);
+  let elapsedTime = Math.floor((Date.now() - startTime) / 1000) // in seconds
 
-  // Calculate minutes and seconds
-  let minutes = Math.floor(elapsedTime / 60);  // Divide by 60 to get minutes
-  let seconds = elapsedTime % 60;  // Remainder is the seconds
+  let minutes = Math.floor(elapsedTime / 60)  
+  let seconds = elapsedTime % 60 
 
-  // Format minutes and seconds with leading zeros if necessary
-  minutes = minutes < 10 ? '0' + minutes : minutes;
-  seconds = seconds < 10 ? '0' + seconds : seconds;
+  // format minutes and seconds with optional leading zeros
+  minutes = minutes < 10 ? '0' + minutes : minutes
+  seconds = seconds < 10 ? '0' + seconds : seconds
 
-  // Update the displayed time
-  document.querySelector("#elapsedTime").textContent = `${minutes}:${seconds}`;
+  // update displayed time
+  elapsedTimeSpan.textContent = `${minutes}:${seconds}`
 }
 
-// To stop the timer when the game ends (e.g., on game over):
-function stopGame() {
-  clearInterval(timerInterval); // Stop the timer
+// currently unused (might be needed for a feature later)
+function stopTimer() {
+  clearInterval(timerInterval)
 }
