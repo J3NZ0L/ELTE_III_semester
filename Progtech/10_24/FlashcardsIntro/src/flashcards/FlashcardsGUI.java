@@ -32,10 +32,10 @@ import javax.swing.JTextArea;
  */
 public class FlashcardsGUI {
 
-    private ArrayList<Card> cards;
-    private int cardNumber;
-    private boolean showQuestion;
-    private int score;
+    private CardPackModel model;
+
+    private ArrayList<JButton> buttons;
+    private ArrayList<ActionListener> listeners;
 
     private JFrame frame;
     private JPanel northPanel;
@@ -44,6 +44,7 @@ public class FlashcardsGUI {
     private JLabel scoreLabel;
 
     public FlashcardsGUI() {
+        model = new CardPackModel();
         frame = new JFrame("Flashcards");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -60,13 +61,15 @@ public class FlashcardsGUI {
         southPanel.add(scoreLabel);
         ArrayList<String> buttonLabels = new ArrayList<>(
                 Arrays.asList("Reset", "Toggle Q/A", "Wrong answer", "Good answer"));
-        ArrayList<ActionListener> listeners = new ArrayList<ActionListener>(
+        listeners = new ArrayList<ActionListener>(
                 Arrays.asList(new ResetButtonActionListener(),
                         new ToggleButtonActionListener(),
                         new AnswerButtonActionListener(false),
                         new AnswerButtonActionListener(true)));
+        buttons = new ArrayList<>();
         for (int i = 0; i < buttonLabels.size(); ++i) {
             JButton button = new JButton(buttonLabels.get(i));
+            buttons.add(button);
             southPanel.add(button);
             button.addActionListener(listeners.get(i));
         }
@@ -93,26 +96,35 @@ public class FlashcardsGUI {
     }
 
     public void reset() {
-        score = 0;
-        cardNumber = 0;
-        showQuestion = true;
+        model.reset();
+        setActionListeners();
         updateScore();
         updateDisplay();
+
     }
 
     private void updateScore() {
-        scoreLabel.setText(score + "/" + cardNumber);
+        scoreLabel.setText(model.getScore() + "/" + model.getCardNumber());
     }
 
     private void updateDisplay() {
-        if (cards != null && cardNumber < cards.size()) {
-            if (showQuestion) {
-                display.setText(cards.get(cardNumber).getQuestion());
-            } else {
-                display.setText(cards.get(cardNumber).getAnswer());
-            }
-        } else if (cards != null) {
+        if (!model.isEmpty() && model.getCardNumber() < model.getCardsSize()) {
+            display.setText(model.getDescription());
+        } else if (!model.isEmpty()) {
             display.setText("The End");
+            removeActionListeners();
+        }
+    }
+
+    private void removeActionListeners() {
+        for (int i=listeners.size()-1; i>=listeners.size()-2; i--) {
+            buttons.get(i).removeActionListener(listeners.get(i));
+        }
+    }
+
+    private void setActionListeners(){
+        for (int i=listeners.size()-1; i>=listeners.size()-2; i--) {
+            buttons.get(i).addActionListener(listeners.get(i));
         }
     }
 
@@ -124,15 +136,9 @@ public class FlashcardsGUI {
             int returnVal = fc.showOpenDialog(frame);
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 File file = fc.getSelectedFile();
-                try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-                    String line;
-                    cards = new ArrayList<>();
-                    while ((line = br.readLine()) != null) {
-                        String[] qa = line.split("~");
-                        if (qa.length == 2) {
-                            cards.add(new Card(qa[0], qa[1]));
-                        }
-                    }
+                try {
+                    model.openFile(file);
+                    reset();
                 } catch (FileNotFoundException ex) {
                     JOptionPane.showMessageDialog(frame, "File not found!",
                             "Error", JOptionPane.ERROR_MESSAGE);
@@ -140,7 +146,7 @@ public class FlashcardsGUI {
                     JOptionPane.showMessageDialog(frame, "IO error!",
                             "Error", JOptionPane.ERROR_MESSAGE);
                 }
-                reset();
+
             }
         }
     }
@@ -150,7 +156,7 @@ public class FlashcardsGUI {
         @Override
         public void actionPerformed(ActionEvent e) {
             // Exercise: implement toggling between the question and answer here
-            showQuestion = !showQuestion;
+            model.toggle();
             updateDisplay();
         }
 
@@ -176,10 +182,11 @@ public class FlashcardsGUI {
         @Override
         public void actionPerformed(ActionEvent e) {
             // Exercise: implement giving an answer, updating the score, and moving onto the next question here
-            if (incScore){
-                score += 1;
+            if (incScore) {
+                model.goodAnswer();
+            } else{
+                model.wrongAnswer();
             }
-            cardNumber++;
             updateScore();
             updateDisplay();
         }
@@ -187,37 +194,3 @@ public class FlashcardsGUI {
     }
 
 }
-/**
- * eddig spagetti a kod
- *
- * nezet es az allapotreprezentacio egybe van
- * allapotreprezentacionak kulon kene lennie
- *
- * modell-nezet architektura legyen alkalmazva
- * modell: cardnumber showquestion stb
- * sajat listajat felto
- *
- *
- * model.good/wronganswer
- * model.toggle()
- * updateDisplayben lekerdezni modellbol mit kell megjeleniteni
- *
- * model.getText()
- *
- * model.getScore model.getNumber (az updateScoreban)
- *
- * model.reset()
- *
- * elso negy deklaraciot is modelbe
- *
- * Model: (CardPackModel)
- * open(File)
- * toggle()
- * goodAnswer()
- * wrongAnswer()
- * reset()
- * getScore()
- * getCardNumber()
- * getDescription() // G/A
- *
- */

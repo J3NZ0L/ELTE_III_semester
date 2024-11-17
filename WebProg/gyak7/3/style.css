@@ -1,0 +1,14 @@
+.column {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+table {
+    margin: auto;
+}
+
+td {
+    vertical-align: top;
+    padding: 0px 20px;
+}

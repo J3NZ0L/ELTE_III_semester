@@ -13,7 +13,7 @@ class Btree {
     Node(int v, Node *l = NULL, Node *r = NULL): v(v), l(l), r(r){}
     // copy konstruktort felul kell irni ha az eletciklusat mi szeretnenk kezelni
     // 
-  }
+  };
 
   Node *r;
   void deleteBranch(Node *b){
@@ -23,28 +23,47 @@ class Btree {
 
     deleteBranch(b->l);
     deleteBranch(b->r);
+    std::cout << "deleting branch with root value: " << b->v << std::endl;
     delete b;
   }
+
+  void push(int e, Node *b){
+    if (b->v == e){ return;}
+    
+    if (e < b->v){
+      if (NULL == b-> l){
+        b->l == new Node(e);
+        return;
+      }
+      push(e, b->l);
+    } 
+    else {
+      if (NULL == b->r){
+        b->r = new Node(e);
+        return;
+      }
+      
+      push(e, b->r);
+    }
+  }
+  
 public: //c++ban szekciok vannak, nem kell kulon definialni a lathatosagat minden egyes adattagnak metodusnak egy szekcion belul (alapertelmezett szekcio private ugye)
   Btree(){
     r = NULL;
   }
   ~Btree(){
+
+    std::cout << "~Btree(), " << std::endl; // h tudjuk h melyik elemet szabaditottuk fel eppen
     deleteBranch(r);
-    std::cout << "~Btree(), " << v << std::endl; // h tudjuk h melyik elemet szabaditottuk fel eppen
   } //destruktornak nincs parametere, legtobbszor fordito kezeli, o nem tudja mi lehetne - mindenkepp kell lennie igy parameter nelkulinek (egyebkent lehet definialni ezen kivul parameterezettet is)
     //
- void pushLeft(int e){
-   if (NULL == r){
-     r = new Node(e);
-   }
-   r-> left = new Node(e);
- }
- void pushRight(int e){
-   if (NULL == r){
-     r = new Node(e);
-   }
-  r->right = new Node(e);
- }
+
+void push(int e){
+    if (NULL == r){
+      r = new Node(e);
+      return;
+    }
+  push(e, r);
+  }
 
 };

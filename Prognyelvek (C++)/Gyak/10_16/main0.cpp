@@ -10,6 +10,7 @@ int main(){
   // 9 |   for (int i=0; i<v.size(); ++i){
 
   std::vector<int> v = {3, 5, 4};
+
   for (int i=0; i<v.size(); ++i){
     std::cout << v[i] << std::endl;
   }
@@ -23,6 +24,7 @@ int main(){
   // itt most bantjukk az iteratort, push_front lenne a megfelelo
   for (int i=0; i<5; i++){
     v.push_back(90-i);
+    //v.push_front(i);
   }
   
   std::vector<int>::iterator b = v.begin();
@@ -39,14 +41,23 @@ int main(){
   for (std::vector<int>::iterator i = v.begin(); i!=v.end(); ++i){
     std::cout << *i << std::endl;
   }
+
   // kovetkezo iteracio nem helyes, HF megnezni mivel lehet kijavitani, ciklusfeltetel, rbegin rend lehet kerdeses, pointer aritmetikaval valo egyszerusite, ciklusfeltetel, rbegin rend lehet kerdeses, pointer aritmetikaval valo egyszerusitess:
+
+  /*
   for (std::vector<int>::reverse_iterator r = v.rend(); r!= v.rbegin() ;++r){
     std::cout << *r << std::endl; 
   }
-
+*/
   std::cout << "-----------" << std::endl;
   for (int i=0; i<5; i++){
     v.push_back(90-i);
+  }
+
+  std::cout << "----------" << std::endl;
+
+  for (std::vector<int>::iterator i=v.begin(); i<=v.end(); i++){
+    std::cout << *i << std::endl;
   }
 
   return 0;
