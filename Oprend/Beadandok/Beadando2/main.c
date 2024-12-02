@@ -1,7 +1,8 @@
 #include <stdio.h>
 
 #include "winery_record_handling.h"
-#include "supervisement.h"
+#include "winery_record_handling.c"
+#include "supervisement.c"
 
 
 int main() {
@@ -33,7 +34,7 @@ int main() {
                 delete_record(filename);
                 break;
             case 5:
-                initiate_supervisement_of_wineries(filename, normatives);
+                initiate_supervisement_of_wineries(filename, f_normatives);
                 break;
             case 6:
                 printf("Exiting.\n");
