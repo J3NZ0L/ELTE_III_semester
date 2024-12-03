@@ -1,5 +1,5 @@
 #include <stdio.h>
-
+#include <errno.h>
 #include "winery_record_handling.h"
 #include "winery_record_handling.c"
 #include "supervisement.c"
@@ -16,7 +16,8 @@ int main() {
         printf("2. List Records\n");
         printf("3. Modify Record\n");
         printf("4. Delete Record\n");
-        printf("5. Exit\n");
+        printf("5. Initiate Supervisement Amongst Wineries\n");
+        printf("6. Exit\n");
         printf("Select an option: ");
         scanf("%d", &choice);
 
@@ -38,10 +39,12 @@ int main() {
                 break;
             case 6:
                 printf("Exiting.\n");
+                break;
             default:
                 printf("Invalid choice. Please try again.\n");
         }
     } while (choice != 6);
+    printf("Error num: ", errno);
 
     return 0;
 }

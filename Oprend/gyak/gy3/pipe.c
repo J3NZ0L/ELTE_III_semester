@@ -26,7 +26,7 @@
 
            if (pid == 0) 
 	   {		    	// child process
-	       sleep(3);	// sleeping a few seconds, not necessary
+	       // sleep(3);	// sleeping a few seconds, not necessary
                close(pipefd[1]);  //Usually we close the unused write end
 	       printf("Gyerek elkezdi olvasni a csobol az adatokat!\n");
                read(pipefd[0],sz,sizeof(sz)); // reading max 100 chars
@@ -38,6 +38,7 @@
            {    // szulo process 
                printf("Szulo indul!\n");
                close(pipefd[0]); //Usually we close unused read end
+           sleep(3);
                write(pipefd[1], "Hajra Fradi!",13);
                close(pipefd[1]); // Closing write descriptor 
                printf("Szulo beirta az adatokat a csobe!\n");
