@@ -3,6 +3,7 @@
 #include "winery_record_handling.h"
 #include "winery_record_handling.c"
 #include "supervisement.c"
+#include "supervisement.h"
 
 
 int main() {
@@ -35,7 +36,7 @@ int main() {
                 delete_record(filename);
                 break;
             case 5:
-                initiate_supervisement_of_wineries(filename, f_normatives);
+                initiate_supervisement_of_wineries();
                 break;
             case 6:
                 printf("Exiting.\n");
@@ -44,8 +45,9 @@ int main() {
                 printf("Invalid choice. Please try again.\n");
         }
     } while (choice != 6);
-    printf("Error num: ", errno);
+    printf("Error num: %d", errno);
 
     return 0;
 }
 
+void initiate_supervisement_of_wineries();

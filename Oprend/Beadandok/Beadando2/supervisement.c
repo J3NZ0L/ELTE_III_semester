@@ -9,12 +9,12 @@
 pid_t governor_pid;
 int pipe_fd[2]; // Pipe file descriptors: [0] for reading, [1] for writing
 
-// Function to handle SIGUSR1 signal in the governor process
+// Function to handle SIGUSR1 signal in the governor process - the governor sends the data to be supervised, with the normaitve, through a pipe
 void handle_signal(int signo) {
-    static const char *filename = "harvest_records.txt";
-    static const char *f_normatives = "sugar_level_normatives.txt";
-
     if (signo == SIGUSR1) {
+        static const char *filename = "harvest_records.txt";
+        static const char *f_normatives = "sugar_level_normatives.txt";
+
         printf("Governor received SIGUSR1 from the committee.\n");
 
         // Open files
@@ -91,13 +91,8 @@ void handle_signal(int signo) {
 void initiate_supervisement_of_wineries() {
     srand(time(NULL));
     governor_pid = getpid();
-
-    // Set up signal handler in the governor process
-    struct sigaction sa;
-    sa.sa_handler = handle_signal;
-    sa.sa_flags = 0;
-    sigemptyset(&sa.sa_mask);
-    sigaction(SIGUSR1, &sa, NULL);
+    
+    signal(SIGUSR1, handle_signal);
 
     while (1) {
         sleep(1);
@@ -118,6 +113,7 @@ void initiate_supervisement_of_wineries() {
 
             if (committee_pid > 0) {
                 // GOVERNOR
+                pause();
                 close(pipe_fd[0]); // Close reading end in governor
                 waitpid(committee_pid, NULL, 0); // Wait for committee to finish
                 close(pipe_fd[1]); // Close writing end in governor after use
