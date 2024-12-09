@@ -15,7 +15,9 @@ public class TronNeonBikeBattle extends JFrame {
     private Timer gameTimer;
     private Timer displayTimer; // Timer for the displayed time
 
-    private HashSet<Point> lightTrails = new HashSet<>();
+    private HashSet<Point> lightTrailsPlayer1 = new HashSet<>();
+    private HashSet<Point> lightTrailsPlayer2 = new HashSet<>();
+
     private Connection dbConnection;
 
     private JLabel timerLabel;  // JLabel to display the timer
@@ -68,11 +70,13 @@ public class TronNeonBikeBattle extends JFrame {
         String player2Name = JOptionPane.showInputDialog(this, "Enter Player 2 name:");
         Color player1Color = JColorChooser.showDialog(this, "Choose Player 1 color", Color.RED);
         Color player2Color = JColorChooser.showDialog(this, "Choose Player 2 color", Color.BLUE);
+        Color player1TrailColor = ColorUtils.deriveLighterColor(player1Color, 0.4f);
+        Color player2TrailColor = ColorUtils.deriveLighterColor(player2Color, 0.4f);
+        player1 = new Player(player1Name, player1Color, player1TrailColor, WIDTH / 4, HEIGHT / 2, KeyEvent.VK_W, KeyEvent.VK_A, KeyEvent.VK_S, KeyEvent.VK_D);
+        player2 = new Player(player2Name, player2Color, player2TrailColor, 3 * WIDTH / 4, HEIGHT / 2, KeyEvent.VK_UP, KeyEvent.VK_LEFT, KeyEvent.VK_DOWN, KeyEvent.VK_RIGHT);
 
-        player1 = new Player(player1Name, player1Color, WIDTH / 4, HEIGHT / 2, KeyEvent.VK_W, KeyEvent.VK_A, KeyEvent.VK_S, KeyEvent.VK_D);
-        player2 = new Player(player2Name, player2Color, 3 * WIDTH / 4, HEIGHT / 2, KeyEvent.VK_UP, KeyEvent.VK_LEFT, KeyEvent.VK_DOWN, KeyEvent.VK_RIGHT);
-
-        lightTrails.clear();
+        lightTrailsPlayer1.clear();
+        lightTrailsPlayer2.clear();
         running = true;
 
         if (gameTimer != null) {
@@ -162,20 +166,21 @@ public class TronNeonBikeBattle extends JFrame {
             Point p1 = new Point(player1.x, player1.y);
             Point p2 = new Point(player2.x, player2.y);
 
-            if (lightTrails.contains(p1) || lightTrails.contains(p2) ||
+            if (lightTrailsPlayer1.contains(p1) || lightTrailsPlayer1.contains(p2) ||
+                    lightTrailsPlayer2.contains(p1) || lightTrailsPlayer2.contains(p2) ||
                     p1.x < 0 || p1.x >= WIDTH || p1.y < 0 || p1.y >= HEIGHT ||
                     p2.x < 0 || p2.x >= WIDTH || p2.y < 0 || p2.y >= HEIGHT) {
 
                 running = false;
-                String winner = (lightTrails.contains(p1) ? player2.name : player1.name);
+                String winner = (lightTrailsPlayer1.contains(p1) || lightTrailsPlayer2.contains(p1) ? player2.name : player1.name);
                 updateScore(winner);
                 gameTimer.stop();
                 displayTimer.stop();
                 JOptionPane.showMessageDialog(TronNeonBikeBattle.this, winner + " wins! Time played: "+ secondsElapsed + " s", "Game Over", JOptionPane.INFORMATION_MESSAGE);
             }
 
-            lightTrails.add(p1);
-            lightTrails.add(p2);
+            lightTrailsPlayer1.add(p1);
+            lightTrailsPlayer2.add(p2);
 
             repaint();
         }
@@ -198,8 +203,12 @@ public class TronNeonBikeBattle extends JFrame {
     public void paint(Graphics g) {
         super.paint(g);
         if (running) {
-            for (Point p : lightTrails) {
-                g.setColor(Color.WHITE);
+            for (Point p : lightTrailsPlayer1) {
+                g.setColor(player1.trailColor);
+                g.fillRect(p.x, p.y, CELL_SIZE, CELL_SIZE);
+            }
+            for (Point p : lightTrailsPlayer2) {
+                g.setColor(player2.trailColor);
                 g.fillRect(p.x, p.y, CELL_SIZE, CELL_SIZE);
             }
             player1.draw(g);
@@ -214,19 +223,25 @@ public class TronNeonBikeBattle extends JFrame {
     private static class Player {
         String name;
         Color color;
+        Color trailColor;  // New attribute for trail color
         int x, y;
         int dx = 0, dy = -CELL_SIZE; // Initial direction
         int upKey, leftKey, downKey, rightKey;
 
-        Player(String name, Color color, int startX, int startY, int upKey, int leftKey, int downKey, int rightKey) {
+        Player(String name, Color color, Color trailColor, int startX, int startY, int upKey, int leftKey, int downKey, int rightKey) {
             this.name = name;
             this.color = color;
+            this.trailColor = trailColor;
             this.x = startX;
             this.y = startY;
             this.upKey = upKey;
             this.leftKey = leftKey;
             this.downKey = downKey;
             this.rightKey = rightKey;
+        }
+
+        public Color getTrailColor() {
+            return trailColor;
         }
 
         void move() {
