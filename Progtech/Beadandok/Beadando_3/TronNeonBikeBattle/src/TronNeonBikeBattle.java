@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Properties;
 
@@ -15,8 +16,8 @@ public class TronNeonBikeBattle extends JFrame {
     private Timer gameTimer;
     private Timer displayTimer; // Timer for the displayed time
 
-    private HashSet<Point> lightTrailsPlayer1 = new HashSet<>();
-    private HashSet<Point> lightTrailsPlayer2 = new HashSet<>();
+    private ArrayList<Point> lightTrailsPlayer1 = new ArrayList<>();
+    private ArrayList<Point> lightTrailsPlayer2 = new ArrayList<>();
 
     private Connection dbConnection;
 
@@ -199,8 +200,8 @@ public class TronNeonBikeBattle extends JFrame {
         }
     }
 
-    @Override
-    public void paint(Graphics g) {
+    //@Override
+    public void paintDepr(Graphics g) {
         super.paint(g);
         if (running) {
             for (Point p : lightTrailsPlayer1) {
@@ -216,6 +217,54 @@ public class TronNeonBikeBattle extends JFrame {
         }
     }
 
+    @Override
+    public void paint(Graphics g) {
+        super.paint(g);
+        if (running) {
+            // Draw the new segments of the trail for player 1
+            g.setColor(player1.trailColor);
+            g.fillRect(player1.prevX, player1.prevY, CELL_SIZE, CELL_SIZE);
+
+            // Draw the new segments of the trail for player 2
+            g.setColor(player2.trailColor);
+            g.fillRect(player2.prevX, player2.prevY, CELL_SIZE, CELL_SIZE);
+
+            // Draw the players at their current positions
+            player1.draw(g);
+            player2.draw(g);
+        }
+    }
+
+    public void paintWithLines(Graphics g){
+        super.paint(g);
+        if (running) {
+            Graphics2D g2d = (Graphics2D) g;
+
+            // Set the stroke (line width) to half the tile size
+            int lineWidth = CELL_SIZE / 2;
+            g2d.setStroke(new BasicStroke(lineWidth));
+
+            Point p, prev;
+            // Draw the light trails for Player 1 (Red)
+            g2d.setColor(player1.getTrailColor());
+            for (int i=1; i<lightTrailsPlayer1.size(); i++) {
+                p = lightTrailsPlayer1.get(i);
+                prev = lightTrailsPlayer1.get(i-1);
+                g2d.drawLine(prev.x, prev.y, p.x, p.y);
+            }
+
+            // Draw the light trails for Player 2 (Blue)
+            g2d.setColor(player2.getTrailColor());
+            for (int i=1; i<lightTrailsPlayer2.size(); i++) {
+                p = lightTrailsPlayer2.get(i);
+                prev = lightTrailsPlayer2.get(i-1);
+                g2d.drawLine(prev.x, prev.y, p.x, p.y);
+            }
+            player1.draw(g);
+            player2.draw(g);
+        }
+    }
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(TronNeonBikeBattle::new);
     }
@@ -225,6 +274,7 @@ public class TronNeonBikeBattle extends JFrame {
         Color color;
         Color trailColor;  // New attribute for trail color
         int x, y;
+        int prevX, prevY;
         int dx = 0, dy = -CELL_SIZE; // Initial direction
         int upKey, leftKey, downKey, rightKey;
 
@@ -234,6 +284,8 @@ public class TronNeonBikeBattle extends JFrame {
             this.trailColor = trailColor;
             this.x = startX;
             this.y = startY;
+            this.prevX = startX;  // Initialize previous position
+            this.prevY = startY;  // Initialize previous position
             this.upKey = upKey;
             this.leftKey = leftKey;
             this.downKey = downKey;
@@ -245,7 +297,9 @@ public class TronNeonBikeBattle extends JFrame {
         }
 
         void move() {
-            x += dx;
+            prevX = x;  // Store current position as previous
+            prevY = y;
+            x += dx;  // Update position for example (this would be based on direction)
             y += dy;
         }
 

@@ -1,10 +1,14 @@
 # Todos regarding the assignment
 - [x] add a visible Timer
 
-- [ ] distinct the light trails of the two players
+- [x] distinct the light trails of the two players
+- [x] reintegrate the movement of the players from gpt
+- [ ] optimize the painting or smth
 
 - [ ] decouple the app into two components: model and view (MV architecture) 
  
 - [ ] create class diagram, not excluding the view part, with just the classes and their relationships
 
 - [ ] figure out a lot of test cases, including ones which are quite logical and self-evident
+
+- [ ] generate the javadocs for every method and simplify them 
