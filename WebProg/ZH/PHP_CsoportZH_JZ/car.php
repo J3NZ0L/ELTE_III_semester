@@ -2,7 +2,6 @@
 include_once "jsonstorage.php";
 
 class Car{
-    public $_id = null;
     public $licensePlate;
     public $color;
     public $brand;
@@ -17,7 +16,6 @@ class Car{
     public static function from_array(array $arr): Car
     {
         $instance = new Car();
-        $instance->_id = $arr['_id'] ?? null;
         $instance->licensePlate = $arr['licensePlate'] ?? null;
         $instance->categocolorry = $arr['color'] ?? null;
         $instance->price = $brand['brand'] ?? null;
