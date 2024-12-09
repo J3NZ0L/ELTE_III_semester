@@ -12,10 +12,14 @@ public class TronNeonBikeBattle extends JFrame {
 
     private Player player1, player2;
     private boolean running = false;
-    private Timer timer;
+    private Timer gameTimer;
+    private Timer displayTimer; // Timer for the displayed time
 
     private HashSet<Point> lightTrails = new HashSet<>();
     private Connection dbConnection;
+
+    private JLabel timerLabel;  // JLabel to display the timer
+    private int secondsElapsed = 0;  // Elapsed time in seconds
 
     public TronNeonBikeBattle() {
         setTitle("Tron Light Cycle Game");
@@ -28,13 +32,21 @@ public class TronNeonBikeBattle extends JFrame {
         JMenu gameMenu = new JMenu("Game");
         JMenuItem newGame = new JMenuItem("New Game");
         JMenuItem highScores = new JMenuItem("High Scores");
+        JMenuItem pauseGame = new JMenuItem("Pause Game"); // Pause functionality
         gameMenu.add(newGame);
         gameMenu.add(highScores);
+        gameMenu.add(pauseGame);  // Added the pause option
         menuBar.add(gameMenu);
         setJMenuBar(menuBar);
 
         newGame.addActionListener(e -> startNewGame());
         highScores.addActionListener(e -> showHighScores());
+        pauseGame.addActionListener(e -> toggleGamePause()); // Pause on click
+
+        // Timer label for displaying time played
+        timerLabel = new JLabel("Time: 0s", JLabel.CENTER);
+        timerLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        add(timerLabel, BorderLayout.NORTH);  // Add timer label to the top of the frame
 
         // Database setup
         setupDatabase();
@@ -63,11 +75,30 @@ public class TronNeonBikeBattle extends JFrame {
         lightTrails.clear();
         running = true;
 
-        if (timer != null) {
-            timer.stop();
+        if (gameTimer != null) {
+            gameTimer.stop();
         }
-        timer = new Timer(100, new GameLoop());
-        timer.start();
+
+        gameTimer = new Timer(100, new GameLoop());
+        gameTimer.start();
+
+        // Timer for tracking elapsed time
+        secondsElapsed = 0;
+        if (displayTimer != null) {
+            displayTimer.stop();  // Stop any existing display timer
+        }
+        // Update the timer label every second
+        displayTimer = new Timer(1000, e -> updateTimerDisplay());  // Trigger every 1 second
+        displayTimer.start();  // Start the display timer
+
+        repaint();
+    }
+
+    private void updateTimerDisplay() {
+        if (running) {
+            secondsElapsed++;  // Increment the time
+            timerLabel.setText("Time: " + secondsElapsed + "s");  // Update the label
+        }
     }
 
     private void showHighScores() {
@@ -82,6 +113,17 @@ public class TronNeonBikeBattle extends JFrame {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    private void toggleGamePause() {
+        if (running) {
+            running = false; // Pause the game
+            gameTimer.stop(); // Stop the game timer
+        } else {
+            running = true; // Resume the game
+            gameTimer.start(); // Start the game timer
+        }
+        repaint();
     }
 
     private void setupDatabase() {
@@ -110,7 +152,7 @@ public class TronNeonBikeBattle extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             if (!running) {
-                timer.stop();
+                gameTimer.stop();
                 return;
             }
 
@@ -127,7 +169,9 @@ public class TronNeonBikeBattle extends JFrame {
                 running = false;
                 String winner = (lightTrails.contains(p1) ? player2.name : player1.name);
                 updateScore(winner);
-                JOptionPane.showMessageDialog(TronNeonBikeBattle.this, winner + " wins!", "Game Over", JOptionPane.INFORMATION_MESSAGE);
+                gameTimer.stop();
+                displayTimer.stop();
+                JOptionPane.showMessageDialog(TronNeonBikeBattle.this, winner + " wins! Time played: "+ secondsElapsed + " s", "Game Over", JOptionPane.INFORMATION_MESSAGE);
             }
 
             lightTrails.add(p1);
