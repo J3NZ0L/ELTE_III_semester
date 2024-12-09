@@ -84,7 +84,7 @@ public class TronNeonBikeBattle extends JFrame {
             gameTimer.stop();
         }
 
-        gameTimer = new Timer(100, new GameLoop());
+        gameTimer = new Timer(200, new GameLoop());
         gameTimer.start();
 
         // Timer for tracking elapsed time
@@ -200,8 +200,8 @@ public class TronNeonBikeBattle extends JFrame {
         }
     }
 
-    //@Override
-    public void paintDepr(Graphics g) {
+    @Override
+    public void paint(Graphics g) {
         super.paint(g);
         if (running) {
             for (Point p : lightTrailsPlayer1) {
@@ -217,8 +217,8 @@ public class TronNeonBikeBattle extends JFrame {
         }
     }
 
-    @Override
-    public void paint(Graphics g) {
+    //@Override
+    public void paintJustOneSegment(Graphics g) {
         super.paint(g);
         if (running) {
             // Draw the new segments of the trail for player 1
