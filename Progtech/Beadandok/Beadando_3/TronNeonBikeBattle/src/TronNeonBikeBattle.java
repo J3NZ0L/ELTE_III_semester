@@ -1,324 +1,197 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.sql.*;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Properties;
 
-public class TronNeonBikeBattle extends JFrame {
-    private final int WIDTH = 800;
-    private final int HEIGHT = 600;
-    private static final int CELL_SIZE = 10;
+public class TronNeonBikeBattle extends JPanel implements ActionListener, KeyListener {
+    private Timer timer;
+    private final int GRID_SIZE = 10;
+    private final int PANEL_WIDTH = 800;
+    private final int PANEL_HEIGHT = 800;
+    private final int DELAY = 50;
 
-    private Player player1, player2;
-    private boolean running = false;
-    private Timer gameTimer;
-    private Timer displayTimer; // Timer for the displayed time
+    private ArrayList<Point> turningPointsPlayer1 = new ArrayList<>();
+    private ArrayList<Point> turningPointsPlayer2 = new ArrayList<>();
 
-    private ArrayList<Point> lightTrailsPlayer1 = new ArrayList<>();
-    private ArrayList<Point> lightTrailsPlayer2 = new ArrayList<>();
+    private Point currentPositionPlayer1 = new Point(200, 400);
+    private Point currentPositionPlayer2 = new Point(600, 400);
 
-    private Connection dbConnection;
+    private Point directionPlayer1 = new Point(GRID_SIZE, 0); // Start moving right
+    private Point directionPlayer2 = new Point(-GRID_SIZE, 0); // Start moving left
 
-    private JLabel timerLabel;  // JLabel to display the timer
-    private int secondsElapsed = 0;  // Elapsed time in seconds
+    private boolean isRunning = true;
+    private boolean collisionCheckEnabled = false;
 
     public TronNeonBikeBattle() {
-        setTitle("Tron Light Cycle Game");
-        setSize(WIDTH, HEIGHT);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setLayout(new BorderLayout());
-
-        // Menu
-        JMenuBar menuBar = new JMenuBar();
-        JMenu gameMenu = new JMenu("Game");
-        JMenuItem newGame = new JMenuItem("New Game");
-        JMenuItem highScores = new JMenuItem("High Scores");
-        JMenuItem pauseGame = new JMenuItem("Pause Game"); // Pause functionality
-        gameMenu.add(newGame);
-        gameMenu.add(highScores);
-        gameMenu.add(pauseGame);  // Added the pause option
-        menuBar.add(gameMenu);
-        setJMenuBar(menuBar);
-
-        newGame.addActionListener(e -> startNewGame());
-        highScores.addActionListener(e -> showHighScores());
-        pauseGame.addActionListener(e -> toggleGamePause()); // Pause on click
-
-        // Timer label for displaying time played
-        timerLabel = new JLabel("Time: 0s", JLabel.CENTER);
-        timerLabel.setFont(new Font("Arial", Font.BOLD, 18));
-        add(timerLabel, BorderLayout.NORTH);  // Add timer label to the top of the frame
-
-        // Database setup
-        setupDatabase();
-
-        // KeyListener for player controls
-        addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (player1 != null) player1.handleKeyPress(e);
-                if (player2 != null) player2.handleKeyPress(e);
-            }
-        });
+        setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
+        setBackground(Color.BLACK);
         setFocusable(true);
-        setVisible(true);
+        addKeyListener(this);
+
+        turningPointsPlayer1.add(new Point(currentPositionPlayer1));
+        turningPointsPlayer2.add(new Point(currentPositionPlayer2));
+
+        timer = new Timer(DELAY, this);
+        timer.start();
     }
 
-    private void startNewGame() {
-        String player1Name = JOptionPane.showInputDialog(this, "Enter Player 1 name:");
-        String player2Name = JOptionPane.showInputDialog(this, "Enter Player 2 name:");
-        Color player1Color = JColorChooser.showDialog(this, "Choose Player 1 color", Color.RED);
-        Color player2Color = JColorChooser.showDialog(this, "Choose Player 2 color", Color.BLUE);
-        Color player1TrailColor = ColorUtils.deriveLighterColor(player1Color, 0.4f);
-        Color player2TrailColor = ColorUtils.deriveLighterColor(player2Color, 0.4f);
-        player1 = new Player(player1Name, player1Color, player1TrailColor, WIDTH / 4, HEIGHT / 2, KeyEvent.VK_W, KeyEvent.VK_A, KeyEvent.VK_S, KeyEvent.VK_D);
-        player2 = new Player(player2Name, player2Color, player2TrailColor, 3 * WIDTH / 4, HEIGHT / 2, KeyEvent.VK_UP, KeyEvent.VK_LEFT, KeyEvent.VK_DOWN, KeyEvent.VK_RIGHT);
-
-        lightTrailsPlayer1.clear();
-        lightTrailsPlayer2.clear();
-        running = true;
-
-        if (gameTimer != null) {
-            gameTimer.stop();
-        }
-
-        gameTimer = new Timer(200, new GameLoop());
-        gameTimer.start();
-
-        // Timer for tracking elapsed time
-        secondsElapsed = 0;
-        if (displayTimer != null) {
-            displayTimer.stop();  // Stop any existing display timer
-        }
-        // Update the timer label every second
-        displayTimer = new Timer(1000, e -> updateTimerDisplay());  // Trigger every 1 second
-        displayTimer.start();  // Start the display timer
-
-        repaint();
-    }
-
-    private void updateTimerDisplay() {
-        if (running) {
-            secondsElapsed++;  // Increment the time
-            timerLabel.setText("Time: " + secondsElapsed + "s");  // Update the label
-        }
-    }
-
-    private void showHighScores() {
-        try (Statement stmt = dbConnection.createStatement();
-             ResultSet rs = stmt.executeQuery("SELECT name, score FROM players ORDER BY score DESC LIMIT 10")) {
-
-            StringBuilder sb = new StringBuilder("Top 10 Players:\n");
-            while (rs.next()) {
-                sb.append(rs.getString("name")).append(": ").append(rs.getInt("score")).append("\n");
-            }
-            JOptionPane.showMessageDialog(this, sb.toString(), "High Scores", JOptionPane.INFORMATION_MESSAGE);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void toggleGamePause() {
-        if (running) {
-            running = false; // Pause the game
-            gameTimer.stop(); // Stop the game timer
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        if (isRunning) {
+            drawTrails(g);
+            drawPlayers(g);
         } else {
-            running = true; // Resume the game
-            gameTimer.start(); // Start the game timer
+            drawGameOver(g);
         }
+    }
+
+    private void drawTrails(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g;
+
+        // Draw Player 1's trail
+        g2d.setColor(Color.BLUE);
+        for (int i = 1; i < turningPointsPlayer1.size(); i++) {
+            Point start = turningPointsPlayer1.get(i - 1);
+            Point end = turningPointsPlayer1.get(i);
+            g2d.drawLine(start.x, start.y, end.x, end.y);
+        }
+
+        // Draw Player 2's trail
+        g2d.setColor(Color.RED);
+        for (int i = 1; i < turningPointsPlayer2.size(); i++) {
+            Point start = turningPointsPlayer2.get(i - 1);
+            Point end = turningPointsPlayer2.get(i);
+            g2d.drawLine(start.x, start.y, end.x, end.y);
+        }
+    }
+
+    private void drawPlayers(Graphics g) {
+        g.setColor(Color.BLUE);
+        g.fillRect(currentPositionPlayer1.x, currentPositionPlayer1.y, GRID_SIZE, GRID_SIZE);
+
+        g.setColor(Color.RED);
+        g.fillRect(currentPositionPlayer2.x, currentPositionPlayer2.y, GRID_SIZE, GRID_SIZE);
+    }
+
+    private void drawGameOver(Graphics g) {
+        String message = "Game Over";
+        g.setColor(Color.WHITE);
+        g.setFont(new Font("Arial", Font.BOLD, 36));
+        FontMetrics metrics = g.getFontMetrics(g.getFont());
+        int x = (PANEL_WIDTH - metrics.stringWidth(message)) / 2;
+        int y = (PANEL_HEIGHT - metrics.getHeight()) / 2 + metrics.getAscent();
+        g.drawString(message, x, y);
+    }
+
+    private void checkCollisions() {
+        // Player 1 collisions
+        if (checkWallCollision(currentPositionPlayer1) || checkTrailCollision(currentPositionPlayer1, turningPointsPlayer1) || checkTrailCollision(currentPositionPlayer1, turningPointsPlayer2)) {
+            isRunning = false;
+        }
+
+        // Player 2 collisions
+        if (checkWallCollision(currentPositionPlayer2) || checkTrailCollision(currentPositionPlayer2, turningPointsPlayer2) || checkTrailCollision(currentPositionPlayer2, turningPointsPlayer1)) {
+            isRunning = false;
+        }
+    }
+
+    private boolean checkWallCollision(Point position) {
+        return position.x < 0 || position.x >= PANEL_WIDTH || position.y < 0 || position.y >= PANEL_HEIGHT;
+    }
+
+    private boolean checkTrailCollision(Point currentPosition, ArrayList<Point> trail) {
+        for (int i = 0; i < trail.size() - 1; i++) {
+            Point start = trail.get(i);
+            Point end = trail.get(i + 1);
+
+            // Skip the segment if it's the player's current segment
+            if (currentPosition.equals(start) || currentPosition.equals(end)) {
+                return false;
+            }
+
+            if (linesIntersect(start, end, currentPosition, currentPosition)) {
+                isRunning = false;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean linesIntersect(Point p1, Point p2, Point p3, Point p4) {
+        // Simplified 2D line segment intersection test
+        int d1 = direction(p3, p4, p1);
+        int d2 = direction(p3, p4, p2);
+        int d3 = direction(p1, p2, p3);
+        int d4 = direction(p1, p2, p4);
+
+        return ((d1 != d2) && (d3 != d4));
+    }
+
+    private int direction(Point pi, Point pj, Point pk) {
+        return (pk.x - pi.x) * (pj.y - pi.y) - (pj.x - pi.x) * (pk.y - pi.y);
+    }
+
+    private void updateGame() {
+        if (!isRunning) return;
+
+        // Move players
+        movePlayer(currentPositionPlayer1, directionPlayer1, turningPointsPlayer1);
+        movePlayer(currentPositionPlayer2, directionPlayer2, turningPointsPlayer2);
+
+        // Enable collision checks after the first movement
+        collisionCheckEnabled = true;
+
+        if (collisionCheckEnabled) {
+            checkCollisions();
+        }
+
         repaint();
     }
 
-    private void setupDatabase() {
-        try {
-            Properties connectionProps = new Properties();
-            connectionProps.put("user", "root");
-            connectionProps.put("password", "root");
-            connectionProps.put("serverTimezone", "UTC");
-            String dbURL = "jdbc:mariadb://localhost:3306/tron";
-            dbConnection = DriverManager.getConnection(dbURL, connectionProps);
+    private void movePlayer(Point currentPosition, Point direction, ArrayList<Point> turningPoints) {
+        currentPosition.translate(direction.x, direction.y);
 
-            try (Statement stmt = dbConnection.createStatement()) {
-                stmt.executeUpdate("""
-                CREATE TABLE IF NOT EXISTS players (
-                    name VARCHAR(50) PRIMARY KEY,
-                    score INT DEFAULT 0
-                )
-            """);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private class GameLoop implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            if (!running) {
-                gameTimer.stop();
-                return;
-            }
-
-            player1.move();
-            player2.move();
-
-            Point p1 = new Point(player1.x, player1.y);
-            Point p2 = new Point(player2.x, player2.y);
-
-            if (lightTrailsPlayer1.contains(p1) || lightTrailsPlayer1.contains(p2) ||
-                    lightTrailsPlayer2.contains(p1) || lightTrailsPlayer2.contains(p2) ||
-                    p1.x < 0 || p1.x >= WIDTH || p1.y < 0 || p1.y >= HEIGHT ||
-                    p2.x < 0 || p2.x >= WIDTH || p2.y < 0 || p2.y >= HEIGHT) {
-
-                running = false;
-                String winner = (lightTrailsPlayer1.contains(p1) || lightTrailsPlayer2.contains(p1) ? player2.name : player1.name);
-                updateScore(winner);
-                gameTimer.stop();
-                displayTimer.stop();
-                JOptionPane.showMessageDialog(TronNeonBikeBattle.this, winner + " wins! Time played: "+ secondsElapsed + " s", "Game Over", JOptionPane.INFORMATION_MESSAGE);
-            }
-
-            lightTrailsPlayer1.add(p1);
-            lightTrailsPlayer2.add(p2);
-
-            repaint();
-        }
-    }
-
-    private void updateScore(String winner) {
-        try (PreparedStatement pstmt = dbConnection.prepareStatement("""
-            INSERT INTO players (name, score)
-            VALUES (?, 1)
-            ON DUPLICATE KEY UPDATE score = score + 1
-            """)) {
-            pstmt.setString(1, winner);
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        // Add turning point if direction changed
+        if (!turningPoints.get(turningPoints.size() - 1).equals(currentPosition)) {
+            turningPoints.add(new Point(currentPosition));
         }
     }
 
     @Override
-    public void paint(Graphics g) {
-        super.paint(g);
-        if (running) {
-            for (Point p : lightTrailsPlayer1) {
-                g.setColor(player1.trailColor);
-                g.fillRect(p.x, p.y, CELL_SIZE, CELL_SIZE);
-            }
-            for (Point p : lightTrailsPlayer2) {
-                g.setColor(player2.trailColor);
-                g.fillRect(p.x, p.y, CELL_SIZE, CELL_SIZE);
-            }
-            player1.draw(g);
-            player2.draw(g);
-        }
+    public void actionPerformed(ActionEvent e) {
+        updateGame();
     }
 
-    //@Override
-    public void paintJustOneSegment(Graphics g) {
-        super.paint(g);
-        if (running) {
-            // Draw the new segments of the trail for player 1
-            g.setColor(player1.trailColor);
-            g.fillRect(player1.prevX, player1.prevY, CELL_SIZE, CELL_SIZE);
+    @Override
+    public void keyPressed(KeyEvent e) {
+        int key = e.getKeyCode();
 
-            // Draw the new segments of the trail for player 2
-            g.setColor(player2.trailColor);
-            g.fillRect(player2.prevX, player2.prevY, CELL_SIZE, CELL_SIZE);
+        // Player 1 controls
+        if (key == KeyEvent.VK_W && directionPlayer1.y == 0) directionPlayer1.setLocation(0, -GRID_SIZE);
+        if (key == KeyEvent.VK_S && directionPlayer1.y == 0) directionPlayer1.setLocation(0, GRID_SIZE);
+        if (key == KeyEvent.VK_A && directionPlayer1.x == 0) directionPlayer1.setLocation(-GRID_SIZE, 0);
+        if (key == KeyEvent.VK_D && directionPlayer1.x == 0) directionPlayer1.setLocation(GRID_SIZE, 0);
 
-            // Draw the players at their current positions
-            player1.draw(g);
-            player2.draw(g);
-        }
+        // Player 2 controls
+        if (key == KeyEvent.VK_UP && directionPlayer2.y == 0) directionPlayer2.setLocation(0, -GRID_SIZE);
+        if (key == KeyEvent.VK_DOWN && directionPlayer2.y == 0) directionPlayer2.setLocation(0, GRID_SIZE);
+        if (key == KeyEvent.VK_LEFT && directionPlayer2.x == 0) directionPlayer2.setLocation(-GRID_SIZE, 0);
+        if (key == KeyEvent.VK_RIGHT && directionPlayer2.x == 0) directionPlayer2.setLocation(GRID_SIZE, 0);
     }
 
-    public void paintWithLines(Graphics g){
-        super.paint(g);
-        if (running) {
-            Graphics2D g2d = (Graphics2D) g;
+    @Override
+    public void keyReleased(KeyEvent e) {}
 
-            // Set the stroke (line width) to half the tile size
-            int lineWidth = CELL_SIZE / 2;
-            g2d.setStroke(new BasicStroke(lineWidth));
-
-            Point p, prev;
-            // Draw the light trails for Player 1 (Red)
-            g2d.setColor(player1.getTrailColor());
-            for (int i=1; i<lightTrailsPlayer1.size(); i++) {
-                p = lightTrailsPlayer1.get(i);
-                prev = lightTrailsPlayer1.get(i-1);
-                g2d.drawLine(prev.x, prev.y, p.x, p.y);
-            }
-
-            // Draw the light trails for Player 2 (Blue)
-            g2d.setColor(player2.getTrailColor());
-            for (int i=1; i<lightTrailsPlayer2.size(); i++) {
-                p = lightTrailsPlayer2.get(i);
-                prev = lightTrailsPlayer2.get(i-1);
-                g2d.drawLine(prev.x, prev.y, p.x, p.y);
-            }
-            player1.draw(g);
-            player2.draw(g);
-        }
-    }
+    @Override
+    public void keyTyped(KeyEvent e) {}
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(TronNeonBikeBattle::new);
-    }
-
-    private static class Player {
-        String name;
-        Color color;
-        Color trailColor;  // New attribute for trail color
-        int x, y;
-        int prevX, prevY;
-        int dx = 0, dy = -CELL_SIZE; // Initial direction
-        int upKey, leftKey, downKey, rightKey;
-
-        Player(String name, Color color, Color trailColor, int startX, int startY, int upKey, int leftKey, int downKey, int rightKey) {
-            this.name = name;
-            this.color = color;
-            this.trailColor = trailColor;
-            this.x = startX;
-            this.y = startY;
-            this.prevX = startX;  // Initialize previous position
-            this.prevY = startY;  // Initialize previous position
-            this.upKey = upKey;
-            this.leftKey = leftKey;
-            this.downKey = downKey;
-            this.rightKey = rightKey;
-        }
-
-        public Color getTrailColor() {
-            return trailColor;
-        }
-
-        void move() {
-            prevX = x;  // Store current position as previous
-            prevY = y;
-            x += dx;  // Update position for example (this would be based on direction)
-            y += dy;
-        }
-
-        void draw(Graphics g) {
-            g.setColor(color);
-            g.fillRect(x, y, CELL_SIZE, CELL_SIZE);
-        }
-
-        void handleKeyPress(KeyEvent e) {
-            int key = e.getKeyCode();
-            if (key == upKey && dy == 0) {
-                dx = 0; dy = -CELL_SIZE; // Up
-            } else if (key == downKey && dy == 0) {
-                dx = 0; dy = CELL_SIZE; // Down
-            } else if (key == leftKey && dx == 0) {
-                dx = -CELL_SIZE; dy = 0; // Left
-            } else if (key == rightKey && dx == 0) {
-                dx = CELL_SIZE; dy = 0; // Right
-            }
-        }
+        JFrame frame = new JFrame("LightBike Game");
+        TronNeonBikeBattle game = new TronNeonBikeBattle();
+        frame.add(game);
+        frame.pack();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
     }
 }
