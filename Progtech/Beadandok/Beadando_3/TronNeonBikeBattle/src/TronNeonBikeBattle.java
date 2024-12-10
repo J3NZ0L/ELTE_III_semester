@@ -3,25 +3,29 @@ import java.awt.*;
 import java.awt.event.*;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Properties;
 
 public class TronNeonBikeBattle extends JFrame {
     private final int WIDTH = 800;
     private final int HEIGHT = 600;
     private static final int CELL_SIZE = 10;
+    private final int DELAY = 50;
 
     private Player player1, player2;
     private boolean running = false;
     private Timer gameTimer;
     private Timer displayTimer; // Timer for the displayed time
 
-    private ArrayList<Point> lightTrailsPlayer1 = new ArrayList<>();
-    private ArrayList<Point> lightTrailsPlayer2 = new ArrayList<>();
+    private ArrayList<Point> turningPointsPlayer1 = new ArrayList<>();
+    private ArrayList<Point> turningPointsPlayer2 = new ArrayList<>();
 
     private Connection dbConnection;
 
     private JLabel timerLabel;  // JLabel to display the timer
     private int secondsElapsed = 0;  // Elapsed time in seconds
+
+    private boolean collisionCheckEnabled = false;
 
     public TronNeonBikeBattle() {
         setTitle("Tron Light Cycle Game");
@@ -75,15 +79,15 @@ public class TronNeonBikeBattle extends JFrame {
         player1 = new Player(player1Name, player1Color, player1TrailColor, WIDTH / 4, HEIGHT / 2, KeyEvent.VK_W, KeyEvent.VK_A, KeyEvent.VK_S, KeyEvent.VK_D);
         player2 = new Player(player2Name, player2Color, player2TrailColor, 3 * WIDTH / 4, HEIGHT / 2, KeyEvent.VK_UP, KeyEvent.VK_LEFT, KeyEvent.VK_DOWN, KeyEvent.VK_RIGHT);
 
-        lightTrailsPlayer1.clear();
-        lightTrailsPlayer2.clear();
+        turningPointsPlayer1.clear();
+        turningPointsPlayer2.clear();
         running = true;
 
         if (gameTimer != null) {
             gameTimer.stop();
         }
 
-        gameTimer = new Timer(200, new GameLoop());
+        gameTimer = new Timer(DELAY, new GameLoop());
         gameTimer.start();
 
         // Timer for tracking elapsed time
@@ -94,6 +98,9 @@ public class TronNeonBikeBattle extends JFrame {
         // Update the timer label every second
         displayTimer = new Timer(1000, e -> updateTimerDisplay());  // Trigger every 1 second
         displayTimer.start();  // Start the display timer
+
+        turningPointsPlayer1.add(new Point(player1.x, player1.y));
+        turningPointsPlayer2.add(new Point(player2.x, player2.y));
 
         repaint();
     }
@@ -199,20 +206,126 @@ public class TronNeonBikeBattle extends JFrame {
         }
     }
 
+    private void drawTrails(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g;
+
+        // Draw Player 1's trail
+        g2d.setColor(Color.BLUE);
+        for (int i = 1; i < turningPointsPlayer1.size(); i++) {
+            Point start = turningPointsPlayer1.get(i - 1);
+            Point end = turningPointsPlayer1.get(i);
+            g2d.drawLine(start.x, start.y, end.x, end.y);
+        }
+
+        // Draw Player 2's trail
+        g2d.setColor(Color.RED);
+        for (int i = 1; i < turningPointsPlayer2.size(); i++) {
+            Point start = turningPointsPlayer2.get(i - 1);
+            Point end = turningPointsPlayer2.get(i);
+            g2d.drawLine(start.x, start.y, end.x, end.y);
+        }
+    }
+
+    private void drawPlayers(Graphics g) {
+        g.setColor(Color.BLUE);
+        g.fillRect(currentPositionPlayer1.x, currentPositionPlayer1.y, GRID_SIZE, GRID_SIZE);
+
+        g.setColor(Color.RED);
+        g.fillRect(currentPositionPlayer2.x, currentPositionPlayer2.y, GRID_SIZE, GRID_SIZE);
+    }
+
+    private void drawGameOver(Graphics g) {
+        String message = "Game Over";
+        g.setColor(Color.WHITE);
+        g.setFont(new Font("Arial", Font.BOLD, 36));
+        FontMetrics metrics = g.getFontMetrics(g.getFont());
+        int x = (PANEL_WIDTH - metrics.stringWidth(message)) / 2;
+        int y = (PANEL_HEIGHT - metrics.getHeight()) / 2 + metrics.getAscent();
+        g.drawString(message, x, y);
+    }
+
+    private void checkCollisions() {
+        // Player 1 collisions
+        if (checkWallCollision(currentPositionPlayer1) || checkTrailCollision(currentPositionPlayer1, turningPointsPlayer1) || checkTrailCollision(currentPositionPlayer1, turningPointsPlayer2)) {
+            isRunning = false;
+        }
+
+        // Player 2 collisions
+        if (checkWallCollision(currentPositionPlayer2) || checkTrailCollision(currentPositionPlayer2, turningPointsPlayer2) || checkTrailCollision(currentPositionPlayer2, turningPointsPlayer1)) {
+            isRunning = false;
+        }
+    }
+
+    private boolean checkWallCollision(Point position) {
+        return position.x < 0 || position.x >= PANEL_WIDTH || position.y < 0 || position.y >= PANEL_HEIGHT;
+    }
+
+    private boolean checkTrailCollision(Point currentPosition, ArrayList<Point> trail) {
+        for (int i = 0; i < trail.size() - 1; i++) {
+            Point start = trail.get(i);
+            Point end = trail.get(i + 1);
+
+            // Skip the segment if it's the player's current segment
+            if (currentPosition.equals(start) || currentPosition.equals(end)) {
+                return false;
+            }
+
+            if (linesIntersect(start, end, currentPosition, currentPosition)) {
+                isRunning = false;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean linesIntersect(Point p1, Point p2, Point p3, Point p4) {
+        // Simplified 2D line segment intersection test
+        int d1 = direction(p3, p4, p1);
+        int d2 = direction(p3, p4, p2);
+        int d3 = direction(p1, p2, p3);
+        int d4 = direction(p1, p2, p4);
+
+        return ((d1 != d2) && (d3 != d4));
+    }
+
+    private int direction(Point pi, Point pj, Point pk) {
+        return (pk.x - pi.x) * (pj.y - pi.y) - (pj.x - pi.x) * (pk.y - pi.y);
+    }
+
+    private void updateGame() {
+        if (!isRunning) return;
+
+        // Move players
+        movePlayer(currentPositionPlayer1, directionPlayer1, turningPointsPlayer1);
+        movePlayer(currentPositionPlayer2, directionPlayer2, turningPointsPlayer2);
+
+        // Enable collision checks after the first movement
+        collisionCheckEnabled = true;
+
+        if (collisionCheckEnabled) {
+            checkCollisions();
+        }
+
+        repaint();
+    }
+
+    private void movePlayer(Point currentPosition, Point direction, ArrayList<Point> turningPoints) {
+        currentPosition.translate(direction.x, direction.y);
+
+        // Add turning point if direction changed
+        if (!turningPoints.get(turningPoints.size() - 1).equals(currentPosition)) {
+            turningPoints.add(new Point(currentPosition));
+        }
+    }
+
     @Override
-    public void paint(Graphics g) {
+    protected void paint(Graphics g) {
         super.paint(g);
         if (running) {
-            for (Point p : lightTrailsPlayer1) {
-                g.setColor(player1.trailColor);
-                g.fillRect(p.x, p.y, CELL_SIZE, CELL_SIZE);
-            }
-            for (Point p : lightTrailsPlayer2) {
-                g.setColor(player2.trailColor);
-                g.fillRect(p.x, p.y, CELL_SIZE, CELL_SIZE);
-            }
-            player1.draw(g);
-            player2.draw(g);
+            drawTrails(g);
+            drawPlayers(g);
+        } else {
+            drawGameOver(g);
         }
     }
 
