@@ -99,8 +99,8 @@ public class TronNeonBikeBattle extends JFrame {
         displayTimer = new Timer(1000, e -> updateTimerDisplay());  // Trigger every 1 second
         displayTimer.start();  // Start the display timer
 
-        turningPointsPlayer1.add(new Point(player1.x, player1.y));
-        turningPointsPlayer2.add(new Point(player2.x, player2.y));
+        turningPointsPlayer1.add(new Point(player1.currentPosition.x, player1.currentPosition.y));
+        turningPointsPlayer2.add(new Point(player2.currentPosition.x, player2.currentPosition.y));
 
         repaint();
     }
@@ -170,24 +170,23 @@ public class TronNeonBikeBattle extends JFrame {
             player1.move();
             player2.move();
 
-            Point p1 = new Point(player1.x, player1.y);
-            Point p2 = new Point(player2.x, player2.y);
+            Point p1 = new Point(player1.currentPosition.x, player1.currentPosition.y);
+            Point p2 = new Point(player2.currentPosition.x, player2.currentPosition.y);
 
-            if (lightTrailsPlayer1.contains(p1) || lightTrailsPlayer1.contains(p2) ||
-                    lightTrailsPlayer2.contains(p1) || lightTrailsPlayer2.contains(p2) ||
+            // deprecated checking of lighttrail and wall collision
+            // TODO: merge in the new methods
+            if (turningPointsPlayer1.contains(p1) || turningPointsPlayer1.contains(p2) ||
+                    turningPointsPlayer2.contains(p1) || turningPointsPlayer2.contains(p2) ||
                     p1.x < 0 || p1.x >= WIDTH || p1.y < 0 || p1.y >= HEIGHT ||
                     p2.x < 0 || p2.x >= WIDTH || p2.y < 0 || p2.y >= HEIGHT) {
 
                 running = false;
-                String winner = (lightTrailsPlayer1.contains(p1) || lightTrailsPlayer2.contains(p1) ? player2.name : player1.name);
+                String winner = (turningPointsPlayer1.contains(p1) || turningPointsPlayer2.contains(p1) ? player2.name : player1.name);
                 updateScore(winner);
                 gameTimer.stop();
                 displayTimer.stop();
                 JOptionPane.showMessageDialog(TronNeonBikeBattle.this, winner + " wins! Time played: "+ secondsElapsed + " s", "Game Over", JOptionPane.INFORMATION_MESSAGE);
             }
-
-            lightTrailsPlayer1.add(p1);
-            lightTrailsPlayer2.add(p2);
 
             repaint();
         }
@@ -228,36 +227,26 @@ public class TronNeonBikeBattle extends JFrame {
 
     private void drawPlayers(Graphics g) {
         g.setColor(Color.BLUE);
-        g.fillRect(currentPositionPlayer1.x, currentPositionPlayer1.y, GRID_SIZE, GRID_SIZE);
+        g.fillRect(player1.currentPosition.x, player1.currentPosition.y, CELL_SIZE, CELL_SIZE);
 
         g.setColor(Color.RED);
-        g.fillRect(currentPositionPlayer2.x, currentPositionPlayer2.y, GRID_SIZE, GRID_SIZE);
-    }
-
-    private void drawGameOver(Graphics g) {
-        String message = "Game Over";
-        g.setColor(Color.WHITE);
-        g.setFont(new Font("Arial", Font.BOLD, 36));
-        FontMetrics metrics = g.getFontMetrics(g.getFont());
-        int x = (PANEL_WIDTH - metrics.stringWidth(message)) / 2;
-        int y = (PANEL_HEIGHT - metrics.getHeight()) / 2 + metrics.getAscent();
-        g.drawString(message, x, y);
+        g.fillRect(player2.currentPosition.x, player2.currentPosition.y, CELL_SIZE, CELL_SIZE);
     }
 
     private void checkCollisions() {
         // Player 1 collisions
-        if (checkWallCollision(currentPositionPlayer1) || checkTrailCollision(currentPositionPlayer1, turningPointsPlayer1) || checkTrailCollision(currentPositionPlayer1, turningPointsPlayer2)) {
-            isRunning = false;
+        if (checkWallCollision(player1.currentPosition) || checkTrailCollision(player1.currentPosition, turningPointsPlayer1) || checkTrailCollision(player1.currentPosition, turningPointsPlayer2)) {
+            running = false;
         }
 
         // Player 2 collisions
-        if (checkWallCollision(currentPositionPlayer2) || checkTrailCollision(currentPositionPlayer2, turningPointsPlayer2) || checkTrailCollision(currentPositionPlayer2, turningPointsPlayer1)) {
-            isRunning = false;
+        if (checkWallCollision(player2.currentPosition) || checkTrailCollision(player2.currentPosition, turningPointsPlayer2) || checkTrailCollision(player2.currentPosition, turningPointsPlayer1)) {
+            running = false;
         }
     }
 
     private boolean checkWallCollision(Point position) {
-        return position.x < 0 || position.x >= PANEL_WIDTH || position.y < 0 || position.y >= PANEL_HEIGHT;
+        return position.x < 0 || position.x >= WIDTH || position.y < 0 || position.y >= HEIGHT;
     }
 
     private boolean checkTrailCollision(Point currentPosition, ArrayList<Point> trail) {
@@ -271,7 +260,7 @@ public class TronNeonBikeBattle extends JFrame {
             }
 
             if (linesIntersect(start, end, currentPosition, currentPosition)) {
-                isRunning = false;
+                running = false;
                 return true;
             }
         }
@@ -293,11 +282,11 @@ public class TronNeonBikeBattle extends JFrame {
     }
 
     private void updateGame() {
-        if (!isRunning) return;
+        if (!running) return;
 
         // Move players
-        movePlayer(currentPositionPlayer1, directionPlayer1, turningPointsPlayer1);
-        movePlayer(currentPositionPlayer2, directionPlayer2, turningPointsPlayer2);
+        movePlayer(player1, turningPointsPlayer1);
+        movePlayer(player2, turningPointsPlayer2);
 
         // Enable collision checks after the first movement
         collisionCheckEnabled = true;
@@ -309,23 +298,22 @@ public class TronNeonBikeBattle extends JFrame {
         repaint();
     }
 
-    private void movePlayer(Point currentPosition, Point direction, ArrayList<Point> turningPoints) {
-        currentPosition.translate(direction.x, direction.y);
+    private void movePlayer(Player player, ArrayList<Point> turningPoints) {
+        Point newPosition = new Point(player.currentPosition);
+        newPosition.translate(player.dx, player.dy);
 
         // Add turning point if direction changed
-        if (!turningPoints.get(turningPoints.size() - 1).equals(currentPosition)) {
-            turningPoints.add(new Point(currentPosition));
+        if ((player.dx != player.prevDX || player.dy != player.prevDY)) {
+            turningPoints.add(newPosition);
         }
     }
 
     @Override
-    protected void paint(Graphics g) {
+    public void paint(Graphics g) {
         super.paint(g);
         if (running) {
             drawTrails(g);
             drawPlayers(g);
-        } else {
-            drawGameOver(g);
         }
     }
 
@@ -347,6 +335,7 @@ public class TronNeonBikeBattle extends JFrame {
         }
     }
 
+    /*
     public void paintWithLines(Graphics g){
         super.paint(g);
         if (running) {
@@ -376,6 +365,7 @@ public class TronNeonBikeBattle extends JFrame {
             player2.draw(g);
         }
     }
+    */
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(TronNeonBikeBattle::new);
@@ -385,17 +375,18 @@ public class TronNeonBikeBattle extends JFrame {
         String name;
         Color color;
         Color trailColor;  // New attribute for trail color
-        int x, y;
+        Point currentPosition;
+        Point prevPosition;
         int prevX, prevY;
         int dx = 0, dy = -CELL_SIZE; // Initial direction
+        int prevDX, prevDY;
         int upKey, leftKey, downKey, rightKey;
 
         Player(String name, Color color, Color trailColor, int startX, int startY, int upKey, int leftKey, int downKey, int rightKey) {
             this.name = name;
             this.color = color;
             this.trailColor = trailColor;
-            this.x = startX;
-            this.y = startY;
+            this.currentPosition = new Point(startX, startY);
             this.prevX = startX;  // Initialize previous position
             this.prevY = startY;  // Initialize previous position
             this.upKey = upKey;
@@ -409,19 +400,19 @@ public class TronNeonBikeBattle extends JFrame {
         }
 
         void move() {
-            prevX = x;  // Store current position as previous
-            prevY = y;
-            x += dx;  // Update position for example (this would be based on direction)
-            y += dy;
+            prevPosition = currentPosition;
+            currentPosition.translate(dx, dy);
         }
 
         void draw(Graphics g) {
             g.setColor(color);
-            g.fillRect(x, y, CELL_SIZE, CELL_SIZE);
+            g.fillRect(currentPosition.x, currentPosition.y, CELL_SIZE, CELL_SIZE);
         }
 
         void handleKeyPress(KeyEvent e) {
             int key = e.getKeyCode();
+            prevDX = dx;
+            prevDY = dy;
             if (key == upKey && dy == 0) {
                 dx = 0; dy = -CELL_SIZE; // Up
             } else if (key == downKey && dy == 0) {
