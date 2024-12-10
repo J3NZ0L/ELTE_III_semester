@@ -1,6 +1,6 @@
 import java.awt.*;
 
-public class ColorUtils {
+public class Utils {
 
     public static Color deriveLighterColor(Color originalColor, float factor) {
         // Extract RGB components

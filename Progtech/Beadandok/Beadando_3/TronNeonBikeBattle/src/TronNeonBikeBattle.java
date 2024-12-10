@@ -3,7 +3,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Properties;
 
 public class TronNeonBikeBattle extends JFrame {
@@ -71,8 +70,8 @@ public class TronNeonBikeBattle extends JFrame {
         String player2Name = JOptionPane.showInputDialog(this, "Enter Player 2 name:");
         Color player1Color = JColorChooser.showDialog(this, "Choose Player 1 color", Color.RED);
         Color player2Color = JColorChooser.showDialog(this, "Choose Player 2 color", Color.BLUE);
-        Color player1TrailColor = ColorUtils.deriveLighterColor(player1Color, 0.4f);
-        Color player2TrailColor = ColorUtils.deriveLighterColor(player2Color, 0.4f);
+        Color player1TrailColor = Utils.deriveLighterColor(player1Color, 0.4f);
+        Color player2TrailColor = Utils.deriveLighterColor(player2Color, 0.4f);
         player1 = new Player(player1Name, player1Color, player1TrailColor, WIDTH / 4, HEIGHT / 2, KeyEvent.VK_W, KeyEvent.VK_A, KeyEvent.VK_S, KeyEvent.VK_D);
         player2 = new Player(player2Name, player2Color, player2TrailColor, 3 * WIDTH / 4, HEIGHT / 2, KeyEvent.VK_UP, KeyEvent.VK_LEFT, KeyEvent.VK_DOWN, KeyEvent.VK_RIGHT);
 
