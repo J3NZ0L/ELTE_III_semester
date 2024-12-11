@@ -265,7 +265,6 @@ public class TronNeonBikeBattle extends JFrame {
             if (i == turningPoints.size() - 2 && currentPosition.equals(end)) {
                 continue;
             }
-
             System.out.println("Checking segment: " + start + " to " + end + " against point: " + currentPosition);
 
             // Check if the current position lies on the segment
@@ -400,7 +399,7 @@ public class TronNeonBikeBattle extends JFrame {
         }
 
         void move() {
-            prevPosition = currentPosition;
+            prevPosition = new Point(currentPosition);
             currentPosition.translate(dx, dy);
             // Add turning point if direction change
             //System.out.println("dx: " + dx + " dy: " + dy + " prevdx: " + prevDX + " prevdy: " + prevDY);
@@ -413,6 +412,8 @@ public class TronNeonBikeBattle extends JFrame {
                 //System.out.println(turningPoints);
                 turningPoints.set(turningPoints.size() - 1, new Point(currentPosition)); // Update the last point
             }
+            prevDX = dx;
+            prevDY = dy;
         }
 
         void draw(Graphics g) {
@@ -422,8 +423,6 @@ public class TronNeonBikeBattle extends JFrame {
 
         void handleKeyPress(KeyEvent e) {
             int key = e.getKeyCode();
-            prevDX = dx;
-            prevDY = dy;
             if (key == upKey && dy == 0) {
                 dx = 0; dy = -CELL_SIZE; // Up
             } else if (key == downKey && dy == 0) {
