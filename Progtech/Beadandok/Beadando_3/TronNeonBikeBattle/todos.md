@@ -18,9 +18,9 @@
   - [x] deter the lines being diagonalxd
   - [x] the last lines sometimes gets dragged, the end point of it
 
-- [ ] see if the else if branch of the if statement in the move method is fully needed or not
+- [x] see if the else if branch of the if statement in the move method is fully needed or not __YES IT IS__
+- [ ] decouple the app into two components: model and view (MV architecture)
 - [ ] getters and setters for everything which is ought to be used outside of it's class
-- [ ] decouple the app into two components: model and view (MV architecture) 
  
 - [ ] create class diagram, not excluding the view part, with just the classes and their relationships
 
