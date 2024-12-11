@@ -9,7 +9,7 @@ public class TronNeonBikeBattle extends JFrame {
     private final int WIDTH = 800;
     private final int HEIGHT = 600;
     private static final int CELL_SIZE = 10;
-    private final int DELAY = 50;
+    private final int DELAY = 75;
 
     private Player player1, player2;
     private boolean running = false;
@@ -261,16 +261,26 @@ public class TronNeonBikeBattle extends JFrame {
             Point start = turningPoints.get(i);
             Point end = turningPoints.get(i + 1);
 
-            // Skip the segment if it's the player's current segment
-            if (currentPosition.equals(start) || currentPosition.equals(end)) {
-                System.out.println("belep hamisba");
-                return false;
+            // Skip the last segment if the player's current position is at its end
+            if (i == turningPoints.size() - 2 && currentPosition.equals(end)) {
+                continue;
             }
-            System.out.println("Tovablep");
-            if (linesIntersect(start, end, currentPosition, currentPosition)) {
+
+            System.out.println("Checking segment: " + start + " to " + end + " against point: " + currentPosition);
+
+            // Check if the current position lies on the segment
+            if (pointOnSegment(start, end, currentPosition)) {
                 running = false;
                 return true;
             }
+        }
+        return false;
+    }
+
+    private boolean pointOnSegment(Point start, Point end, Point point) {
+        if (point.x >= Math.min(start.x, end.x) && point.x <= Math.max(start.x, end.x) &&
+                point.y >= Math.min(start.y, end.y) && point.y <= Math.max(start.y, end.y)) {
+            return (end.x - start.x) * (point.y - start.y) == (end.y - start.y) * (point.x - start.x);
         }
         return false;
     }

@@ -14,6 +14,9 @@
 - [x] check if the turning points are added and taken into account
   - they are not taken into account correctly, every point is added, not just turning points
 - [x] somehow add the first two points to the array, instead of just the first, which is the case currently
+- [ ] test the new collision checking thoroguhly
+  - deter the lines being diagonalxd
+  - the last lines sometimes gets dragged, the end point of it
 - [ ] see if the else if branch of the if statement in the move method is fully needed or not
 - [ ] getters and setters for everything which is ought to be used outside of it's class
 - [ ] decouple the app into two components: model and view (MV architecture) 
