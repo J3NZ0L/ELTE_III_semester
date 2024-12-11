@@ -20,8 +20,8 @@
 
 - [x] see if the else if branch of the if statement in the move method is fully needed or not __YES IT IS__
 - [ ] decouple the app into two components: model and view (MV architecture)
+- [ ] remove the pause option 
 - [ ] getters and setters for everything which is ought to be used outside of it's class
- 
 - [ ] create class diagram, not excluding the view part, with just the classes and their relationships
 
 - [ ] figure out a lot of test cases, including ones which are quite logical and self-evident

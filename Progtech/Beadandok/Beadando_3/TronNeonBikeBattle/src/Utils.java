@@ -17,4 +17,12 @@ public class Utils {
         return new Color(r, g, b);
     }
 
+    public static boolean pointOnSegment(Point start, Point end, Point point) {
+        if (point.x >= Math.min(start.x, end.x) && point.x <= Math.max(start.x, end.x) &&
+                point.y >= Math.min(start.y, end.y) && point.y <= Math.max(start.y, end.y)) {
+            return (end.x - start.x) * (point.y - start.y) == (end.y - start.y) * (point.x - start.x);
+        }
+        return false;
+    }
+
 }
