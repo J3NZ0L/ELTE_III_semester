@@ -1,0 +1,3 @@
+public enum CollisionResultEnum {
+    PLAYER1COLLIDED, PLAYER2COLLIDED, NOONECOLLIDED;
+}
