@@ -23,6 +23,16 @@ public class TronGUI extends JFrame {
 
     private int secondsElapsed = 0;
 
+    /**
+     * Constructs a new TronGUI instance and initializes the graphical user interface for the Tron game.
+     * This includes setting default properties for the JFrame, adding a menu bar with options for
+     * starting a new game and viewing high scores, initializing the game model and database, and
+     * setting up event listeners for keyboard inputs and menu interactions.
+     *
+     * The GUI contains a timer label to display elapsed time during the game, and it is configured
+     * to handle player inputs for controlling the game. The frame is made non-resizable and set to be
+     * visible upon construction.
+     */
     public TronGUI(){
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setSize(new Dimension(WIDTH, HEIGHT));
@@ -69,6 +79,23 @@ public class TronGUI extends JFrame {
         setVisible(true);
     }
 
+    /**
+     * Initializes and starts a new game. This method sets up the game by prompting
+     * the user to enter player names and select their respective colors. It also
+     * computes lighter trail colors for both players, initializes the game model
+     * with these values, and starts the game and display timers.
+     *
+     * The game dimensions and cell size are configured using class-level constants
+     * for width, height, and delay. Once the setup is complete, the game is
+     * rendered, and the game state is set to running.
+     *
+     * Responsibilities included:
+     * - Collecting player names and colors through dialog inputs.
+     * - Deriving lighter trail colors for each player.
+     * - Configuring and initializing the game model.
+     * - Starting the game loop and timers for gameplay and UI updates.
+     * - Repainting the GUI to reflect the initialized game state.
+     */
     public void startNewGame(){
         String player1Name = JOptionPane.showInputDialog(this, "Enter Player 1 name:");
         String player2Name = JOptionPane.showInputDialog(this, "Enter Player 2 name:");
@@ -110,11 +137,28 @@ public class TronGUI extends JFrame {
         }
     }
 
+    /**
+     * Displays the high scores stored in the database to the user in a dialog box.
+     * Retrieves the top 10 high scores from the database using the `getHighScores`
+     * method of the `database` object and presents them in a read-only message box.
+     * If the high scores are successfully retrieved, they are shown in descending
+     * order by score, with each entry including the player name and score.
+     * The dialog box has "High Scores" as its title and uses an informational icon.
+     *
+     * Note: If the `getHighScores` method returns `null` due to an error, the
+     * dialog box will display a `null` string.
+     */
     private void showDataBaseHighScores() {
         StringBuilder sb = database.getHighScores();
         JOptionPane.showMessageDialog(this, sb.toString(), "High Scores", JOptionPane.INFORMATION_MESSAGE);
     }
 
+    /**
+     * Updates the timer display during the game if the game is currently running.
+     * If the game is active (as determined by the model's isRunning() method),
+     * increments the elapsed seconds counter and refreshes the timer label
+     * with the updated time in seconds.
+     */
     private void updateTimerDisplay() {
         if (model.isRunning()) {
             secondsElapsed++;
@@ -122,6 +166,11 @@ public class TronGUI extends JFrame {
         }
     }
 
+    /**
+     * Draws the trails for both players on the game board using the graphics object provided.
+     *
+     * @param g the Graphics object used to render the trails.
+     */
     private void drawTrails(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         int lineWidth = CELL_SIZE / 2;
@@ -144,6 +193,12 @@ public class TronGUI extends JFrame {
         }
     }
 
+    /**
+     * Draws the players on the game screen. It uses the players' current positions and
+     * colors to render them on the graphics context.
+     *
+     * @param g the Graphics object used for rendering the players.
+     */
     private void drawPlayers(Graphics g) {
         g.setColor(model.player1.getColor());
         g.fillRect(model.player1.getCurrentPositionX(), model.player1.getCurrentPositionY(), CELL_SIZE, CELL_SIZE);
@@ -152,6 +207,14 @@ public class TronGUI extends JFrame {
         g.fillRect(model.player2.getCurrentPositionX(), model.player2.getCurrentPositionY(), CELL_SIZE, CELL_SIZE);
     }
 
+    /**
+     * Paints the graphical components of the game onto the screen. This method
+     * is invoked whenever the graphical representation needs to be refreshed.
+     * It delegates drawing game elements such as player trails and player positions
+     * based on the current game state.
+     *
+     * @param g the {@link Graphics} object used for rendering graphics.
+     */
     @Override
     public void paint(Graphics g) {
         super.paint(g);
@@ -161,10 +224,21 @@ public class TronGUI extends JFrame {
         }
     }
 
+    /**
+     * Handles the key press event for Player 1, delegating the input handling
+     * to the game model's logic.
+     *
+     * @param key the key code representing the key pressed by Player 1
+     */
     void handlePlayer1KeyPress(Integer key) {
         model.handlePlayer1KeyPress(key, player1Keys);
 
     }
+    /**
+     * Handles key press events for Player 2 by delegating the action to the model.
+     *
+     * @param key the key code representing the input from Player 2
+     */
     void handlePlayer2KeyPress(Integer key) {
         model.handlePlayer2KeyPress(key, player2Keys);
     }
