@@ -2,23 +2,6 @@ public class KeySet{
     private final int upKey, downKey, leftKey, rightKey;
     private final int movementLength;
 
-    /**
-     *         if (key == upKey && dy == 0) {
-     *             dx = 0; dy = -CELL_SIZE; // Up
-     *         } else if (key == downKey && dy == 0) {
-     *             dx = 0; dy = CELL_SIZE; // Down
-     *         } else if (key == leftKey && dx == 0) {
-     *             dx = -CELL_SIZE; dy = 0; // Left
-     *         } else if (key == rightKey && dx == 0) {
-     *             dx = CELL_SIZE; dy = 0; // Right
-     *         }
-     * @param upKey
-     * @param downKey
-     * @param leftKey
-     * @param rightKey
-     * @param movementLength
-     */
-
     public KeySet(int upKey, int downKey, int leftKey, int rightKey, int movementLength) {
         this.upKey = upKey;
         this.downKey = downKey;
@@ -40,7 +23,7 @@ public class KeySet{
         if (key == rightKey){
             return movementLength;
         }
-        else throw new IllegalArgumentException("The got key is not to be handled");
+        else return prevDx;
     }
 
     public int getDY(int key, int prevDy){
@@ -56,7 +39,7 @@ public class KeySet{
         if (key == downKey){
             return movementLength;
         }
-        else throw new IllegalArgumentException("The got key is not to be handled");
+        else return prevDy;
     }
 
     public boolean contains(int key){
