@@ -1,0 +1,3053 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage{longtable,booktabs,array}
+\usepackage{multirow}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\usepackage[normalem]{ulem}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\author{}
+\date{}
+
+\begin{document}
+
+\includegraphics{vertopal_b2cfe70668f74273a0e0873ca5e4ed7e/media/image1.png}\includegraphics{vertopal_b2cfe70668f74273a0e0873ca5e4ed7e/media/image2.png}\includegraphics{vertopal_b2cfe70668f74273a0e0873ca5e4ed7e/media/image3.png}\includegraphics{vertopal_b2cfe70668f74273a0e0873ca5e4ed7e/media/image4.png}\includegraphics{vertopal_b2cfe70668f74273a0e0873ca5e4ed7e/media/image5.png}\includegraphics{vertopal_b2cfe70668f74273a0e0873ca5e4ed7e/media/image6.png}\includegraphics{vertopal_b2cfe70668f74273a0e0873ca5e4ed7e/media/image7.png}\includegraphics{vertopal_b2cfe70668f74273a0e0873ca5e4ed7e/media/image8.png}\includegraphics{vertopal_b2cfe70668f74273a0e0873ca5e4ed7e/media/image9.png}\includegraphics[width=1.18056in,height=0.83333in]{vertopal_b2cfe70668f74273a0e0873ca5e4ed7e/media/image10.png}\includegraphics[width=1.19444in,height=0.83333in]{vertopal_b2cfe70668f74273a0e0873ca5e4ed7e/media/image11.png}\includegraphics[width=1.19444in,height=0.83333in]{vertopal_b2cfe70668f74273a0e0873ca5e4ed7e/media/image12.png}\includegraphics[width=1.18056in,height=0.83333in]{vertopal_b2cfe70668f74273a0e0873ca5e4ed7e/media/image13.png}\includegraphics[width=1.19444in,height=0.83333in]{vertopal_b2cfe70668f74273a0e0873ca5e4ed7e/media/image14.png}\includegraphics[width=1.19444in,height=0.81944in]{vertopal_b2cfe70668f74273a0e0873ca5e4ed7e/media/image15.png}\includegraphics[width=1.18056in,height=0.83333in]{vertopal_b2cfe70668f74273a0e0873ca5e4ed7e/media/image16.png}\includegraphics[width=1.19444in,height=0.83333in]{vertopal_b2cfe70668f74273a0e0873ca5e4ed7e/media/image17.png}\includegraphics[width=1.19444in,height=0.83333in]{vertopal_b2cfe70668f74273a0e0873ca5e4ed7e/media/image18.png}
+
+\textbf{1. előadás}
+
+\textbf{DIFFERENCIÁLSZÁMÍTÁS 1.}
+
+A differenciálszámítás a matematikai analízis alapvető eszköze.
+Segítségével megvizsgálhatjuk a függvények értékeinek változását, ami
+egy pontosabb függvénymegismerésre ad lehetőséget. A
+differenciálszámítás jól használható általános módszert ad
+függvénytulajdonságok leírásá-hoz, mint például a monotonitás,
+szélsőértékhelyek keresése, konvexitás, a függvénygrafikonhoz húzott
+érintőegyenesek meredeksége, stb. A függvényvizsgálat a matematikai
+analízis és alkal-mazásainak egyik legfontosabb fejezete.
+
+Az érintőkkel kapcsolatos számításoknak és függvényváltozások
+sebességeinek a meghatározá-sának már az ókorban is komoly hagyományai
+voltak, igaz akkor még végtelen kicsiny mennyi-ségekkel, ún.
+infinitezimálisokkal próbáltak számolni. Sőt, még a XVIII. században is
+olyan módszereket alkalmaztak, melyek mai szemmel nézve nem voltak elég
+precízek. Csak a határ-érték fogalmának tisztázása tette lehetővé a
+pontos számítások elvégzését.
+
+\textbf{Emlékeztető a függvény határértékéről}
+
+Az Analízis I. kurzuson megismertük a matematikai analízis egyik
+legfontosabb fogalmát, ne-vezetesen a valós--valós függvények pontbeli
+határértékének definícióját. Emlékeztetünk arra, hogy ezzel a fogalommal
+egy függvénynek azt a -- szemléletünk alapján eléggé világos --
+tu-lajdonságát fogalmaztuk meg matematikai szempontból pontos formában,
+hogy egy adott \emph{a} ponthoz „közeli'' helyeken a függvényértékek
+„közel'' vannak valamely \emph{A} értékhez.
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 0\tabcolsep) * \real{1.0000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+Láttuk, hogy \emph{a} és \emph{A} nem csak valós szám, hanem \emph{±∞}is
+lehet. Környezetek segítségével adtuk meg a függvényhatárérték egységes
+definícióját, amit kilenc speciális esetben egyenlőtlenségek-
+
+kel is megfogalmaztunk. A következő ábra ezeket az eseteket tartalmazza.
+\end{minipage} \\
+\midrule()
+\endhead
+\bottomrule()
+\end{longtable}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{\emph{A} = lim \emph{af}}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\emph{A ∈}R
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\emph{A} = +\emph{∞}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\emph{A} = \emph{−∞}
+\end{minipage} \\
+\midrule()
+\endhead
+\emph{a ∈}R & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+\emph{A −ε}
+\end{quote}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule()
+\multirow{4}{*}{\begin{minipage}[b]{\linewidth}\raggedright
+\emph{y}
+
+\emph{A}
+\end{minipage}} & \begin{minipage}[b]{\linewidth}\raggedright
+\end{minipage} \\
+& \begin{minipage}[b]{\linewidth}\raggedright
+\end{minipage} \\
+& \begin{minipage}[b]{\linewidth}\raggedright
+\end{minipage} \\
+& \begin{minipage}[b]{\linewidth}\raggedright
+\end{minipage} \\
+\midrule()
+\endhead
+& \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+\emph{a a} + \emph{δ}
+\end{quote}
+\end{minipage} \\
+\bottomrule()
+\end{longtable}
+
+\emph{a −δ}
+
+\begin{quote}
+\emph{x A} + \emph{ε}
+\end{quote}
+
+\emph{∀ε \textgreater{}} 0-hoz \emph{∃δ \textgreater{}} 0\emph{, ∀∈Df,}
+0 \emph{\textless{} \textbar x −a\textbar{} \textless{} δ}:
+\emph{\textbar f}(\emph{x}) \emph{−A\textbar{} \textless{} ε}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+\emph{y}
+
+\emph{P}
+\end{quote}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\emph{a −δ}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\emph{a}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\emph{a} + \emph{δ}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\emph{x}
+\end{minipage} \\
+\midrule()
+\endhead
+\bottomrule()
+\end{longtable}
+
+\emph{∀P \textgreater{}} 0-hoz \emph{∃δ \textgreater{}} 0\emph{, ∀x
+∈Df,} 0 \emph{\textless{} \textbar x −a\textbar{} \textless{} δ}:
+\emph{f}(\emph{x}) \emph{\textgreater{} P}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\emph{y}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\emph{a −δ}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\emph{a}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\emph{a} + \emph{δ}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\emph{x}
+\end{minipage} \\
+\midrule()
+\endhead
+\bottomrule()
+\end{longtable}
+
+\begin{quote}
+\emph{P}
+\end{quote}
+
+\emph{∀P \textless{}} 0-hoz \emph{∃δ \textgreater{}} 0\emph{, ∀x ∈Df,} 0
+\emph{\textless{} \textbar x −a\textbar{} \textless{} δ}: \emph{x})
+\emph{\textless{} P}
+\end{minipage} \\
+\emph{a} = +\emph{∞} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+\emph{A −ε}
+\end{quote}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule()
+\multirow{4}{*}{\begin{minipage}[b]{\linewidth}\raggedright
+\emph{y}
+
+\emph{A}
+\end{minipage}} & \begin{minipage}[b]{\linewidth}\raggedright
+\end{minipage} \\
+& \begin{minipage}[b]{\linewidth}\raggedright
+\end{minipage} \\
+& \begin{minipage}[b]{\linewidth}\raggedright
+\end{minipage} \\
+& \begin{minipage}[b]{\linewidth}\raggedright
+\end{minipage} \\
+\midrule()
+\endhead
+& \emph{x}0 \\
+\bottomrule()
+\end{longtable}
+
+\begin{quote}
+\emph{x A} + \emph{ε}
+\end{quote}
+
+\emph{∀ε \textgreater{}} 0-hoz \emph{∃x}0 \emph{\textgreater{}} 0\emph{,
+∀x ∈Df, x \textgreater{} x}0 : \emph{\textbar f}(\emph{x})
+\emph{−A\textbar{} \textless{} ε}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+\emph{y}
+
+\emph{P}
+
+\emph{x}0 \emph{x}
+\end{quote}
+
+\emph{∀P \textgreater{}} 0-hoz \emph{∃x}0 \emph{\textgreater{}} 0\emph{,
+∀x ∈Df, x \textgreater{} x}0 : \emph{f}(\emph{x}) \emph{\textgreater{}
+P}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+\emph{y} \emph{x}0
+\end{quote}
+
+\emph{x}
+
+\begin{quote}
+\emph{P}
+\end{quote}
+
+\emph{∀P \textless{}} 0-hoz \emph{∃x}0 \emph{\textgreater{}} 0\emph{, ∀x
+∈Df, x \textgreater{} x}0 : \emph{f}(\emph{x}) \emph{\textless{} P}
+\end{minipage} \\
+\emph{a} = \emph{−∞} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\end{minipage} &
+\multirow{4}{*}{\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\emph{y}
+\end{quote}
+
+\emph{A}
+\end{minipage}} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\end{minipage} \\
+\midrule()
+\endhead
+\emph{x}0 & \\
+\bottomrule()
+\end{longtable}
+
+\emph{A −ε}
+
+\begin{quote}
+\emph{x}\\
+\emph{A} + \emph{ε}
+\end{quote}
+
+\emph{∀ε \textgreater{}} 0-hoz \emph{∃x}0 \emph{\textless{}} 0\emph{,
+∀∈Df, x \textless{} x}0 : \emph{\textbar f}(\emph{x}) \emph{−A\textbar{}
+\textless{} ε}\strut
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\emph{y}
+
+\emph{P}
+
+\begin{quote}
+\emph{x}0 \emph{x}
+\end{quote}
+
+\emph{∀P \textgreater{}} 0-hoz \emph{∃x}0 \emph{\textless{}} 0\emph{, ∀x
+∈Df, x \textless{} x}0 : \emph{f}(\emph{x}) \emph{\textgreater{} P}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+\emph{x}0 \emph{y}
+\end{quote}
+
+\emph{x}
+
+\emph{P}
+
+\emph{∀P \textless{}} 0-hoz \emph{∃x}0 \emph{\textless{}} 0\emph{, ∀x
+∈Df, x \textless{} x}0 : \emph{f}(\emph{x}) \emph{\textless{} P}
+\end{minipage} \\
+\bottomrule()
+\end{longtable}
+
+1
+
+Nézzük azt az esetet, amikor \emph{a} és \emph{A} valós számok. Legyen
+\emph{f ∈}R \emph{→}R és \emph{a ∈D′}hogy \emph{\textbf{az f függvénynek
+az a pontban vett határértéke az A szám}}, ha \emph{f}. Azt mondjuk,
+
+\begin{quote}
+\emph{∀ε \textgreater{}} 0-hoz \emph{∃δ \textgreater{}} 0\emph{, ∀x
+∈Df,} 0 \emph{\textless{} \textbar x −a\textbar{} \textless{} δ}:
+\emph{f}(\emph{x}) \emph{−A} \emph{\textless{} ε.}
+\end{quote}
+
+Ezt az alábbi szimbólumok valamelyikével jelöljük:
+
+\begin{quote}
+lim \emph{af} = \emph{A,} \emph{x→af}(\emph{x}) = \emph{A,}
+\emph{f}(\emph{x}) \emph{→A,} ha \emph{x →a.}
+\end{quote}
+
+A függvény határértékének a fogalmát ekvivalens módon is meg lehet adni
+sorozatok határér-tékével. Ezt állítja az \emph{\textbf{átviteli elv}}:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+lim \emph{af} = \emph{A}
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\emph{⇐⇒}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\emph{∀}(\emph{xn}) : N \emph{→Df \textbackslash{} \{a\},}
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\emph{n→}+\emph{∞xn} = \emph{a} esetén
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\emph{n→}+\emph{∞f}(\emph{xn}) = \emph{A.}
+\end{quote}
+\end{minipage} \\
+\midrule()
+\endhead
+\bottomrule()
+\end{longtable}
+
+A gyakorlati foglalkozásokon láttuk, hogy határértékek kiszámításában
+nagy segítséget jelentett \emph{\textbf{a határérték és a műveletek
+kapcsolatára vonatkozó tétel}}, amely lényegében azt mond-ja ki, hogy az
+algebrai műveletek és a határértékképzés sorrendje felcserélhető, ha a
+műveletek elvégezhetők a kibővített valós számokR halmazán. Ezt az
+állítást nem tudjuk alkalmazni töb-bek között például akkor, ha olyan
+hányados határértékéről van szó, amelynek számlálójábanés nevezőjében
+szereplő függvények határértéke az adott pontban egyszerre nulla. Ekkor
+0\emph{/}0 típusú kritikus határértékről beszélünk.
+
+Több nevezetes határértéket is megismertünk az Analízis I. kurzuson.
+Ezek közül kiemeljük a
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}@{}}
+\toprule()
+\multicolumn{6}{@{}>{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{1.0000} + 10\tabcolsep}@{}}{%
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+lim sin \emph{x} = 1\emph{,} lim \emph{ex−}1 = 1
+
+\emph{x→}0 \emph{x x→}0 \emph{x}
+\end{quote}
+
+határértékeket. Ezeket nem nehéz igazolni, ti. induljunk ki a szinusz-
+és az exponenciális
+
+függvény hatványsoros definíciójából, és alkalmazzuk \emph{\textbf{a
+hatványsor összegfüggvényének}}
+
+\emph{\textbf{a határértékéről szóló tételt}}. Ez azt mondja ki, hogy
+egy pozitív konvergenciasugárral
+
+rendelkező hatványsor összegfüggvényének a konvergenciahalmazának minden
+pontjában van
+
+határértéke, és ez a határérték megegyezik az összegfüggvény pontbeli
+értékével.
+
+Az előbbi tulajdonság a \emph{\textbf{függvény pontbeli
+folytonosságának}} a fogalmához vezet. Akkor
+
+mondjuk, hogy az \emph{f ∈}R \emph{→}R függvény folytonos az \emph{a
+∈Df} pontban, ha
+\end{minipage}} \\
+\midrule()
+\endhead
+\multicolumn{4}{@{}>{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.6667} + 6\tabcolsep}}{%
+\emph{∀ε \textgreater{}} 0-hoz \emph{∃δ \textgreater{}} 0\emph{, ∀x ∈Df,
+\textbar x −a\textbar{} \textless{} δ}:} & \emph{f}(\emph{x})
+\emph{−f}(\emph{a}) & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+\emph{\textless{} ε.}
+\end{quote}
+\end{minipage} \\
+\multicolumn{6}{@{}>{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{1.0000} + 10\tabcolsep}@{}}{%
+\begin{minipage}[t]{\linewidth}\raggedright
+Jelölés: \emph{f ∈C\{a\}}. Két eset lehetséges:\\
+• ha \emph{a ∈Df}, de \emph{a /∈D′f}, azaz \emph{a} izolált pontja
+\emph{Df}-nek, akkor \emph{f ∈C\{a\}}.\strut
+\end{minipage}} \\
+• ha \emph{a ∈Df ∩D′f}, akkor & \emph{f ∈C\{a\}} & \emph{⇐⇒} &
+\multicolumn{3}{>{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.5000} + 4\tabcolsep}@{}}{%
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+\emph{∃}lim \emph{af} és lim \emph{af} = \emph{f}(\emph{a}).
+\end{quote}
+\end{minipage}} \\
+\bottomrule()
+\end{longtable}
+
+Ezért, ha egy függvény értelmezési tartományának nincsenek izolált
+pontjai, pl. egy intervallum, akkor a függvény akkor és csak akkor
+folytonos valamely pontjában, ha ott létezik határértéke,és ez
+megegyezik a függvény pontbeli értékével. Az előbbiek szerint egy
+hatványsor összeg-függvénye folytonos a konvergenciahalmazának minden
+pontjában. Ezért az exponenciális, a szinusz és a koszinusz függvények
+folytonosak a valós számok halmazán.
+
+\emph{\textbf{Egyoldali határértékeket}} is értelmeztünk. Akkor mondjuk,
+hogy egy \emph{f} függvénynek van jobb oldali határértéke az \emph{a}
+pontban, ha \emph{f} a \emph{Df ∩}(\emph{a,} +\emph{∞}) halmazra való
+leszűkítésének van határértéke az \emph{a} pontban. Bal oldali
+határérték esetén a \emph{Df ∩}(\emph{−∞, a}) halmazra való leszű-kítést
+nézzük. A határértékre vonatkozó alaptételek az egyoldali határértékekre
+is érvényesek.
+
+Továbbá, ha az \emph{a} pont bal és jobb oldali torlódási pontja
+\emph{Df}-nek, akkor\emph{∃}lim \emph{af} \emph{⇐⇒} \emph{∃}lim
+\emph{a−}0\emph{f, ∃}lim \emph{a}+0\emph{f} és \emph{a−}0\emph{f} = lim
+\emph{a}+0\emph{f} (= lim \emph{af})\emph{.}
+
+2
+
+\includegraphics[width=3.70833in,height=2.31944in]{vertopal_b2cfe70668f74273a0e0873ca5e4ed7e/media/image20.png}
+
+\textbf{A derivált motivációja}
+
+A derivált definíciójának értelmezése előtt két olyan problémát
+vázolunk, amelyek jól megvilá-gítják a derivált értelmezésének
+szükségességét, sőt a definíció célszerű módját is sugallják.
+
+\textbf{1. \emph{Az érintőegyenes értelmezése:}} Legyen \emph{f} :
+\emph{I →}R és \emph{a ∈I}, ahol \emph{I} egy nyílt interval-lum. Hogyan
+tudjuk értelmezni és meghatározni az \emph{f} függvény grafikonjához
+\emph{a} abszcisszájúpontban húzott érintőegyenes (vagy egyszerűen
+\emph{\textbf{érintő}}) egyenletét?
+
+\begin{quote}
+A geometriából olyan intuitív fogalmat kapunk az érintőről, amely igazán
+csak olyan speciális görbéknél alkalmazható, mint a kör vagy egyéb
+másodrendű görbék. Olyan fogalomra van szükségünk, ami általánosan
+alkalmazható, egyértelműen eldönthetjük, hogy létezik-e azérintő a
+megadott \emph{a} abszcisszájú pontban, és ha igen, akkor meg tudjuk
+vele határozni azérintő egyenletét.
+
+Tekintsük meg a következő animációt!
+\end{quote}
+
+\emph{y}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\emph{f}(\emph{x})
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\emph{f}
+\end{minipage} \\
+\midrule()
+\endhead
+\bottomrule()
+\end{longtable}
+
+\emph{f}(\emph{a})
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\emph{a}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\emph{x}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\emph{x}
+\end{minipage} \\
+\midrule()
+\endhead
+\bottomrule()
+\end{longtable}
+
+\includegraphics[width=2.16667in,height=0.22222in]{vertopal_b2cfe70668f74273a0e0873ca5e4ed7e/media/image19.png}
+
+\begin{quote}
+Ha \emph{x} az \emph{I} intervallumnak egy \emph{a}-tól különböző
+pontja, akkor vegyük azt a szelőegyenest, amely az (\emph{a,
+f}(\emph{a})) és az (\emph{x, f}(\emph{x})) pontokon megy át (piros
+színnel ábrázolva). Mivel ismerjük a szelőegyenes két pontját, ezért ki
+tudjuk számolni a meredekségét. Ez természetesen függ az \emph{x} érték
+megválasztásától, így a szelőegyenes meredekségét a következő függvény
+adja:
+
+\emph{F}(\emph{x}) :=\emph{f}(\emph{x}) \emph{−f}(\emph{a}) \emph{x −a}
+(\emph{x ∈I, x ̸}= \emph{a})\emph{.}
+
+Az animációban látható, hogy ha az \emph{x} érték elég közel van az
+\emph{a} értékéhez, akkor a szelőegye-nes egy „hátáregyenes'' közelébe
+kerül, amit majd érintőnek fogjuk nevezni. A hátáregyenes az (\emph{a,
+f}(\emph{a})) pontban megy át, meredeksége a szelőegyenesek
+meredekségének határértéke, ha \emph{x →a}. Ez precízen kifejezhető az
+\emph{F} függvény \emph{a} pontban vett határértékkel:
+\end{quote}
+
+lim \emph{f}(\emph{x}) \emph{−f}(\emph{a}) \emph{.}
+
+\begin{quote}
+\emph{x→a} \emph{x −a}\\
+Célszerűnek tűnik tehát ezzel a határértékkel értelmezni az érintő
+meredekségét, ha a ha-tárérték létezik.
+\end{quote}
+
+\textbf{2. \emph{A pillanatnyi sebesség értelmezése:}} Tekintsük most a
+következő fizikai problémát. Egy pontszerű test akkor végez egyenletes
+mozgást egy egyenes pályán, hogy ha bármely megtett szakasz hosszát
+elosztjuk a szakasz megtételére szükséges idő nagyságával, akkor
+ugyanazt az értéket kapjuk. Ezt a hányadost a test
+\emph{\textbf{sebességének}} nevezzük. Ha egy test nem mozog
+egyenletesen, akkor is beszélhetünk a test
+\emph{\textbf{átlagsebességéről}} egy adott szakaszon, ami nem más, mint
+a szakasz hossza és az ennek megtételéhez szükséges időhányadosa. Hogyan
+tudnánk egy test sebességét értelmezni egy adott időpontban?
+
+3
+
+\begin{quote}
+Ha egy egészen kicsi időintervallumot nézünk, akkor azt várjuk, hogy ez
+idő alatt a sebesség nem változik jelentősen, így a mozgás közelítőleg
+egyenletes lesz. Ezért egy test sebességét egy adott időpontban úgy
+kellene értelmezni, mint egy kellően kis időtartamra vett
+átlagse-besség, de ez így nem elég precíz. A pontos értelmezéshez
+ismernünk kell a test mozgását az egyenes pályán a vizsgált \emph{I}
+időintervallumban, azaz tudnunk kell milyen távolságban van a test egy,
+a pályán található \emph{O} referenciaponttól a \emph{t} időpillanatban,
+ahol \emph{t ∈I}. Jelölje \emph{s}(\emph{t}) ezt a távolságot, de mivel
+két irány van, meg kell őket különböztetni. Legyen az
+\emph{s}(\emph{t})értéke pozitív, ha a \emph{t} időpillanatban a test a
+referenciapont jobb oldalán, és negatív, ha a bal oldalán van. Ezt a
+függvényt a test \emph{\textbf{elmozdulásfüggvényének}} hívjuk.
+
+Vegyünk egy \emph{t}0 időpontot az \emph{I} intervallum belsejéből! Ha
+\emph{t ∈I} egy másik időpont, akkor∆\emph{t} := \emph{t −t}0 a két
+időpont között eltelt idő előjelesen, azaz pozitív, ha \emph{t
+\textgreater{} t}0, és negatív, ha \emph{t \textless{} t}0. Ez idő alatt
+a test egy ∆\emph{s} := \emph{s}(\emph{t}) \emph{−s}(\emph{t}0)
+hosszúságú szakaszt tesz meg, ami szintén előjeles mennyiség. Ezért a
+
+különbséghányados a két időpont között eltelt időintervallumban megtett
+szakaszra vonat-∆\emph{t}= \emph{s}(\emph{t}) \emph{−s}(\emph{t}0)
+\emph{t −t}0
+
+kozó átlagsebesség. Ez pozitív, ha a test pozitív irányba halad, és
+negatív, ha az ellenkezőirányba.
+\end{quote}
+
+\includegraphics[width=0.77778in,height=\textheight]{vertopal_b2cfe70668f74273a0e0873ca5e4ed7e/media/image21.png}
+
+\begin{quote}
+\emph{s}(\emph{t})\emph{−}∆\emph{s} ∆\emph{t \textless{}} 0
+\end{quote}
+
+\includegraphics[width=1.58333in,height=\textheight]{vertopal_b2cfe70668f74273a0e0873ca5e4ed7e/media/image22.png}
+
+\emph{s}(\emph{t})
+
+\begin{quote}
+\includegraphics[width=1.16667in,height=\textheight]{vertopal_b2cfe70668f74273a0e0873ca5e4ed7e/media/image23.png}∆\emph{t
+\textgreater{}} 0
+
+\includegraphics[width=1.77778in,height=\textheight]{vertopal_b2cfe70668f74273a0e0873ca5e4ed7e/media/image24.png}
+
+\includegraphics[width=0.77778in,height=\textheight]{vertopal_b2cfe70668f74273a0e0873ca5e4ed7e/media/image25.png}
+\includegraphics[width=1.16667in,height=\textheight]{vertopal_b2cfe70668f74273a0e0873ca5e4ed7e/media/image26.png}
+
+\emph{O s}(\emph{t}0) \emph{O} \emph{s}(\emph{t}0) ∆\emph{s}
+
+Az elvárás szerint a test sebessége a \emph{t}0 időpontban egy kellően
+kis ∆\emph{t} időtartamra vett
+
+átlagsebesség. Ezért célszerű lenne egy egyenes pályán mozgó test
+\emph{\textbf{pillanatnyi sebességét}}
+
+a \emph{t}0 időpontban a
+\end{quote}
+
+lim \emph{s}(\emph{t}) \emph{−s}(\emph{t}0)
+
+\begin{quote}
+határértékkel értelmezni, ami „figyel'' a test haladási irányára, azaz
+pozitív, ha a test pozitív \emph{t→t}0 \emph{t −t}0
+
+irányba halad, és negatív, ha az ellenkező irányba.
+\end{quote}
+
+Vegyük észre, hogy az érintőegyenes meredekségének a meghatározásához
+kapott határérték
+
+azonos a pillanatnyi sebesség értelmezéséhez kapott határértékkel. A
+továbbiakban kiemelten
+
+foglalkozunk az ilyen típusú határértékekkel.
+
+\textbf{A pontbeli derivált fogalma}
+
+Egy adott függvény pontbeli deriváltját a függvény értelmezési
+tartományának olyan pontjaiban
+
+értelmezzük, amelyek valamely környezete is az értelmezési tartományhoz
+tartozik. Az ilyen
+
+pontokat belső pontoknak fogjuk nevezni.
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 0\tabcolsep) * \real{1.0000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{1. Definíció.} \emph{Tegyük fel, hogy ∅̸}= \emph{A ⊂}R\emph{. Az
+a ∈A pont az A halmaz} \textbf{belső pontja}\emph{, ha}
+
+\emph{∃K}(\emph{a})\emph{, hogy K}(\emph{a}) \emph{⊂A.}
+
+\begin{quote}
+\emph{Az}\uline{int} \emph{A szimbólummal jelöljük} \textbf{az \emph{A}
+halmaz belső pontjainak a halmazát}\emph{.}
+\end{quote}
+\end{minipage} \\
+\midrule()
+\endhead
+\bottomrule()
+\end{longtable}
+
+\emph{\textbf{Példák:}} a) Ha \emph{A} = {[}0\emph{,} 1{]}, akkor int
+\emph{A} = (0\emph{,} 1).
+
+\begin{quote}
+b) Ha \emph{A} = (5\emph{,} 6{]} \emph{∪\{}7\emph{\}}, akkor int
+\emph{A} = (5\emph{,} 6).
+
+c) Ha \emph{A} = \emph{\{}2\emph{,} 3\emph{,} 4\emph{\}}, akkor int
+\emph{A} = \emph{∅}.
+\end{quote}
+
+4
+
+\emph{\textbf{Megjegyzés.}} Nem nehéz igazolni, hogy
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}@{}}
+\toprule()
+\multicolumn{4}{@{}>{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.8000} + 6\tabcolsep}}{%
+\begin{minipage}[b]{\linewidth}\raggedright
+int(\emph{A ∩B}) = int \emph{A ∩}int \emph{B.}
+\end{minipage}} & \begin{minipage}[b]{\linewidth}\raggedright
+■
+\end{minipage} \\
+\midrule()
+\endhead
+\multicolumn{4}{@{}>{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.8000} + 6\tabcolsep}}{%
+\textbf{2. Definíció.} \emph{Az f ∈}R \emph{→}R \emph{függvény az a
+∈}int \emph{Df pontban} \textbf{differenciálható} (\emph{vagy}
+\textbf{deriválható})\emph{, ha létezik és véges a}} &
+\multirow{5}{*}{} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+lim\\
+\emph{x→a}
+\end{quote}\strut
+\end{minipage} &
+\multicolumn{3}{>{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.6000} + 4\tabcolsep}}{%
+\begin{minipage}[t]{\linewidth}\raggedright
+\emph{f}(\emph{x}) \emph{−f}(\emph{a})\\
+\emph{x −a}\strut
+\end{minipage}} \\
+\multicolumn{4}{@{}>{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.8000} + 6\tabcolsep}}{%
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+\emph{határérték. Ezt a határértéket az f′}(\emph{a}) \emph{szimbólummal
+jelöljük, és} \textbf{az \emph{f} függvény \emph{a} pontbeli
+deriváltjának} (\emph{vagy} \textbf{differenciálhányadosának})
+\emph{nevezzük, azaz}
+\end{quote}
+\end{minipage}} \\
+\multicolumn{2}{@{}>{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.4000} + 2\tabcolsep}}{%
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+\emph{f′}(\emph{a}) := lim\\
+\emph{x→a}
+\end{quote}\strut
+\end{minipage}} & \emph{f}(\emph{x}) \emph{−f}(\emph{a}) \emph{x −a} &
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+\emph{∈}R\emph{.}
+\end{quote}
+\end{minipage} \\
+\multicolumn{4}{@{}>{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.8000} + 6\tabcolsep}}{%
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+\emph{Ezt a tényt a következőképpen fogjuk jelölni: f ∈D\{a\}.}
+\end{quote}
+\end{minipage}} \\
+\bottomrule()
+\end{longtable}
+
+\emph{\textbf{Megjegyzések.}}
+
+1. A fenti definícióban szereplő határértéket az \emph{h} = \emph{x −a}
+helyettesítéssel gyakran így írjuk fel:
+
+\emph{f′}(\emph{a}) = lim \emph{f}(\emph{x}) \emph{−f}(\emph{a}) = lim
+\emph{f}(\emph{a} + \emph{h}) \emph{−f}(\emph{a}) \emph{.}
+
+\begin{quote}
+\emph{x→a} \emph{x −a} \emph{h→}0 \emph{h}
+\end{quote}
+
+2. Ha \emph{f ∈}R \emph{→}R és \emph{a ∈}int \emph{Df}, akkor az
+
+\emph{F}(\emph{x}) :=\emph{f}(\emph{x}) \emph{−f}(\emph{a})
+
+\begin{quote}
+\emph{x −a x ∈Df \textbackslash{} \{a\}}
+
+függvényt \emph{\textbf{az f függvény az a ponthoz tartozó
+különbséghányados-függvényének}}
+
+vagy \emph{\textbf{differenciahányados-függvényének}} nevezzük.
+\end{quote}
+
+3. A derivált definíciójában 0\emph{/}0-típusú kritikus határértékről
+van szó. A számlaló a következő
+
+\begin{quote}
+tétel állítása miatt fog tartani a nullához.
+\end{quote}
+
+A differenciálhatóság erősebb megkötés, mint a folytonosság.
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 0\tabcolsep) * \real{1.0000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\textbf{1. Tétel (A folytonosság és a deriválhatóság kapcsolata).}
+\emph{Tegyük fel, hogy f ∈}R \emph{→}R \emph{és a ∈}int \emph{Df.
+Ekkor}\\
+\emph{a}) \emph{f ∈D\{a\}} =\emph{⇒} \emph{f ∈C\{a\},}
+
+\emph{b}) \emph{Az állítás megfordítása nem igaz.}
+\end{quote}\strut
+\end{minipage} \\
+\midrule()
+\endhead
+\bottomrule()
+\end{longtable}
+
+\begin{quote}
+\emph{\textbf{Bizonyítás.}}
+\end{quote}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 0\tabcolsep) * \real{1.0000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+a) Ha \emph{f ∈D\{a\}}, akkor
+
+\emph{x→a} lim \emph{f}(\emph{x}) \emph{−f}(\emph{a}) = lim
+
+\emph{x→a}\\
+\emph{f}(\emph{x}) \emph{−f}(\emph{a})
+
+\emph{x −a·} (\emph{x −a}) =
+\end{quote}
+
+= lim
+
+\begin{quote}
+\emph{x→a}\\
+\emph{f}(\emph{x}) \emph{−f}(\emph{a})
+
+\emph{x −a·} lim \emph{x→a}(\emph{x −a}) = \emph{f ′}(\emph{a}) \emph{·}
+0 = 0\emph{.}
+
+Ez éppen azt jelenti, hogy \emph{f ∈C\{a\}}.
+\end{quote}\strut
+\end{minipage} \\
+\midrule()
+\endhead
+\bottomrule()
+\end{longtable}
+
+5
+
+\includegraphics[width=6.70833in,height=2.91667in]{vertopal_b2cfe70668f74273a0e0873ca5e4ed7e/media/image27.png}\includegraphics[width=6.70833in,height=2.23611in]{vertopal_b2cfe70668f74273a0e0873ca5e4ed7e/media/image28.png}
+
+\begin{quote}
+b) Van olyan folytonos függvény, amelyik egy pontban folytonos, de ott
+nem deriválható.
+
+Például az
+
+\emph{f} : R \emph{→}R\emph{,} \emph{f}(\emph{x}) :=
+\emph{\textbar x\textbar{}}
+
+abszolút érték függvény az \emph{a} = 0 pontban.
+
+Valóban \emph{f ∈C\{}0\emph{\}}, de \emph{f /∈D\{}0\emph{\}}, hiszen
+minden \emph{x ̸}= 0 esetén
+
+és így\\
+\emph{f}(\emph{x}) \emph{−f}(0)
+
+\emph{x −}0\\
+=\emph{\textbar x\textbar{} −\textbar{}}0\emph{\textbar{}}
+
+\emph{x} =\emph{\textbar x\textbar{} x}= 1
+
+\emph{−}1\\
+(\emph{x \textgreater{}} 0)
+\end{quote}
+
+(\emph{x \textless{}} 0)\emph{,}
+
+\begin{quote}
+\emph{x→}0\emph{−}0\\
+lim \emph{f}(\emph{x}) \emph{−f}(0)
+
+\emph{x −}0 = \emph{−}1és
+
+\emph{x→}0+0\\
+lim \emph{f}(\emph{x}) \emph{−f}(0)
+
+\emph{x −}0\\
+= 1\emph{.}
+
+Ezért az \emph{f} függvény 0 pontbeli differenciálhányadosa nem létezik.
+\end{quote}
+
+\textbf{Az érintő fogalma}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 0\tabcolsep) * \real{1.0000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+Az előzőek alapján, ha \emph{f ∈D\{a\}}, akkor az (\emph{a,
+f}(\emph{a})) és az (\emph{x, f}(\emph{x})) pontokon átmenő
+szelőegye-neseknek van „határegyenese'', ha \emph{x →a}. Függvény
+grafikonjának (mint síkbeli halmaznak) azérintőjén éppen ezt az egyenest
+célszerű érteni. Az \emph{f ∈D\{a\}} függvény esetén a szóban
+forgóegyenes átmegy az (\emph{a, f}(\emph{a})) pontban, és a meredeksége
+\emph{f′}(\emph{a}).
+\end{minipage} \\
+\midrule()
+\endhead
+\bottomrule()
+\end{longtable}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 0\tabcolsep) * \real{1.0000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\textbf{3. Definíció.} \emph{Az f ∈}R \emph{→}R \emph{függvény
+grafikonjának az} (\emph{a, f}(\emph{a})) \emph{pontban} \textbf{van
+érintője}\emph{, ha f ∈D\{a\}. Az f függvény grafikonjának} (\emph{a,
+f}(\emph{a})) \emph{pontbeli} \textbf{érintőjén} \emph{az}
+\end{quote}
+
+\emph{y} = \emph{f′}(\emph{a}) \emph{·} (\emph{x −a}) +
+\emph{f}(\emph{a})
+
+\begin{quote}
+\emph{egyenletű egyenest értjük.}
+\end{quote}
+\end{minipage} \\
+\midrule()
+\endhead
+\bottomrule()
+\end{longtable}
+
+Vegyük észre, hogy a \emph{f′}(\emph{a}) definíciójában szereplő
+határérték véges, ezért az érintő nem lehet
+
+párhuzamos az \emph{y}-tengellyel.
+
+\emph{\textbf{Megjegyzés.}} Érdemes meggondolni, hogy a kör és a
+parabola érintőjének a fenti definíciója
+
+ekvivalens a középiskolában geometriai úton megadott definícióval. ■
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1111}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1111}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1111}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1111}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1111}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1111}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1111}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1111}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1111}}@{}}
+\toprule()
+\multicolumn{9}{@{}>{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{1.0000} + 16\tabcolsep}@{}}{%
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\textbf{1. Feladat.} \emph{A differenciálhányados fogalmának
+segítségével határozzuk meg az f}(\emph{x}) = \emph{x}2 \emph{függvény
+görbéjéhez az x}0 = 1 \emph{abszcisszájú pontban húzott érintőegyenes
+egyenletét!}
+\end{quote}
+\end{minipage}} \\
+\midrule()
+\endhead
+\multicolumn{7}{@{}>{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.7778} + 12\tabcolsep}}{%
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+\emph{\textbf{Megoldás.}} A differenciálhányados fogalma szerint
+\end{quote}
+\end{minipage}} &
+\multicolumn{2}{>{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.2222} + 2\tabcolsep}@{}}{%
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+\emph{y}
+\end{quote}
+\end{minipage}} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+\emph{f′}(1) = lim \emph{h→}0
+\end{quote}
+\end{minipage} &
+\multicolumn{2}{>{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.2222} + 2\tabcolsep}}{%
+(1 + \emph{h})2\emph{−}12 \emph{h}} &
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+= lim \emph{h→}0
+\end{quote}
+\end{minipage} &
+\multicolumn{2}{>{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.2222} + 2\tabcolsep}}{%
+1 + 2\emph{h} + \emph{h}2\emph{−}1 \emph{h}} &
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+=
+\end{quote}
+\end{minipage} &
+\multicolumn{2}{>{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.2222} + 2\tabcolsep}@{}}{%
+\emph{f}(\emph{x}) = \emph{x}2} \\
+\multirow{2}{*}{\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+= lim\\
+\emph{h→}0
+\end{quote}\strut
+\end{minipage}} & 2\emph{h} + \emph{h}2 &
+\multicolumn{7}{>{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.7778} + 12\tabcolsep}@{}}{%
+\multirow{2}{*}{\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+= lim \emph{h→}0(2 + \emph{h}) = 2\emph{.}
+\end{quote}
+\end{minipage}}} \\
+& \emph{h} \\
+\multicolumn{7}{@{}>{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.7778} + 12\tabcolsep}}{%
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+Másrészt \emph{f}(1) = 12= 1, így behelyettesíthetjük ezeket az érintő
+egyenes egyenletébe:
+\end{quote}
+\end{minipage}} &
+\multicolumn{2}{>{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.2222} + 2\tabcolsep}@{}}{%
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+1
+\end{quote}
+\end{minipage}} \\
+\multicolumn{3}{@{}>{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.3333} + 4\tabcolsep}}{%
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+\emph{y} = \emph{f′}(1)(\emph{x −}1) + \emph{f}(1)
+\end{quote}
+\end{minipage}} &
+\multicolumn{2}{>{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.2222} + 2\tabcolsep}}{%
+=\emph{⇒}} &
+\multicolumn{2}{>{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.2222} + 2\tabcolsep}}{%
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+\emph{y} = 2\emph{x −}1\emph{.}
+\end{quote}
+\end{minipage}} & 1 & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+\emph{x}
+\end{quote}
+\end{minipage} \\
+\bottomrule()
+\end{longtable}
+
+6
+
+\emph{\textbf{Megjegyzés.}} A pillanatnyi sebességről elmondottak
+alapján, egy egyenes pályán mozgó test \emph{v} pillanatnyi sebessége
+egy \emph{t}0 időpontban úgy értelmezzük, mint az \emph{s}
+elmozdulásfüggvény diffe-renciálhányadosa ebben az időpontban, azaz
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\emph{v}(\emph{t}0) := \emph{s′}(\emph{t}0) feltéve, hogy az \emph{s}
+differenciálható a \emph{t}0 pontban. ■
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+(\emph{t}0 \emph{∈I})
+\end{quote}
+\end{minipage} \\
+\midrule()
+\endhead
+\bottomrule()
+\end{longtable}
+
+\textbf{Deriválási szabályok}
+
+A definíció alapján annak eldöntése, hogy egy adott függvény
+deriválható-e valamilyen pont-ban, esetenként szinte reménytelen
+feladat. Éppen ezért különös jelentőséggel bírnak azok azállítások,
+amelyek ezt megkönnyítik. Ezek az ún. \emph{\textbf{deriválási
+szabályok}}, amelyek segítségével bizonyos függvények
+differenciálhatóságából és deriváltjának ismeretéből következtetni
+tudunk további függvények differenciálhatóságára és deriváltjára.
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}@{}}
+\toprule()
+\multicolumn{4}{@{}>{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{1.0000} + 6\tabcolsep}@{}}{%
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\textbf{2. Tétel (Algebrai műveletekre vonatkozó deriválási szabályok).}
+\emph{Tegyük fel, hogy f, g ∈}R \emph{→}R \emph{és f, g ∈D\{a\}
+valamilyen a ∈}int(\emph{Df ∩Dg}) \emph{pontban. Ekkor}\\
+\emph{1. a szorzó konstansokat ki tudjuk emelni a deriválásból, azaz}
+\end{quote}\strut
+\end{minipage}} \\
+\midrule()
+\endhead
+\emph{cf ∈D\{a\}} & \emph{és} &
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+(\emph{cf})\emph{′}(\emph{a}) = \emph{cf′}(\emph{a})
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+(\emph{c ∈}R)
+\end{quote}
+\end{minipage} \\
+\bottomrule()
+\end{longtable}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule()
+\multicolumn{3}{@{}>{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{1.0000} + 4\tabcolsep}@{}}{%
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\emph{2. tagokból álló függvényeket tagonként deriválhatjuk, azaz}
+\end{quote}
+\end{minipage}} \\
+\midrule()
+\endhead
+\emph{f} + \emph{g ∈D\{a\}} & \emph{és} &
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+(\emph{f} + \emph{g})\emph{′}(\emph{a}) = \emph{f′}(\emph{a}) +
+\emph{g′}(\emph{a})\emph{,}
+\end{quote}
+\end{minipage} \\
+\bottomrule()
+\end{longtable}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule()
+\multicolumn{3}{@{}>{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{1.0000} + 4\tabcolsep}@{}}{%
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\emph{3. egy szorzat deriváltja az az összeg, amelynek tagjai az egyik
+tényező deriváltja meg-szorozva a másik tényezővel, azaz}
+\end{quote}
+\end{minipage}} \\
+\midrule()
+\endhead
+\emph{f · g ∈D\{a\}} & \emph{és} &
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+(\emph{f · g})\emph{′}(\emph{a}) = \emph{f′}(\emph{a})\emph{g}(\emph{a})
++ \emph{f}(\emph{a})\emph{g′}(\emph{a})\emph{,}
+\end{quote}
+\end{minipage} \\
+\bottomrule()
+\end{longtable}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}@{}}
+\toprule()
+\multicolumn{6}{@{}>{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{1.0000} + 10\tabcolsep}@{}}{%
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\emph{4. ha még a g}(\emph{a}) \emph{̸}= 0 \emph{feltétel is teljesül,
+akkor}
+\end{quote}
+\end{minipage}} \\
+\midrule()
+\endhead
+\multirow{2}{*}{\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+\emph{f}\\
+\emph{g∈D\{a\}}
+\end{quote}\strut
+\end{minipage}} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+\emph{és}
+\end{quote}
+\end{minipage} & \emph{f} & \emph{′} & (\emph{a}) =\emph{f
+′}(\emph{a})\emph{g}(\emph{a}) \emph{−f}(\emph{a})\emph{g′}(\emph{a}) &
+\multirow{2}{*}{\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+\emph{.}
+\end{quote}
+\end{minipage}} \\
+& & \emph{g} & & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\emph{a}
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\emph{g}2(\emph{a})
+\end{minipage} \\
+\midrule()
+\endhead
+\bottomrule()
+\end{longtable}
+\end{minipage} \\
+\multicolumn{6}{@{}>{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{1.0000} + 10\tabcolsep}@{}}{%
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+\emph{\textbf{Bizonyítás.}} A bizonyításban többször alkalmazzuk az
+algebrai műveletek és a határérték felcserélhetőségéről szóló tételt,
+illetve azt a tényt, hogy ha \emph{g ∈D\{a\}}, akkor \emph{g ∈C\{a\}},
+tehát\\
+\emph{x→ag}(\emph{x}) = \emph{g}(\emph{a})\emph{.}
+\end{quote}\strut
+\end{minipage}} \\
+\bottomrule()
+\end{longtable}
+
+\begin{quote}
+1. Nyilván \emph{a ∈}int \emph{Dcf}, hiszen \emph{Dcf} = \emph{Df}.
+Másrészt
+\end{quote}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+(\emph{cf})\emph{′}(\emph{a}) = lim \emph{x→a}
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\emph{cf}(\emph{x}) \emph{−cf}(\emph{a}) \emph{x −a}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+= lim \emph{x→ac · f}(\emph{x}) \emph{−f}(\emph{a}) \emph{x −a}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+= \emph{c} lim \emph{x→a}
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\emph{f}(\emph{x}) \emph{−f}(\emph{a}) \emph{x −a}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+= \emph{cf′}(\emph{a})\emph{.}
+\end{quote}
+\end{minipage} \\
+\midrule()
+\endhead
+\bottomrule()
+\end{longtable}
+
+7
+
+\includegraphics[width=6.70833in,height=7.91667in]{vertopal_b2cfe70668f74273a0e0873ca5e4ed7e/media/image29.png}
+
+\begin{quote}
+2. Nyilván \emph{a ∈}int \emph{Df}+\emph{g}, hiszen \emph{Df}+\emph{g} =
+\emph{Df ∩Dg}. Másrészt
+
+(\emph{f} + \emph{g})\emph{′}(\emph{a}) = lim (\emph{f} +
+\emph{g})(\emph{x}) \emph{−}(\emph{f} + \emph{g})(\emph{a}) = lim
+\emph{f}(\emph{x}) + \emph{g}(\emph{x}) \emph{−}(\emph{f}(\emph{a}) +
+\emph{g}(\emph{a})) =
+
+\emph{x→a x −a x→a} \emph{x −a}
+
+= lim \emph{f}(\emph{x}) \emph{−f}(\emph{a}) + \emph{g}(\emph{x})
+\emph{−g}(\emph{a}) = lim \emph{f}(\emph{x}) \emph{−f}(\emph{a}) + lim
+\emph{g}(\emph{x}) \emph{−g}(\emph{a}) =
+
+\emph{x→a} \emph{x −a x→a x −a} \emph{x→a x −a}
+
+= \emph{f′}(\emph{a}) + \emph{g′}(\emph{a})\emph{.}
+
+3. Nyilván \emph{a ∈}int \emph{Dfg}, hiszen \emph{Dfg} = \emph{Df ∩Dg}.
+Másrészt
+
+(\emph{fg})\emph{′}(\emph{a}) = lim (\emph{fg})(\emph{x})
+\emph{−}(\emph{fg})(\emph{a}) = lim \emph{f}(\emph{x})\emph{g}(\emph{x})
+\emph{−f}(\emph{a})\emph{g}(\emph{a}) =
+
+\emph{x→a} \emph{x −a} \emph{x→a} \emph{x −a}
+
+= lim \emph{f}(\emph{x})\emph{g}(\emph{x})
+\emph{−f}(\emph{a})\emph{g}(\emph{x}) +
+\emph{f}(\emph{a})\emph{g}(\emph{x})
+\emph{−f}(\emph{a})\emph{g}(\emph{a}) =
+
+\emph{x→a x −a}
+
+= lim \emph{f}(\emph{x}) \emph{−f}(\emph{a}) \emph{g}(\emph{x}) +
+\emph{f}(\emph{a}) \emph{g}(\emph{x}) \emph{−g}(\emph{a}) =
+
+\emph{x→a} \emph{x −a}
+
+= lim
+
+\emph{x→a}\\
+\emph{f}(\emph{x}) \emph{−f}(\emph{a})
+
+\emph{x −a} \emph{x→ag}(\emph{x}) + \emph{f}(\emph{a}) lim
+\emph{g}(\emph{x}) \emph{−g}(\emph{a})
+
+\emph{x −a}\\
+= \emph{f′}(\emph{a})\emph{g}(\emph{a}) +
+\emph{f}(\emph{a})\emph{g′}(\emph{a})\emph{.}
+
+4. \emph{Df/g} = feltétel miatt \emph{x ∈Df ∩Dg \textbar{} g}(\emph{x})
+\emph{̸}= 0 . Ha \emph{g ∈D\{a\}}, akkor \emph{g ∈C\{a\}}, ezért a
+\emph{g}(\emph{a}) \emph{̸}= 0
+\end{quote}
+
+\emph{∃K}(\emph{a}) \emph{⊂Dg, ∀x ∈K}(\emph{a}): \emph{g}(\emph{x})
+\emph{̸}= 0\emph{,}
+
+\begin{quote}
+hiszen a folytonos függvények előjeltartóak.
+
+hogy \emph{K}(\emph{a}) sugara olyan kicsi, hogy a fentiek mellet
+\emph{K}(\emph{a}) \emph{⊂Df} is teljesül. Mivel \emph{a ∈}int
+\emph{Df}, így feltételezhetjük, Ekkor
+
+\emph{K}(\emph{a}) \emph{⊂Df/g}, és így \emph{a ∈}int \emph{Df/g}.
+Másrészt
+
+\emph{f} \emph{′}(\emph{a}) = lim\\
+\emph{f}
+
+\emph{g} (\emph{x}) \emph{−}\\
+\emph{f}
+
+\emph{g} (\emph{a})
+
+= lim \emph{g}(\emph{x})\emph{−f}(\emph{a}) = lim
+\emph{f}(\emph{x})\emph{g}(\emph{a})
+\emph{−f}(\emph{a})\emph{g}(\emph{x}) =
+
+\emph{g x→a} \emph{x −a} \emph{x→a} \emph{x −a} \emph{x→a}
+\emph{g}(\emph{a})\emph{g}(\emph{x})(\emph{x −a})
+
+= lim \emph{f}(\emph{x})\emph{g}(\emph{a})
+\emph{−f}(\emph{a})\emph{g}(\emph{a}) +
+\emph{f}(\emph{a})\emph{g}(\emph{a})
+\emph{−f}(\emph{a})\emph{g}(\emph{x}) =
+
+\emph{x→a} \emph{g}(\emph{a})\emph{g}(\emph{x})(\emph{x −a})
+
+= lim
+
+\emph{x→a} \emph{g}(\emph{a})\emph{g}(\emph{x})\emph{·} 1
+\emph{f}(\emph{x}) \emph{−f}(\emph{a}) \emph{g}(\emph{a})
+\emph{−f}(\emph{a})
+
+\emph{x −a}\\
+\emph{g}(\emph{x}) \emph{−g}(\emph{a}) =
+
+= \emph{g}(\emph{a}) lim \emph{x→ag}(\emph{x}) 1
+
+\emph{x→a}\\
+lim \emph{f}(\emph{x}) \emph{−f}(\emph{a})
+
+\emph{x −a} \emph{g}(\emph{a}) \emph{−f}(\emph{a}) lim \emph{x→a}
+\emph{g}(\emph{x}) \emph{−g}(\emph{a})
+
+\emph{x −a}\\
+=
+
+= \emph{g}2(\emph{a}) 1
+
+\emph{f′}(\emph{a})\emph{g}(\emph{a})
+\emph{−f}(\emph{a})\emph{g′}(\emph{a}) \emph{.}
+\end{quote}
+
+Az összetett függvényre vonatkozó szabály azt mondja ki, hogy egy
+összetett függvény derivált-
+
+jához először a külső függvényt deriváljuk, miközben belseje érintetlen
+marad. Ezt utána még
+
+megszorozzuk a belső függvény deriváltjával.
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 0\tabcolsep) * \real{1.0000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\textbf{3. Tétel (Összetett függvény deriváltja).} \emph{Tegyük fel,
+hogy f, g ∈}R \emph{→}R \emph{és va-lamilyen a ∈}int \emph{Dg pontban g
+∈D\{a\}, továbbá f ∈D\{g}(\emph{a})\emph{\}. Ekkor f ◦g ∈D\{a\},és}
+
+(\emph{f ◦g})\emph{′}(\emph{a}) = \emph{f′} \emph{g}(\emph{a}) \emph{·
+g′}(\emph{a})\emph{.}
+\end{quote}
+\end{minipage} \\
+\midrule()
+\endhead
+\bottomrule()
+\end{longtable}
+
+8
+
+\includegraphics[width=6.70833in,height=9.08333in]{vertopal_b2cfe70668f74273a0e0873ca5e4ed7e/media/image30.png}
+
+\begin{quote}
+\emph{\textbf{Bizonyítás.}} A tétel feltételei alapján
+\end{quote}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1429}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\emph{f ∈D\{g}(\emph{a})\emph{\}}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+=\emph{⇒}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\emph{g}(\emph{a}) \emph{∈}int \emph{Df}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+=\emph{⇒}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\emph{∃ε \textgreater{}} 0: \emph{Kε}
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\emph{g}(\emph{a})
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\emph{⊂Df,}
+\end{quote}
+\end{minipage} \\
+\midrule()
+\endhead
+\bottomrule()
+\end{longtable}
+
+\begin{quote}
+illetve az \emph{a ∈}int \emph{Dg} feltétel miatt
+\end{quote}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\emph{g ∈D\{a\}} =\emph{⇒g ∈C\{a\}} =\emph{⇒ε}-hoz \emph{∃δ
+\textgreater{}} 0\emph{, ∀x ∈Kδ}(\emph{a}) \emph{⊂Dg} :
+\emph{g}(\emph{x}) \emph{∈Kε}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\emph{g}(\emph{a})
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\emph{⊂Df.}
+\end{minipage} \\
+\midrule()
+\endhead
+\bottomrule()
+\end{longtable}
+
+\begin{quote}
+Ebből következik, hogy \emph{Kδ}(\emph{a}) \emph{⊂Df◦g} = \emph{\{x ∈Dg
+\textbar{} g}(\emph{x}) \emph{∈Df\}}, azaz \emph{a ∈}int \emph{Df◦g}.
+
+Másrészt, jelölje \emph{b} := \emph{g}(\emph{a}) és \emph{εg} : \emph{Dg
+→}R, \emph{εf} : \emph{Df →}R a következő függvényeket:
+
+\emph{εg}(\emph{x}) :=0 \emph{g}(\emph{x}) \emph{−g}(\emph{a})
+
+\emph{x −a} \emph{−g′}(\emph{a}) (\emph{x ̸}= \emph{a})
+
+(\emph{x} = \emph{a})\emph{,} \emph{εf}(\emph{y}) :=0
+\emph{f}(\emph{y}) \emph{−f}(\emph{b})
+
+\emph{y −b} \emph{−f′}(\emph{b}) (\emph{y ̸}= \emph{b})
+\end{quote}
+
+(\emph{y} = \emph{b})\emph{.}
+
+\begin{quote}
+ 
+
+Mivel \emph{g ∈D\{a\}} és \emph{f ∈D\{b\}}, így \emph{εg ∈C\{a\}} és
+\emph{εf ∈C\{b\}}. Továbbá a fentiekből
+
+\emph{g}(\emph{x}) \emph{−g}(\emph{a}) = \emph{g′}(\emph{a})(\emph{x
+−a}) + \emph{εg}(\emph{x})(\emph{x −a}) (\emph{x ∈Dg})\emph{,}
+
+\emph{f}(\emph{y}) \emph{−f}(\emph{b}) = \emph{f′}(\emph{b})(\emph{y
+−b}) + \emph{εf}(\emph{y})(\emph{y −b}) (\emph{y ∈Df})\emph{.}
+
+Ezért, ha \emph{x ∈Df◦g} és \emph{y} = \emph{g}(\emph{x}), akkor \emph{y
+−b} = \emph{g}(\emph{x}) \emph{−g}(\emph{a}) és
+
+\emph{f g}(\emph{x}) \emph{−f g}(\emph{a}) = \emph{f}(\emph{y})
+\emph{−f}(\emph{b}) = \emph{f′}(\emph{b})(\emph{y −b}) +
+\emph{εf}(\emph{y})(\emph{y −b}) =
+
+= \emph{f′} \emph{g}(\emph{a}) \emph{g}(\emph{x}) \emph{−g}(\emph{a}) +
+\emph{εf} \emph{g}(\emph{x}) \emph{g}(\emph{x}) \emph{−g}(\emph{a}) =
+
+= \emph{f′} \emph{g}(\emph{a}) \emph{g′}(\emph{a})(\emph{x −a}) +
+\emph{εg}(\emph{x})(\emph{x −a}) + \emph{εf} \emph{g}(\emph{x})
+\emph{g′}(\emph{a})(\emph{x −a}) + \emph{εg}(\emph{x})(\emph{x −a}) =
+
+= \emph{f′} \emph{g}(\emph{a}) \emph{g′}(\emph{a})(\emph{x −a}) +
+\emph{f′}(\emph{b})\emph{εg}(\emph{x}) + \emph{εf} \emph{g}(\emph{x})
+\emph{g′}(\emph{a}) + \emph{εf g}(\emph{x}) \emph{εg}(\emph{x}) (\emph{x
+−a})\emph{.}
+
+Tudjuk, hogy
+
+\emph{εg ∈C\{a\}} =\emph{⇒x→aεg}(\emph{x}) = \emph{εg}(\emph{a}) =
+0\emph{.}
+
+Mivel \emph{εf ∈C\{b\}}, így alkalmazható az összetett függvény
+határértékére vonatkozó tételt:
+
+\emph{x→aεf} lim \emph{g}(\emph{x}) = lim \emph{y→bεf}(\emph{y}) =
+\emph{εf}(\emph{b}) = 0\emph{.}
+
+Így
+\end{quote}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1111}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1111}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1111}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1111}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1111}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1111}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1111}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1111}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1111}}@{}}
+\toprule()
+\multicolumn{3}{@{}>{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.3333} + 4\tabcolsep}}{%
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+(\emph{f ◦g})\emph{′}(\emph{a}) = lim \emph{x→a}\\
+\emph{f} \emph{g}(\emph{x})
+
+\emph{x −a}\\
+\emph{−f g}(\emph{a})
+\end{quote}
+
+=
+
+\begin{quote}
+= \emph{f′g}(\emph{a}) \emph{g′}(\emph{a}) + lim
+\emph{f′}(\emph{b})\emph{εg}(\emph{x}) + \emph{εf}
+\end{quote}
+
+\emph{x→a}\strut
+\end{minipage}} & \begin{minipage}[b]{\linewidth}\raggedright
+\emph{g}(\emph{x})
+\end{minipage} &
+\multicolumn{2}{>{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.2222} + 2\tabcolsep}}{%
+\begin{minipage}[b]{\linewidth}\raggedright
+\emph{g′}(\emph{a}) + \emph{εf}
+\end{minipage}} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\emph{g}(\emph{x})
+\end{quote}
+\end{minipage} &
+\multirow{2}{*}{\begin{minipage}[b]{\linewidth}\raggedright
+\emph{εg}(\emph{x})
+\end{minipage}} &
+\multirow{2}{*}{\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+=
+\end{quote}
+\end{minipage}} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+= \emph{f′}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\emph{g}(\emph{a})
+\end{minipage} &
+\multicolumn{3}{>{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.3333} + 4\tabcolsep}}{%
+\begin{minipage}[b]{\linewidth}\raggedright
+\emph{g′}(\emph{a}) + \emph{f′}(\emph{b}) \emph{·} 0 + 0 \emph{·
+g′}(\emph{a}) + 0 \emph{·} 0 = \emph{f′}
+\end{minipage}} & \begin{minipage}[b]{\linewidth}\raggedright
+\emph{g}(\emph{a})
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\emph{g′}(\emph{a})\emph{.}
+\end{minipage} \\
+\midrule()
+\endhead
+\bottomrule()
+\end{longtable}
+
+Ezután foglalkozunk az inverz függvény differenciálhatóságával. Tegyük
+fel, hogy az \emph{f} függvény
+
+invertálható. Emlékeztetünk arra, hogy az \emph{f} és az
+\emph{f−}1függvények grafikonjai egymásnak az
+
+\emph{y} = \emph{x} egyenletű egyenesre vonatkozó tükörképei.
+
+9
+
+\includegraphics[width=2.5in,height=2.5in]{vertopal_b2cfe70668f74273a0e0873ca5e4ed7e/media/image31.png}\includegraphics[width=6.70833in,height=2.63889in]{vertopal_b2cfe70668f74273a0e0873ca5e4ed7e/media/image32.png}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1111}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1111}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1111}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1111}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1111}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1111}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1111}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1111}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1111}}@{}}
+\toprule()
+\multicolumn{2}{@{}>{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.2222} + 2\tabcolsep}}{%
+\begin{minipage}[b]{\linewidth}\raggedright
+Tekintsük az \emph{f} függvény grafikonjának egy (\emph{a, f}(\emph{a}))
+= (\emph{a, b}) pontját. Ennek tükörképe az \emph{y} = \emph{x}
+egyenletű szögfelező egyenesre a (\emph{b, a}) pont. Mivel \emph{a} =
+\emph{f−}1(\emph{b}), ezért a (\emph{b, a}) pont raj-ta van az
+\emph{f−}1függvény grafikonján.
+\end{minipage}} & \begin{minipage}[b]{\linewidth}\raggedright
+\emph{c}
+\end{minipage} &
+\multirow{3}{*}{\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\emph{y}
+\end{quote}
+\end{minipage}} &
+\multirow{3}{*}{\begin{minipage}[b]{\linewidth}\raggedright
+\emph{b}
+\end{minipage}} &
+\multirow{3}{*}{\begin{minipage}[b]{\linewidth}\raggedright
+\emph{a}
+\end{minipage}} &
+\multirow{3}{*}{\begin{minipage}[b]{\linewidth}\raggedright
+\emph{f}
+\end{minipage}} &
+\multirow{3}{*}{\begin{minipage}[b]{\linewidth}\raggedright
+\emph{c}
+\end{minipage}} & \begin{minipage}[b]{\linewidth}\raggedright
+\emph{f−}1
+\end{minipage} \\
+\multicolumn{2}{@{}>{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.2222} + 2\tabcolsep}}{%
+\multirow{2}{*}{\begin{minipage}[b]{\linewidth}\raggedright
+Az \emph{f} függvény grafikonjának (\emph{a, f}(\emph{a})) = (\emph{a,
+b}) pontbeli érintőegyenesének tükörképe az \emph{f−}1 függvény
+grafikonjának az (\emph{f}(\emph{a})\emph{, a}) = (\emph{b, a}) pontbeli
+érintője. Ha az \emph{f}-hez húzott érin-tő nem párhuzamos az
+\emph{x}-tengellyel (vagyis \emph{f−}1(\emph{a}) \emph{̸}= 0), akkor a
+tükörképe nem párhu-zamos az \emph{y}-tengellyel. Ekkor a meredekségeik
+egymás reciprokai, vagyis
+\end{minipage}}} & \begin{minipage}[b]{\linewidth}\raggedright
+\emph{f−}1(\emph{b}) = \emph{a}
+\end{minipage} & & & & & &
+\multirow{2}{*}{\begin{minipage}[b]{\linewidth}\raggedright
+\emph{x}
+\end{minipage}} \\
+& & \begin{minipage}[b]{\linewidth}\raggedright
+\emph{f}(\emph{a}) = \emph{b}
+\end{minipage} \\
+\midrule()
+\endhead
+\emph{f−}1\emph{′}(\emph{b}) = &
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+1\\
+\emph{f′}(\emph{a})\emph{.}
+\end{quote}\strut
+\end{minipage} &
+\multicolumn{2}{>{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.2222} + 2\tabcolsep}}{%
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+\emph{f′}(\emph{a}) =\emph{c −b} \emph{c −a,}
+\end{quote}
+\end{minipage}} &
+\multicolumn{5}{>{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.5556} + 8\tabcolsep}@{}}{%
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+\emph{f−}1\emph{′}(\emph{b}) =\emph{c −a} \emph{c −b .}
+\end{quote}
+\end{minipage}} \\
+\multicolumn{9}{@{}>{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{1.0000} + 16\tabcolsep}@{}}{%
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+\textbf{4. Tétel (Inverz függvény deriváltja).} \emph{Legyen I egy nyílt
+intervallum, és f} : \emph{I →}R\emph{. Tegyük fel, hogy}
+\end{quote}
+\end{minipage}} \\
+\bottomrule()
+\end{longtable}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 0\tabcolsep) * \real{1.0000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\emph{a}) \emph{f szigorúan monoton és folytonos az I intervallumon,}
+\end{quote}
+\end{minipage} \\
+\midrule()
+\endhead
+\bottomrule()
+\end{longtable}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 0\tabcolsep) * \real{1.0000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\emph{b}) \emph{valamilyen a ∈I pontban f ∈D\{a\} és f′}(\emph{a})
+\emph{̸}= 0\emph{.}
+\end{quote}
+\end{minipage} \\
+\midrule()
+\endhead
+\bottomrule()
+\end{longtable}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0909}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0909}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0909}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0909}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0909}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0909}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0909}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0909}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0909}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0909}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0909}}@{}}
+\toprule()
+\multicolumn{11}{@{}>{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{1.0000} + 20\tabcolsep}@{}}{%
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\emph{Ekkor az f−}1\emph{függvény deriválható a b} = \emph{f}(\emph{a})
+\emph{pontban és}
+\end{quote}
+\end{minipage}} \\
+\midrule()
+\endhead
+\multicolumn{3}{@{}>{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.2727} + 4\tabcolsep}}{%
+\multirow{2}{*}{\emph{f−}1\emph{′}(\emph{b}) =}} &
+\multicolumn{2}{>{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.1818} + 2\tabcolsep}}{%
+\multirow{2}{*}{\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+1\\
+\emph{f′}(\emph{a}\sout{)}=
+\end{quote}\strut
+\end{minipage}}} & & 1 &
+\multicolumn{4}{>{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.3636} + 6\tabcolsep}@{}}{%
+\multirow{2}{*}{\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+\emph{.}
+\end{quote}
+\end{minipage}}} \\
+& & & & & \emph{f′} & \emph{f−}1(\emph{b}) \\
+\multicolumn{11}{@{}>{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{1.0000} + 20\tabcolsep}@{}}{%
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+\emph{\textbf{Bizonyítás.}} Tudjuk, hogy ha \emph{f} szigorúan monoton,
+akkor invertálható és inverze is
+
+szigorúan monoton. Mivel \emph{Df} = \emph{I} egy nyílt intervallum,
+illetve \emph{f} szigorúan monoton és folytonos függvény, így
+\emph{Df−}1 = \emph{Rf} is egy nyílt intervallum, ezért \emph{b ∈}int
+\emph{Df−}1, illetve \emph{f−}1 folytonos ennek az \emph{Rf} nyílt
+intervallum minden pontjában.
+
+Legyen \emph{y ∈Df−}1. Tudjuk, hogy \emph{b} = \emph{f}(\emph{a}) és
+\emph{a} = \emph{f−}1(\emph{b}). Mivel \emph{f−}1egy-egyértelmű, ezért
+alkalmazhatjuk az \emph{x} = \emph{f−}1(\emph{y}) helyettesítést az
+alábbi határértékben, ahol \emph{x →f−}1(\emph{b}) = \emph{a}, ha
+\emph{y →b} (\emph{f−}1folytonossága miatt), illetve \emph{y} =
+\emph{f}(\emph{x}):
+\end{quote}
+\end{minipage}} \\
+\multirow{2}{*}{\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+(\emph{f−}1)\emph{′}(\emph{b}) = lim \emph{y→b}
+\end{quote}
+\end{minipage}} & \multirow{2}{*}{\emph{f−}1(\emph{y})
+\emph{−f−}1(\emph{b}) \emph{y −b}} &
+\multicolumn{2}{>{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.1818} + 2\tabcolsep}}{%
+\multirow{2}{*}{\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+= lim \emph{x→a}
+\end{quote}
+\end{minipage}}} &
+\multicolumn{3}{>{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.2727} + 4\tabcolsep}}{%
+\multirow{2}{*}{\emph{f}(\emph{x}) \emph{−f}(\emph{a}) = \emph{x −a}}} &
+\multirow{2}{*}{lim \emph{x→a}} &
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+1
+\end{quote}
+\end{minipage} & \multirow{2}{*}{=} &
+\multirow{2}{*}{\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+1\\
+\emph{f′}(\emph{a})\emph{,}
+\end{quote}\strut
+\end{minipage}} \\
+& & & & & & & & \emph{f}(\emph{x})\emph{−f}(\emph{a}) \emph{x−a} \\
+\bottomrule()
+\end{longtable}
+
+\begin{quote}
+hiszen \emph{f ∈D\{a\}} és \emph{f′}(\emph{a}) \emph{̸}= 0.
+\end{quote}
+
+Hatványsor összegfüggvénye a konvergenciaintervallum belsejében
+differenciálható és a hatvány-sor deriválását szabad tagonként végezni.
+
+10
+
+\includegraphics[width=6.70833in,height=0.34722in]{vertopal_b2cfe70668f74273a0e0873ca5e4ed7e/media/image33.png}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule()
+\multicolumn{3}{@{}>{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{1.0000} + 4\tabcolsep}@{}}{%
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{5. Tétel (Hatványsor összegfüggvényének deriváltja).}
+\emph{Legyen a ∈}R \emph{és αn ∈}R (\emph{n} = 0\emph{,} 1\emph{, . .
+.})\emph{. Tegyük fel, hogy a}
+\end{minipage}} \\
+\midrule()
+\endhead
+\emph{n}=0 & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+\emph{αn}(\emph{x −a})\emph{n}
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+(\emph{x ∈}R)
+\end{quote}
+\end{minipage} \\
+\bottomrule()
+\end{longtable}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}@{}}
+\toprule()
+\multicolumn{5}{@{}>{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{1.0000} + 8\tabcolsep}@{}}{%
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\emph{hatványsor R konvergenciasugara pozitív, és jelölje f az
+összegfüggvényét:}
+\end{quote}
+\end{minipage}} \\
+\midrule()
+\endhead
+\multirow{2}{*}{\emph{f}(\emph{x}) :=} & +\emph{∞} &
+\multirow{2}{*}{\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+\emph{αn}(\emph{x −a})\emph{n}
+\end{quote}
+\end{minipage}} &
+\multirow{2}{*}{\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+\emph{x ∈KR}(\emph{a})
+\end{quote}
+\end{minipage}} &
+\multirow{2}{*}{\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+\emph{.}
+\end{quote}
+\end{minipage}} \\
+& \emph{n}=0 \\
+\bottomrule()
+\end{longtable}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}@{}}
+\toprule()
+\multicolumn{3}{@{}>{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.6000} + 4\tabcolsep}}{%
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\emph{Ekkor minden x ∈KR}(\emph{a}) \emph{pontban f ∈D\{x\} és}
+\end{quote}
+\end{minipage}} &
+\multirow{3}{*}{\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\emph{x ∈KR}(\emph{a})
+\end{quote}
+\end{minipage}} &
+\multirow{3}{*}{\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\emph{.}
+\end{quote}
+\end{minipage}} \\
+\multirow{2}{*}{\begin{minipage}[b]{\linewidth}\raggedright
+\emph{f′}(\emph{x}) =
+\end{minipage}} & \begin{minipage}[b]{\linewidth}\raggedright
++\emph{∞}
+\end{minipage} &
+\multirow{2}{*}{\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\emph{nαn}(\emph{x −a})\emph{n−}1
+\end{quote}
+\end{minipage}} \\
+& \begin{minipage}[b]{\linewidth}\raggedright
+\emph{n}=1
+\end{minipage} \\
+\midrule()
+\endhead
+\bottomrule()
+\end{longtable}
+
+\begin{quote}
+\emph{\textbf{Bizonyítás.}} Nem bizonyítjuk.
+
+\textbf{A deriváltfüggvény}
+
+Látni fogjuk, hogy a derivált a leghatékonyabb segédeszköz egy függvény
+tulajdonságainak vizsgálatára. Ez lokálisan és globálisan is igaz. Az
+\emph{f′}(\emph{a}) derivált létezése és értéke az \emph{f} függvény
+\emph{a}-beli (lokális) viselkedésére jellemző: \emph{f′}(\emph{a})
+értékéből az \emph{f} függvény \emph{a} pont körüli viselkedésére
+vonhatunk le következtetéseket. (Egy ilyen kapcsolatot már találtunk,
+amikor beláttuk, hogy a differenciálhatóságból következik a
+folytonosság.)
+
+Ha viszont \emph{f} egy \emph{A} halmaz (például intervallum) minden
+pontjában deriválható, akkor az \emph{f′}(\emph{x})értékekből az
+\emph{f} függvény globális viselkedésére következtethetünk. Erre azt
+mondjuk, hogy \emph{\textbf{f az A halmazon deriválható}} vagy
+\emph{\textbf{differenciálható}}, és az \textbf{\emph{f ∈D}(\emph{A})}
+jelölést alkalmazzuk (vagy egyszerűen \textbf{\emph{f ∈D}(\emph{a, b})},
+ha \emph{A} = (\emph{a, b}) egy intervallum).
+
+Az alkalmazásokban legtöbbször olyan \emph{f} függvények szerepelnek,
+amelyek valamely \emph{A} halmazon (például intervallumon) deriválhatók.
+Célszerű tehát a deriválást olyan operációként felfogni, amely
+függvényekhez rendel függvényeket.
+\end{quote}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{4. Definíció.} \emph{Ha f ∈}R \emph{→}R \emph{és}
+\end{minipage} &
+\multicolumn{2}{>{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.3333} + 2\tabcolsep}}{%
+\begin{minipage}[b]{\linewidth}\raggedright
+\emph{x ∈}int \emph{Df}
+\end{minipage}} &
+\multicolumn{2}{>{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.3333} + 2\tabcolsep}}{%
+\begin{minipage}[b]{\linewidth}\raggedright
+\emph{f ∈D\{x\}}
+\end{minipage}} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\emph{̸}= \emph{∅, akkor az}
+\end{quote}
+\end{minipage} \\
+\midrule()
+\endhead
+\multicolumn{2}{@{}>{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.3333} + 2\tabcolsep}}{%
+\emph{x ∈}int \emph{Df}} &
+\multicolumn{2}{>{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.3333} + 2\tabcolsep}}{%
+\emph{f ∈D\{x\}}} &
+\multicolumn{2}{>{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.3333} + 2\tabcolsep}@{}}{%
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+\emph{∋x →f′}(\emph{x})
+\end{quote}
+\end{minipage}} \\
+\bottomrule()
+\end{longtable}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 0\tabcolsep) * \real{1.0000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\emph{függvényt az f} \textbf{deriváltfüggvényének} \emph{(vagy}
+\textbf{differenciálhányados-függvényének}\emph{) nevezzük, és az
+f′szimbólummal jelöljük.}
+\end{quote}
+\end{minipage} \\
+\midrule()
+\endhead
+\bottomrule()
+\end{longtable}
+
+\begin{quote}
+\textbf{Néhány speciális függvény deriváltja}
+
+Ebben a táblázatban felsoroltuk azokat a nevezetes elemi függvényeket,
+amelyek deriváltjait meg kell jegyezni. Ezek közül néhánynak a
+bizonyítását most megmutatjuk.
+\end{quote}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule()
+\multicolumn{2}{@{}>{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{1.0000} + 2\tabcolsep}@{}}{%
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 0\tabcolsep) * \real{1.0000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\end{minipage} \\
+\midrule()
+\endhead
+\bottomrule()
+\end{longtable}
+
+\begin{quote}
+\textbf{1. \emph{Konstans függvények.}} Tetszőleges \emph{c ∈}R esetén
+az
+\end{quote}
+\end{minipage}} \\
+\midrule()
+\endhead
+\emph{f}(\emph{x}) := \emph{c} &
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+(\emph{x ∈}R)
+\end{quote}
+\end{minipage} \\
+\bottomrule()
+\end{longtable}
+
+11
+
+\begin{quote}
+konstans függvény minden \emph{x ∈}R pontban deriválható, és deriváltja
+\end{quote}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 0\tabcolsep) * \real{1.0000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\emph{f′}(\emph{x}) = 0 (\emph{x ∈}R)
+\end{quote}
+\end{minipage} \\
+\midrule()
+\endhead
+\bottomrule()
+\end{longtable}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+vagyis
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 0\tabcolsep) * \real{1.0000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\emph{c}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\emph{′} = 0
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+(\emph{x ∈}R) \emph{.}
+\end{quote}
+\end{minipage} \\
+\midrule()
+\endhead
+\bottomrule()
+\end{longtable}
+\end{minipage} \\
+\midrule()
+\endhead
+\bottomrule()
+\end{longtable}
+\end{minipage} \\
+\midrule()
+\endhead
+\bottomrule()
+\end{longtable}
+
+\begin{quote}
+\emph{\textbf{Bizonyítás.}} Minden \emph{x ∈}R esetén \emph{x ∈}int
+\emph{Df} = R, és
+\end{quote}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\emph{f′}(\emph{x}) = lim\\
+\emph{h→}0
+\end{quote}\strut
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\emph{f}(\emph{x} + \emph{h}) \emph{−f}(\emph{x}) \emph{h}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+= lim \emph{h→}0
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\emph{c −c h}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+= 0\emph{.}
+\end{quote}
+\end{minipage} &
+\multirow{3}{*}{\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+■
+\end{quote}
+\end{minipage}} \\
+\multicolumn{5}{@{}>{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.8333} + 8\tabcolsep}}{%
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 0\tabcolsep) * \real{1.0000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\end{minipage} \\
+\midrule()
+\endhead
+\bottomrule()
+\end{longtable}
+
+\textbf{2. \emph{Hatványfüggvények.}} Tetszőleges \emph{n} természetes
+szám esetén az
+\end{minipage}} \\
+\multicolumn{2}{@{}>{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.3333} + 2\tabcolsep}}{%
+\begin{minipage}[b]{\linewidth}\raggedright
+\emph{f}(\emph{x}) := \emph{xn}
+\end{minipage}} &
+\multicolumn{3}{>{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.5000} + 4\tabcolsep}}{%
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+(\emph{x ∈}R)
+\end{quote}
+\end{minipage}} \\
+\midrule()
+\endhead
+\bottomrule()
+\end{longtable}
+
+\begin{quote}
+hatványfüggvény minden \emph{x ∈}R pontban deriválható, és deriváltja
+\end{quote}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 0\tabcolsep) * \real{1.0000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\emph{xn′}= \emph{nxn−}1 (\emph{x ∈}R) \emph{.}
+\end{quote}
+\end{minipage} \\
+\midrule()
+\endhead
+\bottomrule()
+\end{longtable}
+
+\begin{quote}
+\emph{\textbf{Bizonyítás.}} Minden \emph{x ∈}R esetén \emph{x ∈}int
+\emph{Df} = R, és
+\end{quote}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1250}}@{}}
+\toprule()
+\multirow{2}{*}{\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+= lim\\
+\emph{h→}0
+\end{quote}\strut
+\end{minipage}} &
+\multirow{2}{*}{\begin{minipage}[b]{\linewidth}\raggedright
+\emph{h}
+\end{minipage}} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+lim\\
+\emph{h→}0
+\end{quote}\strut
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\emph{f}(\emph{x} + \emph{h}) \emph{−f}(\emph{x}) \emph{h}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+= lim \emph{h→}0
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+(\emph{x} + \emph{h})\emph{n−xn h}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+=
+\end{quote}
+\end{minipage} &
+\multirow{2}{*}{\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+= \emph{nxn−}1
+\end{quote}
+\end{minipage}} \\
+& &
+\multicolumn{5}{>{\raggedright\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.6250} + 8\tabcolsep}}{%
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+(\emph{x} + \emph{h})\emph{n−}1+ (\emph{x} + \emph{h})\emph{n−}2\emph{x}
++ \emph{· · ·} + (\emph{x} + \emph{h})\emph{xn−}2+ \emph{xn−}1 \emph{h}
+\end{quote}
+\end{minipage}} \\
+\midrule()
+\endhead
+\bottomrule()
+\end{longtable}
+
+\begin{quote}
+a hatványfüggvény folytonossága alapján. azonosságot alkalmaztuk:
+
+Az előző határérték kiszámításában a következő
+\end{quote}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1111}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1111}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1111}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1111}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1111}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1111}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1111}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1111}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1111}}@{}}
+\toprule()
+\multicolumn{2}{@{}>{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.2222} + 2\tabcolsep}}{%
+\begin{minipage}[b]{\linewidth}\raggedright
+\emph{an−bn}= (\emph{a −b})
+\end{minipage}} &
+\multicolumn{5}{>{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.5556} + 8\tabcolsep}}{%
+\begin{minipage}[b]{\linewidth}\raggedright
+\emph{an−}1+ \emph{an−}2\emph{b} + \emph{· · ·} + \emph{abn−}2+
+\emph{bn−}1
+\end{minipage}} & \begin{minipage}[b]{\linewidth}\raggedright
+\emph{.}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+■
+\end{quote}
+\end{minipage} \\
+\midrule()
+\endhead
+\multicolumn{9}{@{}>{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{1.0000} + 16\tabcolsep}@{}}{%
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 0\tabcolsep) * \real{1.0000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\end{minipage} \\
+\midrule()
+\endhead
+\bottomrule()
+\end{longtable}
+
+\textbf{3. \emph{A természetes alapú exponenciális függvény}} minden
+\emph{x ∈}R pontban deriválható, és
+\end{minipage}} \\
+\multicolumn{6}{@{}>{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.6667} + 10\tabcolsep}}{%
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 0\tabcolsep) * \real{1.0000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+exp\emph{′}(\emph{x}) = (\emph{ex})\emph{′}= \emph{ex x ∈}R
+\end{quote}
+\end{minipage} \\
+\midrule()
+\endhead
+\bottomrule()
+\end{longtable}
+\end{minipage}} &
+\multicolumn{3}{>{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.3333} + 4\tabcolsep}@{}}{%
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+\emph{.}
+\end{quote}
+\end{minipage}} \\
+\multirow{3}{*}{\emph{\textbf{Bizonyítás.}}értelmeztük:} &
+\multicolumn{8}{>{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.8889} + 14\tabcolsep}@{}}{%
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+Az exp függvényt az egész R-en konvergens hatványsor összegfüggvényeként
+\end{quote}
+\end{minipage}} \\
+&
+\multicolumn{2}{>{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.2222} + 2\tabcolsep}}{%
+\multirow{2}{*}{exp(\emph{x}) := \emph{ex}:=}} & +\emph{∞} &
+\multirow{2}{*}{\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+1\\
+\emph{n}!\emph{xn}
+\end{quote}\strut
+\end{minipage}} &
+\multicolumn{4}{>{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.4444} + 6\tabcolsep}@{}}{%
+\multirow{2}{*}{\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+(\emph{x ∈}R)\emph{.}
+\end{quote}
+\end{minipage}}} \\
+& & & \emph{n}=0 \\
+\bottomrule()
+\end{longtable}
+
+\begin{quote}
+A hatványsor összegfüggvényének deriválására vonatkozó tételt alkalmazva
+azt kapjuk, hogy minden \emph{x ∈}R pontban exp \emph{∈D\{x\}}, és
+\end{quote}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1250}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+exp\emph{′}(\emph{x}) =
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
++\emph{∞}
+\end{minipage} &
+\multirow{2}{*}{\begin{minipage}[b]{\linewidth}\raggedright
+\emph{n ·}1 \emph{n}!\emph{xn−}1 =
+\end{minipage}} & \begin{minipage}[b]{\linewidth}\raggedright
++\emph{∞}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+1 \emph{xn−}1 = ( \emph{k} := \emph{n}1 ) =
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
++\emph{∞}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+1 \emph{xk} = exp(\emph{x}) = \emph{ex.}
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+■
+\end{minipage} \\
+\begin{minipage}[b]{\linewidth}\raggedright
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\emph{n}=1
+\end{minipage} & & \begin{minipage}[b]{\linewidth}\raggedright
+\emph{n}=1
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+(\emph{n −}1)! \emph{−}
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\emph{k}=0
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\emph{k}!
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\end{minipage} \\
+\midrule()
+\endhead
+\bottomrule()
+\end{longtable}
+
+\begin{quote}
+\emph{\textbf{Megjegyzés.}} Az állítás úgy is megfogalmazható, hogy az
+\textbf{exp \emph{függvény deriváltfüggvényeönmaga}}. Tulajdonképpen ez
+az összefüggés indokolja, hogy az \emph{e} számot tekintjük az analízis
+(és általában a matematika) egyik legfontosabb állandójának.
+\end{quote}
+
+12
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 0\tabcolsep) * \real{1.0000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+és
+\end{quote}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 0\tabcolsep) * \real{1.0000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\end{minipage} \\
+\midrule()
+\endhead
+\bottomrule()
+\end{longtable}
+
+\textbf{4. \emph{A természetes alapú logaritmusfüggvény}} minden \emph{x
+∈}(0\emph{,} +\emph{∞}) pontban deriválható,
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 0\tabcolsep) * \real{1.0000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+ln\emph{′x} =
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+ln \emph{x}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\emph{′} = 1 \emph{x}
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\emph{x ∈}(0\emph{,} +\emph{∞})
+\end{quote}
+\end{minipage} \\
+\midrule()
+\endhead
+\bottomrule()
+\end{longtable}
+\end{minipage} \\
+\midrule()
+\endhead
+\bottomrule()
+\end{longtable}
+
+\emph{.}
+\end{minipage} \\
+\midrule()
+\endhead
+\bottomrule()
+\end{longtable}
+
+\begin{quote}
+\emph{\textbf{Bizonyítás.}} Emlékeztetünk arra, hogy az ln függvényt az
+exp függvény inverzeként értelmez-tük:\\
+ln := exp\emph{−}1\emph{.}
+\end{quote}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 18\tabcolsep) * \real{0.1000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 18\tabcolsep) * \real{0.1000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 18\tabcolsep) * \real{0.1000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 18\tabcolsep) * \real{0.1000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 18\tabcolsep) * \real{0.1000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 18\tabcolsep) * \real{0.1000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 18\tabcolsep) * \real{0.1000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 18\tabcolsep) * \real{0.1000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 18\tabcolsep) * \real{0.1000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 18\tabcolsep) * \real{0.1000}}@{}}
+\toprule()
+\multicolumn{10}{@{}>{\raggedright\arraybackslash}p{(\columnwidth - 18\tabcolsep) * \real{1.0000} + 18\tabcolsep}@{}}{%
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Az exp függvényre az inverz függvény deriválására vonatkozó tétel
+valamennyi feltétele teljesül. Ezért minden \emph{x ∈}(0\emph{,}
++\emph{∞}) = \emph{D}ln pontban ln \emph{∈D\{x\}}, és
+\end{quote}
+\end{minipage}} \\
+\midrule()
+\endhead
+\multirow{2}{*}{ln\emph{′x} =} & ln & \emph{′} = & &
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+1
+\end{quote}
+\end{minipage} & = & & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+1
+\end{quote}
+\end{minipage} & = 1 \emph{.} &
+\multirow{2}{*}{\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+■
+\end{quote}
+\end{minipage}} \\
+& & & exp\emph{′} & ln \emph{x} & & exp & ln \emph{x} & \emph{x.} \\
+\multicolumn{10}{@{}>{\raggedright\arraybackslash}p{(\columnwidth - 18\tabcolsep) * \real{1.0000} + 18\tabcolsep}@{}}{%
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 0\tabcolsep) * \real{1.0000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\end{minipage} \\
+\midrule()
+\endhead
+\bottomrule()
+\end{longtable}
+
+\begin{quote}
+\textbf{5. \emph{Exponenciális függvények. }} Ha \emph{a \textgreater{}}
+0 valós szám, akkor minden \emph{x ∈}R pontban
+
+exp\emph{a ∈D\{x\}}, és
+\end{quote}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 0\tabcolsep) * \real{1.0000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+exp\emph{′a}(\emph{x}) = (\emph{ax})\emph{′} = \emph{ax} ln \emph{a}
+\emph{x ∈}R
+\end{quote}
+\end{minipage} \\
+\midrule()
+\endhead
+\bottomrule()
+\end{longtable}
+
+\emph{.}
+\end{minipage}} \\
+\bottomrule()
+\end{longtable}
+
+\begin{quote}
+\emph{\textbf{Bizonyítás.}} Emlékeztetünk arra, hogy \emph{a
+\textgreater{}} 0 valós szám esetén az \emph{a} alapú exponenciális
+függvényt így értelmeztük:
+
+\emph{ax}:= exp\emph{a}(\emph{x}) := exp(\emph{x} ln \emph{a}) (\emph{x
+∈}R)\emph{.}
+
+Ha \emph{f} := exp és \emph{g}(\emph{x}) := \emph{x} ln \emph{a}
+(\emph{x ∈}R), akkor\\
+exp\emph{a} = \emph{f ◦g.}
+
+Az exp és az összetett függvény deriválására vonatkozó állítások alapján
+azt kapjuk, hogy az exp\emph{a} függvény minden \emph{x ∈}R =
+\emph{D}exp\emph{a} pontban deriválható, és
+\end{quote}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+exp\emph{′a}(\emph{x}) = \emph{f ′}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\emph{g}(\emph{x})
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\emph{· g′}(\emph{x}) = exp(\emph{x} ln \emph{a}) \emph{·} ln \emph{a} =
+\emph{ax}ln \emph{a.}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+■
+\end{quote}
+\end{minipage} \\
+\midrule()
+\endhead
+\multicolumn{4}{@{}>{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{1.0000} + 6\tabcolsep}@{}}{%
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 0\tabcolsep) * \real{1.0000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\end{minipage} \\
+\midrule()
+\endhead
+\bottomrule()
+\end{longtable}
+
+\begin{quote}
+\textbf{6. \emph{Logaritmusfüggvények.}} Ha \emph{a \textgreater{}} 0
+valós szám és \emph{a ̸}= 1, akkor \emph{∀x ∈}(0\emph{,} +\emph{∞})
+pontban log\emph{a ∈D\{x\}}, és
+\end{quote}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 0\tabcolsep) * \real{1.0000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}@{}}
+\toprule()
+\multirow{2}{*}{\begin{minipage}[b]{\linewidth}\raggedright
+log\emph{′ax} =
+\end{minipage}} &
+\multirow{2}{*}{\begin{minipage}[b]{\linewidth}\raggedright
+log\emph{a x}
+\end{minipage}} &
+\multirow{2}{*}{\begin{minipage}[b]{\linewidth}\raggedright
+\emph{′} =
+\end{minipage}} & \begin{minipage}[b]{\linewidth}\raggedright
+1
+\end{minipage} &
+\multirow{2}{*}{\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\emph{x ∈}(0\emph{,} +\emph{∞})
+\end{quote}
+\end{minipage}} \\
+& & & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\emph{x} ln \emph{a}
+\end{quote}
+\end{minipage} \\
+\midrule()
+\endhead
+\bottomrule()
+\end{longtable}
+\end{minipage} \\
+\midrule()
+\endhead
+\bottomrule()
+\end{longtable}
+
+\emph{.}
+
+\emph{\textbf{Bizonyítás.}} Emlékeztetünk arra, hogy \emph{a
+∈}(0\emph{,} +\emph{∞}) \emph{\textbackslash{} \{}1\emph{\}} esetén az
+\emph{a} alapú logaritmusfügg-vényt így értelmeztük:
+
+\begin{quote}
+log\emph{a} := exp\emph{a} \emph{−}1\emph{.}
+\end{quote}
+
+Az exp\emph{a} függvényre az inverz függvény deriválására vonatkozó
+tétel valamennyi feltétele teljesül.
+
+\begin{quote}
+Ezért minden \emph{x ∈}(0\emph{,} +\emph{∞}) = \emph{D}log\emph{a}
+pontban log\emph{a ∈D\{x\}}, és
+
+log\emph{′ax} = log\emph{a x} \emph{′} =
+
+exp\emph{′a}\\
+1
+
+log\emph{a x}\\
+=
+
+(ln \emph{a}) \emph{·} exp\emph{a}\\
+1
+
+log\emph{a x} = \emph{x} ln \emph{a.} 1
+\end{quote}
+
+■\strut
+\end{minipage}} \\
+\bottomrule()
+\end{longtable}
+
+13
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 0\tabcolsep) * \real{1.0000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 0\tabcolsep) * \real{1.0000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\end{minipage} \\
+\midrule()
+\endhead
+\bottomrule()
+\end{longtable}
+
+\begin{quote}
+\textbf{7. \emph{Általánosított hatványfüggvények.}} Ha \emph{α}
+tetszőleges valós szám, akkor a
+\end{quote}
+\end{minipage} \\
+\midrule()
+\endhead
+\bottomrule()
+\end{longtable}
+
+\begin{quote}
+\emph{hα} : (0\emph{,} +\emph{∞}) \emph{∋x →xα}:= \emph{eα} ln
+\emph{x}\\
+általánosított hatványfüggvény minden \emph{x ∈}(0\emph{,} +\emph{∞}) =
+\emph{Dhα} pontban deriválható, és
+\end{quote}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 0\tabcolsep) * \real{1.0000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+(\emph{xα})\emph{′}= \emph{αxα−}1 \emph{x ∈}(0\emph{,} +\emph{∞})
+\end{quote}
+\end{minipage} \\
+\midrule()
+\endhead
+\bottomrule()
+\end{longtable}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\emph{.}
+\end{quote}
+\end{minipage} \\
+\midrule()
+\endhead
+\bottomrule()
+\end{longtable}
+
+\begin{quote}
+Megjegyzünk, hogy ha felírjuk az \emph{x \textgreater{}} 0 alapot
+\emph{e}-hatványként, akkor \emph{x} = \emph{e}ln \emph{x}. Ekkor
+\end{quote}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\emph{xα}=
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\emph{e}ln \emph{xα}= \emph{eα} ln \emph{x}
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+(\emph{x \textgreater{}} 0)\emph{.}
+\end{quote}
+\end{minipage} \\
+\midrule()
+\endhead
+\multicolumn{3}{@{}>{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{1.0000} + 4\tabcolsep}@{}}{%
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+\emph{\textbf{Bizonyítás.}} Rögzítsük az \emph{α ∈}R számot. Alkalmazzuk
+az összetett függvény deriválására vonatkozó szabályt! Azt kapjuk, hogy
+minden \emph{x \textgreater{}} 0 esetén \emph{hα ∈D\{x\}}, és
+
+\emph{h′α}(\emph{x}) = (\emph{xα})\emph{′} = \emph{eα} ln \emph{x′}=
+\emph{eα} ln \emph{x·} (\emph{α} ln \emph{x})\emph{′}= \emph{eα} ln
+\emph{x· α ·}1 \emph{x}= \emph{xα · α ·} 1 \emph{x}= \emph{α
+xα−}1\emph{.} ■
+\end{quote}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 0\tabcolsep) * \real{1.0000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\end{minipage} \\
+\midrule()
+\endhead
+\bottomrule()
+\end{longtable}
+
+\begin{quote}
+\textbf{8. \emph{A szinuszfüggvény}} minden \emph{x ∈}R pontban
+deriválható, és
+\end{quote}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 0\tabcolsep) * \real{1.0000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+sin\emph{′x} = cos \emph{x}
+\end{quote}
+\end{minipage} \\
+\midrule()
+\endhead
+\bottomrule()
+\end{longtable}
+
+(\emph{x ∈}R) \emph{.}
+
+\emph{\textbf{Bizonyítás.}} A szinuszfüggvényt az egész R-en konvergens
+hatványsor összegfüggvényeként
+
+\begin{quote}
+értelmeztük:
+\end{quote}
+
+sin(\emph{x}) :=
+
+\begin{quote}
+\emph{n}=0\\
++\emph{∞}
+
+(\emph{−}1)\emph{n} (2\emph{n} + 1)!\\
+\emph{x}2\emph{n}+1
+\end{quote}
+
+(\emph{x ∈}R)\emph{.}\strut
+\end{minipage}} \\
+\bottomrule()
+\end{longtable}
+
+\begin{quote}
+A hatványsor összegfüggvényének deriválására vonatkozó tételt alkalmazva
+azt kapjuk, hogy minden \emph{x ∈}R pontban sin \emph{∈D\{x\}}, és
+\end{quote}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+sin\emph{′}(\emph{x}) =
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
++\emph{∞}\\
+\emph{n}=0 (\emph{−}1)\emph{n·} (2\emph{n} + 1)
+\end{quote}\strut
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\emph{x}2\emph{n}\\
+(2\emph{n} \sout{+ 1)!}=
+\end{quote}\strut
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
++\emph{∞}\\
+\emph{n}=0 (\emph{−}1)\emph{n x}2\emph{n} (2\emph{n})! =
+cos(\emph{x})\emph{.}
+\end{quote}\strut
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+■
+\end{quote}
+\end{minipage} \\
+\midrule()
+\endhead
+\multicolumn{5}{@{}>{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{1.0000} + 8\tabcolsep}@{}}{%
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 0\tabcolsep) * \real{1.0000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\end{minipage} \\
+\midrule()
+\endhead
+\bottomrule()
+\end{longtable}
+
+\begin{quote}
+\textbf{9. \emph{A koszinuszfüggvény}} minden \emph{x ∈}R pontban
+deriválható, és
+\end{quote}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 0\tabcolsep) * \real{1.0000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+cos\emph{′x} = \emph{−}sin \emph{x}
+\end{quote}
+\end{minipage} \\
+\midrule()
+\endhead
+\bottomrule()
+\end{longtable}
+
+(\emph{x ∈}R) \emph{.}
+
+\emph{\textbf{Bizonyítás.}} A koszinuszfüggvényt az egész R-en
+konvergens hatványsor összegfüggvényeként
+
+\begin{quote}
+értelmeztük:
+\end{quote}
+
++\emph{∞}
+
+cos(\emph{x}) :=
+
+\begin{quote}
+\emph{n}=0 (\emph{−}1)\emph{n x}2\emph{n} (2\emph{n})! (\emph{x
+∈}R)\emph{.}
+\end{quote}
+\end{minipage}} \\
+\bottomrule()
+\end{longtable}
+
+\begin{quote}
+A hatványsor összegfüggvényének deriválására vonatkozó tételt alkalmazva
+azt kapjuk, hogy minden \emph{x ∈}R pontban cos \emph{∈D\{x\}}, és
+\end{quote}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1250}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+cos\emph{′}(\emph{x}) =
+\end{quote}
+\end{minipage} &
+\multicolumn{3}{>{\raggedright\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.3750} + 4\tabcolsep}}{%
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
++\emph{∞}\\
+\emph{n}=0 (\emph{−}1)\emph{n·} 2\emph{n x}2\emph{n−}1 (2\emph{n})! =
+\end{quote}\strut
+\end{minipage}} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
++\emph{∞}\\
+\emph{n}=1 (\emph{−}1)\emph{n·} 2\emph{n x}2\emph{n−}1 (2\emph{n})! =
+\end{quote}\strut
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
++\emph{∞}\\
+\emph{n}=1 (\emph{−}1)\emph{n}
+\end{quote}\strut
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\emph{x}2\emph{n−}1\\
+(2\emph{n −}\sout{1)!}=
+\end{quote}\strut
+\end{minipage} &
+\multirow{2}{*}{\begin{minipage}[b]{\linewidth}\raggedright
+■
+\end{minipage}} \\
+\multicolumn{2}{@{}>{\raggedright\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.2500} + 2\tabcolsep}}{%
+\begin{minipage}[b]{\linewidth}\raggedright
+= \emph{−}
+\end{minipage}} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
++\emph{∞}\\
+\emph{n}=1 (\emph{−}1)\emph{n−}1
+\end{quote}\strut
+\end{minipage} &
+\multicolumn{2}{>{\raggedright\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.2500} + 2\tabcolsep}}{%
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\emph{x}2\emph{n−}1\\
+(2\emph{n −}\sout{1)!}= ( \emph{k} := \emph{n −}1 ) = \emph{−}
+\end{quote}\strut
+\end{minipage}} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
++\emph{∞}\\
+\emph{k}=0 (\emph{−}1)\emph{k}
+\end{quote}\strut
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\emph{x}2\emph{k}+1\\
+(2\emph{k} \sout{+ 1)!}= \emph{−}sin(\emph{x})\emph{.}
+\end{quote}\strut
+\end{minipage} \\
+\midrule()
+\endhead
+\bottomrule()
+\end{longtable}
+
+14
+
+\end{document}

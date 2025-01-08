@@ -1,0 +1,21 @@
+{
+    "6581e483f08ce": {
+        "name": "Signal",
+        "length": 882,
+        "color": "green",
+        "dangers": [
+            "learners"
+        ],
+        "id": "6581e483f08ce"
+    },
+    "6581e48400470": {
+        "name": "Combe Charbonni\u00e8re",
+        "length": 3000,
+        "color": "black",
+        "dangers": [
+            "ice",
+            "accident"
+        ],
+        "id": "6581e48400470"
+    }
+}
