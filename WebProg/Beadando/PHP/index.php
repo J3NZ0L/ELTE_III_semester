@@ -1,4 +1,18 @@
+<?php
+include_once "car.php";
+$carRepository = new CarRepository();
 
+$filters = [
+  'start_date' => $_GET['start_date'] ?? null,
+  'end_date' => $_GET['end_date'] ?? null,
+  'transmission' => $_GET['transmission'] ?? null,
+  'passenger_number' => $_GET['passenger_number'] ?? null,
+  'min_price' => $_GET['min_price'] ?? null,
+  'max_price' => $_GET['max_price'] ?? null,
+];
+
+$cars = $carRepository->all();
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -37,37 +51,64 @@
       </div>
     </div>
   </nav>
-
+  <!-- Filter Form -->
+  <div class="container my-4">
+    <h2>Filter results</h2>
+    <form method="GET" action="index.php" class="row g-3">
+      <div class="col-md-3">
+        <label for="start_date" class="form-label">Start Date</label>
+        <input type="date" class="form-control" id="start_date" name="start_date" value="<?= htmlspecialchars($_GET['start_date'] ?? '') ?>">
+      </div>
+      <div class="col-md-3">
+        <label for="end_date" class="form-label">End Date</label>
+        <input type="date" class="form-control" id="end_date" name="end_date" value="<?= htmlspecialchars($_GET['end_date'] ?? '') ?>">
+      </div>
+      <div class="col-md-3">
+        <label for="transmission" class="form-label">Transmission</label>
+        <select class="form-control" id="transmission" name="transmission">
+          <option value="">Any</option>
+          <option value="automatic" <?= (isset($_GET['transmission']) && $_GET['transmission'] == 'automatic') ? 'selected' : '' ?>>Automatic</option>
+          <option value="manual" <?= (isset($_GET['transmission']) && $_GET['transmission'] == 'manual') ? 'selected' : '' ?>>Manual</option>
+        </select>
+      </div>
+      <div class="col-md-3">
+        <label for="passenger_number" class="form-label">Passenger Number</label>
+        <input type="number" class="form-control" id="passenger_number" name="passenger_number" value="<?= htmlspecialchars($_GET['passenger_number'] ?? '') ?>">
+      </div>
+      <div class="col-md-3">
+        <label for="min_price" class="form-label">Min Price (HUF/day)</label>
+        <input type="number" class="form-control" id="min_price" name="min_price" value="<?= htmlspecialchars($_GET['min_price'] ?? '') ?>">
+      </div>
+      <div class="col-md-3">
+        <label for="max_price" class="form-label">Max Price (HUF/day)</label>
+        <input type="number" class="form-control" id="max_price" name="max_price" value="<?= htmlspecialchars($_GET['max_price'] ?? '') ?>">
+      </div>
+      <div class="col-md-3">
+        <button type="submit" class="btn btn-primary mt-4">Filter</button>
+      </div>
+    </form>
+  </div>
   <!-- Main Content: Car List -->
   <div class="container my-5">
     <h1 class="mb-4">Available Cars</h1>
     <div class="row"> 
-    <?php
-        // Get the car ID from the URL
-        $carId = $_GET['id'] ?? null;
-        $cars = json_decode(file_get_contents('data/cars.json'), true);
-
-        foreach ($cars as $car) {
-          echo '
-          <h1 class="mb-4">' . htmlspecialchars($car['brand'] . ' ' . $car['model']) . '</h1>
-          <div class="row">
-              <div class="col-md-6">
-                  <img src="' . htmlspecialchars($car['image']) . '" class="img-fluid" alt="' . htmlspecialchars($car['brand'] . ' ' . $car['model']) . '">
-              </div>
-              <div class="col-md-6">
-                  <ul class="list-group">
-                      <li class="list-group-item">Year: ' . htmlspecialchars($car['year']) . '</li>
-                      <li class="list-group-item">Transmission: ' . htmlspecialchars($car['transmission']) . '</li>
-                      <li class="list-group-item">Fuel: ' . htmlspecialchars($car['fuel_type']) . '</li>
-                      <li class="list-group-item">Passengers: ' . htmlspecialchars($car['passengers']) . '</li>
-                      <li class="list-group-item">Price: ' . htmlspecialchars($car['daily_price_huf']) . ' HUF/day</li>
-                  </ul>
-              </div>
-          </div>
-          ';
-        }
-        ?>
+        <?php foreach ($cars as $car): ?>
+            <div class="col-md-4 mb-4">
+                <a href="car_details.php?id=<?= htmlspecialchars($car->id) ?>" class="text-decoration-none">
+                    <div class="card h-100">
+                        <img src="<?= htmlspecialchars($car->image) ?>" class="card-img-top" alt="<?= htmlspecialchars($car->brand . ' ' . $car->model) ?>">
+                        <div class="card-body">
+                            <h5 class="card-title"><?= htmlspecialchars($car->brand . ' ' . $car->model) ?></h5>
+                            <p class="card-text">Year: <?= htmlspecialchars($car->year) ?></p>
+                            <p class="card-text">Price: <?= htmlspecialchars($car->daily_price_huf) ?> HUF/day</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        <?php endforeach; ?>
     </div>
+</div>
+
 </div>
 
 </body>

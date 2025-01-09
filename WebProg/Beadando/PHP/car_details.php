@@ -1,0 +1,73 @@
+<?php
+include_once "car.php";
+$carRepository = new CarRepository();
+
+$cars = $carRepository->all();
+
+// Get the car ID from the query string
+$carId = $_GET['id'] ?? null;
+
+// Find the car by ID
+$car = null;
+foreach ($cars as $c) {
+    if ($c->id == $carId) {
+        $car = $c;
+        break;
+    }
+}
+
+if (!$car) {
+    echo "Car not found!";
+    exit;
+}
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?= htmlspecialchars($car->brand . ' ' . $car->model) ?> Details</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container my-5">
+    <h1><?= htmlspecialchars($car->brand . ' ' . $car->model) ?></h1>
+    <img src="<?= htmlspecialchars($car->image) ?>" class="img-fluid mb-4" alt="<?= htmlspecialchars($car->brand . ' ' . $car->model) ?>">
+    <ul class="list-group">
+        <li class="list-group-item">Year: <?= htmlspecialchars($car->year) ?></li>
+        <li class="list-group-item">Transmission: <?= htmlspecialchars($car->transmission) ?></li>
+        <li class="list-group-item">Fuel Type: <?= htmlspecialchars($car->fuel_type) ?></li>
+        <li class="list-group-item">Passengers: <?= htmlspecialchars($car->passengers) ?></li>
+        <li class="list-group-item">Daily Price: <?= htmlspecialchars($car->daily_price_huf) ?> HUF/day</li>
+    </ul>
+    <!-- Action Buttons -->
+    <div class="col-md-4">
+            <form action="reserve.php" method="GET">
+                <input type="hidden" name="car_id" value="<?= htmlspecialchars($car->id) ?>">
+
+                <!-- Date Range Selector -->
+                <div class="mb-3">
+                    <label for="start_date" class="form-label">Start Date:</label>
+                    <input type="date" id="start_date" name="start_date" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="end_date" class="form-label">End Date:</label>
+                    <input type="date" id="end_date" name="end_date" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-success w-100 mb-3">Select Date Range</button>
+            </form>
+
+            <!-- Reserve Button -->
+            <button class="btn btn-primary w-100" onclick="alert('Reservation functionality coming soon!')">Reserve Car</button>
+        </div>
+    </div>
+
+    <!-- Back to Main Page Button -->
+    <div class="text-end mt-4">
+        <a href="index.php" class="btn btn-secondary">Back to Main Page</a>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
