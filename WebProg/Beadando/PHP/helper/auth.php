@@ -22,7 +22,9 @@ class Auth
     }
     public function login($user)
     {
-        $_SESSION["user"] = $user;
+        $_SESSION["user"] = array_values(array_filter($this->users->all(), function ($u) use ($user) {
+            return ((array) $u)['email'] === $user['email'];
+        }))[0] ?? null;
     }
     public function check_credentials($email, $password)
     {

@@ -12,13 +12,15 @@
 
 - [ ] filter for reservations in the reservationrepository somehow
 
-Admin funkciók
-Külön adminisztrátori bejelentkezési lehetőség (alapértelmezett admin: e-mail: admin@ikarrental.hu, jelszó: admin).
-Az adminisztrátor "Profil" oldalán elérhető az összes foglalás
-Az adminisztrátor képes:
-Új autókat hozzáadni.
-Meglévő autók adatait szerkeszteni.
-Az "Autó szerkesztése" aloldalon lehessen módosítani az összes alapadatát (az azonosítón kívül), és az autóra vonatkozó meglévő foglalást törölni.
-Autókat törölni.
+## Admin funkciók
+- [x] Külön adminisztrátori bejelentkezési lehetőség (alapértelmezett admin: e-mail: admin@ikarrental.hu, jelszó: admin).
+- [ ] Az adminisztrátor "Profil" oldalán elérhető az összes foglalás
+- Az adminisztrátor képes:
+    - [ ] **Új autókat hozzáadni**, menti is ha megfeleloek az adatok
+        - [ ] auto kartyak elso peldanya admin eseten egy + kepu add car lehetoseg, ez egy hasonlo oldalra visz mint a car details, csak meg kell adni minden adatot, kepet linkkent
+        - autot hasonloan  adja hozza mint felhasznalot regisztralaskor
+    - [ ] Meglévő autók adatait szerkeszteni.
+    - [ ] Az "Autó szerkesztése" aloldalon lehessen módosítani az összes alapadatát (az azonosítón kívül), és az autóra vonatkozó meglévő foglalást törölni.
+    - [ ] Autókat törölni.
 
 - [ ] add header to every page

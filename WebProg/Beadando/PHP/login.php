@@ -1,6 +1,6 @@
 <?php
-require_once "auth.php";
-require_once "validation.php";
+require_once "helper/auth.php";
+require_once "helper/validation.php";
 session_start();
 
 $auth = new Auth();
@@ -13,8 +13,6 @@ if (count($_POST)!= 0){
         die();
     }
 }
-
-
 ?>
 
 

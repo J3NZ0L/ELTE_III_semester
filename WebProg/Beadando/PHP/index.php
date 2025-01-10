@@ -1,6 +1,6 @@
 <?php
 include_once "classes/car.php";
-include_once "reservation.php";
+include_once "classes/reservation.php";
 session_start();
 
 $carRepository = new CarRepository();
@@ -14,6 +14,12 @@ $filters = [
   'max_price' => $_GET['max_price'] ?? null,
 ];
 $cars = $carRepository->allFilteredBy(...$filters);
+
+$userLoggedIn = false;
+if (isset($_SESSION['user'])) {
+  $userLoggedIn = true;
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -36,19 +42,29 @@ $cars = $carRepository->allFilteredBy(...$filters);
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
+        <ul class="navbar-nav me-auto">
           <li class="nav-item">
             <a class="nav-link" href="index.php">Home</a>
           </li>
+          
           <li class="nav-item">
             <a class="nav-link" href="profile.php">Profile</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="login.php">Login</a>
-          </li>
-          <li class="nav-item">
             <a class="nav-link" href="register.php">Register</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="login.php">Login</a>
+          </li>
+
+        </ul>
+        <ul class="navbar-nav ms-auto">
+          <?php if ($userLoggedIn): ?>
+              <li class="nav-item">
+                <a class="nav-link" href="logout.php">Logout</a>
+              </li>
+              <span class="navbar-text">Welcome, <?= htmlspecialchars($_SESSION['user']->name) ?></class>
+          <?php endif; ?>
         </ul>
       </div>
     </div>
