@@ -63,10 +63,42 @@ class CarRepository
     {
         return $this->storage->insert($Car);
     }
-    public function filter(callable $callback): array
+    public function allFilteredBy($start_date = null, $end_date = null, $transmission = null, $passenger_number = null, $min_price = null, $max_price = null): array
     {
-        $cars = $this->all();
-        return array_filter($cars, $callback);
+        $filterfunc = function($car) use ($start_date, $end_date, $transmission, $passenger_number, $min_price, $max_price){
+            if ($start_date && $end_date && $start_date <= $end_date){
+                $form_start_datetime = DateTime::createFromFormat('Y-m-d', $start_date);
+                $form_end_datetime = DateTime::createFromFormat('Y-m-d', $end_date);
+                $reservations = (new ReservationRepository())->all();
+                foreach ($reservations as $reservation){
+                    if ($reservation->car_id == $car->id){
+                        $reservation_start_datetime = new DateTime($reservation->start_date);
+    $reservation_end_datetime = new DateTime($reservation->end_date);
+                        if ($form_start_datetime >= $reservation_start_datetime && $form_start_datetime <= $reservation_end_datetime){
+                            return false;
+                        }
+                        if ($form_end_datetime >= $reservation_start_datetime && $form_end_datetime <= $reservation_end_datetime){
+                            return false;
+                        }
+                    }
+                }
+            }
+            if ($transmission && strtolower($car->transmission) != strtolower($transmission)){
+                return false;
+            }
+            if ($passenger_number && $car->passengers < $passenger_number){
+                return false;
+            }
+            if ($min_price && $car->daily_price_huf < $min_price){
+                return false;
+            }
+            if ($max_price && $car->daily_price_huf > $max_price){
+                return false;
+            }
+            return true;
+        };
+        
+        return array_filter($this->all(), $filterfunc);
     }
 }
 ?>
