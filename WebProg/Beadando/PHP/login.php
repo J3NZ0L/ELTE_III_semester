@@ -1,3 +1,23 @@
+<?php
+require_once "auth.php";
+require_once "validation.php";
+session_start();
+
+$auth = new Auth();
+
+$errors = [];
+if (count($_POST)!= 0){
+    if (validate_login($_POST, $errors, $auth)){
+        $auth->login($_POST);
+        header('Location: index.php');
+        die();
+    }
+}
+
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,14 +29,23 @@
 <body>
   <div class="container mt-4">
     <h1>Login</h1>
-    <form>
+    <?php
+    if (count($errors)>0){
+      echo "<h2> An error occurred while trying to log in: </h2><ul>";
+      foreach($errors as $error){
+        echo "<li> $error </li>";
+      }
+      echo "</ul>";
+    }
+  ?>
+    <form action="" method="post" novalidate>
       <div class="mb-3">
         <label for="email" class="form-label">Email address</label>
-        <input type="email" class="form-control" id="email" placeholder="Enter your email">
+        <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" >
       </div>
       <div class="mb-3">
         <label for="password" class="form-label">Password</label>
-        <input type="password" class="form-control" id="password" placeholder="Enter your password">
+        <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password">
       </div>
       <button type="submit" class="btn btn-primary">Login</button>
     </form>

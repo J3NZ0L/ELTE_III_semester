@@ -10,7 +10,7 @@ ELTE Hallgatói Követelményrendszer, IK kari különös rész, 377/A. §: "Az 
 - [x] 1.0 pont Főoldal: az összes autó és a hozzájuk tartozó alapadatok kilistázódnak 
 - [x] 1.0 pont Főoldal: az autó kártyájára/nevére kattintva a megfelelő autó aloldalára jutunk 
 - [x] 1.0 pont Autóoldal: Megjelennek az autó adatai és képe 
-- [ ] 1.0 pont Főoldal: A főoldalon a feladatban meghatározott elemekre - kivéve a szabad időpontokra - sikeresen tudunk szűrni 
+- [x] 1.0 pont Főoldal: A főoldalon a feladatban meghatározott elemekre - kivéve a szabad időpontokra - sikeresen tudunk szűrni 
 - [ ] 2.0 pont Admin: Új autót tudunk létrehozni hibakezeléssel, és sikeresen menti megfelelő adatok esetén. (Ehhez bejelentkezni nem szükséges) 
 
 ### Az alap feladatok (14 pont) 

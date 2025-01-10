@@ -8,6 +8,17 @@
         - json, user, car id, start date, end date
     
 
-- [ ] write back all the ddetails of the cars to the main page on the cards, instead of just displaying them on the dedicated details page
+- [x] write back all the details of the cars to the main page on the cards, instead of just displaying them on the dedicated details page
 
 - [ ] filter for reservations in the reservationrepository somehow
+
+Admin funkciók
+Külön adminisztrátori bejelentkezési lehetőség (alapértelmezett admin: e-mail: admin@ikarrental.hu, jelszó: admin).
+Az adminisztrátor "Profil" oldalán elérhető az összes foglalás
+Az adminisztrátor képes:
+Új autókat hozzáadni.
+Meglévő autók adatait szerkeszteni.
+Az "Autó szerkesztése" aloldalon lehessen módosítani az összes alapadatát (az azonosítón kívül), és az autóra vonatkozó meglévő foglalást törölni.
+Autókat törölni.
+
+- [ ] add header to every page

@@ -1,5 +1,6 @@
 <?php
-include_once "car.php";
+include_once "classes/car.php";
+session_start();
 $carRepository = new CarRepository();
 
 $cars = $carRepository->all();
@@ -19,6 +20,18 @@ foreach ($cars as $c) {
 if (!$car) {
     echo "Car not found!";
     exit;
+}
+
+// Check if the form is submitted, and if the user is logged in
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (!isset($_SESSION['user'])) {
+        // Redirect to another page if session variable is not set
+        header('Location: login.php');
+        exit;
+    } else {
+        // Process the form if session variable is set
+        // Code to process the form
+    }
 }
 ?>
 
@@ -43,24 +56,20 @@ if (!$car) {
     </ul>
     <!-- Action Buttons -->
     <div class="col-md-4">
-            <form action="reserve.php" method="GET">
-                <input type="hidden" name="car_id" value="<?= htmlspecialchars($car->id) ?>">
+        <form action="" method="POST">
+            <input type="hidden" name="car_id" value="<?= htmlspecialchars($car->id) ?>">
 
-                <!-- Date Range Selector -->
-                <div class="mb-3">
-                    <label for="start_date" class="form-label">Start Date:</label>
-                    <input type="date" id="start_date" name="start_date" class="form-control" required>
-                </div>
-                <div class="mb-3">
-                    <label for="end_date" class="form-label">End Date:</label>
-                    <input type="date" id="end_date" name="end_date" class="form-control" required>
-                </div>
-                <button type="submit" class="btn btn-success w-100 mb-3">Select Date Range</button>
-            </form>
-
-            <!-- Reserve Button -->
-            <button class="btn btn-primary w-100" onclick="alert('Reservation functionality coming soon!')">Reserve Car</button>
-        </div>
+            <!-- Date Range Selector -->
+            <div class="mb-3">
+                <label for="start_date" class="form-label">Start Date:</label>
+                <input type="date" id="start_date" name="start_date" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="end_date" class="form-label">End Date:</label>
+                <input type="date" id="end_date" name="end_date" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Reserve Car</button>
+        </form>
     </div>
 
     <!-- Back to Main Page Button -->

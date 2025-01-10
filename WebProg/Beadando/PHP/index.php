@@ -1,6 +1,8 @@
 <?php
-include_once "car.php";
+include_once "classes/car.php";
 include_once "reservation.php";
+session_start();
+
 $carRepository = new CarRepository();
 
 $filters = [
@@ -99,7 +101,8 @@ $cars = $carRepository->allFilteredBy(...$filters);
                         <img src="<?= htmlspecialchars($car->image) ?>" class="card-img-top" alt="<?= htmlspecialchars($car->brand . ' ' . $car->model) ?>">
                         <div class="card-body">
                             <h5 class="card-title"><?= htmlspecialchars($car->brand . ' ' . $car->model) ?></h5>
-                            <p class="card-text">Year: <?= htmlspecialchars($car->year) ?></p>
+                            <p class="card-text">Passengers: <?= htmlspecialchars($car->passengers) ?></p>
+                            <p class="card-text">Transmission: <?= htmlspecialchars($car->transmission) ?></p>
                             <p class="card-text">Price: <?= htmlspecialchars($car->daily_price_huf) ?> HUF/day</p>
                         </div>
                     </div>
