@@ -92,7 +92,7 @@ if (isset($_SESSION['user']) && $_SESSION['user']->isAdmin) {
           <div class="col-md-4 mb-4">
               <a href="car_details.php?id=<?= htmlspecialchars($car->id) ?>" class="text-decoration-none">
                   <div class="card h-100 hover-card">
-                      <img src="<?= htmlspecialchars($car->image) ?>" class="card-img-top" alt="<?= htmlspecialchars($car->brand . ' ' . $car->model) ?>">
+                        <img src="<?= htmlspecialchars($car->image) ?>" class="card-img-top img-fluid" alt="<?= htmlspecialchars($car->brand . ' ' . $car->model) ?>" style="object-fit: cover; height: 200px;">
                       <div class="card-body">
                           <h5 class="card-title"><?= htmlspecialchars($car->brand . ' ' . $car->model) ?></h5>
                           <p class="card-text">Passengers: <?= htmlspecialchars($car->passengers) ?></p>

@@ -1,8 +1,6 @@
 <?php
-$userLoggedIn = false;
-if (isset($_SESSION['user'])) {
-  $userLoggedIn = true;
-}
+require_once "helper/auth.php";
+$auth = new Auth();
 ?>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -13,12 +11,14 @@ if (isset($_SESSION['user'])) {
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav me-auto">
+        <?php if ($auth->is_authenticated()): ?>
           <li class="nav-item">
             <a class="nav-link" href="profile.php">Profile</a>
           </li>
+        <?php endif; ?>
         </ul>
         <ul class="navbar-nav ms-auto">
-          <?php if ($userLoggedIn): ?>
+          <?php if ($auth->is_authenticated()): ?>
               <li class="nav-item">
                 <a class="nav-link" href="logout.php">Logout</a>
               </li>

@@ -32,7 +32,6 @@ class Auth
             return ((array) $user)['email'] === $email;
         });
         if (count($users) === 1) {
-            //echo $password;
             $user = (array) array_values($users)[0];
             return password_verify($password, $user["password"])
             ? $user

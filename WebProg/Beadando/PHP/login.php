@@ -6,12 +6,17 @@ session_start();
 $auth = new Auth();
 
 $errors = [];
-if (count($_POST)!= 0){
-    if (validate_login($_POST, $errors, $auth)){
-        $auth->login($_POST);
-        header('Location: index.php');
-        die();
-    }
+if (count($_POST) != 0) {
+  if (validate_login($_POST, $errors, $auth)) {
+    $auth->login($_POST);
+    $redirect_url = isset($_SESSION['redirect_url']) ? $_SESSION['redirect_url'] : 'index.php';
+    header("Location: $redirect_url");
+    exit();
+  }
+} else {
+  if (isset($_SERVER['HTTP_REFERER']) && strpos($_SERVER['HTTP_REFERER'], $_SERVER['HTTP_HOST']) !== false) {
+    $_SESSION['redirect_url'] = $_SERVER['HTTP_REFERER'];
+  }
 }
 ?>
 
@@ -42,7 +47,7 @@ if (count($_POST)!= 0){
     <form action="" method="post" novalidate>
       <div class="mb-3">
         <label for="email" class="form-label">Email address</label>
-        <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" >
+        <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>">
       </div>
       <div class="mb-3">
         <label for="password" class="form-label">Password</label>

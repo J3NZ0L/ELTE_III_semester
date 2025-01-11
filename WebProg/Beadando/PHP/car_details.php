@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
     <?php include_once "common_segments/header.php"; ?>
-    
+
     <div class="container my-5">
     <h1><?= htmlspecialchars($car->brand . ' ' . $car->model) ?></h1>
     <img src="<?= htmlspecialchars($car->image) ?>" class="img-fluid mb-4" alt="<?= htmlspecialchars($car->brand . ' ' . $car->model) ?>">
@@ -60,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="col-md-4">
         <form action="" method="POST">
             <input type="hidden" name="car_id" value="<?= htmlspecialchars($car->id) ?>">
-
+            <h2 class="my-3">Reserve:</h2>
             <!-- Date Range Selector -->
             <div class="mb-3">
                 <label for="start_date" class="form-label">Start Date:</label>

@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!-- Profile Page (profile.html) -->
 <!DOCTYPE html>
 <html lang="en">
@@ -11,12 +15,11 @@
   <?php include "common_segments/header.php"; ?>
   <div class="container mt-4">
     <h1>User Profile</h1>
-    <p>Name: John Doe</p>
-    <p>Email: john.doe@example.com</p>
+    <p>Name: <?= htmlspecialchars($_SESSION['user']->name) ?></p>
+    <p>Email: <?= htmlspecialchars($_SESSION['user']->email) ?></p>
     <p>Rented Cars:</p>
     <ul>
-      <li>Tesla Model S - Rented on 2024-01-01</li>
-      <li>BMW X5 - Rented on 2024-02-15</li>
+<!-- To be implemented --> 
     </ul>
   </div>
 </body>

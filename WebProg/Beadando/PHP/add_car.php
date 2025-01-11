@@ -8,7 +8,7 @@ $carRepository = new CarRepository();
 $errors = [];
 
 if (count($_POST) != 0){
-    IF (validate_car_details($_POST, $errors)){
+    if (validate_car_details($_POST, $errors)){
         $car = new Car(
             $carRepository->getNextId(),
             $_POST['brand'],
@@ -21,7 +21,7 @@ if (count($_POST) != 0){
             $_POST['image']
         );
         $carRepository->add($car);
-        header('Location: login.php');
+        header('Location: index.php');
         exit();
     }
 }
@@ -51,39 +51,42 @@ if (count($_POST) != 0){
     <form action="" method="post" novalidate>
     <div class="mb-3">
         <label for="brand" class="form-label">Brand</label>
-        <input type="text" class="form-control" id="brand" name="brand" required>
+        <input type="text" class="form-control" id="brand" name="brand" value="<?=htmlspecialchars($_POST['brand'] ?? '')?>" required>
     </div>
     <div class="mb-3">
         <label for="model" class="form-label">Model</label>
-        <input type="text" class="form-control" id="model" name="model" required>
+        <input type="text" class="form-control" id="model" name="model" value="<?=htmlspecialchars($_POST['model'] ?? '')?>" required>
     </div>
-    <div class="mb-3">
+    <div class="col-md-3 mb-3">
         <label for="year" class="form-label">Year</label>
-        <input type="number" class="form-control" id="year" name="year" required>
+        <input type="number" class="form-control" id="year" name="year" placeholder="2005" value="<?=htmlspecialchars($_POST['year'] ?? '2005')?>" required>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-3 mb-3">
         <label for="transmission" class="form-label">Transmission</label>
         <select class="form-control" id="transmission" name="transmission">
-          <option value="">Any</option>
-          <option value="automatic" <?= (isset($_GET['transmission']) && $_GET['transmission'] == 'automatic') ? 'selected' : '' ?>>Automatic</option>
-          <option value="manual" <?= (isset($_GET['transmission']) && $_GET['transmission'] == 'manual') ? 'selected' : '' ?>>Manual</option>
+          <option value="Automatic" <?= (isset($_POST['transmission']) && $_POST['transmission'] == 'Automatic') ? 'selected' : '' ?>>Automatic</option>
+          <option value="Manual" <?= (isset($_POST['transmission']) && $_POST['transmission'] == 'Manual') ? 'selected' : '' ?>>Manual</option>
         </select>
-      </div>
-    <div class="mb-3">
+    </div>
+    <div class="col-md-3 mb-3">
         <label for="fuel_type" class="form-label">Fuel Type</label>
-        <input type="text" class="form-control" id="fuel_type" name="fuel_type" required>
+        <select class="form-control" id="fuel_type" name="fuel_type">
+          <option value="Petrol" <?= (isset($_POST['fuel_type']) && $_POST['fuel_type'] == 'Petrol') ? 'selected' : '' ?>>Petrol</option>
+          <option value="Diesel" <?= (isset($_POST['fuel_type']) && $_POST['fuel_type'] == 'Diesel') ? 'selected' : '' ?>>Diesel</option>
+          <option value="Electric" <?= (isset($_POST['fuel_type']) && $_POST['fuel_type'] == 'Electric') ? 'selected' : '' ?>>Electric</option>
+        </select>
     </div>
-    <div class="mb-3">
+    <div class="col-md-3 mb-3">
         <label for="passengers" class="form-label">Passengers</label>
-        <input type="number" class="form-control" id="passengers" name="passengers" required>
+        <input type="number" class="form-control" id="passengers" name="passengers" value="<?=htmlspecialchars($_POST['passengers'] ?? '')?>" required>
     </div>
-    <div class="mb-3">
+    <div class="col-md-3 mb-3">
         <label for="daily_price_huf" class="form-label">Daily Price (HUF)</label>
-        <input type="number" class="form-control" id="daily_price_huf" name="daily_price_huf" required>
+        <input type="number" class="form-control" id="daily_price_huf" name="daily_price_huf" value="<?=htmlspecialchars($_POST['daily_price_huf'] ?? '')?>" required>
     </div>
     <div class="mb-3">
         <label for="image" class="form-label">Image URL</label>
-        <input type="url" class="form-control" id="image" name="image" required>
+        <input type="url" class="form-control" id="image" name="image" value="<?=htmlspecialchars($_POST['image'] ?? '')?>" required>
     </div>
     <button type="submit" class="btn btn-primary mb-3">Add car</button>
     </form>
