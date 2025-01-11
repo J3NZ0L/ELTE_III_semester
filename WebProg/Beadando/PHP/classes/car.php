@@ -63,6 +63,15 @@ class CarRepository
     {
         return $this->storage->insert($Car);
     }
+    public function getNextId(): int
+    {
+        $cars = $this->all();
+        $ids = array_map(function($car){
+            return $car->id;
+        }, $cars);
+        return max($ids) + 1;
+    }
+
     public function allFilteredBy($start_date = null, $end_date = null, $transmission = null, $passenger_number = null, $min_price = null, $max_price = null): array
     {
         $filterfunc = function($car) use ($start_date, $end_date, $transmission, $passenger_number, $min_price, $max_price){

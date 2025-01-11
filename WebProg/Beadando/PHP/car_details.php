@@ -44,7 +44,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<div class="container my-5">
+    <?php include_once "common_segments/header.php"; ?>
+    
+    <div class="container my-5">
     <h1><?= htmlspecialchars($car->brand . ' ' . $car->model) ?></h1>
     <img src="<?= htmlspecialchars($car->image) ?>" class="img-fluid mb-4" alt="<?= htmlspecialchars($car->brand . ' ' . $car->model) ?>">
     <ul class="list-group">

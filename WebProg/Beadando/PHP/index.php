@@ -15,9 +15,9 @@ $filters = [
 ];
 $cars = $carRepository->allFilteredBy(...$filters);
 
-$userLoggedIn = false;
-if (isset($_SESSION['user'])) {
-  $userLoggedIn = true;
+$adminLoggedIn = false;
+if (isset($_SESSION['user']) && $_SESSION['user']->isAdmin) {
+  $adminLoggedIn = true;
 }
 
 ?>
@@ -35,40 +35,7 @@ if (isset($_SESSION['user'])) {
 <body>
 
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">iKarRental</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav me-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="index.php">Home</a>
-          </li>
-          
-          <li class="nav-item">
-            <a class="nav-link" href="profile.php">Profile</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="register.php">Register</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="login.php">Login</a>
-          </li>
-
-        </ul>
-        <ul class="navbar-nav ms-auto">
-          <?php if ($userLoggedIn): ?>
-              <li class="nav-item">
-                <a class="nav-link" href="logout.php">Logout</a>
-              </li>
-              <span class="navbar-text">Welcome, <?= htmlspecialchars($_SESSION['user']->name) ?></class>
-          <?php endif; ?>
-        </ul>
-      </div>
-    </div>
-  </nav>
+  <?php include "common_segments/header.php"; ?>
   <!-- Filter Form -->
   <div class="container my-4">
     <h2>Filter results</h2>
@@ -110,23 +77,40 @@ if (isset($_SESSION['user'])) {
   <div class="container my-5">
     <h1 class="mb-4">Available Cars</h1>
     <div class="row"> 
-        <?php foreach ($cars as $car): ?>
-            <div class="col-md-4 mb-4">
-                <a href="car_details.php?id=<?= htmlspecialchars($car->id) ?>" class="text-decoration-none">
-                    <div class="card h-100">
-                        <img src="<?= htmlspecialchars($car->image) ?>" class="card-img-top" alt="<?= htmlspecialchars($car->brand . ' ' . $car->model) ?>">
-                        <div class="card-body">
-                            <h5 class="card-title"><?= htmlspecialchars($car->brand . ' ' . $car->model) ?></h5>
-                            <p class="card-text">Passengers: <?= htmlspecialchars($car->passengers) ?></p>
-                            <p class="card-text">Transmission: <?= htmlspecialchars($car->transmission) ?></p>
-                            <p class="card-text">Price: <?= htmlspecialchars($car->daily_price_huf) ?> HUF/day</p>
-                        </div>
-                    </div>
-                </a>
+      <?php if ($adminLoggedIn): ?>
+        <div class="col-md-4 mb-4">
+          <a href="add_car.php" class="text-decoration-none">
+            <div class="card h-100 hover-card bg-dark text-white d-flex justify-content-center align-items-center">
+              <div class="card-body d-flex justify-content-center align-items-center">
+                <h5 class="card-title">Add New Car</h5>
+              </div>
             </div>
-        <?php endforeach; ?>
+          </a>
+        </div>
+      <?php endif; ?>
+      <?php foreach ($cars as $car): ?>
+          <div class="col-md-4 mb-4">
+              <a href="car_details.php?id=<?= htmlspecialchars($car->id) ?>" class="text-decoration-none">
+                  <div class="card h-100 hover-card">
+                      <img src="<?= htmlspecialchars($car->image) ?>" class="card-img-top" alt="<?= htmlspecialchars($car->brand . ' ' . $car->model) ?>">
+                      <div class="card-body">
+                          <h5 class="card-title"><?= htmlspecialchars($car->brand . ' ' . $car->model) ?></h5>
+                          <p class="card-text">Passengers: <?= htmlspecialchars($car->passengers) ?></p>
+                          <p class="card-text">Transmission: <?= htmlspecialchars($car->transmission) ?></p>
+                          <p class="card-text">Price: <?= htmlspecialchars($car->daily_price_huf) ?> HUF/day</p>
+                      </div>
+                  </div>
+              </a>
+          </div>
+      <?php endforeach; ?>
     </div>
-</div>
+  </div>
+  <style>
+    .hover-card:hover {
+      opacity: 0.65;
+      transition: opacity 0.3s;
+    }
+  </style>
 
 </div>
 

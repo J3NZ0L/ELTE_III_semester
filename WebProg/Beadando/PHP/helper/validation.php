@@ -6,6 +6,8 @@ function is_empty($input, $key){
 }
 
 function validate_login($input, &$errors, $auth){
+        // TODO:
+
     if (is_empty($input, "email")){
         $errors[] = "Email address is mandatoriy";
     }
@@ -22,6 +24,8 @@ function validate_login($input, &$errors, $auth){
 }
 
 function validate_signup($input, &$errors, $auth){
+        // TODO:
+
     if (is_empty($input, "email")){
         $errors[] = "Email address is mandatoriy";
     }
@@ -36,4 +40,14 @@ function validate_signup($input, &$errors, $auth){
     return !(bool) $errors;
 }
 
+function validate_car_details($input, &$errors){
+    // TODO:
+    $fields = ["brand", "model", "year", "transmission", "fuel_type", "passengers", "daily_price_huf", "image"];
+    foreach ($fields as $field) {
+        if (is_empty($input, $field)) {
+            $errors[] = ucfirst($field) . " is mandatory";
+        }
+    }
+    return !(bool) $errors;
+}
 ?>
