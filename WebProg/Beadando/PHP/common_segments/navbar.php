@@ -6,6 +6,9 @@ $auth = new Auth();
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
       <a class="navbar-brand" href="index.php">iKarRental</a>
+      <?php if ($auth->is_authenticated()): ?>
+        <span class="navbar-text d-lg-none ms-auto me-2">Logged in as: <?= htmlspecialchars($_SESSION['user']->name) ?></span>
+      <?php endif; ?>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -19,10 +22,11 @@ $auth = new Auth();
         </ul>
         <ul class="navbar-nav ms-auto">
           <?php if ($auth->is_authenticated()): ?>
+                <span class="navbar-text d-none d-lg-inline ms-auto me-2">Logged in as: <?= htmlspecialchars($_SESSION['user']->name) ?></span>
               <li class="nav-item">
                 <a class="nav-link" href="logout.php">Logout</a>
               </li>
-              <span class="navbar-text ">Logged in as: <?= htmlspecialchars($_SESSION['user']->name) ?></class>
+              
           <?php else: ?>
             <li class="nav-item">
             <a class="nav-link" href="register.php">Register</a>

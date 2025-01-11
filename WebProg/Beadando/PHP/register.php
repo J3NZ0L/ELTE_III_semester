@@ -29,6 +29,7 @@ if (count($_POST) != 0){
   <div class="container mt-4">
     <h1>Registration</h1>
     <?php if ($errors) {?>
+    <h2> Error(s) in the registration form: </h2>
     <ul>
         <?php foreach ($errors as $error) { ?>
         <li><?=$error?></li>
@@ -46,10 +47,11 @@ if (count($_POST) != 0){
       </div>
       <div class="mb-3">
         <label for="password" class="form-label">Password</label>
-        <input type="password" class="form-control" id="password" name="password" placeholder="Create a password">
+        <input type="password" class="form-control" id="password" name="password" placeholder="Enter the password">
       </div>
       <button type="submit" class="btn btn-primary">Registration</button>
     </form>
   </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

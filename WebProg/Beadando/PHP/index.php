@@ -29,13 +29,19 @@ if (isset($_SESSION['user']) && $_SESSION['user']->isAdmin) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>iKarRental Service</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .hover-card:hover {
+      opacity: 0.65;
+      transition: opacity 0.4s;
+    }
+  </style>
 </head>
 <body>
   <?php include "common_segments/navbar.php"; ?>
 
-  <!-- Filter Form -->
+  <!-- Filter form -->
   <div class="container my-4">
-    <h2>Filter results</h2>
+    <h2>Filter cars</h2>
     <form method="GET" action="index.php" class="row g-3" novalidate>
       <div class="col-md-3">
         <label for="start_date" class="form-label">Start Date</label>
@@ -70,7 +76,8 @@ if (isset($_SESSION['user']) && $_SESSION['user']->isAdmin) {
       </div>
     </form>
   </div>
-  <!-- Main Content: Car List -->
+
+  <!-- Car list -->
   <div class="container my-5">
     <h1 class="mb-4">Available Cars</h1>
     <div class="row"> 
@@ -102,12 +109,6 @@ if (isset($_SESSION['user']) && $_SESSION['user']->isAdmin) {
       <?php endforeach; ?>
     </div>
   </div>
-  <style>
-    .hover-card:hover {
-      opacity: 0.65;
-      transition: opacity 0.3s;
-    }
-  </style>
 
 </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

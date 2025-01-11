@@ -2,7 +2,7 @@
 session_start();
 ?>
 
-<!-- Profile Page (profile.html) -->
+<!-- Profile page -->
 <!DOCTYPE html>
 <html lang="en">
 <head>

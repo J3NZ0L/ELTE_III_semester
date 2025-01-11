@@ -38,15 +38,14 @@ if (count($_POST) != 0) {
 
   <div class="container mt-4">
     <h1>Login</h1>
-    <?php
-    if (count($errors)>0){
-      echo "<h2> An error occurred while trying to log in: </h2><ul>";
-      foreach($errors as $error){
-        echo "<li> $error </li>";
-      }
-      echo "</ul>";
-    }
-  ?>
+    <?php if ($errors) {?>
+    <h2> Error(s) occurred while trying to log in: </h2>
+    <ul>
+        <?php foreach ($errors as $error) { ?>
+        <li><?=$error?></li>
+        <?php }?>
+    </ul>
+    <?php }?>
     <form action="" method="post" novalidate>
       <div class="mb-3">
         <label for="email" class="form-label">Email address</label>
@@ -59,5 +58,6 @@ if (count($_POST) != 0) {
       <button type="submit" class="btn btn-primary">Login</button>
     </form>
   </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
