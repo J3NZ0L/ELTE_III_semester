@@ -25,9 +25,9 @@
 
 - [x] add header to every page
 
-- [ ] validate every form and input according to the data type of it correctly, if it is expected
-- 1.0 pont Hitelesítés: A regisztráció hibakezeléssel működik 
-    - 1.0 pont Hitelesítés: A bejelentkezés hibakezeléssel működik 
+- [x] validate every form and input according to the data type of it correctly, if it is expected
+- [x] 1.0 pont Hitelesítés: A regisztráció hibakezeléssel működik 
+- [x] 1.0 pont Hitelesítés: A bejelentkezés hibakezeléssel működik 
 
 - **NO need to implement:**
     - [ ] 2.0 pont Autóoldal: A kiválasztott autót le tudom foglalni két időpont között, sikeres foglalás esetén a foglalás elmentődik 
@@ -38,3 +38,14 @@
     - [ ] 1.0 pont Admin: Autók adatainak módosítása (hibakezeléssel) 
     - [ ] 1.0 pont Admin: Autók törlése 
     - [ ] 2.0 pont Megjelenés: Igényes, mobilbarát megjelenés 
+
+- Check every source file
+    - classes:
+        - [x] car.php
+        - [x] reservation.php
+    - common:
+        - [x] header.php
+    - [x] helper
+    - pages:
+        - [x] add_car.php
+        - [x] car_details.com

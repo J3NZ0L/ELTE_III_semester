@@ -29,17 +29,14 @@ if (isset($_SESSION['user']) && $_SESSION['user']->isAdmin) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>iKarRental Service</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body>
+  <?php include "common_segments/navbar.php"; ?>
 
-  <!-- Navbar -->
-  <?php include "common_segments/header.php"; ?>
   <!-- Filter Form -->
   <div class="container my-4">
     <h2>Filter results</h2>
-    <form method="GET" action="index.php" class="row g-3">
+    <form method="GET" action="index.php" class="row g-3" novalidate>
       <div class="col-md-3">
         <label for="start_date" class="form-label">Start Date</label>
         <input type="date" class="form-control" id="start_date" name="start_date" value="<?= htmlspecialchars($_GET['start_date'] ?? '') ?>">
@@ -113,7 +110,8 @@ if (isset($_SESSION['user']) && $_SESSION['user']->isAdmin) {
   </style>
 
 </div>
-
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </body>
 </html>
 

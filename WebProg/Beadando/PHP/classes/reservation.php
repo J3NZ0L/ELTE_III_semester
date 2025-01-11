@@ -4,18 +4,16 @@ include_once "helper/jsonstorage.php";
 class Reservation{
     public $id;
     public $car_id;
-    public $user_id;
+    public $user_email;
     public $start_date;
     public $end_date;
-    public $total_price_huf;
 
-    public function __construct($id = null, $car_id = null, $user_id = null, $start_date = null, $end_date = null, $total_price_huf = null){
+    public function __construct($id = null, $car_id = null, $user_email = null, $start_date = null, $end_date = null){
         $this->id = $id;
         $this->car_id = $car_id;
-        $this->user_id = $user_id;
+        $this->user_email = $user_email;
         $this->start_date = $start_date;
         $this->end_date = $end_date;
-        $this->total_price_huf = $total_price_huf;
     }
 
     public static function from_array(array $arr): Reservation
@@ -23,10 +21,9 @@ class Reservation{
         $instance = new Reservation();
         $instance->id = $arr['id'] ?? null;
         $instance->car_id = $arr['car_id'] ?? null;
-        $instance->user_id = $arr['user_id'] ?? null;
+        $instance->user_email = $arr['user_email'] ?? null;
         $instance->start_date = $arr['start_date'] ?? null;
         $instance->end_date = $arr['end_date'] ?? null;
-        $instance->total_price_huf = $arr['total_price_huf'] ?? null;
         return $instance;
     }
 
@@ -53,11 +50,6 @@ class ReservationRepository
     public function add(Reservation $reservation): string
     {
         return $this->storage->insert($reservation);
-    }
-    public function filter(callable $callback): array
-    {
-        $reservations = $this->all();
-        return array_filter($reservations, $callback);
     }
 }
 ?>

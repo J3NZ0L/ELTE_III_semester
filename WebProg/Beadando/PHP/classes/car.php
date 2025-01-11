@@ -63,6 +63,7 @@ class CarRepository
     {
         return $this->storage->insert($Car);
     }
+    
     public function getNextId(): int
     {
         $cars = $this->all();

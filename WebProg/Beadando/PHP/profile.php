@@ -12,7 +12,7 @@ session_start();
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-  <?php include "common_segments/header.php"; ?>
+  <?php include "common_segments/navbar.php"; ?>
   <div class="container mt-4">
     <h1>User Profile</h1>
     <p>Name: <?= htmlspecialchars($_SESSION['user']->name) ?></p>
@@ -22,5 +22,6 @@ session_start();
 <!-- To be implemented --> 
     </ul>
   </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -18,7 +18,6 @@ class JsonStorage
     {
         $all = $this->all();
         $id = uniqid('', true);
-        //$item->_id = $id;
         $all[$id] = $item;
         $this->io->save_to_file($this->filename, $all);
         return $id;

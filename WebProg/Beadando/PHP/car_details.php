@@ -5,10 +5,8 @@ $carRepository = new CarRepository();
 
 $cars = $carRepository->all();
 
-// Get the car ID from the query string
 $carId = $_GET['id'] ?? null;
 
-// Find the car by ID
 $car = null;
 foreach ($cars as $c) {
     if ($c->id == $carId) {
@@ -18,19 +16,16 @@ foreach ($cars as $c) {
 }
 
 if (!$car) {
-    echo "Car not found!";
+    echo "Car not found";
     exit;
 }
 
-// Check if the form is submitted, and if the user is logged in
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!isset($_SESSION['user'])) {
-        // Redirect to another page if session variable is not set
         header('Location: login.php');
         exit;
     } else {
-        // Process the form if session variable is set
-        // Code to process the form
+        // reservation is yet to be implemented, from here
     }
 }
 ?>
@@ -44,8 +39,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <?php include_once "common_segments/header.php"; ?>
-
+    <?php include_once "common_segments/navbar.php"; ?>
+    
+    <!-- Heading and base car data -->
     <div class="container my-5">
     <h1><?= htmlspecialchars($car->brand . ' ' . $car->model) ?></h1>
     <img src="<?= htmlspecialchars($car->image) ?>" class="img-fluid mb-4" alt="<?= htmlspecialchars($car->brand . ' ' . $car->model) ?>">
@@ -56,12 +52,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <li class="list-group-item">Passengers: <?= htmlspecialchars($car->passengers) ?></li>
         <li class="list-group-item">Daily Price: <?= htmlspecialchars($car->daily_price_huf) ?> HUF/day</li>
     </ul>
-    <!-- Action Buttons -->
+
+    <!-- Reservation form -->
     <div class="col-md-4">
-        <form action="" method="POST">
+        <form action="" method="POST" novalidate>
             <input type="hidden" name="car_id" value="<?= htmlspecialchars($car->id) ?>">
             <h2 class="my-3">Reserve:</h2>
-            <!-- Date Range Selector -->
+            <!-- Date range selector -->
             <div class="mb-3">
                 <label for="start_date" class="form-label">Start Date:</label>
                 <input type="date" id="start_date" name="start_date" class="form-control" required>
@@ -74,7 +71,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </form>
     </div>
 
-    <!-- Back to Main Page Button -->
     <div class="text-end mt-4">
         <a href="index.php" class="btn btn-secondary">Back to Main Page</a>
     </div>

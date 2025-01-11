@@ -9,11 +9,14 @@ $errors = [];
 if (count($_POST) != 0) {
   if (validate_login($_POST, $errors, $auth)) {
     $auth->login($_POST);
+
+    // try to redirect to the page the user was on before attempting to log out, not expected by the assignment but a nice touch, in my opinion
     $redirect_url = isset($_SESSION['redirect_url']) ? $_SESSION['redirect_url'] : 'index.php';
     header("Location: $redirect_url");
     exit();
   }
 } else {
+  // set the redirect_url session variable, for it to become accessible later, when we need to redirect the user back to the page they were on before attempting to log in
   if (isset($_SERVER['HTTP_REFERER']) && strpos($_SERVER['HTTP_REFERER'], $_SERVER['HTTP_HOST']) !== false) {
     $_SESSION['redirect_url'] = $_SERVER['HTTP_REFERER'];
   }
@@ -31,7 +34,7 @@ if (count($_POST) != 0) {
 </head>
 <body>
   
-  <?php include "common_segments/header.php"; ?>
+  <?php include "common_segments/navbar.php"; ?>
 
   <div class="container mt-4">
     <h1>Login</h1>
