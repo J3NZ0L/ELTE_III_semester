@@ -6,7 +6,7 @@ session_start();
 $auth = new Auth();
 
 $errors = [];
-
+echo count($_POST);
 if (count($_POST)!= 0){
     if (validate_login($_POST, $errors, $auth)){
         $auth->login($_POST);
@@ -34,7 +34,7 @@ if (count($_POST)!= 0){
       echo "</ul>";
     }
   ?>
-  <form action="" method="post">
+  <form action="login.php" method="post">
     <label for="username">Felhasznalonev:</label>
     <input type="text" name="username" id="username">
     <br>
